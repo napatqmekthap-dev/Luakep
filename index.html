@@ -835,6 +835,62 @@ body.lowfx #festfx{display:none}
 .setback svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
 @media (prefers-reduced-motion: reduce){.story .sart,.story .cfall,.story .arc,.story .stamp,.story .stampin,.story .circ,.story .sjar svg,.setpage,.minijar .wave,.gjar .wave,.rjar .wave{animation:none!important}.story .arc,.story .circ{stroke-dashoffset:0}}
 body.lowfx .story .cfall,body.lowfx .story .sjar svg{animation:none}
+
+/* ===== Motion round 3 ===== */
+/* collapsing header */
+.navtitle{position:relative;height:34px;overflow:hidden;display:block}
+.navtitle>span{position:absolute;inset:0;display:flex;align-items:center;gap:8px;white-space:nowrap;transition:transform .5s cubic-bezier(.2,1.25,.4,1),opacity .3s}
+.ntbal{transform:translateY(110%);opacity:0}
+.nav.compact .ntname{transform:translateY(-110%);opacity:0}
+.nav.compact .ntbal{transform:none;opacity:1}
+#ntjar{width:32px;height:32px;display:block;flex:none}
+#ntjar svg{width:100%;height:100%;overflow:visible}
+#ntjar .wave{animation:wave 3.2s linear infinite}
+#ntbal{font-family:var(--display);font-size:20px;font-weight:500}
+.balance{transform:scale(calc(1 - var(--hp,0) * .07));transform-origin:50% 100%;opacity:calc(1 - var(--hp,0) * .55)}
+.balance .pig{scale:calc(1 - var(--hp,0) * .3)}
+/* odometer */
+.odr{display:inline-block;position:relative;overflow:hidden;vertical-align:top}
+.odr .n{display:inline-block;animation:odin .6s var(--d) cubic-bezier(.2,1.3,.4,1) both}
+.odr .o{position:absolute;left:0;top:0;animation:odout .38s var(--d) cubic-bezier(.5,0,.75,0) both}
+@keyframes odin{from{transform:translateY(calc(var(--dir) * 100%));opacity:0}}
+@keyframes odout{to{transform:translateY(calc(var(--dir) * -100%));opacity:0}}
+/* view transitions */
+::view-transition-group(morph){animation-duration:.55s;animation-timing-function:cubic-bezier(.2,.9,.25,1.05)}
+::view-transition-old(morph),::view-transition-new(morph){height:100%;object-fit:cover}
+::view-transition-new(vtpanel){animation:vtup .5s cubic-bezier(.17,1.1,.32,1) both}
+@keyframes vtup{from{transform:translateY(60%);opacity:0}}
+::view-transition-old(root),::view-transition-new(root){animation-duration:.3s}
+.vt-reveal::view-transition-old(root){animation:none}
+.vt-reveal::view-transition-new(root){animation:reveal .65s cubic-bezier(.3,0,.1,1) both}
+.vt-unreveal::view-transition-new(root){animation:none}
+.vt-unreveal::view-transition-old(root){animation:reveal .5s cubic-bezier(.5,0,.75,0) reverse both;z-index:2}
+@keyframes reveal{from{clip-path:circle(0 at var(--cx) var(--cy))}to{clip-path:circle(150vmax at var(--cx) var(--cy))}}
+/* mascot reactions */
+.look{transition:transform .28s cubic-bezier(.2,1.2,.4,1)}
+.pig.sleepy .eyes,.pig.nap .eyes{animation:none!important;transform:scaleY(.22)!important}
+.pig.sleepy::after,.pig.nap::after{content:"z";position:absolute;right:-6px;top:-10px;font:600 18px var(--display);color:var(--muted);animation:zfloat 2.6s ease-in-out infinite;pointer-events:none}
+.pig.sleepy svg,.pig.nap svg{animation:yawn 8s ease-in-out infinite!important}
+@keyframes zfloat{0%{transform:translate(0,6px) scale(.6);opacity:0}30%{opacity:1}100%{transform:translate(10px,-16px) scale(1.15);opacity:0}}
+@keyframes yawn{0%,78%,100%{transform:none}84%{transform:scale(.97,1.07)}90%{transform:scale(1.02,.97)}}
+.minijar{position:relative}
+.minijar.sweat svg{animation:nerv .45s ease-in-out infinite}
+.minijar.sweat::after{content:"";position:absolute;right:4px;top:12px;width:9px;height:9px;background:#7cc8f2;border-radius:0 50% 50% 50%;transform:rotate(45deg);animation:drip 1.3s ease-in infinite}
+@keyframes nerv{0%,100%{transform:translateX(0)}25%{transform:translateX(-1.5px) rotate(-2deg)}75%{transform:translateX(1.5px) rotate(2deg)}}
+@keyframes drip{0%{transform:translateY(0) rotate(45deg);opacity:0}20%{opacity:1}100%{transform:translateY(22px) rotate(45deg);opacity:0}}
+/* segmented pill */
+.seg{position:relative;isolation:isolate}
+.seg>.segpill{position:absolute;top:4px;bottom:4px;left:0;width:0;border-radius:999px;background:var(--btn);z-index:-1;pointer-events:none;transition:transform .5s cubic-bezier(.3,1.35,.45,1),width .5s cubic-bezier(.3,1.35,.45,1),opacity .2s}
+.seg.haspill>button.on{background:transparent!important}
+/* budget bars: flowing liquid, overspend turns red and shakes */
+#cats .bar i{position:relative;overflow:hidden}
+#cats .bar i::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 0 35%,rgba(255,255,255,.5) 48%,transparent 62% 100%);background-size:250% 100%;animation:liquid 3.2s linear infinite}
+@keyframes liquid{from{background-position:180% 0}to{background-position:-80% 0}}
+.fresh #cats .bar i.over,#cats.fresh .bar i.over{animation:grow 1s cubic-bezier(.2,0,0,1) both,overred .5s .95s both,overshake .5s 1.05s both}
+@keyframes overred{from{background:var(--warn-bar)}}
+@keyframes overshake{0%,100%{transform:translateX(0)}20%{transform:translateX(-3px)}40%{transform:translateX(3px)}60%{transform:translateX(-2px)}80%{transform:translateX(1px)}}
+body.lowfx #cats .bar i::after,body.lowfx .pig.sleepy svg,body.lowfx .pig.nap svg{animation:none!important}
+@media (prefers-reduced-motion: reduce){.navtitle>span,.seg>.segpill,.look{transition:none}.odr .n,.odr .o,#cats .bar i::after,.pig.sleepy svg,.pig.nap svg,.pig.sleepy::after,.pig.nap::after,.minijar.sweat svg,.minijar.sweat::after{animation:none!important}.balance{transform:none;opacity:1}}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i></div><div id="festfx" aria-hidden="true"></div>
@@ -912,7 +968,7 @@ body.lowfx .story .cfall,body.lowfx .story .sjar svg{animation:none}
 
 <header class="nav" id="nav">
   <span></span>
-  <span class="navtitle">เหลือเก็บ</span>
+  <span class="navtitle"><span class="ntname">เหลือเก็บ</span><span class="ntbal" aria-hidden="true"><i id="ntjar"></i><b id="ntbal"></b></span></span>
   <button class="navbtn" id="openset" aria-label="ตั้งค่า"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
 </header>
 <div class="wrap">
@@ -1611,7 +1667,7 @@ function jarSVG(m,o,lv){
   const S=`stroke="${O}" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"`;
   const body='M36 32C22 36 14 48 15 62C16 80 28 100 44 106Q60 109 76 106C92 100 104 80 105 62C106 48 98 36 84 32Z';
   // wave: 3 wavelengths of 40, animated sideways by one wavelength
-  const wave=`M-20 ${wy} q10 -4 20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 V112 H-20Z`;
+  const wave=`M-20 ${wy} q10 -4 20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 V190 H-20Z`;
   const eyes={
     great:`<path d="M42 62q5-6 10 0M68 62q5-6 10 0" ${S}/>`,
     good:`<ellipse cx="47" cy="61" rx="3.6" ry="4.4" fill="${O}"/><ellipse cx="73" cy="61" rx="3.6" ry="4.4" fill="${O}"/><circle cx="48.4" cy="59.3" r="1.4" fill="#fff"/><circle cx="74.4" cy="59.3" r="1.4" fill="#fff"/>`,
@@ -1649,7 +1705,7 @@ function jarSVG(m,o,lv){
   <ellipse cx="60" cy="111" rx="34" ry="4.5" fill="#000" opacity=".12"/>
   <path d="${body}" fill="url(#${id}g)"/>
   <g clip-path="url(#${id}c)">
-    <g class="wave"><path d="${wave}" fill="url(#${id}w)"/><path d="M-20 ${wy} q10 -4 20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0" stroke="#e8fbff" stroke-width="2" fill="none" opacity=".8" pathLength="1"/></g>
+    <g class="wlvl"><g class="wave"><path d="${wave}" fill="url(#${id}w)"/><path d="M-20 ${wy} q10 -4 20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0" stroke="#e8fbff" stroke-width="2" fill="none" opacity=".8" pathLength="1"/></g></g>
     ${coins}${(m==='great'||m==='good'||m==='warn')?`<g class="bubs"><circle class="bub" cx="40" cy="100" r="2.2" fill="#ffffff" opacity=".7"/><circle class="bub b2" cx="66" cy="102" r="1.6" fill="#ffffff" opacity=".7"/><circle class="bub b3" cx="80" cy="98" r="2.6" fill="#ffffff" opacity=".6"/></g>`:''}
     <path d="M30 44c8-5 14 2 22-2s14-6 22-1 12 4 18 0" stroke="#ffffff" stroke-width="2.2" fill="none" opacity=".5" stroke-linecap="round"/>
     <path d="M24 86c10 4 18-2 26 2s16 4 24 0 16-4 22 0" stroke="#ffffff" stroke-width="2" fill="none" opacity=".35" stroke-linecap="round"/>
@@ -1661,13 +1717,13 @@ function jarSVG(m,o,lv){
   <path d="M38 33Q36 27 32 25H88Q84 27 82 33Z" fill="#bfe6cf" stroke="${O}" stroke-width="2.6" stroke-linejoin="round"/><rect x="30" y="20" width="60" height="7" rx="3.5" fill="#cfeedb" stroke="${O}" stroke-width="2.6"/>
   ${W.shirt}
   <path d="M18 72q-8-1-9 7M102 72q8-1 9 7" ${S}/>
-  ${W.neck}${o?'':lid}${W.head}${o?'':leaf}${W.props}${cheeks}<g class="eyes">${eyes}</g>${mouth}${extra}
+  ${W.neck}${o?'':lid}${W.head}${o?'':leaf}${W.props}${cheeks}<g class="look"><g class="eyes">${eyes}</g></g>${mouth}${extra}
 </svg>`;
 }
 
 
 function pigSVG(m){return jarSVG(m)}
-let lastMood=null;
+let lastMood=null, lastL=null;
 function setMood(tin,tout,overCats){
   let m, text;
   const pct=tin>0?Math.round(tout/tin*100):0;
@@ -1678,7 +1734,15 @@ function setMood(tin,tout,overCats){
   else if(pct>50){m='good';text=L(`ใช้ไป <b>${pct}%</b> ของรายรับ ออมได้ ${100-pct}% กำลังดี`,`<b>${pct}%</b> of income spent, ${100-pct}% saved. Nicely balanced.`)}
   else {m='great';text=L(`น้ำในโอ่งยังเต็ม ใช้ไปแค่ <b>${pct}%</b> ของรายรับ เยี่ยมมาก!`,`The jar is still full: only <b>${pct}%</b> of income spent. Great job!`)}
   if(overCats&&m!=='none') text+=L(` · เกินงบ ${overCats} หมวด`,` · ${overCats} ${overCats>1?'categories':'category'} over budget`);
-  if(m!==lastMood){const p=$('pig');p.innerHTML=pigSVG(m);p.classList.remove('pop');void p.offsetWidth;p.classList.add('pop');
+  const lv=tin>0?Math.max(0,(tin-tout)/tin):null, newL=lv!=null?Math.max(.05,Math.min(.9,lv)):{great:.86,good:.62,warn:.32,bad:.07,none:.55}[m];
+  if(m===lastMood&&lastL!=null&&Math.abs(newL-lastL)>.003){
+    const p=$('pig'); p.innerHTML=jarSVG(m,undefined,lv); try{$('ntjar').innerHTML=jarSVG(m,undefined,lv)}catch(e){}
+    if(FX()){const g=p.querySelector('.wlvl'); if(g) g.animate([{transform:`translateY(${(72*(newL-lastL)).toFixed(1)}px)`},{transform:'translateY(0)'}],{duration:1200,easing:'cubic-bezier(.3,1.3,.45,1)'})}
+    lastL=newL;
+  }
+  if(m!==lastMood){const p=$('pig');p.innerHTML=jarSVG(m,undefined,lv);p.classList.remove('pop');void p.offsetWidth;p.classList.add('pop'); try{$('ntjar').innerHTML=jarSVG(m,undefined,lv)}catch(e){}
+    if(FX()&&lastL!=null&&Math.abs(newL-lastL)>.003){const g=p.querySelector('.wlvl'); if(g) g.animate([{transform:`translateY(${(72*(newL-lastL)).toFixed(1)}px)`},{transform:'translateY(0)'}],{duration:1200,easing:'cubic-bezier(.3,1.3,.45,1)'})}
+    lastL=newL; applyNight();
     p.setAttribute('aria-label',{great:'น้องโอ่งน้ำเต็ม ยิ้มกว้าง',good:'น้องโอ่งยิ้ม',warn:'น้องโอ่งน้ำเหลือน้อย กังวล',bad:'น้องโอ่งแห้ง ร้องไห้',none:'น้องโอ่งปิดฝาหลับ'}[m]);lastMood=m}
   $('mood').innerHTML=text;
 }
@@ -1746,9 +1810,17 @@ const RM=()=>{try{return matchMedia('(prefers-reduced-motion: reduce)').matches}
 function showSheet(id){const el=$(id); el.classList.remove('closing'); el.hidden=false}
 function hideSheet(id){const el=$(id); if(el.hidden) return; if(RM()){el.hidden=true;return}
   el.classList.add('closing'); clearTimeout(el._ct); el._ct=setTimeout(()=>{if(el.classList.contains('closing')){el.hidden=true;el.classList.remove('closing')}},230)}
+function odo(el,txt,dir){
+  const old=el._odt!=null?el._odt:el.textContent; el._odt=txt; if(old===txt){el.textContent=txt;return}
+  const n=txt.length,o=old.length; let h='';
+  for(let i=0;i<n;i++){const fr=n-1-i, oc=old[o-1-fr], c=txt[i];
+    h+=oc===c?`<span class="odk">${esc(c)}</span>`:`<span class="odr" style="--d:${fr*45}ms;--dir:${dir}">${oc!=null?`<span class="o">${esc(oc)}</span>`:''}<span class="n">${esc(c)}</span></span>`}
+  el.innerHTML=h; clearTimeout(el._odT); el._odT=setTimeout(()=>{if(el._odt===txt) el.textContent=txt},1400);
+}
 function animNum(el,to,fmtFn){
   const from=typeof el._v==='number'?el._v:to; el._v=to;
-  if(RM()||from===to||!el.isConnected){el.textContent=fmtFn(to);return}
+  if(RM()||from===to||!el.isConnected){el._odt=fmtFn(to);el.textContent=fmtFn(to);return}
+  if(FX()&&el.closest&&el.closest('.balance')){cancelAnimationFrame(el._raf); odo(el,fmtFn(to),to>from?1:-1); return}
   const t0=performance.now(), d=520; cancelAnimationFrame(el._raf);
   const step=t=>{const k=Math.min(1,(t-t0)/d), e=1-Math.pow(1-k,3); el.textContent=fmtFn(Math.round(from+(to-from)*e)); if(k<1) el._raf=requestAnimationFrame(step); else el.textContent=fmtFn(to)};
   el._raf=requestAnimationFrame(step);
@@ -1775,6 +1847,7 @@ function render(){
     $('carry').textContent=L(`ยกมา ${sgn(carryAmt)} · เดือนนี้ ${tin-tout>=0?'+':''}${sgn(tin-tout)}${depThis?` · เก็บเข้าเป้า ${sgn(-depThis)}`:''}`,
       `${sgn(carryAmt)} brought forward · ${tin-tout>=0?'+':''}${sgn(tin-tout)} this month${depThis?` · ${sgn(-depThis)} to goals`:''}`);
   } else { $('ballabel').textContent=L('คงเหลือเดือนนี้','Left this month'); animNum($('bal'),tin-tout,sgn); $('carry').hidden=true }
+  try{$('ntbal').textContent=sgn($('bal')._v)}catch(e){}
   $('demo').hidden=!data.some(r=>r.demo);
   renderBackupBanner();
   renderAllowance(rows,tin,tout,carryAmt);
@@ -1863,6 +1936,7 @@ function updatePreview(){
   if(type==='in') tin+=a; else tout+=a;
   const m=moodOf(tin,tout), lv=tin>0?Math.max(0,(tin-tout)/tin):(tout?0:null);
   box.innerHTML=jarSVG(m,undefined,lv);
+  box.classList.toggle('sweat',type==='out'&&a>0&&(a>=Math.max(1000,(tin-a>0?0:0)+rows.filter(r=>r.type==='in').reduce((s,r)=>s+r.amount,0)*.15)||((budget[cat]||0)>0&&catSpent+a>budget[cat])));
   const left=tin-tout, el=$('impact'), b=budget[cat]||0; let warn=false, t;
   if(!a) t=L(`เดือนนี้เหลือ <b>${fmt(left)}</b>`,`<b>${fmt(left)}</b> left this month`);
   else if(type==='in') t=L(`เงินเข้าโอ่ง เดือนนี้จะเหลือ <b>${fmt(left)}</b>`,`Into the jar: <b>${fmt(left)}</b> left this month`);
@@ -2098,9 +2172,19 @@ function showSlide(i){
   if(FX()) el.querySelectorAll('.n').forEach(n=>{const t=n.textContent.trim(); if(/^฿[\d,]+$/.test(t)){const v=+t.replace(/[^\d]/g,''); n._v=0; animNum(n,v,fmt)}});
   clearTimeout(stTimer);
   if(!last) stTimer=setTimeout(()=>showSlide(i+1),dur);
-  else { makeCard(story.d).then(blob=>{ if(!story||!blob) return; story.blob=blob; $('shot').src=URL.createObjectURL(blob) }).catch(()=>{ if($('shint')) $('shint').textContent=tr('กดค้างที่รูปแล้วเลือกบันทึก') }); $('sshare').onclick=shareCard; $('sdone').onclick=closeStory }
+  else { makeCard(story.d).then(blob=>{ if(!story||!blob) return; story.blob=blob; $('shot').src=URL.createObjectURL(blob) }).catch(()=>{ if($('shint')) $('shint').textContent=tr('กดค้างที่รูปแล้วเลือกบันทึก') }); $('sshare').onclick=shareCard; $('sdone').onclick=closeStoryVT }
 }
-$('openrecap').onclick=openStory; $('sclose').onclick=closeStory;
+function vtReveal(el,update,closing){
+  if(!FX()||!document.startViewTransition||!el){update();return}
+  const r=el.getBoundingClientRect(), R=document.documentElement;
+  R.style.setProperty('--cx',(r.left+r.width/2)+'px'); R.style.setProperty('--cy',(r.top+r.height/2)+'px');
+  const c=closing?'vt-unreveal':'vt-reveal'; R.classList.add(c);
+  let t; try{ t=document.startViewTransition(update) }catch(e){R.classList.remove(c); update(); return}
+  t.finished.finally(()=>R.classList.remove(c));
+}
+$('openrecap').onclick=()=>vtReveal($('openrecap'),openStory);
+function closeStoryVT(){ if($('story').hidden) return; const b=$('openrecap'); vtReveal(b&&!b.hidden?b:null,closeStory,true) }
+$('sclose').onclick=closeStoryVT;
 $('snext').onclick=e=>{if(!story)return; if(e&&e.clientX!=null){story.tx=Math.round(e.clientX/innerWidth*100);story.ty=Math.round(e.clientY/innerHeight*100)} story.i<story.slides.length-1&&showSlide(story.i+1)};
 $('sprev').onclick=()=>story&&showSlide(story.i-1);
 document.addEventListener('keydown',e=>{ if(!story) return; if(e.key==='Escape') closeStory(); if(e.key==='ArrowRight') $('snext').click(); if(e.key==='ArrowLeft') $('sprev').click() });
@@ -2176,7 +2260,15 @@ function renderGoals(){
       <span class="amt2 num">${fmt(sv)} <small>/ ${fmt(g.target)}</small></span><span class="bar"><i style="width:${(p*100).toFixed(1)}%"></i></span><span class="sub">${Math.round(p*100)}% · ${sub}</span></button>`;
   }).join('')+`<button class="goal add" id="goaladd"><span>+</span>เป้าหมายใหม่</button>`;
 }
-$('goals').onclick=e=>{const b=e.target.closest('.goal');if(!b)return; if(b.id==='goaladd') openGoalEdit(null); else openGoal(b.dataset.g)};
+function vtMorph(fromEl,update,getTo,sheetId){
+  if(!FX()||!document.startViewTransition||!fromEl){update();return}
+  fromEl.style.viewTransitionName='morph';
+  let t; try{ t=document.startViewTransition(()=>{ fromEl.style.viewTransitionName=''; update();
+    const pn=sheetId&&$(sheetId).querySelector('.panel'); if(pn){pn.style.animationDuration='0s'; pn.style.viewTransitionName='vtpanel'}
+    const to=getTo(); if(to) to.style.viewTransitionName='morph' }) }catch(e){fromEl.style.viewTransitionName=''; update(); return}
+  t.finished.finally(()=>{ const to=getTo(); if(to) to.style.viewTransitionName=''; const pn=sheetId&&$(sheetId).querySelector('.panel'); if(pn){pn.style.viewTransitionName=''; pn.style.animationDuration=''} });
+}
+$('goals').onclick=e=>{const b=e.target.closest('.goal');if(!b)return; if(b.id==='goaladd') openGoalEdit(null); else vtMorph(b.querySelector('.gjar'),()=>openGoal(b.dataset.g),()=>document.querySelector('#goalpanel .rjar'),'goalsheet')};
 $('addgoal').onclick=()=>openGoalEdit(null);
 $('goalsheet').onclick=e=>{if(e.target.id==='goalsheet')hideSheet('goalsheet')};
 let gEditIcon='travel', gDelArmed=false;
@@ -2650,6 +2742,45 @@ try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',applyTh
 applyTheme();
 function applyFx(){document.body.classList.toggle('lowfx',prefs.fx===false); const sw=$('fxon'); if(sw) sw.checked=prefs.fx!==false}
 $('fxon').addEventListener('change',()=>{prefs.fx=$('fxon').checked; savePrefs(); applyFx(); applyFestFx()});
+
+/* ===== Motion round 3 ===== */
+/* Collapsing header: hero shrinks, nav shows mini jar + balance */
+(function(){
+  const hero=document.querySelector('.balance'), nav=$('nav'); if(!hero||!nav) return;
+  try{ new IntersectionObserver(([e])=>nav.classList.toggle('compact',!e.isIntersecting&&e.boundingClientRect.top<0),{rootMargin:'-72px 0px 0px 0px'}).observe(hero) }catch(e){}
+  let raf=0; addEventListener('scroll',()=>{ if(raf) return; raf=requestAnimationFrame(()=>{raf=0;
+    if(!FX()){hero.style.removeProperty('--hp');return}
+    const r=hero.getBoundingClientRect(), p=Math.max(0,Math.min(1,(72-r.top)/Math.max(1,r.height)));
+    hero.style.setProperty('--hp',p.toFixed(3)) }) },{passive:true});
+})();
+/* Nong Ong looks at your finger, naps when idle, gets sleepy at night */
+(function(){
+  let lookT=0, idleT=0;
+  const look=(x,y)=>{ const p=$('pig'); if(!p||!FX()) return; const g=p.querySelector('.look'); if(!g) return; const r=p.getBoundingClientRect(); if(r.bottom<0||r.top>innerHeight) return;
+    const dx=x-(r.left+r.width/2), dy=y-(r.top+r.height*.55), d=Math.hypot(dx,dy)||1, k=Math.min(1,d/160);
+    g.style.transform=`translate(${(dx/d*3.2*k).toFixed(2)}px,${(dy/d*2.6*k).toFixed(2)}px)`;
+    clearTimeout(lookT); lookT=setTimeout(()=>{g.style.transform=''},1600) };
+  addEventListener('pointerdown',e=>look(e.clientX,e.clientY),{passive:true});
+  addEventListener('pointermove',e=>{ if(e.buttons) look(e.clientX,e.clientY) },{passive:true});
+  const wake=()=>{ const p=$('pig'); if(p&&p.classList.contains('nap')){p.classList.remove('nap'); bump(p)} clearTimeout(idleT); idleT=setTimeout(()=>{ const q=$('pig'); if(q&&FX()&&document.visibilityState==='visible'&&lastMood!=='none') q.classList.add('nap') },45000) };
+  ['pointerdown','keydown','scroll'].forEach(ev=>addEventListener(ev,wake,{passive:true})); wake();
+  setInterval(applyNight,60000);
+})();
+function applyNight(){ const p=$('pig'); if(!p) return; const h=new Date().getHours(); p.classList.toggle('sleepy',(h>=22||h<5)&&lastMood!=='none') }
+applyNight();
+/* Segmented controls: sliding pill */
+function segPill(seg,instant){
+  let p=seg.querySelector(':scope>.segpill'); if(!p){p=document.createElement('i');p.className='segpill';p.setAttribute('aria-hidden','true');seg.prepend(p);seg.classList.add('haspill');instant=true}
+  const on=seg.querySelector(':scope>button.on'); if(!on||!on.offsetWidth){p.style.opacity='0';return}
+  if(instant) p.style.transition='none';
+  p.style.opacity='1'; p.style.width=on.offsetWidth+'px'; p.style.transform=`translateX(${on.offsetLeft}px)`;
+  if(instant){void p.offsetWidth; p.style.transition=''}
+}
+(function(){
+  const segs=[...document.querySelectorAll('.seg')]; segs.forEach(sg=>segPill(sg,true));
+  try{ const ro=new ResizeObserver(es=>es.forEach(e=>segPill(e.target,true))); segs.forEach(sg=>ro.observe(sg)) }catch(e){}
+  try{ new MutationObserver(rs=>{const done=new Set(); rs.forEach(r=>{const sg=r.target.parentElement; if(r.target.tagName==='BUTTON'&&sg&&sg.classList.contains('seg')&&!done.has(sg)){done.add(sg); segPill(sg)}})}).observe(document.body,{attributes:true,attributeFilter:['class'],subtree:true}) }catch(e){}
+})();
 /* ===== Colour palettes ===== */
 const PALETTES=['lime','sakura','sea','lavender','sunshine'];
 function applyPalette(){
