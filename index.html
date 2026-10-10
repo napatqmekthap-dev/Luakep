@@ -1067,6 +1067,21 @@ input.flash{animation:flashin 1.2s ease-out}
 .ucard.armed{background:var(--btn);color:var(--btn-fg)}
 .ucard.armed small,.ucard.armed .ua,.ucard.armed .ua.in{color:inherit}
 .ucard.armed .ud{background:color-mix(in srgb,currentColor 18%,transparent);color:inherit}
+
+/* ===== Polish round 9: inputs and sheet titles ===== */
+.panel h3{font-weight:500;letter-spacing:0}
+input:focus,select:focus,textarea:focus{border-color:var(--ink);box-shadow:0 0 0 3px color-mix(in srgb,var(--ink) 13%,transparent)}
+input:focus-visible,select:focus-visible,textarea:focus-visible{outline:none}
+.amtrow>label{position:relative}
+#amount{border:0;background:var(--surface);border-radius:22px;height:76px;font-size:44px;font-weight:500;padding:0 18px 0 48px;box-shadow:inset 0 0 0 1.5px var(--ov);transition:box-shadow .2s,background .2s}
+#amount::placeholder{color:color-mix(in srgb,var(--muted) 45%,transparent)}
+#amount:focus{box-shadow:inset 0 0 0 2px var(--ink),0 0 0 4px color-mix(in srgb,var(--ink) 10%,transparent)}
+.amtrow>label::after{content:"฿";position:absolute;left:18px;bottom:15px;font:500 28px var(--display);color:var(--muted);pointer-events:none}
+#gamt{font-family:var(--display);font-size:28px;font-weight:500;text-align:right;height:62px;border-radius:18px}
+.lkpad{align-items:center}
+.lkpad input{width:180px;height:58px;border:0;border-radius:18px;background:var(--s-low);box-shadow:inset 0 0 0 1.5px var(--ov);font-size:26px;letter-spacing:.55em;text-indent:.55em;text-align:center}
+.lkpad input:focus{box-shadow:inset 0 0 0 2px var(--ink),0 0 0 4px color-mix(in srgb,var(--ink) 10%,transparent)}
+.lkpad .btn{height:58px;border-radius:18px;padding:0 20px}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i></div><div id="festfx" aria-hidden="true"></div>
