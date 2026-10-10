@@ -891,6 +891,58 @@ body.lowfx .story .cfall,body.lowfx .story .sjar svg{animation:none}
 @keyframes overshake{0%,100%{transform:translateX(0)}20%{transform:translateX(-3px)}40%{transform:translateX(3px)}60%{transform:translateX(-2px)}80%{transform:translateX(1px)}}
 body.lowfx #cats .bar i::after,body.lowfx .pig.sleepy svg,body.lowfx .pig.nap svg{animation:none!important}
 @media (prefers-reduced-motion: reduce){.navtitle>span,.seg>.segpill,.look{transition:none}.odr .n,.odr .o,#cats .bar i::after,.pig.sleepy svg,.pig.nap svg,.pig.sleepy::after,.pig.nap::after,.minijar.sweat svg,.minijar.sweat::after{animation:none!important}.balance{transform:none;opacity:1}}
+
+/* ===== Wallets, split, insights ===== */
+#seg{grid-template-columns:none!important;grid-auto-flow:column;grid-auto-columns:1fr}
+.seg3{grid-template-columns:repeat(3,1fr)!important}
+.lbl2{display:block;margin-top:10px}
+.wallets{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;margin:12px -16px 0;padding:2px 16px 4px}
+.wallets::-webkit-scrollbar{display:none}
+.wcard{flex:none;min-width:132px;border:0;text-align:left;cursor:pointer;background:var(--s-low);color:var(--ink);border-radius:20px;padding:12px 14px;display:flex;flex-direction:column;gap:4px;box-shadow:var(--card-sh)}
+.wcard small{color:var(--muted);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:150px}
+.wcard b{font-family:var(--display);font-size:18px;font-weight:500}
+.wcard b.neg{color:var(--out)}
+.amt.tr{color:var(--muted)} .amt.lend{color:var(--muted)} .amt.back{color:var(--in)}
+.tag.split{background:var(--t-mood);color:var(--t-mood-fg)}
+.splitbox{display:flex;flex-direction:column;gap:10px;margin-top:-6px}
+.splitsum{font-size:13px;color:var(--muted)} .splitsum b{color:var(--ink)}
+.owe{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;margin:0 -16px;padding:2px 16px 6px}
+.owe::-webkit-scrollbar{display:none}
+.oweb{flex:none;border:0;cursor:pointer;background:var(--s-low);color:var(--ink);border-radius:20px;padding:10px 14px 10px 10px;display:flex;align-items:center;gap:10px;box-shadow:var(--card-sh)}
+.oweb .av{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-family:var(--display);font-weight:600;background:hsl(var(--h) 70% 88%);color:hsl(var(--h) 55% 28%)}
+.oweb .nm{font-size:14px;font-weight:500}
+.oweb b{font-family:var(--display);font-weight:500;font-size:16px}
+.fbig{background:var(--t-allow);color:var(--t-allow-fg);border-radius:22px;padding:16px 18px;display:flex;flex-direction:column;gap:2px}
+.fbig.zero{background:var(--s-high);color:var(--ink)}
+.fbig b{font-family:var(--display);font-size:34px;font-weight:600}
+.insbtn{display:flex;align-items:center;gap:14px;border:0;width:100%;text-align:left;cursor:pointer;border-radius:26px;padding:14px 16px;margin-top:10px;background:var(--t-mood);color:var(--t-mood-fg);font:inherit}
+.insbtn .spark{width:40px;height:40px;border-radius:12px;background:color-mix(in srgb,currentColor 12%,transparent);display:grid;place-items:center;flex:none}
+.insbtn .spark svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.insbtn>span:nth-child(2){flex:1;display:flex;flex-direction:column;gap:2px}
+.insbtn b{font-weight:600} .insbtn small{opacity:.8;font-size:13px}
+.insbtn .go{font-size:24px;opacity:.6}
+.icard{background:var(--surface);border-radius:22px;padding:14px;display:flex;flex-direction:column;gap:10px}
+.ichart{width:100%;height:auto;display:block}
+.ichart .bi{fill:var(--in-bar);transform-box:fill-box;transform-origin:bottom;animation:barup .7s cubic-bezier(.2,1.2,.4,1) both}
+.ichart .bo{fill:var(--out-bar);transform-box:fill-box;transform-origin:bottom;animation:barup .7s cubic-bezier(.2,1.2,.4,1) both}
+.ichart .avg{stroke:var(--muted);stroke-width:1.5;stroke-dasharray:4 4}
+.ichart text{font-size:11px;fill:var(--muted);font-family:var(--body)} .ichart text.cur{fill:var(--ink);font-weight:700}
+@keyframes barup{from{transform:scaleY(0)}}
+.ileg{display:flex;gap:14px;font-size:12px;color:var(--muted)} .ileg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.ileg .li{background:var(--in-bar)} .ileg .lo{background:var(--out-bar)} .ileg .la{border:1.5px dashed var(--muted);height:0;width:12px;border-radius:0;vertical-align:3px}
+.fcast{background:var(--t-in);color:var(--t-in-fg);border-radius:22px;padding:16px 18px;display:flex;flex-direction:column;gap:4px}
+.fcast.bad{background:var(--t-out);color:var(--t-out-fg)}
+.fcast b{font-family:var(--display);font-size:34px;font-weight:600;line-height:1.1} .fcast span{font-size:13px;opacity:.85}
+.mv{display:flex;align-items:center;gap:10px} .mv .nm{flex:1;font-size:14px}
+.mv .up{color:var(--out);font-weight:600;font-size:13px} .mv .down{color:var(--in);font-weight:600;font-size:13px} .mv small{color:var(--muted);min-width:70px;text-align:right}
+.notes p{margin:0;font-size:14px;line-height:1.5} .notes p+p{border-top:1px solid var(--ov);padding-top:8px}
+.subh{font-size:14px;font-weight:600;display:block;margin-top:4px}
+.remtime{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.remtime input{max-width:140px}
+#sharebk{flex:none}
+.panel>.btn{flex:none}
+.group .remtime{flex-direction:row;align-items:center;justify-content:space-between;text-align:left}
+@media (prefers-reduced-motion: reduce){.ichart .bi,.ichart .bo{animation:none}}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i></div><div id="festfx" aria-hidden="true"></div>
@@ -995,6 +1047,8 @@ body.lowfx #cats .bar i::after,body.lowfx .pig.sleepy svg,body.lowfx .pig.nap sv
     <div class="mood" id="mood" aria-live="polite"></div>
   </div>
 
+  <div class="wallets" id="wallets" hidden></div>
+
   <div class="bkbanner" id="bkbanner" hidden>
     <span class="bi"><svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg></span>
     <span class="tx"><b id="bktitle">ยังไม่เคยสำรองข้อมูล</b><span id="bksub">ข้อมูลอยู่ในมือถือเครื่องนี้เท่านั้น สำรองไว้กันหาย</span></span>
@@ -1011,6 +1065,17 @@ body.lowfx #cats .bar i::after,body.lowfx .pig.sleepy svg,body.lowfx .pig.nap sv
     <span><b id="recaptitle">สรุปเดือนนี้ของคุณ</b><small>ดูเป็นสตอรี่ แล้วแชร์เป็นรูปได้</small></span>
     <span class="go">›</span>
   </button>
+
+  <button class="insbtn" id="openins" hidden>
+    <span class="spark"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span>
+    <span><b>ภาพรวม 6 เดือน</b><small>แนวโน้ม หมวดที่เปลี่ยนไป และคาดการณ์สิ้นเดือน</small></span>
+    <span class="go">›</span>
+  </button>
+
+  <section id="owesec" hidden>
+    <h2><span>เพื่อนค้างจ่าย</span><small id="owetotal"></small></h2>
+    <div class="owe" id="owe"></div>
+  </section>
 
   <section id="goalsec">
     <h2><span>เป้าหมายออม</span><button id="addgoal">เพิ่มเป้าหมาย</button></h2>
@@ -1072,17 +1137,22 @@ body.lowfx #cats .bar i::after,body.lowfx .pig.sleepy svg,body.lowfx .pig.nap sv
     <div class="seg" id="seg">
       <button type="button" data-t="out" class="on">รายจ่าย</button>
       <button type="button" data-t="in">รายรับ</button>
+      <button type="button" data-t="tr" id="segtr" hidden>โอน</button>
     </div>
     <div class="amtrow"><label>จำนวนเงิน (บาท)<input id="amount" inputmode="decimal" placeholder="0"></label><div class="minijar" id="minijar" aria-hidden="true"></div></div>
     <div class="quickamt" id="quickamt"></div>
     <div class="impact" id="impact" aria-live="polite"></div>
-    <div><label>หมวด</label><div class="chips" id="chips"></div></div>
+    <div id="catpick"><label>หมวด</label><div class="chips" id="chips"></div></div>
+    <div id="wpick" hidden><label>กระเป๋า</label><div class="chips" id="wchips"></div></div>
+    <div id="trpick" hidden><label>โอนจาก</label><div class="chips" id="wfrom"></div><label class="lbl2">ไปที่</label><div class="chips" id="wto"></div></div>
     <div class="quickcat" id="quickcat" hidden><input id="qcname" maxlength="24" placeholder="ชื่อหมวดใหม่" aria-label="ชื่อหมวดใหม่"><button type="button" id="qcsave">เพิ่ม</button></div>
     <div class="two">
       <label>วันที่<input type="date" id="date"></label>
       <label>หมายเหตุ<input id="memo" placeholder="เช่น ข้าวมันไก่"></label>
     </div>
     <label class="switch" id="recurrow"><span><b>ทำซ้ำทุกเดือน</b><small id="recurhint">ลงรายการนี้ให้อัตโนมัติทุกเดือน</small></span><input type="checkbox" id="recur" role="switch"></label>
+    <label class="switch" id="splitrow"><span><b>หารบิลกับเพื่อน</b><small>จ่ายแทนเพื่อน แล้วให้แอปจำว่าใครค้างเท่าไร</small></span><input type="checkbox" id="splitchk" role="switch"></label>
+    <div class="splitbox" id="splitbox" hidden><input id="splitnames" maxlength="120" placeholder="ชื่อเพื่อน คั่นด้วยจุลภาค เช่น ต้น, บี" aria-label="ชื่อเพื่อน"><div class="chips" id="fchips"></div><div class="splitsum" id="splitsum"></div></div>
     <div class="err" id="err"></div>
     <div class="actions">
       <button type="button" id="delentry" class="danger" hidden>ลบ</button>
@@ -1091,6 +1161,9 @@ body.lowfx #cats .bar i::after,body.lowfx .pig.sleepy svg,body.lowfx .pig.nap sv
     </div>
   </form>
 </div>
+
+<div class="sheet" id="friendsheet" hidden><div class="panel" id="friendpanel"></div></div>
+<div class="sheet" id="inssheet" hidden><div class="panel" id="inspanel"></div></div>
 
 <!-- Settings sheet -->
 <div class="sheet" id="setsheet" hidden>
@@ -1121,6 +1194,13 @@ body.lowfx #cats .bar i::after,body.lowfx .pig.sleepy svg,body.lowfx .pig.nap sv
       <h4>เสียง</h4>
       <label class="switch" style="background:var(--s-low)"><span><b>เสียงเหรียญ</b><small>เสียงกริ๊งเมื่อเงินเข้าโอ่ง และเสียงเมื่อแตะน้องโอ่ง</small></span><input type="checkbox" id="sndon" role="switch"></label>
     </div>
+    <div class="group" id="remgroup">
+      <h4>แจ้งเตือน</h4>
+      <label class="switch" style="background:var(--s-low)"><span><b>เตือนให้จดตอนค่ำ</b><small>ถ้าวันนั้นยังไม่ได้จดอะไรเลย</small></span><input type="checkbox" id="remeve" role="switch"></label>
+      <label class="remtime">เวลาเตือน<input type="time" id="remtime" value="20:00"></label>
+      <label class="switch" style="background:var(--s-low)"><span><b>เตือนก่อนรายการประจำ</b><small>ล่วงหน้า 1 วันก่อนถึงวันจ่าย</small></span><input type="checkbox" id="remrec" role="switch"></label>
+      <small class="hint" id="remnote"></small>
+    </div>
     <div class="group">
       <h4>บัญชี</h4>
       <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
@@ -1142,6 +1222,20 @@ body.lowfx #cats .bar i::after,body.lowfx .pig.sleepy svg,body.lowfx .pig.nap sv
       <label>ยอดเงินเริ่มต้น (บาท)<input id="opening" inputmode="decimal" class="num" placeholder="เช่น เงินในบัญชีวันที่เริ่มใช้แอป"></label>
       <button class="btn save" id="savecarry">บันทึก</button>
       <div class="err" id="carrymsg"></div>
+    </div>
+    <div class="group" id="walletgroup">
+      <h4>กระเป๋าเงิน</h4>
+      <p>แยกเงินสด บัญชีธนาคาร และบัตรเครดิต โอนระหว่างกระเป๋าได้โดยไม่นับเป็นรายรับรายจ่าย</p>
+      <div id="wlist"></div>
+      <div class="wform" id="wform" hidden>
+        <input id="wname" maxlength="24" placeholder="ชื่อ เช่น เงินสด, KBank, บัตร KTC" aria-label="ชื่อกระเป๋า">
+        <div class="seg seg3" id="wkind"><button type="button" data-k="cash" class="on">เงินสด</button><button type="button" data-k="bank">ธนาคาร</button><button type="button" data-k="card">บัตรเครดิต</button></div>
+        <label>ยอดเริ่มต้น (บาท)<input id="wopen" inputmode="decimal" class="num" placeholder="0"></label>
+        <small class="hint">บัตรเครดิตที่มียอดค้าง ให้ใส่เป็นเลขติดลบ</small>
+        <div class="actions"><button class="btn" id="wcancel" type="button">ยกเลิก</button><button class="btn save" id="wsave" type="button">บันทึกกระเป๋า</button></div>
+      </div>
+      <button class="btn" id="wadd" type="button">+ เพิ่มกระเป๋า</button>
+      <div class="err" id="wmsg"></div>
     </div>
     <div class="group">
       <h4>งบรายจ่ายต่อเดือน</h4>
@@ -1185,12 +1279,17 @@ body.lowfx #cats .bar i::after,body.lowfx .pig.sleepy svg,body.lowfx .pig.nap sv
       <h4>สำรองข้อมูล</h4>
       <p>คัดลอกแล้วเก็บไว้ใน LINE Keep, โน้ต หรืออีเมลถึงตัวเอง</p>
       <p id="lastbk"></p>
+      <p class="hint" id="persistst"></p>
+      <button class="btn save" id="sharebk" type="button">ส่งไฟล์สำรองไป Drive / LINE</button>
       <div class="actions">
         <button class="btn" id="copyjson">คัดลอกไฟล์สำรอง</button>
         <button class="btn" id="copycsv">คัดลอก CSV (Excel)</button>
       </div>
       <textarea id="out" readonly hidden aria-label="ข้อมูลสำรอง"></textarea>
       <div class="err" id="cmsg"></div>
+      <b class="subh">จุดย้อนกลับในเครื่อง</b>
+      <small class="hint">แอปเก็บสำเนาไว้วันละครั้ง ย้อนได้ 7 วัน ใช้ตอนลบหรือกู้คืนผิด (ไม่ช่วยถ้าเครื่องหาย)</small>
+      <div id="snaps"></div>
     </div>
     <div class="group">
       <h4>กู้คืนข้อมูล</h4>
@@ -1383,6 +1482,12 @@ function setLang(l){
   try{renderWardrobe();applyFestPill()}catch(e){}
 }
 Object.assign(DICT,{
+'โอน':'Transfer','กระเป๋า':'Wallet','โอนจาก':'From','ไปที่':'To','หารบิลกับเพื่อน':'Split with friends','จ่ายแทนเพื่อน แล้วให้แอปจำว่าใครค้างเท่าไร':'Pay for friends and let the app track who owes what','ชื่อเพื่อน คั่นด้วยจุลภาค เช่น ต้น, บี':'Friends, separated by commas','ชื่อเพื่อน':'Friend names','หารบิล':'Split',
+'ภาพรวม {0} เดือน':'{0}-month overview','แนวโน้ม หมวดที่เปลี่ยนไป และคาดการณ์สิ้นเดือน':'Trends, category changes and a month-end forecast','เพื่อนค้างจ่าย':'Friends who owe you',
+'กระเป๋าเงิน':'Wallets','แยกเงินสด บัญชีธนาคาร และบัตรเครดิต โอนระหว่างกระเป๋าได้โดยไม่นับเป็นรายรับรายจ่าย':'Keep cash, bank accounts and credit cards apart. Transfers between them are not counted as income or spending.','ชื่อ เช่น เงินสด, KBank, บัตร KTC':'Name, e.g. Cash, KBank, Visa','ชื่อกระเป๋า':'Wallet name','เงินสด':'Cash','ธนาคาร':'Bank','บัตรเครดิต':'Credit card','ยอดเริ่มต้น (บาท)':'Starting balance (THB)','บัตรเครดิตที่มียอดค้าง ให้ใส่เป็นเลขติดลบ':'For a card with a balance owed, enter a negative number','บันทึกกระเป๋า':'Save wallet','+ เพิ่มกระเป๋า':'+ Add wallet',
+'แจ้งเตือน':'Reminders','เตือนให้จดตอนค่ำ':'Evening reminder','ถ้าวันนั้นยังไม่ได้จดอะไรเลย':'If nothing has been logged that day','เวลาเตือน':'Time','เตือนก่อนรายการประจำ':'Bill reminders','ล่วงหน้า {0} วันก่อนถึงวันจ่าย':'{0} day before a recurring item is due',
+'ส่งไฟล์สำรองไป Drive / LINE':'Send backup file to Drive / LINE','จุดย้อนกลับในเครื่อง':'Restore points on this phone','แอปเก็บสำเนาไว้วันละครั้ง ย้อนได้ {0} วัน ใช้ตอนลบหรือกู้คืนผิด (ไม่ช่วยถ้าเครื่องหาย)':'The app keeps a daily copy for {0} days, for undoing a wrong delete or restore. It does not help if you lose the phone.',
+'รับคืน':'Repaid',
 'ก้อนใหญ่':'Big one','ไม่ใช้เงิน':'No spend','สีโอ่ง':'Jar colour',
 'มะนาว':'Lime','ซากุระ':'Sakura','ทะเล':'Sea','ลาเวนเดอร์':'Lavender','แสงแดด':'Sunshine','สีธีม':'Colour palette','ตู้เสื้อผ้าน้องโอ่ง':'Nong Ong’s wardrobe','เสียง':'Sound','เสียงเหรียญ':'Coin sounds','เสียงกริ๊งเมื่อเงินเข้าโอ่ง และเสียงเมื่อแตะน้องโอ่ง':'A clink when money lands in the jar, and a bloop when you tap Nong Ong',
 'เอฟเฟกต์เต็มรูปแบบ':'Full effects','ฉากเปิดแอป เหรียญบิน พื้นหลังเคลื่อนไหว ปิดได้ถ้าอยากประหยัดแบต':'Opening scene, flying coins, moving background. Turn off to save battery.',
@@ -1468,8 +1573,8 @@ function renderBackupBanner(){
 }
 function renderLastBackup(){const last=+prefs.lastBackup||0; $('lastbk').textContent=last?L('สำรองล่าสุด: ','Last backup: ')+new Date(last).toLocaleDateString(LOC(),{day:'numeric',month:'short',year:'numeric'}):L('ยังไม่เคยสำรองข้อมูล','You have never backed up')}
 function carryBefore(ym){
-  let s=+prefs.opening||0;
-  data.forEach(r=>{ if(r.date.slice(0,7)<ym) s+=r.type==='in'?r.amount:-r.amount });
+  let s=(+prefs.opening||0)+wallets.filter(w=>w.id!=='w0').reduce((a,w)=>a+(+w.opening||0),0);
+  data.forEach(r=>{ if(r.date.slice(0,7)<ym) s+=NET(r) });
   goals.forEach(g=>{ if(g.demo) return; (g.hist||[]).forEach(h=>{ if(h.date.slice(0,7)<ym) s-=h.amount }) });
   return Math.round(s*100)/100;
 }
@@ -1512,6 +1617,28 @@ function upcomingFor(now){
 }
 let budget=load(BKEY,null); if(!budget||typeof budget!=='object') budget={'อาหาร':4000,'ช้อปปิ้ง':2000,'บันเทิง':1500};
 const save=()=>store(KEY,data);
+/* ===== Wallets, transfers, split bills ===== */
+const NET=r=>r.type==='in'||r.type==='back'?r.amount:(r.type==='out'||r.type==='lend')?-r.amount:0;
+const WKEY='kp-wallets-v1', FKEY='kp-friends-v1';
+let wallets=load(WKEY,null); if(!Array.isArray(wallets)||!wallets.length) wallets=[{id:'w0',name:'บัญชีหลัก',kind:'bank'}];
+let friends=load(FKEY,[]); if(!Array.isArray(friends)) friends=[];
+const saveWallets=()=>store(WKEY,wallets), saveFriends=()=>store(FKEY,friends);
+const WK={cash:[45,'M3 7h18v10H3zM12 9.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM6 10v4M18 10v4'],bank:[200,'M3 10l9-6 9 6M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 20h18'],card:[300,'M3 6h18v12H3zM3 10h18M7 15h4']};
+const wIco=(k,cls='')=>{const x=WK[k]||WK.bank;return `<span class="ico ${cls}" style="--h:${x[0]}" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="${x[1]}"/></svg></span>`};
+const wOf=r=>r.w||'w0', wById=id=>wallets.find(w=>w.id===id)||wallets[0];
+const wName=w=>w.name==='บัญชีหลัก'?L('บัญชีหลัก','Main account'):w.name;
+const wOpen=w=>w.id==='w0'?(+prefs.opening||0):(+w.opening||0);
+function walletBal(id){ let s=wOpen(wById(id)); data.forEach(r=>{ if(r.type==='tr'){ if(r.to===id) s+=r.amount; if(r.from===id) s-=r.amount } else if(wOf(r)===id) s+=NET(r) }); return Math.round(s*100)/100 }
+function owed(){ const o={}; data.forEach(r=>{ if(r.type==='lend') o[r.who]=(o[r.who]||0)+r.amount; else if(r.type==='back') o[r.who]=(o[r.who]||0)-r.amount }); Object.keys(o).forEach(k=>{o[k]=Math.round(o[k]*100)/100; if(Math.abs(o[k])<.01) delete o[k]}); return o }
+ICONS['โอน']=[200,'M4 8h14M14 4l4 4-4 4M20 16H6M10 12l-4 4 4 4'];
+ICONS['รับคืน']=[150,'M12 3v12M7 10l5 5 5-5M5 21h14'];
+function rTitle(r){ return r.type==='tr'?(r.memo||L('โอนเงิน','Transfer')):r.type==='back'?L(`${r.who} คืนเงิน`,`${r.who} paid back`):(r.memo||r.cat) }
+function rSub(r){
+  if(r.type==='tr') return `${wName(wById(r.from))} → ${wName(wById(r.to))}`;
+  if(r.type==='lend') return L(`${r.who} ค้าง · ${r.cat}`,`${r.who} owes · ${tr(r.cat)}`);
+  if(r.type==='back') return L('รับเงินคืน','Repaid');
+  const wn=wallets.length>1?' · '+wName(wById(wOf(r))):''; return L(r.cat+wn,tr(r.cat)+wn);
+}
 /* Custom categories */
 const CKEY='kp-cats-v1';
 let customCats=load(CKEY,null); if(!customCats||!Array.isArray(customCats.out)||!Array.isArray(customCats.in)) customCats={out:[],in:[]};
@@ -1841,17 +1968,19 @@ function render(){
   const carryAmt=prefs.carry?carryBefore(ym):0, depThis=prefs.carry?goals.filter(g=>!g.demo).reduce((s,g)=>s+(g.hist||[]).filter(h=>h.date.startsWith(ym)).reduce((a,h)=>a+h.amount,0),0):0;
   const sgn=v=>(v<0?'-':'')+fmt(Math.abs(v));
   if(prefs.carry){
-    const total=carryAmt+tin-tout-depThis;
+    const lendNet=rows.filter(r=>r.type==='lend'||r.type==='back').reduce((a,r)=>a+NET(r),0);
+    const total=carryAmt+tin-tout-depThis+lendNet;
     $('ballabel').textContent=L('คงเหลือทั้งหมด','Total balance'); animNum($('bal'),total,sgn);
     $('carry').hidden=false;
     $('carry').textContent=L(`ยกมา ${sgn(carryAmt)} · เดือนนี้ ${tin-tout>=0?'+':''}${sgn(tin-tout)}${depThis?` · เก็บเข้าเป้า ${sgn(-depThis)}`:''}`,
       `${sgn(carryAmt)} brought forward · ${tin-tout>=0?'+':''}${sgn(tin-tout)} this month${depThis?` · ${sgn(-depThis)} to goals`:''}`);
+    if(lendNet) $('carry').textContent+=L(` · หารบิล ${sgn(lendNet)}`,` · split bills ${sgn(lendNet)}`);
   } else { $('ballabel').textContent=L('คงเหลือเดือนนี้','Left this month'); animNum($('bal'),tin-tout,sgn); $('carry').hidden=true }
   try{$('ntbal').textContent=sgn($('bal')._v)}catch(e){}
   $('demo').hidden=!data.some(r=>r.demo);
   renderBackupBanner();
   renderAllowance(rows,tin,tout,carryAmt);
-  renderGoals(); renderUpcoming();
+  renderGoals(); renderUpcoming(); renderWallets(); renderOwe(); try{$('openins').hidden=data.length<5}catch(e){}
   $('openrecap').hidden=rows.length<3;
   $('recaptitle').textContent=`สรุป${TH_M[view.getMonth()]}ของคุณ`;
 
@@ -1892,10 +2021,10 @@ function render(){
   const bigCut=shown.length>3?Math.max(1000,mOut*.2):Infinity;
   const leaf='<svg viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-14-1 9-6 14-14 14zM5 19l7-7"/></svg>';
   const dayHTML=([dt,rs])=>{
-    const d=new Date(dt+'T00:00'); const net=rs.reduce((s,r)=>s+(r.type==='in'?r.amount:-r.amount),0), sp=dayOut[dt]||0;
+    const d=new Date(dt+'T00:00'); const net=rs.reduce((s,r)=>s+NET(r),0), sp=dayOut[dt]||0;
     return `<div class="day"><div class="dayhead"><span>${d.toLocaleDateString(LOC(),searching?{day:'numeric',month:'short',year:'numeric'}:{weekday:'short',day:'numeric',month:'short'})}</span><span class="dright">${sp?`<i class="dbar" title="${fmt(sp)}"><b style="width:${Math.max(6,sp/maxDay*100).toFixed(0)}%"></b></i>`:'<span class="nospend">ไม่ใช้เงิน</span>'}<span class="num">${net>=0?'+':'-'}${fmt(Math.abs(net))}</span></span></div>`+
-    rs.map(r=>{const big=r.type==='out'&&r.amount>=bigCut; return `<div class="rowwrap"><div class="row${String(r.id)===lastAddedId?' new':''}${big?' big':''}" data-id="${r.id}">${ic(r.cat)}<div class="t" tabindex="0" role="button" aria-label="${L('แก้ไข','Edit')} ${esc(r.memo||r.cat)}"><b>${esc(r.memo||r.cat)}${big?'<span class="tag big">ก้อนใหญ่</span>':''}${r.demo?'<span class="tag">ตัวอย่าง</span>':''}${r.recurId?'<span class="tag rec">ประจำ</span>':''}</b><small>${esc(r.cat)}${r.note?' · '+esc(r.note):''}</small></div>
-      <div class="amt num ${r.type}">${r.type==='in'?'+':'-'}${fmt(r.amount)}</div></div></div>`}).join('')+'</div>';
+    rs.map(r=>{const big=r.type==='out'&&r.amount>=bigCut; return `<div class="rowwrap"><div class="row${String(r.id)===lastAddedId?' new':''}${big?' big':''}" data-id="${r.id}">${ic(r.cat)}<div class="t" tabindex="0" role="button" aria-label="${L('แก้ไข','Edit')} ${esc(rTitle(r))}"><b>${esc(rTitle(r))}${big?'<span class="tag big">ก้อนใหญ่</span>':''}${r.demo?'<span class="tag">ตัวอย่าง</span>':''}${r.recurId?'<span class="tag rec">ประจำ</span>':''}${r.type==='lend'?'<span class="tag split">หารบิล</span>':''}</b><small>${esc(rSub(r))}${r.note?' · '+esc(r.note):''}</small></div>
+      <div class="amt num ${r.type}">${r.type==='in'||r.type==='back'?'+':r.type==='tr'?'':'-'}${fmt(r.amount)}</div></div></div>`}).join('')+'</div>';
   };
   const gapHTML=(n,a,b)=>{const f=x=>x.toLocaleDateString(LOC(),{day:'numeric',month:'short'}); return `<div class="nsgap">${leaf}<span>${L(`ไม่ใช้เงิน ${n} วัน`,`${n} no-spend ${n===1?'day':'days'}`)}</span><small>${n>1?`${f(a)} – ${f(b)}`:f(a)}</small></div>`};
   if(searching||filterCat){ $('list').innerHTML=Object.entries(groups).map(dayHTML).join('') }
@@ -1913,6 +2042,7 @@ function render(){
 
 /* Entry sheet */
 function chips(){
+  if(type==='tr'){ try{const sb=$('savebtn'); sb.style.setProperty('--sh',200); sb.classList.add('tint')}catch(e){} updatePreview(); return }
   const list=CATS[type].includes(cat)?CATS[type]:[...CATS[type],cat];
   $('chips').innerHTML=list.map(c=>`<button type="button" data-c="${esc(c)}" class="${c===cat?'on':''}">${ic(c,'xs')}${esc(c)}</button>`).join('')+`<button type="button" class="addchip" data-add="1">+ ${L('หมวดใหม่','New category')}</button>`;
   try{const sb=$('savebtn'); sb.style.setProperty('--sh',(ICONS[cat]||[200])[0]); sb.classList.add('tint')}catch(e){}
@@ -1933,33 +2063,66 @@ function updatePreview(){
   const rows=data.filter(r=>r.date.startsWith(ym)&&String(r.id)!==String(editing));
   let tin=rows.filter(r=>r.type==='in').reduce((s,r)=>s+r.amount,0), tout=rows.filter(r=>r.type==='out').reduce((s,r)=>s+r.amount,0);
   const catSpent=rows.filter(r=>r.type==='out'&&r.cat===cat).reduce((s,r)=>s+r.amount,0);
-  if(type==='in') tin+=a; else tout+=a;
+  const eff=type==='out'&&$('splitchk').checked?splitInfo(a).mine:a;
+  if(type==='in') tin+=a; else if(type==='out') tout+=eff;
   const m=moodOf(tin,tout), lv=tin>0?Math.max(0,(tin-tout)/tin):(tout?0:null);
   box.innerHTML=jarSVG(m,undefined,lv);
   box.classList.toggle('sweat',type==='out'&&a>0&&(a>=Math.max(1000,(tin-a>0?0:0)+rows.filter(r=>r.type==='in').reduce((s,r)=>s+r.amount,0)*.15)||((budget[cat]||0)>0&&catSpent+a>budget[cat])));
   const left=tin-tout, el=$('impact'), b=budget[cat]||0; let warn=false, t;
-  if(!a) t=L(`เดือนนี้เหลือ <b>${fmt(left)}</b>`,`<b>${fmt(left)}</b> left this month`);
+  if(type==='tr') t=wTo?L(`โอนจาก${esc(wName(wById(wFrom)))}ไป${esc(wName(wById(wTo)))} ไม่นับเป็นรายรับรายจ่าย`,`Moves money from ${esc(wName(wById(wFrom)))} to ${esc(wName(wById(wTo)))}. Not counted as income or spending.`):L('เพิ่มกระเป๋าที่สองในตั้งค่าก่อน','Add a second wallet in Settings first');
+  else if(!a) t=L(`เดือนนี้เหลือ <b>${fmt(left)}</b>`,`<b>${fmt(left)}</b> left this month`);
   else if(type==='in') t=L(`เงินเข้าโอ่ง เดือนนี้จะเหลือ <b>${fmt(left)}</b>`,`Into the jar: <b>${fmt(left)}</b> left this month`);
-  else if(b>0&&catSpent+a>b){warn=true; t=L(`เกินงบ${esc(cat)} <b>${fmt(catSpent+a-b)}</b>`,`<b>${fmt(catSpent+a-b)}</b> over the ${esc(tr(cat))} budget`)}
+  else if(b>0&&catSpent+eff>b){warn=true; t=L(`เกินงบ${esc(cat)} <b>${fmt(catSpent+eff-b)}</b>`,`<b>${fmt(catSpent+eff-b)}</b> over the ${esc(tr(cat))} budget`)}
   else if(left<0){warn=true; t=L(`ใช้เกินรายรับเดือนนี้ <b>${fmt(-left)}</b>`,`<b>${fmt(-left)}</b> over this month's income`)}
-  else t=L(`หลังรายการนี้ เดือนนี้เหลือ <b>${fmt(left)}</b>`+(b>0?` · งบ${esc(cat)}เหลือ ${fmt(b-catSpent-a)}`:''),`After this: <b>${fmt(left)}</b> left this month`+(b>0?` · ${fmt(b-catSpent-a)} left in ${esc(tr(cat))}`:''));
+  else t=L(`หลังรายการนี้ เดือนนี้เหลือ <b>${fmt(left)}</b>`+(b>0?` · งบ${esc(cat)}เหลือ ${fmt(b-catSpent-eff)}`:''),`After this: <b>${fmt(left)}</b> left this month`+(b>0?` · ${fmt(b-catSpent-eff)} left in ${esc(tr(cat))}`:''));
   el.innerHTML=t; el.classList.toggle('warn',warn);
 }
-$('amount').addEventListener('input',updatePreview);
-function setType(t){type=t;[...$('seg').children].forEach(x=>x.classList.toggle('on',x.dataset.t===t))}
+$('amount').addEventListener('input',()=>{updatePreview(); if($('splitchk').checked) renderSplit()});
+function setType(t){type=t;[...$('seg').children].forEach(x=>x.classList.toggle('on',x.dataset.t===t)); syncEntryMode()}
+let wSel='w0', wFrom='w0', wTo=null;
+function syncEntryMode(){
+  const isTr=type==='tr', multi=wallets.length>1;
+  $('segtr').hidden=!multi&&!isTr; $('catpick').hidden=isTr; $('quickamt').hidden=isTr; $('wpick').hidden=isTr||!multi; $('trpick').hidden=!isTr;
+  $('splitrow').hidden=type!=='out'||!!editing; if(type!=='out'){$('splitchk').checked=false; $('splitbox').hidden=true}
+  if(isTr) $('recurrow').hidden=true; else $('recurrow').hidden=!!editing;
+  renderWChips();
+}
+function renderWChips(){
+  if(!wallets.some(w=>w.id===wSel)) wSel='w0'; if(!wallets.some(w=>w.id===wFrom)) wFrom='w0';
+  if(!wTo||wTo===wFrom||!wallets.some(w=>w.id===wTo)) wTo=(wallets.find(w=>w.id!==wFrom)||{}).id||null;
+  const chip=(w,on,a)=>`<button type="button" ${a}="${w.id}" class="${on?'on':''}">${wIco(w.kind,'xs')}${esc(wName(w))}</button>`;
+  $('wchips').innerHTML=wallets.map(w=>chip(w,w.id===wSel,'data-w')).join('');
+  $('wfrom').innerHTML=wallets.map(w=>chip(w,w.id===wFrom,'data-wf')).join('');
+  $('wto').innerHTML=wallets.filter(w=>w.id!==wFrom).map(w=>chip(w,w.id===wTo,'data-wt')).join('');
+}
+$('wpick').addEventListener('click',e=>{const b=e.target.closest('[data-w]'); if(b){wSel=b.dataset.w; renderWChips()}});
+$('trpick').addEventListener('click',e=>{const f=e.target.closest('[data-wf]'), t=e.target.closest('[data-wt]'); if(f){wFrom=f.dataset.wf; if(wTo===wFrom) wTo=null} if(t) wTo=t.dataset.wt; renderWChips(); updatePreview()});
+function splitNames(){ const seen=new Set(); return ($('splitnames').value||'').split(/[,\n]+/).map(x=>x.trim().slice(0,24)).filter(x=>x&&!seen.has(x.toLowerCase())&&seen.add(x.toLowerCase())) }
+function splitInfo(a){ const names=splitNames(), n=names.length+1, each=Math.round(a/n*100)/100; return {names,each,mine:Math.round((a-each*names.length)*100)/100} }
+function renderSplit(){
+  const a=parseFloat(($('amount').value||'').replace(/,/g,''))||0, sp=splitInfo(a), cur=new Set(sp.names);
+  $('fchips').innerHTML=friends.slice(0,10).map(f=>`<button type="button" data-fr="${esc(f)}" class="${cur.has(f)?'on':''}">${esc(f)}</button>`).join('');
+  $('splitsum').innerHTML=!sp.names.length?L('ใส่ชื่อเพื่อนที่หารด้วย หรือแตะชื่อด้านบน','Add the friends you are splitting with'):
+    L(`หาร ${sp.names.length+1} คน · คนละ <b>${fmt(sp.each)}</b> · เพื่อนค้างคุณรวม <b>${fmt(sp.each*sp.names.length)}</b>`,`${sp.names.length+1} people · <b>${fmt(sp.each)}</b> each · friends owe you <b>${fmt(sp.each*sp.names.length)}</b>`);
+}
+$('splitchk').addEventListener('change',()=>{ $('splitbox').hidden=!$('splitchk').checked; renderSplit(); updatePreview() });
+$('splitnames').addEventListener('input',()=>{renderSplit(); updatePreview()});
+$('fchips').addEventListener('click',e=>{const b=e.target.closest('[data-fr]'); if(!b) return; const n=b.dataset.fr, cur=splitNames(); const nx=cur.includes(n)?cur.filter(x=>x!==n):[...cur,n]; $('splitnames').value=nx.join(', '); renderSplit(); updatePreview()});
 $('chips').onclick=e=>{const b=e.target.closest('button');if(!b)return; if(b.dataset.add){$('quickcat').hidden=false;$('qcname').value='';$('qcname').focus();return} cat=b.dataset.c;chips()};
 $('qcsave').onclick=()=>{const n=$('qcname').value.trim(); if(!n){$('qcname').focus();return} if(catExists(n)){$('err').textContent=L('มีหมวดชื่อนี้อยู่แล้ว','That category already exists');return}
   addCustomCat(type,n); cat=n; $('quickcat').hidden=true; $('err').textContent=''; chips()};
 $('qcname').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('qcsave').click()}});
-$('seg').onclick=e=>{const b=e.target.closest('button');if(!b)return;setType(b.dataset.t);cat=CATS[type][0];chips()};
+$('seg').onclick=e=>{const b=e.target.closest('button');if(!b)return;setType(b.dataset.t);cat=type==='tr'?'โอน':CATS[type][0];chips()};
 function openEntry(rec){
   editing=rec?String(rec.id):null;
   $('ftitle').textContent=rec?'แก้ไขรายการ':'จดรายการ';
   $('savebtn').textContent=rec?'บันทึกการแก้ไข':'บันทึก';
+  wSel=rec?wOf(rec):(wallets.some(w=>w.id===prefs.lastW)?prefs.lastW:'w0'); if(rec&&rec.type==='tr'){wFrom=rec.from;wTo=rec.to} else {wFrom=wSel;wTo=null}
+  $('splitchk').checked=false; $('splitbox').hidden=true; $('splitnames').value='';
   setType(rec?rec.type:'out'); cat=rec?rec.cat:CATS.out[0];
   $('amount').value=rec?rec.amount:''; $('memo').value=rec?rec.memo:''; $('date').value=rec?rec.date:iso(new Date());
   $('err').textContent=''; chips(); showSheet('sheet'); $('delentry').hidden=!rec;
-  $('recur').checked=false; $('recurrow').hidden=!!rec; updateRecurHint(); $('quickcat').hidden=true;
+  $('recur').checked=false; $('recurrow').hidden=!!rec||type==='tr'; updateRecurHint(); $('quickcat').hidden=true;
   if(!rec) setTimeout(()=>$('amount').focus(),50);
 }
 $('add').onclick=()=>openEntry(null);
@@ -1974,10 +2137,17 @@ $('form').onsubmit=e=>{
   if(!(amt>0)){$('err').textContent='ใส่จำนวนเงินที่มากกว่า 0';shake($('amount'));$('amount').focus();return}
   if(!$('date').value){$('err').textContent='เลือกวันที่';return}
   const rec={type,amount:Math.round(amt*100)/100,cat,memo:$('memo').value.trim(),date:$('date').value};
+  if(type==='tr'){ if(!wTo||wFrom===wTo){$('err').textContent=L('เลือกกระเป๋าต้นทางและปลายทางให้ต่างกัน','Pick two different wallets');return} rec.cat='โอน'; rec.from=wFrom; rec.to=wTo }
+  else { rec.w=wSel; prefs.lastW=wSel }
+  const doSplit=!editing&&type==='out'&&$('splitchk').checked, sp=doSplit?splitInfo(rec.amount):null;
+  if(doSplit&&!sp.names.length){$('err').textContent=L('ใส่ชื่อเพื่อนที่หารด้วย','Add at least one friend');$('splitnames').focus();return}
+  prefs.lastLogDay=iso(new Date()); savePrefs();
   if(editing){const i=data.findIndex(r=>String(r.id)===editing); if(i>-1) data[i]={...data[i],...rec,demo:false}}
   else{
     const id=Date.now().toString(36);
-    if($('recur').checked){const rid='rc'+id; recur.push({id:rid,type:rec.type,amount:rec.amount,cat:rec.cat,memo:rec.memo,day:+rec.date.slice(8,10),startYM:rec.date.slice(0,7),skip:[]}); saveRecur(); rec.recurId=rid}
+    if($('recur').checked&&!doSplit&&type!=='tr'){const rid='rc'+id; recur.push({id:rid,type:rec.type,amount:rec.amount,cat:rec.cat,memo:rec.memo,day:+rec.date.slice(8,10),startYM:rec.date.slice(0,7),skip:[]}); saveRecur(); rec.recurId=rid}
+    if(doSplit){ rec.amount=sp.mine; sp.names.forEach((nm,k)=>data.push({id:id+'s'+k,type:'lend',amount:sp.each,cat:rec.cat,memo:rec.memo,date:rec.date,w:rec.w,who:nm,split:id}));
+      friends=[...sp.names,...friends.filter(f=>!sp.names.includes(f))].slice(0,30); saveFriends() }
     data.push({id,...rec}); lastAddedId=id;
   }
   if(rec.memo) learn(rec.memo,rec.type,rec.cat);
@@ -1999,7 +2169,7 @@ $('list').onclick=e=>{
   if(e.target.closest('[data-act="add"]')){openEntry(null);return}
   if(suppressClick){suppressClick=false;return}
   const row=e.target.closest('.row'); if(!row) return;
-  const rec=data.find(r=>String(r.id)===row.dataset.id); if(rec){armed=null;openEntry(rec)}
+  const rec=data.find(r=>String(r.id)===row.dataset.id); if(rec){ if(rec.type==='lend'||rec.type==='back'){openFriend(rec.who);return} armed=null;openEntry(rec)}
 };
 $('list').onkeydown=e=>{if((e.key==='Enter'||e.key===' ')&&e.target.classList.contains('t')){e.preventDefault();e.target.click()}};
 $('prev').onclick=()=>{view.setMonth(view.getMonth()-1);filterCat=null;render()};
@@ -2017,7 +2187,7 @@ function searchData(q){
   const terms=q.toLowerCase().split(/\s+/).filter(Boolean);
   return data.filter(r=>{
     const amt=String(r.amount), amtF=fmt(r.amount).replace('฿','');
-    const hay=[r.memo,r.note,r.cat,EN_CAT[r.cat]||'',r.type==='in'?L('รายรับ','income'):L('รายจ่าย','expense')].join(' ').toLowerCase();
+    const hay=[r.memo,r.note,r.cat,EN_CAT[r.cat]||'',r.who||'',r.type==='tr'?wById(r.from).name+' '+wById(r.to).name:wById(wOf(r)).name,r.type==='in'?L('รายรับ','income'):r.type==='out'?L('รายจ่าย','expense'):r.type==='tr'?L('โอน','transfer'):L('หารบิล','split')].join(' ').toLowerCase();
     return terms.every(t=>{const tn=t.replace(/[฿,]/g,''); return hay.includes(t)||(tn&&/^\d+(\.\d+)?$/.test(tn)&&amt===tn)});
   }).sort((a,b)=>b.date.localeCompare(a.date)||String(b.id).localeCompare(String(a.id)));
 }
@@ -2345,7 +2515,7 @@ $('recurlist').onclick=e=>{const b=e.target.closest('button[data-r]');if(!b)retu
 function openSet(focusBudget){
   $('budgets').innerHTML=CATS.out.map((c,i)=>`<label><span class="cl">${ic(c,'xs')}${c}</span><input class="num" id="b${i}" inputmode="numeric" placeholder="ไม่ตั้งงบ" value="${budget[c]||''}"></label>`).join('');
   ['bmsg','cmsg','rmsg'].forEach(id=>{$(id).textContent='';$(id).classList.remove('ok-msg')});
-  $('owners').value=owners; $('omsg').textContent=''; renderMerchants(); renderAccount(); renderRecurList(); catDelArmed=null; $('catform').hidden=true; $('addcat').hidden=false; renderCatList(); renderLastBackup(); $('carryon').checked=!!prefs.carry; $('opening').value=prefs.opening||''; $('carrymsg').textContent='';
+  $('owners').value=owners; $('omsg').textContent=''; renderMerchants(); renderAccount(); renderRecurList(); catDelArmed=null; $('catform').hidden=true; $('addcat').hidden=false; renderCatList(); renderLastBackup(); renderWList(); renderSnaps(); applyRem(); $('wform').hidden=true; $('wadd').hidden=false; wDelArmed=null; $('carryon').checked=!!prefs.carry; $('opening').value=prefs.opening||''; $('carrymsg').textContent='';
   $('out').hidden=true; $('restoretext').value=''; restoreArmed=false; $('restorebtn').textContent='กู้คืน'; $('restorebtn').classList.remove('danger');
   showSheet('setsheet'); if(typeof setPage==='function') { if(focusBudget) setOpenFor($('b0')); else setPage(null) }
   if(focusBudget) setTimeout(()=>$('b0').focus(),50);
@@ -2414,12 +2584,19 @@ function copyText(text,label){
   const fallback=()=>{ta.focus();ta.select();msg('cmsg','คัดลอกอัตโนมัติไม่ได้ ข้อความถูกเลือกไว้ด้านบนแล้ว กดค้างเพื่อคัดลอก',false)};
   try{navigator.clipboard.writeText(text).then(done,fallback)}catch(e){fallback()}
 }
-$('copyjson').onclick=()=>{ prefs.lastBackup=Date.now(); prefs.snooze=0; savePrefs(); renderLastBackup(); render(); copyText(JSON.stringify({app:'kp-ledger',v:1,exported:new Date().toISOString(),data:data.filter(r=>!r.demo),budget,merchants,goals:goals.filter(g=>!g.demo),recur:recur.filter(r=>!r.demo),prefs,cats:customCats}),'ไฟล์สำรอง') };
+function backupJSON(all){ return JSON.stringify({app:'kp-ledger',v:2,exported:new Date().toISOString(),data:all?data:data.filter(r=>!r.demo),budget,merchants,goals:all?goals:goals.filter(g=>!g.demo),recur:all?recur:recur.filter(r=>!r.demo),prefs,cats:customCats,wallets,friends}) }
+$('copyjson').onclick=()=>{ prefs.lastBackup=Date.now(); prefs.snooze=0; savePrefs(); renderLastBackup(); render(); copyText(backupJSON(),'ไฟล์สำรอง') };
+$('sharebk').onclick=async()=>{
+  const name='luakep-backup-'+iso(new Date())+'.json', blob=new Blob([backupJSON()],{type:'application/json'});
+  const done=()=>{prefs.lastBackup=Date.now(); prefs.snooze=0; savePrefs(); renderLastBackup(); render(); msg('cmsg',L('ส่งไฟล์สำรองแล้ว','Backup file sent'),true)};
+  try{ const f=new File([blob],name,{type:'application/json'}); if(navigator.canShare&&navigator.canShare({files:[f]})){ await navigator.share({files:[f],title:name}); done(); return } }catch(e){ if(e&&e.name==='AbortError') return }
+  try{ const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=name; document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1500); done() }catch(e){ msg('cmsg',L('ส่งไฟล์ไม่ได้ ลองปุ่มคัดลอกแทน','Could not share the file. Try copying instead.')) }
+};
 $('copycsv').onclick=()=>{
   const q=s=>'"'+String(s).replace(/"/g,'""')+'"';
   const lines=[L('วันที่,ประเภท,หมวด,จำนวนเงิน,บันทึก','Date,Type,Category,Amount,Note')].concat(
     data.filter(r=>!r.demo).sort((a,b)=>a.date.localeCompare(b.date))
-      .map(r=>[r.date,r.type==='in'?L('รายรับ','Income'):L('รายจ่าย','Expense'),q(LANG==='en'?trText(r.cat):r.cat),r.type==='in'?r.amount:-r.amount,q(r.memo)].join(',')));
+      .map(r=>[r.date,({in:L('รายรับ','Income'),out:L('รายจ่าย','Expense'),tr:L('โอน','Transfer'),lend:L('หารบิล','Split'),back:L('รับคืน','Repaid')})[r.type]||r.type,q(LANG==='en'?trText(r.cat):r.cat),r.type==='tr'?0:NET(r)+0*r.amount,q(r.memo)].join(',')));
   copyText(lines.join('\n'),' CSV');
 };
 
@@ -2429,9 +2606,13 @@ function parseBackup(text){
   const o=JSON.parse(text);
   const arr=Array.isArray(o)?o:o&&Array.isArray(o.data)?o.data:null;
   if(!arr) throw new Error('shape');
-  const clean=arr.filter(r=>r&&(r.type==='in'||r.type==='out')&&+r.amount>0&&/^\d{4}-\d{2}-\d{2}$/.test(r.date))
-    .map((r,i)=>({id:String(r.id||('r'+i+Date.now().toString(36))),type:r.type,amount:+r.amount,cat:String(r.cat||'อื่นๆ'),memo:String(r.memo||''),note:String(r.note||''),ref:String(r.ref||''),date:r.date,...(r.recurId?{recurId:String(r.recurId)}:{})}));
-  return {data:clean,budget:o&&o.budget&&typeof o.budget==='object'?o.budget:null,merchants:o&&o.merchants&&typeof o.merchants==='object'?o.merchants:null,goals:o&&Array.isArray(o.goals)?o.goals:null,recur:o&&Array.isArray(o.recur)?o.recur:null,cats:o&&o.cats&&Array.isArray(o.cats.out)?o.cats:null,prefs:o&&o.prefs&&typeof o.prefs==='object'?o.prefs:null,skipped:arr.length-clean.length};
+  const clean=arr.filter(r=>r&&['in','out','tr','lend','back'].includes(r.type)&&+r.amount>0&&/^\d{4}-\d{2}-\d{2}$/.test(r.date))
+    .map((r,i)=>({id:String(r.id||('r'+i+Date.now().toString(36))),type:r.type,amount:+r.amount,cat:String(r.cat||'อื่นๆ'),memo:String(r.memo||''),note:String(r.note||''),ref:String(r.ref||''),date:r.date,...(r.recurId?{recurId:String(r.recurId)}:{}),...(r.w?{w:String(r.w)}:{}),...(r.from?{from:String(r.from),to:String(r.to)}:{}),...(r.who?{who:String(r.who)}:{}),...(r.split?{split:String(r.split)}:{}),...(r.demo?{demo:true}:{})}));
+  return {data:clean,budget:o&&o.budget&&typeof o.budget==='object'?o.budget:null,merchants:o&&o.merchants&&typeof o.merchants==='object'?o.merchants:null,goals:o&&Array.isArray(o.goals)?o.goals:null,recur:o&&Array.isArray(o.recur)?o.recur:null,cats:o&&o.cats&&Array.isArray(o.cats.out)?o.cats:null,prefs:o&&o.prefs&&typeof o.prefs==='object'?o.prefs:null,wallets:o&&Array.isArray(o.wallets)&&o.wallets.length?o.wallets:null,friends:o&&Array.isArray(o.friends)?o.friends:null,skipped:arr.length-clean.length};
+}
+function applyBackup(p){
+  data=p.data; if(p.budget) budget=p.budget; if(p.merchants){merchants=p.merchants;store(MKEY,merchants);renderMerchants()} if(p.goals){goals=p.goals;saveGoals()} if(p.recur){recur=p.recur;saveRecur()} if(p.prefs){prefs=p.prefs;savePrefs()} if(p.cats){customCats=p.cats;saveCats()}
+  if(p.wallets){wallets=p.wallets;saveWallets()} if(p.friends){friends=p.friends;saveFriends()} save(); store(BKEY,budget);
 }
 function armRestore(text){
   try{pending=parseBackup(text)}catch(e){pending=null;msg('rmsg','อ่านข้อมูลไม่ได้ ตรวจว่าวางข้อมูลจากปุ่ม “คัดลอกไฟล์สำรอง” ครบทั้งหมด');return}
@@ -2440,7 +2621,11 @@ function armRestore(text){
 }
 $('restorebtn').onclick=()=>{
   if(restoreArmed&&pending){
-    data=pending.data; if(pending.budget) budget=pending.budget; if(pending.merchants){merchants=pending.merchants;store(MKEY,merchants);renderMerchants()} if(pending.goals){goals=pending.goals;saveGoals()} if(pending.recur){recur=pending.recur;saveRecur()} if(pending.prefs){prefs=pending.prefs;savePrefs()} if(pending.cats){customCats=pending.cats;saveCats()} save(); store(BKEY,budget);
+    snapNow('pre-restore'); applyBackup(pending);
+    restoreArmed=false; pending=null; $('restorebtn').textContent='กู้คืน'; $('restorebtn').classList.remove('danger');
+    view=new Date(); view.setDate(1); render(); msg('rmsg','กู้คืนข้อมูลเรียบร้อย',true); return;
+  }
+  if(false){ if(pending.merchants){merchants=pending.merchants;store(MKEY,merchants);renderMerchants()} if(pending.goals){goals=pending.goals;saveGoals()} if(pending.recur){recur=pending.recur;saveRecur()} if(pending.prefs){prefs=pending.prefs;savePrefs()} if(pending.cats){customCats=pending.cats;saveCats()} save(); store(BKEY,budget);
     restoreArmed=false; pending=null; $('restorebtn').textContent='กู้คืน'; $('restorebtn').classList.remove('danger');
     view=new Date(); view.setDate(1); render(); msg('rmsg','กู้คืนข้อมูลเรียบร้อย',true); return;
   }
@@ -2677,12 +2862,12 @@ try{$('brandcrab').innerHTML=pigSVG('great')}catch(e){}
 (function organizeSettings(){
   const panel=$('setsheet').querySelector('.panel'); const groups=[...panel.querySelectorAll(':scope>.group')];
   const byTitle=t=>groups.find(g=>{const h=g.querySelector('h4');return h&&h.textContent.trim()===t});
-  const I={lang:'M12 3a9 9 0 1 0 0 18 9 9 0 1 0 0-18zM3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18',acct:'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21c1-4 4.5-6 8-6s7 2 8 6',theme:'M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9z',ward:'M10 6a2 2 0 1 1 3 1.7c-.6.4-1 .9-1 1.6V10M12 10l-8.4 6.3c-.8.6-.4 1.7.6 1.7h15.6c1 0 1.4-1.1.6-1.7z',snd:'M4 9v6h4l5 4V5L8 9zM16 9.5a3.5 3.5 0 0 1 0 5M18.5 7a7 7 0 0 1 0 10',
+  const I={lang:'M12 3a9 9 0 1 0 0 18 9 9 0 1 0 0-18zM3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18',acct:'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21c1-4 4.5-6 8-6s7 2 8 6',theme:'M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9z',ward:'M10 6a2 2 0 1 1 3 1.7c-.6.4-1 .9-1 1.6V10M12 10l-8.4 6.3c-.8.6-.4 1.7.6 1.7h15.6c1 0 1.4-1.1.6-1.7z',snd:'M4 9v6h4l5 4V5L8 9zM16 9.5a3.5 3.5 0 0 1 0 5M18.5 7a7 7 0 0 1 0 10',bell:'M6 16V11a6 6 0 0 1 12 0v5l2 2H4zM10 20a2 2 0 0 0 4 0',wal:'M3 7h15a3 3 0 0 1 3 3v7a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3zM3 7l12-4v4M16 14h2',
     carry:'M4 12h13M13 6l6 6-6 6',budget:'M12 3v9h9A9 9 0 1 1 12 3zM15 3.5A9 9 0 0 1 20.5 9H15z',recur:'M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3M18 3v4h-4M6 21v-4h4',
     cats:'M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z',owner:'M3 6h18v12H3zM8 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM5 16c.5-1.5 1.7-2.3 3-2.3s2.5.8 3 2.3M14 10h4M14 14h3',
     shop:'M4 9l1.5-5h13L20 9M4 9v11h16V9M4 9h16M9 20v-6h6v6',bk:'M12 3v12M7 10l5 5 5-5M5 21h14',rs:'M12 15V3M7 8l5-5 5 5M5 21h14'};
-  const plan=[['แอป','--t-mood',[['ภาษา / Language','lang'],['ธีม','theme'],['ตู้เสื้อผ้าน้องโอ่ง','ward'],['เสียง','snd'],['บัญชี','acct']]],
-    ['การเงิน','--t-allow',[['ยอดยกมาและยอดเริ่มต้น','carry'],['งบรายจ่ายต่อเดือน','budget'],['รายการประจำ','recur'],['หมวดหมู่','cats']]],
+  const plan=[['แอป','--t-mood',[['ภาษา / Language','lang'],['ธีม','theme'],['ตู้เสื้อผ้าน้องโอ่ง','ward'],['เสียง','snd'],['แจ้งเตือน','bell'],['บัญชี','acct']]],
+    ['การเงิน','--t-allow',[['ยอดยกมาและยอดเริ่มต้น','carry'],['กระเป๋าเงิน','wal'],['งบรายจ่ายต่อเดือน','budget'],['รายการประจำ','recur'],['หมวดหมู่','cats']]],
     ['การอ่านสลิป','--t-in',[['ชื่อเจ้าของบัญชี','owner'],['ร้านที่แอปจำได้','shop']]],
     ['ข้อมูล','--t-out',[['สำรองข้อมูล','bk'],['กู้คืนข้อมูล','rs']]]];
   const anchor=panel.querySelector(':scope>h3');
@@ -2743,6 +2928,167 @@ applyTheme();
 function applyFx(){document.body.classList.toggle('lowfx',prefs.fx===false); const sw=$('fxon'); if(sw) sw.checked=prefs.fx!==false}
 $('fxon').addEventListener('change',()=>{prefs.fx=$('fxon').checked; savePrefs(); applyFx(); applyFestFx()});
 
+
+/* ===== Wallets UI ===== */
+function renderWallets(){
+  const box=$('wallets'); if(!box) return; box.hidden=wallets.length<2; if(box.hidden) return;
+  box.innerHTML=wallets.map(w=>{const b=walletBal(w.id), owe=w.kind==='card'&&b<0;
+    return `<button class="wcard" data-w="${w.id}">${wIco(w.kind,'sm')}<small>${esc(wName(w))}</small><b class="num${b<0?' neg':''}">${owe?L('ค้าง ','owe ')+fmt(-b):(b<0?'-':'')+fmt(Math.abs(b))}</b></button>`}).join('');
+}
+$('wallets').addEventListener('click',e=>{ if(e.target.closest('.wcard')){ openSet(false); setOpenFor($('walletgroup')) } });
+let wEdit=null, wKind='cash', wDelArmed=null;
+function renderWList(){
+  const KL={cash:L('เงินสด','Cash'),bank:L('ธนาคาร','Bank'),card:L('บัตรเครดิต','Credit card')};
+  $('wlist').innerHTML=wallets.map(w=>{const b=walletBal(w.id); return `<div class="catrow">${wIco(w.kind,'sm')}<span class="nm">${esc(wName(w))}</span><small class="num">${KL[w.kind]||''} · ${(b<0?'-':'')+fmt(Math.abs(b))}</small><button data-wed="${w.id}">${L('แก้ไข','Edit')}</button>${w.id!=='w0'?`<button data-wdel="${w.id}" class="${wDelArmed===w.id?'danger':''}">${wDelArmed===w.id?L('แตะอีกครั้ง','Tap again'):L('ลบ','Delete')}</button>`:''}</div>`}).join('');
+}
+function openWForm(w){
+  wEdit=w?w.id:null; wKind=w?w.kind:'cash'; $('wform').hidden=false; $('wadd').hidden=true; $('wmsg').textContent='';
+  $('wname').value=w?w.name:''; $('wopen').value=w?(wOpen(w)||''):'';
+  [...$('wkind').querySelectorAll('[data-k]')].forEach(b=>b.classList.toggle('on',b.dataset.k===wKind)); $('wname').focus();
+}
+$('wadd').onclick=()=>openWForm(null);
+$('wcancel').onclick=()=>{$('wform').hidden=true;$('wadd').hidden=false};
+$('wkind').onclick=e=>{const b=e.target.closest('[data-k]'); if(!b) return; wKind=b.dataset.k; [...$('wkind').querySelectorAll('[data-k]')].forEach(x=>x.classList.toggle('on',x===b))};
+$('wsave').onclick=()=>{
+  const name=$('wname').value.trim(), op=parseFloat(($('wopen').value||'0').replace(/,/g,''))||0;
+  if(!name){$('wmsg').textContent=L('ตั้งชื่อกระเป๋า','Name the wallet');return}
+  if(wallets.some(w=>w.name===name&&w.id!==wEdit)){$('wmsg').textContent=L('มีชื่อนี้อยู่แล้ว','That name is taken');return}
+  if(wEdit){const w=wById(wEdit); w.name=name; w.kind=wKind; if(w.id==='w0'){prefs.opening=op;savePrefs()} else w.opening=op}
+  else wallets.push({id:'w'+Date.now().toString(36),name,kind:wKind,opening:op});
+  saveWallets(); $('wform').hidden=true; $('wadd').hidden=false; renderWList(); render(); msg('wmsg',L('บันทึกกระเป๋าแล้ว','Wallet saved'),true);
+};
+$('wlist').onclick=e=>{
+  const ed=e.target.closest('[data-wed]'), dl=e.target.closest('[data-wdel]');
+  if(ed) openWForm(wById(ed.dataset.wed));
+  if(dl){ const id=dl.dataset.wdel; if(wDelArmed!==id){wDelArmed=id;renderWList();return}
+    data=data.filter(r=>!(r.type==='tr'&&((r.from===id&&r.to==='w0')||(r.to===id&&r.from==='w0'))));
+    data.forEach(r=>{ if(r.w===id) r.w='w0'; if(r.from===id) r.from='w0'; if(r.to===id) r.to='w0' });
+    wallets=wallets.filter(w=>w.id!==id); wDelArmed=null; save(); saveWallets(); renderWList(); render(); msg('wmsg',L('ลบกระเป๋าแล้ว รายการย้ายไปบัญชีหลัก','Wallet deleted. Its transactions moved to the main account.'),true) }
+};
+/* ===== Friends who owe you ===== */
+function renderOwe(){
+  const sec=$('owesec'); if(!sec) return; const o=owed(), ks=Object.keys(o).sort((a,b)=>o[b]-o[a]);
+  sec.hidden=!ks.length; if(!ks.length) return; const tot=ks.reduce((s,k)=>s+Math.max(0,o[k]),0);
+  $('owetotal').textContent=L(`รวม ${fmt(tot)}`,`${fmt(tot)} total`);
+  $('owe').innerHTML=ks.map((k,i)=>`<button class="oweb" data-who="${esc(k)}" style="--h:${[22,150,260,200,330,45][i%6]}"><span class="av">${esc(k.slice(0,1).toUpperCase())}</span><span class="nm">${esc(k)}</span><b class="num">${o[k]<0?'-':''}${fmt(Math.abs(o[k]))}</b></button>`).join('');
+}
+$('owe').addEventListener('click',e=>{const b=e.target.closest('[data-who]'); if(b) openFriend(b.dataset.who)});
+function oweMessage(who){
+  const amt=owed()[who]||0; const lends=data.filter(r=>r.type==='lend'&&r.who===who).sort((a,b)=>b.date.localeCompare(a.date));
+  let left=amt; const items=[]; for(const r of lends){ if(left<=0.009) break; items.push(r); left-=r.amount }
+  const d=r=>new Date(r.date+'T00:00').toLocaleDateString(LOC(),{day:'numeric',month:'short'});
+  const lines=items.reverse().map(r=>`- ${d(r)} ${r.memo||(LANG==='en'?tr(r.cat):r.cat)} ${fmt(r.amount)}`).join('\n');
+  return L(`หวัดดี ${who} ขอเก็บค่าหารบิลหน่อยนะ\n${lines}\nรวม ${fmt(amt)} โอนมาได้เลย ขอบคุณมาก`,`Hi ${who}, here is your share of the bills:\n${lines}\nTotal ${fmt(amt)}. Thanks!`);
+}
+function openFriend(who){
+  if(!who) return; const amt=owed()[who]||0;
+  const rs=data.filter(r=>(r.type==='lend'||r.type==='back')&&r.who===who).sort((a,b)=>b.date.localeCompare(a.date)).slice(0,12);
+  $('friendpanel').innerHTML=`<h3>${esc(who)}</h3>
+    <div class="fbig ${amt>0?'':'zero'}"><small>${amt>0?L('ค้างคุณอยู่','Owes you'):amt<0?L('คุณค้างเขา','You owe them'):L('เคลียร์กันแล้ว','All settled')}</small><b class="num">${fmt(Math.abs(amt))}</b></div>
+    <div class="hist">${rs.map(r=>`<div><span>${new Date(r.date+'T00:00').toLocaleDateString(LOC(),{day:'numeric',month:'short'})} · ${esc(r.type==='back'?L('คืนเงิน','Paid back'):(r.memo||r.cat))}</span><span class="num ${r.type==='back'?'plus':''}">${r.type==='back'?'-':'+'}${fmt(r.amount)}</span></div>`).join('')}</div>
+    ${amt>0?`<div class="actions"><button class="btn" id="fline">${L('ทวงทาง LINE','Send on LINE')}</button><button class="btn" id="fshare">${L('แชร์ข้อความ','Share message')}</button></div>
+    <button class="btn save" id="fpaid">${L(`ได้รับคืนแล้ว ${fmt(amt)}`,`Got ${fmt(amt)} back`)}</button>`:''}
+    <div class="actions"><button class="btn" id="fclose">${L('ปิด','Close')}</button></div>`;
+  showSheet('friendsheet');
+  $('fclose').onclick=()=>hideSheet('friendsheet');
+  if(amt>0){
+    $('fline').onclick=()=>{ window.open('https://line.me/R/share?text='+encodeURIComponent(oweMessage(who)),'_blank') };
+    $('fshare').onclick=async()=>{ const t=oweMessage(who); try{ if(navigator.share){await navigator.share({text:t});return} }catch(e){ if(e&&e.name==='AbortError') return } try{await navigator.clipboard.writeText(t); toast(L('คัดลอกข้อความแล้ว','Message copied'))}catch(e){} };
+    $('fpaid').onclick=()=>{ const last=data.filter(r=>r.type==='lend'&&r.who===who).sort((a,b)=>b.date.localeCompare(a.date))[0];
+      data.push({id:Date.now().toString(36),type:'back',amount:amt,cat:'รับคืน',memo:'',date:iso(new Date()),w:last?wOf(last):'w0',who}); save(); render(); hideSheet('friendsheet'); toast(L(`${who} คืนเงินแล้ว`,`${who} paid you back`)); sfx('clink') };
+  }
+}
+$('friendsheet').onclick=e=>{if(e.target.id==='friendsheet')hideSheet('friendsheet')};
+/* ===== Insights: 6 months ===== */
+function sumT(rs,t){return rs.filter(r=>r.type===t).reduce((s,r)=>s+r.amount,0)}
+function openInsights(){
+  const now=new Date(), base=new Date(view.getFullYear(),view.getMonth(),1), cur=base.getFullYear()===now.getFullYear()&&base.getMonth()===now.getMonth();
+  const ymOf=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');
+  const M=[]; for(let k=5;k>=0;k--){const d=new Date(base.getFullYear(),base.getMonth()-k,1), ym=ymOf(d), rs=data.filter(r=>r.date.startsWith(ym)); M.push({d,ym,tin:sumT(rs,'in'),tout:sumT(rs,'out')})}
+  const mx=Math.max(1,...M.map(m=>Math.max(m.tin,m.tout))), withData=M.filter(m=>m.tin||m.tout), avgOut=withData.length?withData.reduce((s,m)=>s+m.tout,0)/withData.length:0;
+  const W=320,H=150,gw=W/6, bw=Math.min(16,gw/3.2), y=v=>H-6-(v/mx)*(H-20);
+  const chart=`<svg class="ichart" viewBox="0 0 ${W} ${H+22}">${avgOut?`<line x1="0" x2="${W}" y1="${y(avgOut).toFixed(1)}" y2="${y(avgOut).toFixed(1)}" class="avg"/>`:''}${M.map((m,i)=>{const x=i*gw+gw/2; return `<rect class="bi" x="${(x-bw-1).toFixed(1)}" y="${y(m.tin).toFixed(1)}" width="${bw}" height="${(H-6-y(m.tin)).toFixed(1)}" rx="4" style="animation-delay:${i*60}ms"/><rect class="bo" x="${(x+1).toFixed(1)}" y="${y(m.tout).toFixed(1)}" width="${bw}" height="${(H-6-y(m.tout)).toFixed(1)}" rx="4" style="animation-delay:${i*60+30}ms"/><text x="${x}" y="${H+14}" text-anchor="middle" class="${i===5?'cur':''}">${m.d.toLocaleDateString(LOC(),{month:'short'})}</text>`}).join('')}</svg>`;
+  const T=M[5], P=M[4], dIn=new Date(base.getFullYear(),base.getMonth()+1,0).getDate(), day=cur?now.getDate():dIn;
+  let fc='';
+  if(cur){
+    const rows=data.filter(r=>r.date.startsWith(T.ym)), disc=rows.filter(r=>r.type==='out'&&!r.recurId).reduce((s,r)=>s+r.amount,0), rate=disc/Math.max(1,day);
+    const up=upcomingFor(now), upOut=up.filter(r=>r.type==='out').reduce((s,r)=>s+r.amount,0), upIn=up.filter(r=>r.type==='in').reduce((s,r)=>s+r.amount,0);
+    const projOut=T.tout+rate*(dIn-day)+upOut, projLeft=T.tin+upIn-projOut;
+    fc=`<div class="fcast ${projLeft<0?'bad':''}"><small>${L('คาดการณ์สิ้นเดือน','Month-end forecast')}</small><b class="num">${projLeft<0?'-':''}${fmt(Math.abs(Math.round(projLeft)))}</b><span>${projLeft>=0?L(`ถ้าใช้เฉลี่ยวันละ ${fmt(Math.round(rate))} แบบนี้ต่อไป สิ้นเดือนจะเหลือประมาณนี้`,`At ${fmt(Math.round(rate))} a day, this is roughly what you will have left`):L(`ถ้าใช้เฉลี่ยวันละ ${fmt(Math.round(rate))} ต่อไป จะใช้เกินรายรับประมาณนี้`,`At ${fmt(Math.round(rate))} a day, you would overspend by about this much`)}${upOut?L(` (รวมรายการประจำที่จะมาอีก ${fmt(upOut)})`,` (including ${fmt(upOut)} of upcoming bills)`):''}</span></div>`;
+  }
+  const byCat=(ym,maxDay)=>{const o={}; data.filter(r=>r.type==='out'&&r.date.startsWith(ym)&&+r.date.slice(8,10)<=maxDay).forEach(r=>o[r.cat]=(o[r.cat]||0)+r.amount); return o};
+  const a=byCat(T.ym,day), b=byCat(P.ym,cur?day:31), cats=[...new Set([...Object.keys(a),...Object.keys(b)])];
+  const mv=cats.map(c=>({c,now:a[c]||0,was:b[c]||0,d:(a[c]||0)-(b[c]||0)})).filter(x=>Math.abs(x.d)>=1).sort((p,q)=>Math.abs(q.d)-Math.abs(p.d)).slice(0,5);
+  const movers=mv.length?mv.map(x=>`<div class="mv">${ic(x.c,'sm')}<span class="nm">${esc(x.c)}</span><span class="num ${x.d>0?'up':'down'}">${x.d>0?'▲':'▼'} ${x.was?Math.round(Math.abs(x.d)/x.was*100)+'%':L('ใหม่','new')}</span><small class="num">${x.d>0?'+':'-'}${fmt(Math.abs(x.d))}</small></div>`).join(''):`<p class="hint">${L('ยังไม่มีข้อมูลเดือนก่อนให้เทียบ','No previous month to compare yet')}</p>`;
+  const notes=[]; const rateNow=T.tin?1-T.tout/T.tin:null, rates=withData.filter(m=>m.tin).map(m=>1-m.tout/m.tin), avgRate=rates.length?rates.reduce((s,v)=>s+v,0)/rates.length:null;
+  if(rateNow!=null&&avgRate!=null&&rates.length>1) notes.push(rateNow>=avgRate?L(`เดือนนี้เก็บได้ ${Math.round(rateNow*100)}% ของรายรับ ดีกว่าค่าเฉลี่ย ${Math.round(avgRate*100)}%`,`You kept ${Math.round(rateNow*100)}% of income this month, above your ${Math.round(avgRate*100)}% average`):L(`เดือนนี้เก็บได้ ${Math.round(rateNow*100)}% ของรายรับ ต่ำกว่าค่าเฉลี่ย ${Math.round(avgRate*100)}%`,`You kept ${Math.round(rateNow*100)}% of income this month, below your ${Math.round(avgRate*100)}% average`));
+  if(mv[0]&&mv[0].d>0&&mv[0].was) notes.push(L(`${mv[0].c}เพิ่มขึ้น ${Math.round(mv[0].d/mv[0].was*100)}% เมื่อเทียบกับช่วงเดียวกันของเดือนก่อน`,`${tr(mv[0].c)} is up ${Math.round(mv[0].d/mv[0].was*100)}% on the same period last month`));
+  if(avgOut) notes.push(L(`รายจ่ายเฉลี่ยต่อเดือน ${fmt(Math.round(avgOut))}`,`Average monthly spending ${fmt(Math.round(avgOut))}`));
+  $('inspanel').innerHTML=`<h3>ภาพรวม 6 เดือน</h3>${fc}
+    <div class="icard"><div class="ileg"><span><i class="li"></i>${L('รายรับ','Income')}</span><span><i class="lo"></i>${L('รายจ่าย','Spending')}</span>${avgOut?`<span><i class="la"></i>${L('เฉลี่ย','Average')}</span>`:''}</div>${chart}</div>
+    <div class="icard"><b class="subh">${cur?L('เทียบกับช่วงเดียวกันของเดือนก่อน','Compared with the same days last month'):L('เทียบกับเดือนก่อน','Compared with last month')}</b>${movers}</div>
+    ${notes.length?`<div class="icard notes">${notes.map(t=>`<p>${esc(t)}</p>`).join('')}</div>`:''}
+    <div class="actions"><button class="btn" id="insclose">${L('ปิด','Close')}</button></div>`;
+  showSheet('inssheet'); $('insclose').onclick=()=>hideSheet('inssheet');
+}
+$('openins').onclick=openInsights;
+$('inssheet').onclick=e=>{if(e.target.id==='inssheet')hideSheet('inssheet')};
+/* ===== Data safety: persistent storage + daily restore points ===== */
+function renderPersist(p){ const el=$('persistst'); if(!el) return; el.textContent=p?L('มือถือจะไม่ลบข้อมูลของแอปนี้เอง','This phone will not clear the app data on its own'):L('ถ้าพื้นที่เต็ม Chrome อาจลบข้อมูลแอปได้ ติดตั้งแอปลงหน้าจอหลักและสำรองไฟล์ไว้เสมอ','If storage runs low, Chrome may clear app data. Install the app and keep a backup file.') }
+try{ if(navigator.storage&&navigator.storage.persisted){ navigator.storage.persisted().then(p=>p?p:(navigator.storage.persist?navigator.storage.persist():false)).then(renderPersist,()=>renderPersist(false)) } else renderPersist(false) }catch(e){}
+function snapDB(){ return new Promise((ok,no)=>{ try{ const r=indexedDB.open('kp-snap',1); r.onupgradeneeded=()=>r.result.createObjectStore('snaps',{keyPath:'key'}); r.onsuccess=()=>ok(r.result); r.onerror=()=>no(r.error) }catch(e){no(e)} }) }
+async function snapNow(tag){
+  try{ const db=await snapDB(), key=tag?tag+'-'+Date.now():iso(new Date()), n=data.filter(r=>!r.demo).length; if(!n&&!tag) return;
+    await new Promise((ok,no)=>{const t=db.transaction('snaps','readwrite'); t.objectStore('snaps').put({key,at:Date.now(),n,json:backupJSON(true)}); t.oncomplete=ok; t.onerror=()=>no(t.error)});
+    const all=await snapList(); const old=all.slice(8); if(old.length){ await new Promise(ok=>{const t=db.transaction('snaps','readwrite'); old.forEach(s=>t.objectStore('snaps').delete(s.key)); t.oncomplete=ok; t.onerror=ok}) }
+  }catch(e){}
+}
+async function snapList(){ try{ const db=await snapDB(); return await new Promise(ok=>{const q=db.transaction('snaps').objectStore('snaps').getAll(); q.onsuccess=()=>ok((q.result||[]).sort((a,b)=>b.at-a.at)); q.onerror=()=>ok([])}) }catch(e){return []} }
+let snapArmed=null;
+async function renderSnaps(){
+  const box=$('snaps'); if(!box) return; const all=await snapList();
+  box.innerHTML=all.length?all.map(s=>`<div class="catrow"><span class="nm">${new Date(s.at).toLocaleString(LOC(),{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}${s.key.startsWith('pre-')?` <span class="tag">${L('ก่อนกู้คืน','before restore')}</span>`:''}</span><small class="num">${L(`${s.n} รายการ`,`${s.n} ${s.n===1?'item':'items'}`)}</small><button data-snap="${esc(s.key)}" class="${snapArmed===s.key?'danger':''}">${snapArmed===s.key?L('แตะอีกครั้ง','Tap again'):L('ย้อนกลับ','Restore')}</button></div>`).join(''):`<small class="hint">${L('ยังไม่มีจุดย้อนกลับ','No restore points yet')}</small>`;
+}
+$('snaps').addEventListener('click',async e=>{ const b=e.target.closest('[data-snap]'); if(!b) return; const k=b.dataset.snap;
+  if(snapArmed!==k){snapArmed=k; renderSnaps(); return} snapArmed=null;
+  const s=(await snapList()).find(x=>x.key===k); if(!s) return;
+  try{ await snapNow('pre-restore'); applyBackup(parseBackup(s.json)); view=new Date(); view.setDate(1); render(); renderSnaps(); msg('cmsg',L('ย้อนข้อมูลกลับแล้ว','Restored'),true) }catch(err){ msg('cmsg',L('ย้อนกลับไม่ได้','Could not restore')) } });
+setTimeout(async()=>{ const all=await snapList(); if(!all.some(s=>s.key===iso(new Date()))) snapNow() },2500);
+/* ===== Reminders (installed app only) ===== */
+prefs.rem=prefs.rem||{};
+function remNote(){
+  const el=$('remnote'); const off=!window.STANDALONE||!('Notification' in window)||!('serviceWorker' in navigator);
+  ['remeve','remrec','remtime'].forEach(id=>$(id).disabled=off);
+  el.textContent=off?L('ใช้ได้เฉพาะแอปที่ติดตั้งลงมือถือแล้ว','Only works in the app installed on your phone'):
+    Notification.permission==='denied'?L('มือถือบล็อกการแจ้งเตือนของแอปนี้อยู่ เปิดได้ในการตั้งค่าแอปของมือถือ','Notifications are blocked for this app. Allow them in your phone settings.'):
+    L('Chrome เป็นคนเลือกจังหวะส่งแจ้งเตือน อาจช้ากว่าเวลาที่ตั้งไว้บ้าง','Chrome decides exactly when to deliver, so it may arrive a little later than set');
+}
+function upcomingSoon(){
+  const now=new Date(), today=iso(now), out=[];
+  recur.filter(r=>!r.demo).forEach(r=>{ for(const k of [0,1]){ const d=new Date(now.getFullYear(),now.getMonth()+k,1), dim=new Date(d.getFullYear(),d.getMonth()+1,0).getDate(), dt=iso(new Date(d.getFullYear(),d.getMonth(),Math.min(r.day,dim))), ym=dt.slice(0,7);
+    if(dt>=today&&r.startYM<=ym&&!(r.skip||[]).includes(ym)&&!data.some(e=>e.recurId===r.id&&e.date.startsWith(ym))){ out.push({id:r.id,date:dt,title:L(`พรุ่งนี้ถึงกำหนด ${r.memo||r.cat}`,`Due tomorrow: ${r.memo||tr(r.cat)}`),body:L(`${r.type==='in'?'รับ':'จ่าย'} ${fmt(r.amount)} · ${r.cat}`,`${r.type==='in'?'In':'Out'} ${fmt(r.amount)} · ${tr(r.cat)}`)}); break } } });
+  return out;
+}
+async function remSync(){
+  if(!window.STANDALONE||!('serviceWorker' in navigator)||!('caches' in window)) return;
+  try{ const c=await caches.open('kp-state'), old=await c.match('./__kp-remind.json'), prev=old?await old.json():{};
+    const st={eve:!!prefs.rem.eve,time:prefs.rem.time||'20:00',rec:!!prefs.rem.rec,lastLog:prefs.lastLogDay||'',up:upcomingSoon(),sent:prev.sent||{},
+      t:{eveTitle:L('วันนี้ยังไม่ได้จดเลยนะ','Nothing logged today'),eveBody:L('น้องโอ่งรออยู่ แตะเพื่อจดรายการของวันนี้','Nong Ong is waiting. Tap to log today.')}};
+    await c.put('./__kp-remind.json',new Response(JSON.stringify(st),{headers:{'content-type':'application/json'}}));
+    const reg=await navigator.serviceWorker.ready;
+    if(reg.periodicSync){ if(st.eve||st.rec){ try{await reg.periodicSync.register('kp-remind',{minInterval:2*3600*1000})}catch(e){} } else { try{await reg.periodicSync.unregister('kp-remind')}catch(e){} } }
+  }catch(e){}
+}
+function applyRem(){ $('remeve').checked=!!prefs.rem.eve; $('remrec').checked=!!prefs.rem.rec; $('remtime').value=prefs.rem.time||'20:00'; remNote() }
+async function remToggle(key,on){
+  if(on){ let p=Notification.permission; if(p==='default'){ try{p=await Notification.requestPermission()}catch(e){} } if(p!=='granted'){ $(key==='eve'?'remeve':'remrec').checked=false; remNote(); return } }
+  prefs.rem[key]=on; savePrefs(); remNote(); remSync();
+}
+$('remeve').addEventListener('change',e=>remToggle('eve',e.target.checked));
+$('remrec').addEventListener('change',e=>remToggle('rec',e.target.checked));
+$('remtime').addEventListener('change',e=>{prefs.rem.time=e.target.value||'20:00'; savePrefs(); remSync()});
+document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='hidden') remSync() });
+applyRem(); remSync();
 /* ===== Motion round 3 ===== */
 /* Collapsing header: hero shrinks, nav shows mini jar + balance */
 (function(){
