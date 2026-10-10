@@ -1268,7 +1268,7 @@ function searchData(q){
   const terms=q.toLowerCase().split(/\s+/).filter(Boolean);
   return data.filter(r=>{
     const amt=String(r.amount), amtF=fmt(r.amount).replace('฿','');
-    const hay=[r.memo,r.note,r.cat,EN_CAT[r.cat]||'',r.type==='in'?L('รายรับ','income'):L('รายจ่าย','expense'),amt,amtF].join(' ').toLowerCase();
+    const hay=[r.memo,r.note,r.cat,EN_CAT[r.cat]||'',r.type==='in'?L('รายรับ','income'):L('รายจ่าย','expense')].join(' ').toLowerCase();
     return terms.every(t=>{const tn=t.replace(/[฿,]/g,''); return hay.includes(t)||(tn&&/^\d+(\.\d+)?$/.test(tn)&&amt===tn)});
   }).sort((a,b)=>b.date.localeCompare(a.date)||String(b.id).localeCompare(String(a.id)));
 }
