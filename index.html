@@ -971,6 +971,51 @@ body.privacy .balance .big,body.privacy .balance .carry,body.privacy .split b,bo
 .tipb.below .tarr{top:-6px}.tipb.above .tarr{bottom:-6px}
 @keyframes tipin{from{opacity:0;transform:translateY(8px) scale(.92)}}
 @media (prefers-reduced-motion: reduce){.tipb,#lockscr.out{animation:none}}
+
+/* ===== Polish round 6 ===== */
+/* 1. calmer section headings: the money stays the loudest thing on screen */
+section h2{font-size:17px;font-weight:500;letter-spacing:0}
+section h2 small{font-family:var(--body)}
+section h2 button{font-family:var(--body);font-weight:500;font-size:14px}
+/* 2. floating button menu */
+.fab .fl{display:inline-block;max-width:180px;overflow:hidden;white-space:nowrap;transition:max-width .35s cubic-bezier(.2,0,0,1),opacity .2s}
+.fab{transition:padding .35s cubic-bezier(.2,0,0,1),gap .35s,transform .14s,opacity .25s,box-shadow .2s}
+.fabs.mini:not(.open) .fab .fl{max-width:0;opacity:0}
+.fabs.mini:not(.open) .fab{padding:0 16px;gap:0}
+.fab.main svg{transition:transform .35s cubic-bezier(.3,1.4,.5,1)}
+.fabs.open .fab.main svg{transform:rotate(135deg)}
+.fabs.hasmenu #scan,.fabs.hasmenu #add{transition:transform .35s cubic-bezier(.3,1.3,.5,1),opacity .2s}
+.fabs.hasmenu:not(.open) #scan,.fabs.hasmenu:not(.open) #add{position:absolute;right:0;bottom:0;opacity:0;transform:translateY(24px) scale(.8);pointer-events:none}
+.fabs.hasmenu.open #add{transition-delay:.03s}.fabs.hasmenu.open #scan{transition-delay:.08s}
+.fabs.hasmenu #add{background:var(--s-low);color:var(--ink)}
+.fabscrim{position:fixed;inset:0;z-index:5;background:color-mix(in srgb,var(--surface) 55%,transparent);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);animation:fade .2s}
+/* 3. wallet cards in bank tones */
+.wcard{position:relative;overflow:hidden;min-width:150px;min-height:96px;border-radius:20px;justify-content:space-between}
+.wcard .wtop{display:flex;justify-content:space-between;align-items:center;width:100%}
+.wcard.tone{background:var(--wbg);color:var(--wfg);box-shadow:0 12px 24px -16px rgba(0,0,0,.5)}
+.wcard.tone small{color:inherit;opacity:.85}
+.wcard.tone b.neg{color:inherit}
+.wcard.tone .ico{background:color-mix(in srgb,#fff 24%,transparent);color:inherit}
+.wcard.tone::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.22) 45%,transparent 60%);pointer-events:none}
+.wcard.tone::before{content:"";position:absolute;right:-30px;bottom:-40px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.12);pointer-events:none}
+.wcard .chip{width:28px;height:20px;border-radius:5px;background:linear-gradient(135deg,#f7dd8a,#c9a23e);box-shadow:inset 0 0 0 1px rgba(0,0,0,.15)}
+/* 4. slip review */
+.rv{grid-template-columns:96px 1fr}
+.rv img{width:96px;height:150px;cursor:zoom-in;box-shadow:0 6px 16px -10px rgba(0,0,0,.4)}
+.rv .chk{background:#fff4c2!important;border-color:#e8b923!important;color:#3d2e00}
+.chkhint{font-size:12px;font-weight:600;color:#9a6a00;display:flex;align-items:center;gap:6px}
+.chkhint::before{content:"";width:10px;height:10px;border-radius:3px;background:#fff4c2;box-shadow:inset 0 0 0 1.5px #e8b923}
+#imgview{position:fixed;inset:0;z-index:95;background:rgba(10,10,10,.92);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:16px;animation:fade .2s}
+#imgview img{max-width:100%;max-height:86vh;object-fit:contain;border-radius:12px}
+#imgview small{color:#ddd}
+/* 5. welcome card */
+.note.welcome{display:grid;grid-template-columns:64px 1fr;gap:6px 14px;align-items:center;background:var(--t-allow);color:var(--t-allow-fg);border:0;border-radius:26px;padding:14px 16px}
+.note.welcome .wj{width:64px;height:64px;grid-row:span 2}.note.welcome .wj svg{width:100%;height:100%;overflow:visible}
+.note.welcome .wt{display:flex;flex-direction:column;gap:2px}
+.note.welcome .wt b{font-family:var(--display);font-size:17px;font-weight:500}
+.note.welcome .wt small{font-size:13px;opacity:.8;line-height:1.45}
+.note.welcome button{grid-column:2;justify-self:start;background:var(--btn);color:var(--btn-fg);border-radius:999px;padding:8px 16px;font-weight:600}
+@media (prefers-reduced-motion: reduce){.fab,.fab .fl,.fab.main svg,.fabs.hasmenu #scan,.fabs.hasmenu #add{transition:none}}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i></div><div id="festfx" aria-hidden="true"></div>
@@ -1086,8 +1131,9 @@ body.privacy .balance .big,body.privacy .balance .carry,body.privacy .split b,bo
     <button id="bklater">ไว้ทีหลัง</button><button class="go" id="bknow">สำรองเลย</button>
   </div>
 
-  <div class="note" id="demo" hidden>
-    <span>ตอนนี้เป็นข้อมูลตัวอย่าง</span>
+  <div class="note welcome" id="demo" hidden>
+    <span class="wj" id="demojar" aria-hidden="true"></span>
+    <span class="wt"><b>ยินดีต้อนรับสู่เหลือเก็บ</b><small>ตอนนี้เป็นข้อมูลตัวอย่าง ลองแตะเล่นได้เลย พร้อมเมื่อไรค่อยล้างแล้วเริ่มจดจริง</small></span>
     <button id="cleardemo">ล้างตัวอย่าง เริ่มจดจริง</button>
   </div>
 
@@ -1133,10 +1179,12 @@ body.privacy .balance .big,body.privacy .balance .carry,body.privacy .split b,bo
   </section>
 </div>
 
-<div class="fabs">
-  <button class="fab alt" id="scan" hidden><svg viewBox="0 0 24 24"><path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3M8 9h8M8 12h8M8 15h5"/></svg>อ่านสลิป</button>
-  <button class="fab" id="add"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>จดรายการ</button>
+<div class="fabs" id="fabs">
+  <button class="fab alt" id="scan" hidden><svg viewBox="0 0 24 24"><path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3M8 9h8M8 12h8M8 15h5"/></svg><span class="fl">อ่านสลิป</span></button>
+  <button class="fab" id="add"><svg viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg><span class="fl">จดรายการ</span></button>
+  <button class="fab main" id="fabmain" hidden aria-expanded="false" aria-label="เพิ่มรายการ"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg><span class="fl">เพิ่ม</span></button>
 </div>
+<div class="fabscrim" id="fabscrim" hidden></div>
 <div class="sheet" id="goalsheet" hidden><div class="panel" id="goalpanel"></div></div>
 <div class="snack" id="snack" hidden role="status"><span id="snacktext"></span><button id="undo">เลิกทำ</button></div>
 <div class="story" id="story" hidden>
@@ -1195,6 +1243,8 @@ body.privacy .balance .big,body.privacy .balance .carry,body.privacy .split b,bo
 
 <div class="sheet" id="friendsheet" hidden><div class="panel" id="friendpanel"></div></div>
 <div class="sheet" id="inssheet" hidden><div class="panel" id="inspanel"></div></div>
+
+<div id="imgview" hidden role="dialog" aria-label="ดูสลิป"><img id="imgviewimg" alt="สลิป"><small>แตะเพื่อปิด</small></div>
 
 <!-- Settings sheet -->
 <div class="sheet" id="setsheet" hidden>
@@ -1526,6 +1576,8 @@ function setLang(l){
   try{renderWardrobe();applyFestPill()}catch(e){}
 }
 Object.assign(DICT,{
+'ยินดีต้อนรับสู่เหลือเก็บ':'Welcome to Luakep','ตอนนี้เป็นข้อมูลตัวอย่าง ลองแตะเล่นได้เลย พร้อมเมื่อไรค่อยล้างแล้วเริ่มจดจริง':'This is sample data, so tap around freely. When you are ready, clear it and start for real.',
+'เพิ่มรายการ':'Add','ดูสลิป':'Slip','แตะเพื่อปิด':'Tap to close','สลิป':'Slip',
 'เหลือเก็บล็อกอยู่':'Luakep is locked','ปลดล็อก':'Unlock','ใช้ PIN แทน':'Use PIN instead','ตกลง':'OK','ล็อกอยู่':'Locked','ซ่อนหรือแสดงยอดเงิน':'Hide or show balances',
 'ล็อกแอป':'App lock','ล็อกด้วยลายนิ้วมือหรือสแกนหน้า':'Lock with fingerprint or face','ใช้ระบบปลดล็อกของมือถือ และตั้ง PIN สำรองไว้เผื่อสแกนไม่ผ่าน':'Uses your phone unlock, plus a backup PIN in case scanning fails','ตั้ง PIN สำรอง {0}–{1} หลัก':'Set a {0}–{1} digit backup PIN','PIN สำรอง':'Backup PIN','เปิดล็อก':'Turn on lock',
 'ล็อกเมื่อออกจากแอปนาน':'Lock after leaving the app for','ทันที':'Immediately','{0} นาที':'{0} min','ซ่อนยอดเงิน':'Hide balances','เบลอตัวเลขบนหน้าหลัก แตะรูปตาเพื่อสลับ':'Blur amounts on the home screen; tap the eye to switch',
@@ -2025,7 +2077,7 @@ function render(){
     if(lendNet) $('carry').textContent+=L(` · หารบิล ${sgn(lendNet)}`,` · split bills ${sgn(lendNet)}`);
   } else { $('ballabel').textContent=L('คงเหลือเดือนนี้','Left this month'); animNum($('bal'),tin-tout,sgn); $('carry').hidden=true }
   try{$('ntbal').textContent=sgn($('bal')._v)}catch(e){}
-  $('demo').hidden=!data.some(r=>r.demo);
+  $('demo').hidden=!data.some(r=>r.demo); if(!$('demo').hidden&&!$('demojar').firstChild) $('demojar').innerHTML=jarSVG('great');
   renderBackupBanner();
   renderAllowance(rows,tin,tout,carryAmt);
   renderGoals(); renderUpcoming(); renderWallets(); renderOwe(); try{$('openins').hidden=data.length<5}catch(e){}
@@ -2206,7 +2258,7 @@ $('form').onsubmit=e=>{
   hideSheet('sheet'); editing=null; render();
   if(!wasEdit&&FX()){
     if(rec.type==='in') flyCoin(fromPt,jarPt,()=>{splash(jarPt.x,jarPt.y-20,10);bump($('pig'));sfx('clink')});
-    else flyCoin(jarPt,centerOf($('add')),()=>{});
+    else flyCoin(jarPt,centerOf($('fabmain').hidden?$('add'):$('fabmain')),()=>{});
   }
   toast(wasEdit?L('บันทึกการแก้ไขแล้ว','Changes saved'):L('บันทึกแล้ว','Saved')); bump($('bal')); bump($('pig'));
   try{navigator.vibrate&&navigator.vibrate(10)}catch(e){}
@@ -2764,7 +2816,8 @@ function mapSlips(files,arr){
       if(m&&m.type===type){cat=m.cat;remembered=true}
       const date=/^\d{4}-\d{2}-\d{2}$/.test(r.date||'')?r.date:iso(new Date());
       const ref=String(r.ref||'').trim(), dup=!!ref&&data.some(x=>x.ref===ref);
-      return {i,type,cat,amount:Math.round(+r.amount*100)/100,date,memo,note:String(r.note||'').slice(0,80),ref,dup,transfer,remembered,on:!dup&&!transfer};
+      const flags={date:!/^\d{4}-\d{2}-\d{2}$/.test(r.date||''),cat:!remembered&&cat==='อื่นๆ',memo:!memo};
+      return {i,flags,type,cat,amount:Math.round(+r.amount*100)/100,date,memo,note:String(r.note||'').slice(0,80),ref,dup,transfer,remembered,on:!dup&&!transfer};
     });
 }
 
@@ -2779,8 +2832,9 @@ function renderReview(){
     return `<div class="rv ${x.on?'':'off'}" data-i="${x.i}">${img}<div class="f">
       <label class="head" style="flex-direction:row;color:var(--ink)"><input type="checkbox" id="rvon${x.i}" ${x.on?'checked':''}>${ic(x.cat,'xs')}สลิปที่ ${x.i+1}${x.dup?'<span class="tag">บันทึกไปแล้ว</span>':''}${x.remembered?'<span class="tag">จำร้านได้</span>':''}</label>
       ${x.transfer?'<div class="why">โอนระหว่างบัญชีตัวเอง ไม่นับเป็นรายรับหรือรายจ่าย ติ๊กถ้าต้องการบันทึก</div>':''}
-      <div class="two"><select id="rvcat${x.i}" aria-label="หมวด">${catOptions(x.type+'|'+x.cat)}</select><input id="rvamt${x.i}" class="amt-in num" inputmode="decimal" value="${x.amount}" aria-label="จำนวนเงิน"></div>
-      <div class="two"><input type="date" id="rvdate${x.i}" value="${x.date}" aria-label="วันที่"><input id="rvmemo${x.i}" value="${esc(x.memo)}" placeholder="หมายเหตุ" aria-label="หมายเหตุ"></div>
+      ${x.flags&&(x.flags.date||x.flags.cat||x.flags.memo)?`<div class="chkhint">${L('ช่องสีเหลือง ช่วยเช็กอีกครั้ง','Please check the yellow fields')}</div>`:''}
+      <div class="two"><select id="rvcat${x.i}" aria-label="หมวด"${x.flags&&x.flags.cat?' class="chk"':''}>${catOptions(x.type+'|'+x.cat)}</select><input id="rvamt${x.i}" class="amt-in num" inputmode="decimal" value="${x.amount}" aria-label="จำนวนเงิน"></div>
+      <div class="two"><input type="date" id="rvdate${x.i}" value="${x.date}" aria-label="วันที่"${x.flags&&x.flags.date?' class="chk"':''}><input id="rvmemo${x.i}" value="${esc(x.memo)}" placeholder="หมายเหตุ" aria-label="หมายเหตุ"${x.flags&&x.flags.memo?' class="chk"':''}></div>
       ${x.note?`<div class="why">${esc(x.note)}</div>`:''}
     </div></div>`;
   }).join('');
@@ -2795,7 +2849,9 @@ function syncRv(){
   });
 }
 function updateRvCount(){ const n=rvItems.filter(x=>!x.bad&&x.on).length; $('rvsave').textContent=n?`บันทึก ${n} รายการ`:'เลือกอย่างน้อย 1 รายการ'; $('rvsave').disabled=!n }
-$('rvlist').onchange=e=>{
+$('rvlist').addEventListener('input',e=>{ const m=(e.target.id||'').match(/^rv(cat|date|memo)(\d+)$/); if(m){ e.target.classList.remove('chk'); const x=rvItems.find(y=>y.i===+m[2]); if(x&&x.flags) x.flags[m[1]]=false } });
+$('rvlist').addEventListener('click',e=>{ const im=e.target.closest('.rv img'); if(!im) return; $('imgviewimg').src=im.src; $('imgview').hidden=false });
+$('rvlist').onchange=e=>{ { const m=(e.target.id||'').match(/^rv(cat|date|memo)(\d+)$/); if(m){ const x=rvItems.find(y=>y.i===+m[2]); if(x&&x.flags) x.flags[m[1]]=false } }
   syncRv();
   if(e.target.id.startsWith('rvon')||e.target.id.startsWith('rvcat')) renderReview(); else updateRvCount();
 };
@@ -2984,10 +3040,21 @@ $('fxon').addEventListener('change',()=>{prefs.fx=$('fxon').checked; savePrefs()
 
 
 /* ===== Wallets UI ===== */
+function BANK_TONES(){ return [[/kbank|k ?plus|กสิกร/i,'#00a950','#006e34'],[/scb|ไทยพาณิชย์/i,'#6a3aa8','#3b1a66'],[/ktb|กรุงไทย|เป๋าตัง|paotang/i,'#1aa7e0','#00669e'],[/bbl|bualuang|กรุงเทพ/i,'#2650b0','#0f2a66'],
+  [/krungsri|กรุงศรี|\bbay\b/i,'#ffd94a','#f2b400','#3d2e00'],[/ttb|ทีทีบี|ธนชาต|ทหารไทย/i,'#1c63e0','#0a3a8f'],[/gsb|ออมสิน/i,'#ec3d9d','#a30f5f'],[/ghb|ธอส|อาคารสงเคราะห์/i,'#f7943a','#c25a00'],
+  [/uob|ยูโอบี/i,'#1d4fa0','#06245a'],[/cimb|ซีไอเอ็มบี/i,'#e0414a','#8f1219'],[/kkp|เกียรตินาคิน/i,'#7462b8','#3a2d6b'],[/true ?money|ทรูมันนี่/i,'#ff9a2e','#e05a00'],
+  [/line ?bk|ไลน์บีเค/i,'#2fd06e','#04913e'],[/shopee ?pay|ช้อปปี้/i,'#f2683f','#b8321a'],[/ktc|เคทีซี/i,'#e0414a','#7e0d12'],[/aeon|อิออน/i,'#b8338f','#6e0b54'],[/citi|ซิตี้/i,'#2a74c9','#0b3f7a']] }
+function walletTone(w){
+  for(const [re,a,b,fg] of BANK_TONES()) if(re.test(w.name)) return {bg:`linear-gradient(135deg,${a},${b})`,fg:fg||'#fff'};
+  if(w.kind==='card') return {bg:'linear-gradient(135deg,#3a3a44,#121217)',fg:'#fff'};
+  if(w.kind==='cash') return {bg:'linear-gradient(135deg,#e6f2d2,#c9e3a8)',fg:'#1f3a0e'};
+  return null;
+}
 function renderWallets(){
   const box=$('wallets'); if(!box) return; box.hidden=wallets.length<2; if(box.hidden) return;
   box.innerHTML=wallets.map(w=>{const b=walletBal(w.id), owe=w.kind==='card'&&b<0;
-    return `<button class="wcard" data-w="${w.id}">${wIco(w.kind,'sm')}<small>${esc(wName(w))}</small><b class="num${b<0?' neg':''}">${owe?L('ค้าง ','owe ')+fmt(-b):(b<0?'-':'')+fmt(Math.abs(b))}</b></button>`}).join('');
+    const t=walletTone(w);
+    return `<button class="wcard ${t?'tone':''} k-${w.kind}" data-w="${w.id}" ${t?`style="--wbg:${t.bg};--wfg:${t.fg}"`:''}><span class="wtop">${wIco(w.kind,'sm')}${w.kind==='card'?'<i class="chip"></i>':''}</span><small>${esc(wName(w))}</small><b class="num${b<0?' neg':''}">${owe?L('ค้าง ','owe ')+fmt(-b):(b<0?'-':'')+fmt(Math.abs(b))}</b></button>`}).join('');
 }
 $('wallets').addEventListener('click',e=>{ if(e.target.closest('.wcard')){ openSet(false); setOpenFor($('walletgroup')) } });
 let wEdit=null, wKind='cash', wDelArmed=null;
@@ -3444,6 +3511,20 @@ $('privon').addEventListener('change',e=>{prefs.privacy=e.target.checked; savePr
 applyPrivacy(); applyLockUI();
 if(prefs.lock&&prefs.lock.on){ try{sessionStorage.setItem('kp-intro','1')}catch(e){} showLock() }
 
+
+/* ===== Floating button: one "+" that opens Add / Read slip; shrinks while scrolling down ===== */
+function syncFab(){ const has=!$('scan').hidden; $('fabs').classList.toggle('hasmenu',has); $('fabmain').hidden=!has; if(!has) closeFab() }
+function openFab(){ $('fabs').classList.add('open'); $('fabscrim').hidden=false; $('fabmain').setAttribute('aria-expanded','true') }
+function closeFab(){ $('fabs').classList.remove('open'); $('fabscrim').hidden=true; $('fabmain').setAttribute('aria-expanded','false') }
+$('fabmain').onclick=e=>{ e.stopPropagation(); $('fabs').classList.contains('open')?closeFab():openFab() };
+$('fabscrim').onclick=closeFab;
+['add','scan'].forEach(id=>$(id).addEventListener('click',()=>setTimeout(closeFab,10)));
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeFab() });
+$('imgview').onclick=()=>{ $('imgview').hidden=true; $('imgviewimg').removeAttribute('src') };
+(function(){ let lastY=scrollY, raf=0; addEventListener('scroll',()=>{ if(raf) return; raf=requestAnimationFrame(()=>{ raf=0; const y=scrollY, f=$('fabs');
+  if(y>lastY+6&&y>120) f.classList.add('mini'); else if(y<lastY-6||y<120) f.classList.remove('mini'); lastY=y }) },{passive:true}) })();
+try{ new MutationObserver(syncFab).observe($('scan'),{attributes:true,attributeFilter:['hidden']}) }catch(e){}
+syncFab();
 /* ===== First-use tips from Nong Ong ===== */
 const TIPS={
   jar:[()=>$('pig'),['แตะน้องโอ่งได้นะ น้องมีเรื่องจะบอก','Tap me, I have things to tell you']],
@@ -3453,7 +3534,7 @@ const TIPS={
   ins:[()=>{const b=$('openins');return b&&!b.hidden?b:null},['ดูแนวโน้ม 6 เดือน และคาดการณ์ว่าสิ้นเดือนจะเหลือเท่าไร','See 6-month trends and a month-end forecast']],
   wallets:[()=>{const b=$('wallets');return b&&!b.hidden?b:null},['แตะการ์ดเพื่อจัดการกระเป๋า ตอนจดรายการกด "โอน" เพื่อย้ายเงินระหว่างกระเป๋า','Tap a card to manage wallets. Use "Transfer" when adding to move money between them']],
   split:[()=>{const r=$('splitrow');return r&&!r.hidden&&!$('sheet').hidden?r:null},['จ่ายแทนเพื่อน? เปิดตรงนี้ แอปจะจำว่าใครค้างเท่าไร','Paid for friends? Turn this on and the app tracks who owes what']],
-  scan:[()=>{const b=$('scan');return b&&!b.hidden?b:null},['ส่งสลิปให้อ่านได้ หรือกดแชร์สลิปจากแอปธนาคารมาที่ "เหลือเก็บ" ก็ได้','Read slips here, or share a slip from your bank app to Luakep']]
+  scan:[()=>{const m=$('fabmain'), b=$('scan'); return m&&!m.hidden?m:(b&&!b.hidden?b:null)},['ส่งสลิปให้อ่านได้ หรือกดแชร์สลิปจากแอปธนาคารมาที่ "เหลือเก็บ" ก็ได้','Read slips here, or share a slip from your bank app to Luakep']]
 };
 function tipSeen(k){ return !!(prefs.tips&&prefs.tips[k]) }
 function closeTip(){ document.querySelectorAll('.tipb').forEach(t=>{t.classList.add('out'); setTimeout(()=>t.remove(),220)}) }
