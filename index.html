@@ -1008,6 +1008,7 @@ section h2 button{font-family:var(--body);font-weight:500;font-size:14px}
 #imgview{position:fixed;inset:0;z-index:95;background:rgba(10,10,10,.92);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:16px;animation:fade .2s}
 #imgview img{max-width:100%;max-height:86vh;object-fit:contain;border-radius:12px}
 #imgview small{color:#ddd}
+#rvmsg.info{color:var(--muted)}
 /* 5. welcome card */
 .note.welcome{display:grid;grid-template-columns:64px 1fr;gap:6px 14px;align-items:center;background:var(--t-allow);color:var(--t-allow-fg);border:0;border-radius:26px;padding:14px 16px}
 .note.welcome .wj{width:64px;height:64px;grid-row:span 2}.note.welcome .wj svg{width:100%;height:100%;overflow:visible}
@@ -3421,7 +3422,7 @@ async function prepSlip(file){
 }
 async function readSlipsLocal(files){
   files=files.slice(0,10); thumbs=files.map(f=>URL.createObjectURL(f)); rvItems=[];
-  $('rvlist').innerHTML=''; $('rvmsg').textContent=''; $('rvmsg').classList.remove('ok-msg');
+  $('rvlist').innerHTML=''; $('rvmsg').textContent=''; $('rvmsg').classList.remove('ok-msg','info');
   $('rvstatus').hidden=false; $('rvsave').hidden=true; $('rvcancel').textContent=L('ยกเลิก','Cancel'); showSheet('rvsheet');
   const st=t=>{$('rvstatustext').textContent=t}; let cancelled=false; rvCtl={abort(){cancelled=true}};
   st(ocrReady()?L('กำลังเตรียมตัวอ่านสลิป...','Getting the slip reader ready...'):L('โหลดตัวอ่านสลิปครั้งแรก ประมาณ 8 MB ครั้งต่อไปไม่ต้องโหลดอีก','Downloading the slip reader once, about 8 MB'));
@@ -3435,7 +3436,7 @@ async function readSlipsLocal(files){
     }
     if(cancelled) return;
     rvItems=mapSlips(files,arr); renderReview();
-    if(rvItems.some(x=>!x.bad)){ $('rvmsg').textContent=L('อ่านในเครื่องแล้ว ไม่ได้ส่งรูปไปไหน ตรวจยอดเงินและวันที่ก่อนบันทึก','Read on this phone; nothing was uploaded. Check the amount and date before saving.'); $('rvmsg').classList.remove('ok-msg') }
+    if(rvItems.some(x=>!x.bad)){ $('rvmsg').textContent=L('อ่านในเครื่องแล้ว ไม่ได้ส่งรูปไปไหน ตรวจยอดเงินและวันที่ก่อนบันทึก','Read on this phone; nothing was uploaded. Check the amount and date before saving.'); $('rvmsg').classList.remove('ok-msg'); $('rvmsg').classList.add('info') }
   }catch(err){ $('rvstatus').hidden=true; $('rvmsg').textContent=L('โหลดตัวอ่านสลิปไม่สำเร็จ ต่อเน็ตแล้วลองใหม่','Could not load the slip reader. Connect to the internet and try again.'); $('rvcancel').textContent=L('ปิด','Close') }
   finally{ rvCtl=null; ocrProg=null }
 }
