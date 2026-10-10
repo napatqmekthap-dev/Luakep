@@ -1017,6 +1017,31 @@ section h2 button{font-family:var(--body);font-weight:500;font-size:14px}
 .note.welcome .wt small{font-size:13px;opacity:.8;line-height:1.45}
 .note.welcome button{grid-column:2;justify-self:start;background:var(--btn);color:var(--btn-fg);border-radius:999px;padding:8px 16px;font-weight:600}
 @media (prefers-reduced-motion: reduce){.fab,.fab .fl,.fab.main svg,.fabs.hasmenu #scan,.fabs.hasmenu #add{transition:none}}
+
+/* ===== Polish round 7: budget bars + spending donut ===== */
+.bar.b2{position:relative;height:10px;border-radius:5px;overflow:visible;background:var(--s-high)}
+.bar.b2 i{height:100%;border-radius:5px;display:block}
+.bar.b2 i.ok{background:var(--in-bar)} .bar.b2 i.near{background:var(--warn-bar,#e08a00)} .bar.b2 i.over{background:var(--out-bar)}
+.bar.b2 .pace{position:absolute;top:-4px;bottom:-4px;width:2px;margin-left:-1px;border-radius:1px;background:var(--ink);opacity:.55;text-decoration:none}
+.cat .cn{font-weight:500}
+.paceh{font-size:12px;color:var(--warn,#8a5100);margin-top:6px}
+.nob{margin-top:6px;padding-top:12px;border-top:1px solid var(--ov);display:flex;flex-direction:column;gap:8px}
+.nobh{font-size:12px;font-weight:600;color:var(--muted);letter-spacing:.02em}
+.nobr{display:flex;align-items:center;gap:10px}
+.nobr .cn{flex:1;font-size:14px}
+.nobr small{color:var(--muted);font-size:13px}
+.nobr button{border:0;border-radius:999px;padding:5px 12px;font:inherit;font-size:12px;font-weight:600;background:var(--t-allow);color:var(--t-allow-fg);cursor:pointer}
+input.flash{animation:flashin 1.2s ease-out}
+@keyframes flashin{0%,40%{box-shadow:0 0 0 3px var(--t-allow-fg)}100%{box-shadow:0 0 0 0 transparent}}
+.donut circle{stroke-width:20}
+.donut circle.trk{stroke:var(--s-high);stroke-width:20;cursor:default}
+.donut .mid .mi{margin-bottom:2px}
+.donut .mid b{font-size:19px}
+.legend button{grid-template-columns:24px 1fr auto;position:relative;overflow:hidden;padding:7px 8px}
+.legend button span{display:flex;flex-direction:column;line-height:1.25;overflow:hidden}
+.legend button span small{font-size:11px;color:var(--muted)}
+.legend button.on span small{color:inherit;opacity:.8}
+.legend .lb{position:absolute;left:8px;bottom:2px;height:2px;width:calc((100% - 16px) * var(--w) / 100);border-radius:1px;opacity:.55}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i></div><div id="festfx" aria-hidden="true"></div>
@@ -2091,15 +2116,13 @@ function render(){
   const maxSpent=Math.max(1,...Object.values(spent));
   setMood(tin,tout,Object.keys(budget).filter(c=>budget[c]>0&&(spent[c]||0)>budget[c]).length);
   names.sort((a,b)=>{const ra=budget[a]?(spent[a]||0)/budget[a]:-1, rb=budget[b]?(spent[b]||0)/budget[b]:-1; return rb-ra||(spent[b]||0)-(spent[a]||0)});
-  $('cats').innerHTML=names.length?names.map(c=>{
-    const s=spent[c]||0, b=budget[c]||0;
-    if(b>0){
-      const p=s/b, cls=p>1?'over':p>=.8?'near':'ok';
-      const right=p>1?`<small class="over num">เกินงบ ${fmt(s-b)}</small>`:`<small class="num">เหลือ ${fmt(b-s)}</small>`;
-      return `<div class="cat"><div class="top"><span class="cl">${ic(c,'sm')}${c} <small class="num">${fmt(s)} / ${fmt(b)}</small></span>${right}</div><div class="bar"><i class="${cls}" style="width:${Math.min(100,p*100).toFixed(1)}%"></i></div></div>`;
-    }
-    return `<div class="cat"><div class="top"><span class="cl">${ic(c,'sm')}${c} <small>ไม่ได้ตั้งงบ</small></span><small class="num">${fmt(s)}</small></div><div class="bar"><i style="width:${(s/maxSpent*100).toFixed(1)}%"></i></div></div>`;
-  }).join(''):emptyState('great',L('ยังไม่มีรายจ่ายเดือนนี้','No spending this month yet'),L('น้ำในโอ่งยังเต็มปริ่ม','The jar is still full to the brim'),null,true);
+  const nowD=new Date(), curM=view.getFullYear()===nowD.getFullYear()&&view.getMonth()===nowD.getMonth(), pace=curM?nowD.getDate()/new Date(nowD.getFullYear(),nowD.getMonth()+1,0).getDate():null;
+  const withB=names.filter(c=>budget[c]>0), noB=names.filter(c=>!(budget[c]>0)&&(spent[c]||0)>0);
+  $('cats').innerHTML=names.length?withB.map(c=>{
+    const s=spent[c]||0, b=budget[c], p=s/b, cls=p>1?'over':p>=.8?'near':'ok', ahead=pace!=null&&p<=1&&p>pace+.08;
+    const right=p>1?`<small class="over num">${L('เกินงบ','over by')} ${fmt(s-b)}</small>`:`<small class="num">${L('เหลือ','left')} ${fmt(b-s)}</small>`;
+    return `<div class="cat"><div class="top"><span class="cl">${ic(c,'sm')}<span class="cn">${esc(c)}</span> <small class="num">${fmt(s)} / ${fmt(b)}</small></span>${right}</div><div class="bar b2"><i class="${cls}" style="width:${Math.min(100,p*100).toFixed(1)}%"></i>${pace!=null?`<u class="pace" style="left:${(pace*100).toFixed(1)}%" title="${L('ผ่านไปแล้วของเดือน','of the month so far')}"></u>`:''}</div>${ahead?`<div class="paceh">${L(`ใช้ไป ${Math.round(p*100)}% แต่เดือนเพิ่งผ่านไป ${Math.round(pace*100)}%`,`${Math.round(p*100)}% used with ${Math.round(pace*100)}% of the month gone`)}</div>`:''}</div>`;
+  }).join('')+(noB.length?`<div class="nob"><div class="nobh">${L('ยังไม่ได้ตั้งงบ','No budget yet')}</div>${noB.map(c=>`<div class="nobr">${ic(c,'sm')}<span class="cn">${esc(c)}</span><small class="num">${fmt(spent[c])}</small><button type="button" data-sb="${esc(c)}">${L('ตั้งงบ','Set')}</button></div>`).join('')}</div>`:''):emptyState('great',L('ยังไม่มีรายจ่ายเดือนนี้','No spending this month yet'),L('น้ำในโอ่งยังเต็มปริ่ม','The jar is still full to the brim'),null,true);
   renderMix(spent,tout);
   if(ym!==lastAnimYm&&FX()){lastAnimYm=ym; ['mix','cats'].forEach(id=>{const e=$(id); e.classList.add('fresh'); clearTimeout(e._ft); e._ft=setTimeout(()=>e.classList.remove('fresh'),1500)})}
 
@@ -2326,16 +2349,17 @@ let filterCat=null;
 function renderMix(spent,tout){
   const list=Object.entries(spent).sort((a,b)=>b[1]-a[1]);
   $('mixsec').hidden=!list.length; if(!list.length) return;
-  const R=60, C=2*Math.PI*R, gap=list.length>1?2.5:0; let off=0;
+  const R=60, C=2*Math.PI*R, gap=list.length>1?3:0; let off=0;
   const segs=list.map(([c,v])=>{
     const len=Math.max(0,v/tout*C-gap), h=(ICONS[c]||[200])[0];
     const s=`<circle r="${R}" cx="75" cy="75" data-c="${esc(c)}" class="${filterCat&&filterCat!==c?'dim':''}" style="stroke:hsl(${h} 62% var(--dl))" stroke-dasharray="${len.toFixed(2)} ${(C-len).toFixed(2)}" stroke-dashoffset="${(-off).toFixed(2)}"><title>${esc(c)} ${fmt(v)}</title></circle>`;
     off+=v/tout*C; return s;
   }).join('');
   const sel=filterCat&&spent[filterCat]?[filterCat,spent[filterCat]]:null;
-  $('mix').innerHTML=`<div class="donut"><svg viewBox="0 0 150 150">${segs}</svg><div class="mid"><small>${sel?esc(sel[0]):'รายจ่ายรวม'}</small><b class="num">${fmt(sel?sel[1]:tout)}</b>${sel?`<small>${Math.round(sel[1]/tout*100)}%</small>`:''}</div></div>
-  <div class="legend">${list.slice(0,6).map(([c,v])=>`<button data-c="${esc(c)}" class="${filterCat===c?'on':''}"><i style="background:hsl(${(ICONS[c]||[200])[0]} 62% var(--dl))"></i><span>${esc(c)}</span><em class="num">${Math.round(v/tout*100)}%</em></button>`).join('')}</div>`;
+  $('mix').innerHTML=`<div class="donut"><svg viewBox="0 0 150 150"><circle class="trk" r="${R}" cx="75" cy="75"/>${segs}</svg><div class="mid">${sel?`<span class="mi">${ic(sel[0],'sm')}</span>`:''}<small>${sel?esc(sel[0]):'รายจ่ายรวม'}</small><b class="num">${fmt(sel?sel[1]:tout)}</b>${sel?`<small>${Math.round(sel[1]/tout*100)}%</small>`:''}</div></div>
+  <div class="legend">${list.slice(0,6).map(([c,v])=>`<button data-c="${esc(c)}" class="${filterCat===c?'on':''}">${ic(c,'xs')}<span>${esc(c)}<small class="num">${fmt(v)}</small></span><em class="num">${Math.round(v/tout*100)}%</em><b class="lb" style="--w:${(v/list[0][1]*100).toFixed(1)};background:hsl(${(ICONS[c]||[200])[0]} 62% var(--dl))"></b></button>`).join('')}</div>`;
 }
+$('cats').addEventListener('click',e=>{ const b=e.target.closest('[data-sb]'); if(!b) return; const c=b.dataset.sb; openSet(false); const i=CATS.out.indexOf(c); const inp=$('b'+i); if(inp){ setOpenFor(inp); setTimeout(()=>{ try{inp.scrollIntoView({block:'center'})}catch(_){} inp.focus(); inp.classList.add('flash') },120) } });
 $('mix').onclick=e=>{const t=e.target.closest('[data-c]'); if(!t) return; const c=t.getAttribute('data-c'); filterCat=filterCat===c?null:c; render(); if(filterCat) $('fchip').scrollIntoView({behavior:'smooth',block:'start'})};
 
 /* Swipe to delete + undo */
