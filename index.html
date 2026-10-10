@@ -1042,6 +1042,31 @@ input.flash{animation:flashin 1.2s ease-out}
 .legend button span small{font-size:11px;color:var(--muted)}
 .legend button.on span small{color:inherit;opacity:.8}
 .legend .lb{position:absolute;left:8px;bottom:2px;height:2px;width:calc((100% - 16px) * var(--w) / 100);border-radius:1px;opacity:.55}
+
+/* ===== Polish round 8 ===== */
+:root{--cash-bg:linear-gradient(135deg,#e6f2d2,#c9e3a8);--cash-fg:#1f3a0e}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--cash-bg:linear-gradient(135deg,#3b4a24,#222c16);--cash-fg:#e3f6bd}}
+:root[data-theme="dark"]{--cash-bg:linear-gradient(135deg,#3b4a24,#222c16);--cash-fg:#e3f6bd}
+/* list: tags sit on the second line so titles are never cut */
+.row .t small .tag{margin:0 6px 0 0;vertical-align:1px;font-size:10px;padding:0 7px}
+/* recurring timeline */
+.upcoming{padding-bottom:14px}
+.upcoming .uh{display:flex;justify-content:space-between;align-items:center;padding:14px 16px 8px;font-size:13px;font-weight:600;color:var(--ink);letter-spacing:0}
+.upcoming .uh small{color:var(--muted);font-weight:500}
+.utrack{display:flex;gap:10px;overflow-x:auto;padding:2px 14px 2px;scrollbar-width:none;scroll-snap-type:x mandatory}
+.utrack::-webkit-scrollbar{display:none}
+.ucard{flex:none;width:156px;scroll-snap-align:start;border:0;border-radius:20px;background:var(--surface);color:var(--ink);padding:12px;display:flex;flex-direction:column;align-items:flex-start;gap:6px;text-align:left;cursor:pointer;font:inherit;transition:background .25s,color .25s,transform .15s}
+.ucard:active{transform:scale(.97)}
+.ucard .ud{font-size:11px;font-weight:600;padding:2px 9px;border-radius:999px;background:var(--s-high);color:var(--muted)}
+.ucard.soon .ud{background:var(--t-out);color:var(--t-out-fg)}
+.ucard .ur{display:flex;align-items:center;justify-content:space-between;width:100%;gap:8px}
+.ucard .ua{font-family:var(--display);font-size:18px;font-weight:500}
+.ucard .ua.in{color:var(--in)}
+.ucard b{font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.ucard small{font-size:11px;color:var(--muted)}
+.ucard.armed{background:var(--btn);color:var(--btn-fg)}
+.ucard.armed small,.ucard.armed .ua,.ucard.armed .ua.in{color:inherit}
+.ucard.armed .ud{background:color-mix(in srgb,currentColor 18%,transparent);color:inherit}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i></div><div id="festfx" aria-hidden="true"></div>
@@ -2147,7 +2172,7 @@ function render(){
   const dayHTML=([dt,rs])=>{
     const d=new Date(dt+'T00:00'); const net=rs.reduce((s,r)=>s+NET(r),0), sp=dayOut[dt]||0;
     return `<div class="day"><div class="dayhead"><span>${d.toLocaleDateString(LOC(),searching?{day:'numeric',month:'short',year:'numeric'}:{weekday:'short',day:'numeric',month:'short'})}</span><span class="dright">${sp?`<i class="dbar" title="${fmt(sp)}"><b style="width:${Math.max(6,sp/maxDay*100).toFixed(0)}%"></b></i>`:'<span class="nospend">ไม่ใช้เงิน</span>'}<span class="num">${net>=0?'+':'-'}${fmt(Math.abs(net))}</span></span></div>`+
-    rs.map(r=>{const big=r.type==='out'&&r.amount>=bigCut; return `<div class="rowwrap"><div class="row${String(r.id)===lastAddedId?' new':''}${big?' big':''}" data-id="${r.id}">${ic(r.cat)}<div class="t" tabindex="0" role="button" aria-label="${L('แก้ไข','Edit')} ${esc(rTitle(r))}"><b>${esc(rTitle(r))}${big?'<span class="tag big">ก้อนใหญ่</span>':''}${r.demo?'<span class="tag">ตัวอย่าง</span>':''}${r.recurId?'<span class="tag rec">ประจำ</span>':''}${r.type==='lend'?'<span class="tag split">หารบิล</span>':''}</b><small>${esc(rSub(r))}${r.note?' · '+esc(r.note):''}</small></div>
+    rs.map(r=>{const big=r.type==='out'&&r.amount>=bigCut; return `<div class="rowwrap"><div class="row${String(r.id)===lastAddedId?' new':''}${big?' big':''}" data-id="${r.id}">${ic(r.cat)}<div class="t" tabindex="0" role="button" aria-label="${L('แก้ไข','Edit')} ${esc(rTitle(r))}"><b>${esc(rTitle(r))}</b><small>${big?'<span class="tag big">ก้อนใหญ่</span>':''}${r.type==='lend'?'<span class="tag split">หารบิล</span>':''}${r.recurId?'<span class="tag rec">ประจำ</span>':''}${r.demo?'<span class="tag">ตัวอย่าง</span>':''}${esc(rSub(r))}${r.note?' · '+esc(r.note):''}</small></div>
       <div class="amt num ${r.type}">${r.type==='in'||r.type==='back'?'+':r.type==='tr'?'':'-'}${fmt(r.amount)}</div></div></div>`}).join('')+'</div>';
   };
   const gapHTML=(n,a,b)=>{const f=x=>x.toLocaleDateString(LOC(),{day:'numeric',month:'short'}); return `<div class="nsgap">${leaf}<span>${L(`ไม่ใช้เงิน ${n} วัน`,`${n} no-spend ${n===1?'day':'days'}`)}</span><small>${n>1?`${f(a)} – ${f(b)}`:f(a)}</small></div>`};
@@ -2629,8 +2654,17 @@ function renderUpcoming(){
   const now=new Date(), isCur=view.getFullYear()===now.getFullYear()&&view.getMonth()===now.getMonth();
   const up=isCur?upcomingFor(now):[];
   $('upcoming').hidden=!up.length; if(!up.length) return;
-  $('upcoming').innerHTML=`<div class="uh">รายการประจำที่จะมาเดือนนี้</div>`+up.map(r=>`<div class="row">${ic(r.cat)}<div class="t"><b>${esc(r.memo||r.cat)}</b><small>${esc(r.cat)}</small></div><div><div class="amt num ${r.type}">${r.type==='in'?'+':'-'}${fmt(r.amount)}</div><div class="when">${new Date(r.date+'T00:00').toLocaleDateString(LOC(),{day:'numeric',month:'short'})}</div></div></div>`).join('');
+  const tot=up.reduce((a,r)=>a+(r.type==='in'?r.amount:-r.amount),0), t0=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  $('upcoming').innerHTML=`<div class="uh"><span>${L('รายการประจำที่จะมา','Coming up')}</span><small class="num">${tot<0?'-':'+'}${fmt(Math.abs(tot))}</small></div><div class="utrack">`+up.map(r=>{
+    const d=Math.round((new Date(r.date+'T00:00')-t0)/DAY), soon=d<=3, armed=upArmed===r.id;
+    return `<button type="button" class="ucard${soon?' soon':''}${armed?' armed':''}" data-up="${r.id}"><span class="ud">${d<=0?L('วันนี้','Today'):d===1?L('พรุ่งนี้','Tomorrow'):L(`อีก ${d} วัน`,`In ${d} days`)}</span><span class="ur">${ic(r.cat,'sm')}<span class="ua num ${r.type}">${r.type==='in'?'+':'-'}${fmt(r.amount)}</span></span><b>${esc(r.memo||r.cat)}</b><small>${armed?L('แตะอีกครั้ง = จ่ายแล้ว','Tap again to mark paid'):new Date(r.date+'T00:00').toLocaleDateString(LOC(),{day:'numeric',month:'short'})}</small></button>`}).join('')+'</div>';
 }
+let upArmed=null, upArmT=0;
+$('upcoming').addEventListener('click',e=>{ const c=e.target.closest('[data-up]'); if(!c) return; const id=c.dataset.up;
+  if(upArmed!==id){ upArmed=id; renderUpcoming(); clearTimeout(upArmT); upArmT=setTimeout(()=>{ if(upArmed===id){upArmed=null; renderUpcoming()} },4000); return }
+  upArmed=null; const r=recur.find(x=>x.id===id); if(!r) return;
+  data.push({id:'a'+Date.now().toString(36),type:r.type,amount:r.amount,cat:r.cat,memo:r.memo,date:iso(new Date()),recurId:r.id,w:'w0',...(r.demo?{demo:true}:{})});
+  prefs.lastLogDay=iso(new Date()); savePrefs(); save(); render(); toast(L(`บันทึก ${r.memo||r.cat} แล้ว`,`${r.memo||tr(r.cat)} logged`)); if(r.type==='in') sfx('clink') });
 function renderRecurList(){
   $('recurlist').innerHTML=recur.length?recur.map(r=>`<div class="rc">${ic(r.cat,'sm')}<div class="t2"><b>${esc(r.memo||r.cat)}${r.demo?'<span class="tag">ตัวอย่าง</span>':''}</b><small class="num">${r.type==='in'?'+':'-'}${fmt(r.amount)} · ทุกวันที่ ${r.day}</small></div><button data-r="${r.id}">หยุด</button></div>`).join('')
     :'<div class="empty">ยังไม่มีรายการประจำ</div>';
@@ -3072,7 +3106,7 @@ function BANK_TONES(){ return [[/kbank|k ?plus|กสิกร/i,'#00a950','#006
 function walletTone(w){
   for(const [re,a,b,fg] of BANK_TONES()) if(re.test(w.name)) return {bg:`linear-gradient(135deg,${a},${b})`,fg:fg||'#fff'};
   if(w.kind==='card') return {bg:'linear-gradient(135deg,#3a3a44,#121217)',fg:'#fff'};
-  if(w.kind==='cash') return {bg:'linear-gradient(135deg,#e6f2d2,#c9e3a8)',fg:'#1f3a0e'};
+  if(w.kind==='cash') return {bg:'var(--cash-bg)',fg:'var(--cash-fg)'};
   return null;
 }
 function renderWallets(){
