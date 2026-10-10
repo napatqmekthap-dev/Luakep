@@ -1463,9 +1463,11 @@ function checkMonthWin(){
   }catch(e){}
 }
 /* Cinematic helpers */
-const FX=()=>!RM()&&prefs.fx!==false;
+const CAN_ANIM=typeof Element!=='undefined'&&typeof Element.prototype.animate==='function';
+const FX=()=>!RM()&&prefs.fx!==false&&CAN_ANIM;
 function centerOf(el){const r=el.getBoundingClientRect();return {x:r.left+r.width/2,y:r.top+r.height/2,vis:r.bottom>0&&r.top<innerHeight&&r.width>0}}
 function splash(x,y,n){
+  if(!CAN_ANIM) return;
   const rp=document.createElement('div'); rp.className='ripple'; rp.style.left=x+'px'; rp.style.top=y+'px'; document.body.appendChild(rp); setTimeout(()=>rp.remove(),750);
   for(let i=0;i<(n||9);i++){const d=document.createElement('div'); d.className='drop'; d.style.left=x+'px'; d.style.top=y+'px'; document.body.appendChild(d);
     const a=-Math.PI/2+(Math.random()-.5)*2.2, v=40+Math.random()*50;
