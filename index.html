@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#f3f1ec">
+<meta name="theme-color" content="#f5f3ee">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
@@ -1132,6 +1132,15 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{outline:none}
 [data-palette="celadon"] .bar.b2 i.ok{background:var(--in-bar)}
 [data-palette="celadon"] .wcard.tone{filter:saturate(.68) brightness(.97)}
 [data-palette="celadon"] .goal .bar i,[data-palette="celadon"] .ring .val{filter:saturate(.45)}
+
+/* celadon: story + intro */
+.story.luxe .h,.story.luxe .n{font-weight:400}
+.story.luxe .k{letter-spacing:.06em}
+.story.luxe .blob{background:color-mix(in srgb,#ffffff 30%,transparent)}
+.story.luxe .week .hi span{background:#b8913a}
+[data-palette="celadon"] #intro .ishine{background:radial-gradient(circle,var(--halo) 0%,transparent 65%)}
+[data-palette="celadon"] #intro .iword{font-weight:400}
+[data-palette="celadon"] .flycoin{box-shadow:inset 0 0 0 3px #c99a1e,0 6px 14px rgba(20,28,24,.3)}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i></div><div id="festfx" aria-hidden="true"></div>
@@ -2098,7 +2107,7 @@ function celebrate(){
   if(RM()) return;
   const c=document.createElement('canvas'); c.className='confetti'; const dpr=Math.min(2,devicePixelRatio||1);
   c.width=innerWidth*dpr; c.height=innerHeight*dpr; document.body.appendChild(c); const g=c.getContext('2d'); if(!g){c.remove();return} g.scale(dpr,dpr);
-  const cols=['#dff3b4','#cdeedd','#ffd9cc','#e9e4ff','#fff1cf','#1f1f1f'], P=[];
+  const cols=document.documentElement.getAttribute('data-palette')==='celadon'?['#c9a24a','#e8d39a','#fffefb','#8fbfa6','#2f5e4c','#f0e6cc']:['#dff3b4','#cdeedd','#ffd9cc','#e9e4ff','#fff1cf','#1f1f1f'], P=[];
   for(let i=0;i<120;i++){const coin=i%5===0; P.push({x:innerWidth/2+(Math.random()-.5)*80,y:innerHeight*.35,vx:(Math.random()-.5)*12,vy:-Math.random()*14-6,r:coin?9:6+Math.random()*5,rot:Math.random()*6,vr:(Math.random()-.5)*.4,coin,c:cols[i%cols.length]})}
   const t0=performance.now();
   const step=t=>{const k=(t-t0)/1000; g.clearRect(0,0,innerWidth,innerHeight);
@@ -2491,6 +2500,7 @@ $('undo').onclick=()=>{ if(undoBuf){data.splice(Math.min(undoBuf.i,data.length),
 
 /* Monthly recap story */
 const TH_D=['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัสฯ','ศุกร์','เสาร์'];
+const LUXE_BG=[['#f5f3ee','#1d2420'],['#e3eee7','#1f3a2d'],['#efe7dc','#4a3218'],['#2f5e4c','#f5f3ee'],['#ece9e1','#2a2a25'],['#141a17','#ece9e1']];
 const BG=[['#dff3b4','#25360a'],['#cdeedd','#0d3b23'],['#ffd9cc','#4a1607'],['#e9e4ff','#2b2161'],['#fff1cf','#5a3d00'],['#1f1f1f','#f3f1ec']];
 const SMOOD=[null,null,'good','great','warn',null];
 let story=null, stTimer=null;
@@ -2549,7 +2559,8 @@ function closeStory(){ const st=$('story'); if(st) st._shown=false;clearTimeout(
 function showSlide(i){
   if(!story) return; i=Math.max(0,Math.min(story.slides.length-1,i)); story.i=i;
   const last=i===story.slides.length-1, dur=last?0:5200;
-  const pal=last?BG[BG.length-1]:BG[i%(BG.length-1)];
+  const BGS=document.documentElement.getAttribute('data-palette')==='celadon'?LUXE_BG:BG, pal=last?BGS[BGS.length-1]:BGS[i%(BGS.length-1)];
+  $('story').classList.toggle('luxe',BGS===LUXE_BG);
   const st=$('story');
   if(FX()&&st._shown){const w=document.createElement('div'); w.className='swipe'; w.style.background=pal[0]; w.style.setProperty('--wx',(story.tx||80)+'%'); w.style.setProperty('--wy',(story.ty||50)+'%'); st.prepend(w); setTimeout(()=>{st.style.background=pal[0]; w.remove()},560)}
   else st.style.background=pal[0];
@@ -2579,40 +2590,41 @@ document.addEventListener('keydown',e=>{ if(!story) return; if(e.key==='Escape')
 
 const PIGC={'c-body':'#ff8a65','c-shell':'#f6c453','c-shell-d':'#c98a1f','c-ink':'#4a1f14','c-cheek':'#ff4f7b','c-coin':'#ffe08a','c-tear':'#64b5f6'};
 async function makeCard(d){
+  const LX=document.documentElement.getAttribute('data-palette')==='celadon', CMAP={"#f3f1ec": "#f5f3ee", "#6b665e": "#6c716b", "#1f1f1f": "#1d2420", "#ffffff": "#fffefb", "#13703e": "#2f6e52", "#c2410c": "#a2502f", "#cdeedd": "#e3eee7", "#0d3b23": "#1f3a2d", "#ffd9cc": "#f1e6dd", "#4a1607": "#5b2f1e", "#e9e4ff": "#ecebe5", "#2b2161": "#2c2c27", "#dff3b4": "#e7efe9", "#25360a": "#21372c", "#fff1cf": "#f3ecdc", "#5a3d00": "#4f3d12"}, CL=c=>LX&&CMAP[c]||c;
   try{await document.fonts.ready}catch(e){}
   const W=1080,H=1920,c=document.createElement('canvas'); c.width=W;c.height=H; const g=c.getContext('2d');
   {const ft=g.fillText.bind(g), mt=g.measureText.bind(g); g.fillText=(t,x,y)=>ft(tr(String(t)),x,y); g.measureText=t=>mt(tr(String(t)));}
   const F='"Noto Sans Thai","Roboto",sans-serif', FD='"Kanit","Mitr","Noto Sans Thai",sans-serif';
   try{await Promise.all([document.fonts.load('600 40px Mitr','เก็บ'),document.fonts.load('600 40px Kanit','0123456789')])}catch(e){}
   const rr=(x,y,w,h,r,fill)=>{g.fillStyle=fill;g.beginPath();if(g.roundRect)g.roundRect(x,y,w,h,r);else g.rect(x,y,w,h);g.fill()};
-  const txt=(t,x,y,size,weight,color,alpha)=>{g.globalAlpha=alpha==null?1:alpha;g.fillStyle=color;g.font=weight>=700?`600 ${size}px ${FD}`:`${weight} ${size}px ${F}`;g.fillText(t,x,y);g.globalAlpha=1};
-  const fnt=(w,s)=>w>=700?`600 ${s}px ${FD}`:`${w} ${s}px ${F}`;
+  const txt=(t,x,y,size,weight,color,alpha)=>{g.globalAlpha=alpha==null?1:alpha;g.fillStyle=color;g.font=weight>=700?`${LX?500:600} ${size}px ${FD}`:`${weight} ${size}px ${F}`;g.fillText(t,x,y);g.globalAlpha=1};
+  const fnt=(w,s)=>w>=700?`${LX?500:600} ${s}px ${FD}`:`${w} ${s}px ${F}`;
   const fit=(t,max,size,weight)=>{let s=size;g.font=fnt(weight,s);while(g.measureText(t).width>max&&s>28){s-=4;g.font=fnt(weight,s)}return s};
-  g.fillStyle='#f3f1ec'; g.fillRect(0,0,W,H);
-  txt('สรุปการเงินของฉัน',90,170,44,600,'#6b665e');
-  txt(d.month,90,280,fit(tr(d.month),900,96,800),800,'#1f1f1f');
+  g.fillStyle=CL('#f3f1ec'); g.fillRect(0,0,W,H);
+  txt('สรุปการเงินของฉัน',90,170,44,600,CL('#6b665e'));
+  txt(d.month,90,280,fit(tr(d.month),900,96,800),800,CL('#1f1f1f'));
   // hero card
-  rr(60,350,960,600,56,'#ffffff');
+  rr(60,350,960,600,56,CL('#ffffff')); if(LX){ g.strokeStyle='rgba(184,145,58,.5)'; g.lineWidth=3; g.beginPath(); if(g.roundRect) g.roundRect(61.5,351.5,957,597,55); else g.rect(61.5,351.5,957,597); g.stroke(); g.fillStyle='rgba(184,145,58,.7)'; g.fillRect(90,200,120,3) }
   const left=d.tin-d.tout, pct=d.tin?Math.round((1-d.tout/d.tin)*100):0;
-  txt(left>=0?'เหลือเก็บเดือนนี้':'ใช้เกินรายรับ',110,450,40,600,'#6b665e');
-  const big=fmt(Math.abs(left)); txt(big,110,570,fit(big,500,104,800),800,'#1f1f1f');
-  if(d.tin) txt(left>=0?`เก็บได้ ${pct}% ของรายรับ`:`ใช้เกินรายรับ ${fmt(-left)}`,110,640,36,600,left>=0?'#13703e':'#c2410c');
+  txt(left>=0?'เหลือเก็บเดือนนี้':'ใช้เกินรายรับ',110,450,40,600,CL('#6b665e'));
+  const big=fmt(Math.abs(left)); txt(big,110,570,fit(big,500,104,800),800,CL('#1f1f1f'));
+  if(d.tin) txt(left>=0?`เก็บได้ ${pct}% ของรายรับ`:`ใช้เกินรายรับ ${fmt(-left)}`,110,640,36,600,left>=0?CL('#13703e'):CL('#c2410c'));
   try{
     const svg=jarSVG(moodOf(d.tin,d.tout)).replace(/var\(--([\w-]+)\)/g,(m,n)=>PIGC[n]||'#000').replace(/currentColor/g,'#2b3b36').replace('viewBox="0 0 120 120"','viewBox="-9 -18 138 138"').replace('<svg ','<svg xmlns="http://www.w3.org/2000/svg" width="420" height="420" ');
     const img=new Image(); const u=URL.createObjectURL(new Blob([svg],{type:'image/svg+xml'}));
     await new Promise((ok,no)=>{img.onload=ok;img.onerror=no;img.src=u}); g.drawImage(img,620,360,380,380); URL.revokeObjectURL(u);
   }catch(e){}
-  rr(100,690,430,220,40,'#cdeedd'); txt('เงินเข้า',140,760,36,600,'#0d3b23',.8); txt(fmt(d.tin),140,860,fit(fmt(d.tin),360,64,800),800,'#0d3b23');
-  rr(550,690,430,220,40,'#ffd9cc'); txt('เงินออก',590,760,36,600,'#4a1607',.8); txt(fmt(d.tout),590,860,fit(fmt(d.tout),360,64,800),800,'#4a1607');
+  rr(100,690,430,220,40,CL('#cdeedd')); txt('เงินเข้า',140,760,36,600,CL('#0d3b23'),.8); txt(fmt(d.tin),140,860,fit(fmt(d.tin),360,64,800),800,CL('#0d3b23'));
+  rr(550,690,430,220,40,CL('#ffd9cc')); txt('เงินออก',590,760,36,600,CL('#4a1607'),.8); txt(fmt(d.tout),590,860,fit(fmt(d.tout),360,64,800),800,CL('#4a1607'));
   // detail tiles
   let y=990;
   const tile=(bg,fg,k,v,side)=>{rr(60,y,960,200,48,bg); txt(k,110,y+72,34,600,fg,.75); const vs=String(v); txt(vs,110,y+152,fit(tr(vs),560,58,800),800,fg);
     if(side){g.font=`700 40px ${F}`; const w=g.measureText(side).width; txt(side,W-110-w,y+152,40,700,fg)} y+=228};
-  if(d.top) tile('#e9e4ff','#2b2161','หมวดที่ใช้มากที่สุด',d.top[0],fmt(d.top[1]));
-  if(d.fav&&d.fav.n>1) tile('#dff3b4','#25360a','ขาประจำ',String(d.fav.name).slice(0,18),d.fav.n+' ครั้ง');
-  else if(d.biggest) tile('#dff3b4','#25360a','ก้อนใหญ่ที่สุด',String(d.biggest.memo||d.biggest.cat).slice(0,18),fmt(d.biggest.amount));
-  if(d.tout){const hi=d.wd.indexOf(Math.max(...d.wd)); tile('#fff1cf','#5a3d00','วันที่ใช้เยอะที่สุด','วัน'+TH_D[hi],d.noSpend?`ไม่ใช้เงิน ${d.noSpend} วัน`:'')}
-  txt('จดด้วยแอป เหลือเก็บ',90,H-90,36,600,'#6b665e');
+  if(d.top) tile(CL('#e9e4ff'),CL('#2b2161'),'หมวดที่ใช้มากที่สุด',d.top[0],fmt(d.top[1]));
+  if(d.fav&&d.fav.n>1) tile(CL('#dff3b4'),CL('#25360a'),'ขาประจำ',String(d.fav.name).slice(0,18),d.fav.n+' ครั้ง');
+  else if(d.biggest) tile(CL('#dff3b4'),CL('#25360a'),'ก้อนใหญ่ที่สุด',String(d.biggest.memo||d.biggest.cat).slice(0,18),fmt(d.biggest.amount));
+  if(d.tout){const hi=d.wd.indexOf(Math.max(...d.wd)); tile(CL('#fff1cf'),CL('#5a3d00'),'วันที่ใช้เยอะที่สุด','วัน'+TH_D[hi],d.noSpend?`ไม่ใช้เงิน ${d.noSpend} วัน`:'')}
+  txt('จดด้วยแอป เหลือเก็บ',90,H-90,36,600,CL('#6b665e'));
   return await new Promise(ok=>c.toBlob(ok,'image/png'));
 }
 async function shareCard(){
