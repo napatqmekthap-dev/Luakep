@@ -2168,7 +2168,7 @@ function applyTheme(){
   const t=prefs.theme||'auto', r=document.documentElement;
   if(t==='auto'){ if(HOST_THEME) r.setAttribute('data-theme',HOST_THEME); else r.removeAttribute('data-theme') } else r.setAttribute('data-theme',t);
   document.querySelectorAll('#themeseg [data-th]').forEach(b=>b.classList.toggle('on',b.dataset.th===t));
-  const dark=t==='dark'||(t==='auto'&&(HOST_THEME==='dark'||(!HOST_THEME&&matchMedia('(prefers-color-scheme: dark)').matches)));
+  const dark=t==='dark'||(t==='auto'&&(HOST_THEME==='dark'||(!HOST_THEME&&!!(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches))));
   const mt=document.querySelector('meta[name="theme-color"]'); if(mt) mt.setAttribute('content',dark?'#141311':'#f3f1ec');
 }
 $('themeseg').addEventListener('click',e=>{const b=e.target.closest('[data-th]'); if(!b) return; prefs.theme=b.dataset.th; savePrefs(); applyTheme()});
