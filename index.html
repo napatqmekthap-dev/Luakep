@@ -92,6 +92,29 @@ h1{font-family:var(--display);font-size:32px;font-weight:400;margin:0;line-heigh
 .split b{font-size:20px;font-weight:500}
 .mood{margin-top:8px;background:var(--hero-fill);border-radius:16px;padding:10px 14px;font-size:14px;line-height:1.45}
 .mood b{font-weight:700}
+.bkbanner{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--tc3);color:var(--on-tc3);border-radius:16px;padding:12px 12px 12px 16px}
+.bkbanner .bi{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.45);display:grid;place-items:center;flex:none}
+.bkbanner .bi svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.bkbanner span.tx{flex:1;min-width:150px;font-size:14px;line-height:1.4}
+.bkbanner span.tx b{display:block;font-size:15px}
+.bkbanner button{border:0;border-radius:20px;height:36px;padding:0 14px;font-size:14px;font-weight:500;cursor:pointer;background:transparent;color:inherit}
+.bkbanner button.go{background:var(--on-tc3);color:var(--tc3)}
+.flash{animation:flash 1.4s ease}
+@keyframes flash{0%,60%{box-shadow:0 0 0 3px var(--primary)}100%{box-shadow:0 0 0 0 transparent}}
+.addchip{border-style:dashed!important;color:var(--primary)!important;padding:0 12px!important}
+.quickcat{display:flex;gap:8px}
+.quickcat input{flex:1;padding:10px 12px}
+.quickcat button{flex:none;height:44px;border-radius:12px;border:0;padding:0 16px;background:var(--primary);color:var(--on-primary);font-weight:500;cursor:pointer}
+.catrow{display:flex;align-items:center;gap:10px;font-size:15px;padding:4px 0}
+.catrow .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.catrow small{color:var(--muted);font-size:12px}
+.catrow button{border:0;background:none;color:var(--primary);font-size:13px;font-weight:500;cursor:pointer;padding:6px 8px}
+.catrow button.del{color:var(--out)}
+.picks{display:flex;flex-wrap:wrap;gap:8px}
+.picks button{width:40px;height:40px;border-radius:50%;border:0;cursor:pointer;display:grid;place-items:center;background:hsl(var(--h) var(--tone-s) var(--tone-bg));color:hsl(var(--h) 60% var(--tone-fg))}
+.picks button svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.picks button.on{box-shadow:0 0 0 3px var(--primary)}
+.picks.hues button{width:32px;height:32px;background:hsl(var(--h) 60% 50%)}
 .carry{font-size:13px;opacity:.85;margin:-12px 0 14px;padding-right:92px}
 
 /* Sections */
@@ -489,6 +512,12 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
     <div class="mood" id="mood" aria-live="polite"></div>
   </div>
 
+  <div class="bkbanner" id="bkbanner" hidden>
+    <span class="bi"><svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg></span>
+    <span class="tx"><b id="bktitle">ยังไม่เคยสำรองข้อมูล</b><span id="bksub">ข้อมูลอยู่ในมือถือเครื่องนี้เท่านั้น สำรองไว้กันหาย</span></span>
+    <button id="bklater">ไว้ทีหลัง</button><button class="go" id="bknow">สำรองเลย</button>
+  </div>
+
   <div class="note" id="demo" hidden>
     <span>ตอนนี้เป็นข้อมูลตัวอย่าง</span>
     <button id="cleardemo">ล้างตัวอย่าง เริ่มจดจริง</button>
@@ -561,6 +590,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
     </div>
     <label>จำนวนเงิน (บาท)<input id="amount" inputmode="decimal" placeholder="0"></label>
     <div><label>หมวด</label><div class="chips" id="chips"></div></div>
+    <div class="quickcat" id="quickcat" hidden><input id="qcname" maxlength="24" placeholder="ชื่อหมวดใหม่" aria-label="ชื่อหมวดใหม่"><button type="button" id="qcsave">เพิ่ม</button></div>
     <div class="two">
       <label>วันที่<input type="date" id="date"></label>
       <label>บันทึก<input id="memo" placeholder="เช่น ข้าวมันไก่"></label>
@@ -629,9 +659,24 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
       <p>แอปจะลงรายการเหล่านี้ให้เองเมื่อถึงวันที่กำหนดของทุกเดือน สร้างได้จากสวิตช์ “ทำซ้ำทุกเดือน” ตอนจดรายการ</p>
       <div class="cats" id="recurlist"></div>
     </div>
+    <div class="group" id="catgroup">
+      <h4>หมวดหมู่</h4>
+      <p>เพิ่มหมวดของคุณเองได้ หมวดที่มากับแอปแก้หรือลบไม่ได้</p>
+      <div class="seg" id="catseg"><button type="button" data-ct="out" class="on">รายจ่าย</button><button type="button" data-ct="in">รายรับ</button></div>
+      <div id="catlist"></div>
+      <div id="catform" hidden style="display:flex;flex-direction:column;gap:12px">
+        <label>ชื่อหมวด<input id="catname" maxlength="24" placeholder="เช่น สัตว์เลี้ยง, ประกัน, ทำบุญ"></label>
+        <div><label>ไอคอน</label><div class="picks" id="caticons"></div></div>
+        <div><label>สี</label><div class="picks hues" id="cathues"></div></div>
+        <div class="err" id="caterr"></div>
+        <div class="actions"><button id="catcancel">ยกเลิก</button><button class="save" id="catsave">บันทึกหมวด</button></div>
+      </div>
+      <button class="btn" id="addcat">+ เพิ่มหมวด</button>
+    </div>
     <div class="group" id="backup">
       <h4>สำรองข้อมูล</h4>
       <p>คัดลอกแล้วเก็บไว้ใน LINE Keep, โน้ต หรืออีเมลถึงตัวเอง</p>
+      <p id="lastbk"></p>
       <div class="actions">
         <button class="btn" id="copyjson">คัดลอกไฟล์สำรอง</button>
         <button class="btn" id="copycsv">คัดลอก CSV (Excel)</button>
@@ -829,6 +874,7 @@ function setLang(l){
   if(typeof setMoodForce==='function') setMoodForce();
 }
 Object.assign(DICT,{
+'ไว้ทีหลัง':'Later','สำรองเลย':'Back up now','หมวดหมู่':'Categories','เพิ่มหมวดของคุณเองได้ หมวดที่มากับแอปแก้หรือลบไม่ได้':'Add your own categories. Built-in ones cannot be edited or deleted.','ชื่อหมวด':'Category name','เช่น สัตว์เลี้ยง, ประกัน, ทำบุญ':'e.g. Pets, Insurance, Donations','สี':'Colour','บันทึกหมวด':'Save category','+ เพิ่มหมวด':'+ Add category','ชื่อหมวดใหม่':'New category name','เพิ่ม':'Add',
 'ยอดยกมาและยอดเริ่มต้น':'Carry-over & opening balance','ยกยอดคงเหลือจากเดือนก่อน':'Carry over previous balance','เงินที่เหลือของเดือนก่อนๆ จะรวมเข้ามาในยอดคงเหลือเดือนนี้':'Money left from earlier months is added to this month’s balance','ยอดเงินเริ่มต้น (บาท)':'Opening balance (THB)','เช่น เงินในบัญชีวันที่เริ่มใช้แอป':'e.g. what you had when you started','คงเหลือทั้งหมด':'Total balance',
 'จดไป {0} รายการ มาดูกันว่าเงินไปไหนบ้าง':'{0} transactions logged. Let’s see where the money went.',
 'เหลือเก็บ {0} หรือ {1} ของรายรับ':'You kept {0}, or {1} of your income','ใช้เกินรายรับไป {0}':'Spent {0} more than you earned','ยังไม่มีรายรับในเดือนนี้':'No income this month yet',
@@ -897,6 +943,15 @@ if(!Array.isArray(recur)){
 function saveGoals(){store(GKEY,goals)} function saveRecur(){store(RKEY,recur)}
 const SKEY='kp-settings-v1'; let prefs=load(SKEY,null); if(!prefs||typeof prefs!=='object') prefs={carry:true,opening:0};
 function savePrefs(){store(SKEY,prefs)}
+const DAY=864e5;
+function renderBackupBanner(){
+  const real=data.filter(r=>!r.demo).length, now=Date.now(), last=+prefs.lastBackup||0, days=last?Math.floor((now-last)/DAY):null;
+  const show=real>=10&&(!last||days>=30)&&!((+prefs.snooze||0)>now);
+  $('bkbanner').hidden=!show; if(!show) return;
+  $('bktitle').textContent=last?L(`สำรองข้อมูลล่าสุดเมื่อ ${days} วันก่อน`,`Last backup was ${days} days ago`):L('ยังไม่เคยสำรองข้อมูล','You have never backed up');
+  $('bksub').textContent=L(`มี ${real} รายการอยู่ในมือถือเครื่องนี้เท่านั้น สำรองไว้กันหาย`,`${real} transactions live only on this phone. Back them up so they are safe.`);
+}
+function renderLastBackup(){const last=+prefs.lastBackup||0; $('lastbk').textContent=last?L('สำรองล่าสุด: ','Last backup: ')+new Date(last).toLocaleDateString(LOC(),{day:'numeric',month:'short',year:'numeric'}):L('ยังไม่เคยสำรองข้อมูล','You have never backed up')}
 function carryBefore(ym){
   let s=+prefs.opening||0;
   data.forEach(r=>{ if(r.date.slice(0,7)<ym) s+=r.type==='in'?r.amount:-r.amount });
@@ -942,6 +997,47 @@ function upcomingFor(now){
 }
 let budget=load(BKEY,null); if(!budget||typeof budget!=='object') budget={'อาหาร':4000,'ช้อปปิ้ง':2000,'บันเทิง':1500};
 const save=()=>store(KEY,data);
+/* Custom categories */
+const CKEY='kp-cats-v1';
+let customCats=load(CKEY,null); if(!customCats||!Array.isArray(customCats.out)||!Array.isArray(customCats.in)) customCats={out:[],in:[]};
+const BASE_CATS={out:CATS.out.slice(),in:CATS.in.slice()};
+const CICONS={
+  dots:DOTS,
+  paw:'M8 14.5c1-2 2.5-3 4-3s3 1 4 3 1 4.5-1.5 4.5c-1 0-1.5-.6-2.5-.6s-1.5.6-2.5.6C7 19 7 16.5 8 14.5zM5 9.5a1.6 2 0 1 0 3.2 0a1.6 2 0 1 0-3.2 0M15.8 9.5a1.6 2 0 1 0 3.2 0a1.6 2 0 1 0-3.2 0M8.6 5.8a1.6 2 0 1 0 3.2 0a1.6 2 0 1 0-3.2 0M12.2 5.8a1.6 2 0 1 0 3.2 0a1.6 2 0 1 0-3.2 0',
+  shield:'M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6zM9 12l2 2 4-4',
+  heart:'M12 20s-7.5-4.6-7.5-10.2A4.1 4.1 0 0 1 12 7.4a4.1 4.1 0 0 1 7.5 2.4C19.5 15.4 12 20 12 20z',
+  gift:'M4 10h16v10H4zM3 7h18v3H3zM12 7v13M12 7C10 3 6.5 4 8.5 7M12 7c2-4 5.5-3 3.5 0',
+  study:'M3 6l9-3 9 3-9 3zM7 8v5c3 2 7 2 10 0V8M21 6v6',
+  phone:'M7 2h10a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zM11 18h2',
+  car:'M5 16V11l2-5h10l2 5v5M3 16h18v3H3zM7.5 13.5h.01M16.5 13.5h.01',
+  fuel:'M5 21V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v16M3 21h14M7 8h6M15 10l3 2v6a1.5 1.5 0 0 0 3 0v-8l-3-3',
+  baby:'M12 3a4 4 0 0 1 4 4v1a4 4 0 0 1-8 0V7a4 4 0 0 1 4-4zM6 21v-3a6 6 0 0 1 12 0v3',
+  gym:'M6 7v10M18 7v10M3 9v6M21 9v6M6 12h12',
+  plant:'M12 21v-9M12 12C12 7 8 5 4 5c0 4 3 7 8 7zM12 14c0-4 3-6 8-6 0 4-3 6-8 6zM8 21h16',
+  coffee:'M4 9h12v6a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5zM16 11h2a2 2 0 0 1 0 4h-2M8 3v3M12 3v3',
+  sparkle:'M12 3l2 5 5 2-5 2-2 5-2-5-5-2 5-2zM19 16l1 2 2 1-2 1-1 2-1-2-2-1 2-1z',
+  travel:'M2 16l20-7-3-2-7 2-5-4-2 1 3 5-4 1-2-1-1 1 3 3zM5 21h14',
+  home:'M3 11l9-7 9 7M5.5 9.5V20h13V9.5M10 20v-5h4v5'
+};
+const CHUES=[22,45,95,150,190,215,260,300,340];
+function applyCats(){
+  for(const t of ['out','in']){
+    const base=BASE_CATS[t].filter(c=>c!=='อื่นๆ');
+    CATS[t].length=0; CATS[t].push(...base,...customCats[t].map(c=>c.name),'อื่นๆ');
+    customCats[t].forEach(c=>{ICONS[c.name]=[c.hue,CICONS[c.icon]||DOTS]});
+  }
+}
+function saveCats(){store(CKEY,customCats);applyCats()}
+function catExists(name){return [...CATS.out,...CATS.in].some(c=>c.trim().toLowerCase()===name.trim().toLowerCase())}
+function addCustomCat(t,name,icon,hue){customCats[t].push({name,icon:icon||'dots',hue:hue==null?CHUES[(customCats.out.length+customCats.in.length)%CHUES.length]:hue});saveCats()}
+function renameCat(oldN,newN){
+  data.forEach(r=>{if(r.cat===oldN)r.cat=newN}); recur.forEach(r=>{if(r.cat===oldN)r.cat=newN});
+  if(budget[oldN]!=null){budget[newN]=budget[oldN];delete budget[oldN];store(BKEY,budget)}
+  Object.values(merchants).forEach(m=>{if(m.cat===oldN)m.cat=newN}); store(MKEY,merchants);
+  delete ICONS[oldN]; save(); saveRecur();
+}
+applyCats();
+
 
 /* Merchant memory + owner names */
 const MKEY='kp-merchant-v1', OKEY='kp-owners-v1';
@@ -1056,6 +1152,7 @@ function render(){
       `${sgn(carryAmt)} brought forward · ${tin-tout>=0?'+':''}${sgn(tin-tout)} this month${depThis?` · ${sgn(-depThis)} to goals`:''}`);
   } else { $('ballabel').textContent=L('คงเหลือเดือนนี้','Left this month'); $('bal').textContent=sgn(tin-tout); $('carry').hidden=true }
   $('demo').hidden=!data.some(r=>r.demo);
+  renderBackupBanner();
   renderAllowance(rows,tin,tout,carryAmt);
   renderGoals(); renderUpcoming();
   $('openrecap').hidden=rows.length<3;
@@ -1094,10 +1191,13 @@ function render(){
 /* Entry sheet */
 function chips(){
   const list=CATS[type].includes(cat)?CATS[type]:[...CATS[type],cat];
-  $('chips').innerHTML=list.map(c=>`<button type="button" data-c="${esc(c)}" class="${c===cat?'on':''}">${ic(c,'xs')}${esc(c)}</button>`).join('');
+  $('chips').innerHTML=list.map(c=>`<button type="button" data-c="${esc(c)}" class="${c===cat?'on':''}">${ic(c,'xs')}${esc(c)}</button>`).join('')+`<button type="button" class="addchip" data-add="1">+ ${L('หมวดใหม่','New category')}</button>`;
 }
 function setType(t){type=t;[...$('seg').children].forEach(x=>x.classList.toggle('on',x.dataset.t===t))}
-$('chips').onclick=e=>{const b=e.target.closest('button');if(b){cat=b.dataset.c;chips()}};
+$('chips').onclick=e=>{const b=e.target.closest('button');if(!b)return; if(b.dataset.add){$('quickcat').hidden=false;$('qcname').value='';$('qcname').focus();return} cat=b.dataset.c;chips()};
+$('qcsave').onclick=()=>{const n=$('qcname').value.trim(); if(!n){$('qcname').focus();return} if(catExists(n)){$('err').textContent=L('มีหมวดชื่อนี้อยู่แล้ว','That category already exists');return}
+  addCustomCat(type,n); cat=n; $('quickcat').hidden=true; $('err').textContent=''; chips()};
+$('qcname').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('qcsave').click()}});
 $('seg').onclick=e=>{const b=e.target.closest('button');if(!b)return;setType(b.dataset.t);cat=CATS[type][0];chips()};
 function openEntry(rec){
   editing=rec?String(rec.id):null;
@@ -1106,7 +1206,7 @@ function openEntry(rec){
   setType(rec?rec.type:'out'); cat=rec?rec.cat:CATS.out[0];
   $('amount').value=rec?rec.amount:''; $('memo').value=rec?rec.memo:''; $('date').value=rec?rec.date:iso(new Date());
   $('err').textContent=''; chips(); $('sheet').hidden=false; $('delentry').hidden=!rec;
-  $('recur').checked=false; $('recurrow').hidden=!!rec; updateRecurHint();
+  $('recur').checked=false; $('recurrow').hidden=!!rec; updateRecurHint(); $('quickcat').hidden=true;
   if(!rec) setTimeout(()=>$('amount').focus(),50);
 }
 $('add').onclick=()=>openEntry(null);
@@ -1384,7 +1484,7 @@ $('recurlist').onclick=e=>{const b=e.target.closest('button[data-r]');if(!b)retu
 function openSet(focusBudget){
   $('budgets').innerHTML=CATS.out.map((c,i)=>`<label><span class="cl">${ic(c,'xs')}${c}</span><input class="num" id="b${i}" inputmode="numeric" placeholder="ไม่ตั้งงบ" value="${budget[c]||''}"></label>`).join('');
   ['bmsg','cmsg','rmsg'].forEach(id=>{$(id).textContent='';$(id).classList.remove('ok-msg')});
-  $('owners').value=owners; $('omsg').textContent=''; renderMerchants(); renderAccount(); renderRecurList(); $('carryon').checked=!!prefs.carry; $('opening').value=prefs.opening||''; $('carrymsg').textContent='';
+  $('owners').value=owners; $('omsg').textContent=''; renderMerchants(); renderAccount(); renderRecurList(); catDelArmed=null; $('catform').hidden=true; $('addcat').hidden=false; renderCatList(); renderLastBackup(); $('carryon').checked=!!prefs.carry; $('opening').value=prefs.opening||''; $('carrymsg').textContent='';
   $('out').hidden=true; $('restoretext').value=''; restoreArmed=false; $('restorebtn').textContent='กู้คืน'; $('restorebtn').classList.remove('danger');
   $('setsheet').hidden=false;
   if(focusBudget) setTimeout(()=>$('b0').focus(),50);
@@ -1400,6 +1500,43 @@ $('savebudget').onclick=()=>{
   budget=nb; store(BKEY,budget); render(); msg('bmsg','บันทึกงบแล้ว',true);
 };
 
+let catType='out', catEdit=null, catIcon='dots', catHue=CHUES[0], catDelArmed=null;
+function renderCatList(){
+  const list=CATS[catType];
+  $('catlist').innerHTML=list.map(c=>{const cu=customCats[catType].find(x=>x.name===c), n=data.filter(r=>r.cat===c&&!r.demo).length;
+    return `<div class="catrow">${ic(c,'sm')}<span class="nm">${esc(c)}</span><small class="num">${n?L(`${n} รายการ`,`${n} items`):''}</small>${cu?`<button data-ed="${esc(c)}">${L('แก้ไข','Edit')}</button><button class="del" data-del="${esc(c)}">${catDelArmed===c?(n?L(`ย้าย ${n} รายการไป “อื่นๆ” แล้วลบ`,`Move ${n} to Other and delete`):L('แตะอีกครั้งเพื่อลบ','Tap again to delete')):L('ลบ','Delete')}</button>`:''}</div>`}).join('');
+  [...$('catseg').children].forEach(b=>b.classList.toggle('on',b.dataset.ct===catType));
+}
+function openCatForm(c){
+  catEdit=c||null; const cu=c?customCats[catType].find(x=>x.name===c):null;
+  catIcon=cu?cu.icon:'dots'; catHue=cu?cu.hue:CHUES[(customCats.out.length+customCats.in.length)%CHUES.length];
+  $('catname').value=c||''; $('caterr').textContent=''; $('catform').hidden=false; $('addcat').hidden=true; drawPicks(); $('catname').focus();
+}
+function drawPicks(){
+  $('caticons').innerHTML=Object.keys(CICONS).map(k=>`<button type="button" data-ic="${k}" class="${k===catIcon?'on':''}" style="--h:${catHue}" aria-label="${k}"><svg viewBox="0 0 24 24"><path d="${CICONS[k]}" ${k==='dots'?'stroke-width="3"':''}/></svg></button>`).join('');
+  $('cathues').innerHTML=CHUES.map(h=>`<button type="button" data-hu="${h}" class="${h===catHue?'on':''}" style="--h:${h}" aria-label="${h}"></button>`).join('');
+}
+$('caticons').onclick=e=>{const b=e.target.closest('[data-ic]');if(b){catIcon=b.dataset.ic;drawPicks()}};
+$('cathues').onclick=e=>{const b=e.target.closest('[data-hu]');if(b){catHue=+b.dataset.hu;drawPicks()}};
+$('catseg').onclick=e=>{const b=e.target.closest('[data-ct]');if(!b)return;catType=b.dataset.ct;catDelArmed=null;$('catform').hidden=true;$('addcat').hidden=false;renderCatList()};
+$('addcat').onclick=()=>openCatForm(null);
+$('catcancel').onclick=()=>{$('catform').hidden=true;$('addcat').hidden=false};
+$('catsave').onclick=()=>{
+  const n=$('catname').value.trim(); if(!n){$('caterr').textContent=L('ตั้งชื่อหมวด','Name the category');return}
+  if(n!==catEdit&&catExists(n)){$('caterr').textContent=L('มีหมวดชื่อนี้อยู่แล้ว','That category already exists');return}
+  if(catEdit){const cu=customCats[catType].find(x=>x.name===catEdit); if(n!==catEdit) renameCat(catEdit,n); Object.assign(cu,{name:n,icon:catIcon,hue:catHue})}
+  else customCats[catType].push({name:n,icon:catIcon,hue:catHue});
+  saveCats(); $('catform').hidden=true; $('addcat').hidden=false; renderCatList(); render();
+};
+$('catlist').onclick=e=>{
+  const ed=e.target.closest('[data-ed]'); if(ed){openCatForm(ed.dataset.ed);return}
+  const del=e.target.closest('[data-del]'); if(!del) return; const c=del.dataset.del;
+  if(catDelArmed!==c){catDelArmed=c;renderCatList();return}
+  data.forEach(r=>{if(r.cat===c)r.cat='อื่นๆ'}); recur.forEach(r=>{if(r.cat===c)r.cat='อื่นๆ'}); delete budget[c]; store(BKEY,budget);
+  customCats[catType]=customCats[catType].filter(x=>x.name!==c); delete ICONS[c]; save(); saveRecur(); saveCats(); catDelArmed=null; renderCatList(); render();
+};
+$('bklater').onclick=()=>{prefs.snooze=Date.now()+7*DAY;savePrefs();render()};
+$('bknow').onclick=()=>{openSet(false); setTimeout(()=>{const g=$('backup'); try{g.scrollIntoView({behavior:'smooth',block:'center'})}catch(e){} g.classList.remove('flash'); void g.offsetWidth; g.classList.add('flash')},120)};
 $('savecarry').onclick=()=>{const v=parseFloat(($('opening').value||'0').replace(/,/g,'')); prefs.carry=$('carryon').checked; prefs.opening=isFinite(v)?v:0; savePrefs(); render(); msg('carrymsg',L('บันทึกแล้ว','Saved'),true)};
 $('saveowners').onclick=()=>{owners=$('owners').value.trim();store(OKEY,owners);msg('omsg',owners?'บันทึกชื่อแล้ว':'ลบชื่อแล้ว',true)};
 function renderMerchants(){
@@ -1416,7 +1553,7 @@ function copyText(text,label){
   const fallback=()=>{ta.focus();ta.select();msg('cmsg','คัดลอกอัตโนมัติไม่ได้ ข้อความถูกเลือกไว้ด้านบนแล้ว กดค้างเพื่อคัดลอก',false)};
   try{navigator.clipboard.writeText(text).then(done,fallback)}catch(e){fallback()}
 }
-$('copyjson').onclick=()=>copyText(JSON.stringify({app:'kp-ledger',v:1,exported:new Date().toISOString(),data:data.filter(r=>!r.demo),budget,merchants,goals:goals.filter(g=>!g.demo),recur:recur.filter(r=>!r.demo),prefs}),'ไฟล์สำรอง');
+$('copyjson').onclick=()=>{ prefs.lastBackup=Date.now(); prefs.snooze=0; savePrefs(); renderLastBackup(); render(); copyText(JSON.stringify({app:'kp-ledger',v:1,exported:new Date().toISOString(),data:data.filter(r=>!r.demo),budget,merchants,goals:goals.filter(g=>!g.demo),recur:recur.filter(r=>!r.demo),prefs,cats:customCats}),'ไฟล์สำรอง') };
 $('copycsv').onclick=()=>{
   const q=s=>'"'+String(s).replace(/"/g,'""')+'"';
   const lines=[L('วันที่,ประเภท,หมวด,จำนวนเงิน,บันทึก','Date,Type,Category,Amount,Note')].concat(
@@ -1433,7 +1570,7 @@ function parseBackup(text){
   if(!arr) throw new Error('shape');
   const clean=arr.filter(r=>r&&(r.type==='in'||r.type==='out')&&+r.amount>0&&/^\d{4}-\d{2}-\d{2}$/.test(r.date))
     .map((r,i)=>({id:String(r.id||('r'+i+Date.now().toString(36))),type:r.type,amount:+r.amount,cat:String(r.cat||'อื่นๆ'),memo:String(r.memo||''),note:String(r.note||''),ref:String(r.ref||''),date:r.date,...(r.recurId?{recurId:String(r.recurId)}:{})}));
-  return {data:clean,budget:o&&o.budget&&typeof o.budget==='object'?o.budget:null,merchants:o&&o.merchants&&typeof o.merchants==='object'?o.merchants:null,goals:o&&Array.isArray(o.goals)?o.goals:null,recur:o&&Array.isArray(o.recur)?o.recur:null,prefs:o&&o.prefs&&typeof o.prefs==='object'?o.prefs:null,skipped:arr.length-clean.length};
+  return {data:clean,budget:o&&o.budget&&typeof o.budget==='object'?o.budget:null,merchants:o&&o.merchants&&typeof o.merchants==='object'?o.merchants:null,goals:o&&Array.isArray(o.goals)?o.goals:null,recur:o&&Array.isArray(o.recur)?o.recur:null,cats:o&&o.cats&&Array.isArray(o.cats.out)?o.cats:null,prefs:o&&o.prefs&&typeof o.prefs==='object'?o.prefs:null,skipped:arr.length-clean.length};
 }
 function armRestore(text){
   try{pending=parseBackup(text)}catch(e){pending=null;msg('rmsg','อ่านข้อมูลไม่ได้ ตรวจว่าวางข้อมูลจากปุ่ม “คัดลอกไฟล์สำรอง” ครบทั้งหมด');return}
@@ -1442,7 +1579,7 @@ function armRestore(text){
 }
 $('restorebtn').onclick=()=>{
   if(restoreArmed&&pending){
-    data=pending.data; if(pending.budget) budget=pending.budget; if(pending.merchants){merchants=pending.merchants;store(MKEY,merchants);renderMerchants()} if(pending.goals){goals=pending.goals;saveGoals()} if(pending.recur){recur=pending.recur;saveRecur()} if(pending.prefs){prefs=pending.prefs;savePrefs()} save(); store(BKEY,budget);
+    data=pending.data; if(pending.budget) budget=pending.budget; if(pending.merchants){merchants=pending.merchants;store(MKEY,merchants);renderMerchants()} if(pending.goals){goals=pending.goals;saveGoals()} if(pending.recur){recur=pending.recur;saveRecur()} if(pending.prefs){prefs=pending.prefs;savePrefs()} if(pending.cats){customCats=pending.cats;saveCats()} save(); store(BKEY,budget);
     restoreArmed=false; pending=null; $('restorebtn').textContent='กู้คืน'; $('restorebtn').classList.remove('danger');
     view=new Date(); view.setDate(1); render(); msg('rmsg','กู้คืนข้อมูลเรียบร้อย',true); return;
   }
@@ -1621,7 +1758,7 @@ let delArmed=false;
 $('logout').onclick=()=>{try{localStorage.removeItem(AKEY)}catch(e){} account=null; $('setsheet').hidden=true; showAuth()};
 $('delacct').onclick=()=>{
   if(!delArmed){delArmed=true;$('delacct').textContent='แตะอีกครั้งเพื่อลบถาวร';$('delacct').classList.add('danger');msg('amsg','บัญชีและข้อมูลทั้งหมดจะถูกลบ กู้คืนไม่ได้ ถ้ายังไม่ได้สำรองข้อมูล ให้คัดลอกไฟล์สำรองด้านล่างก่อน');return}
-  goals=[];recur=[];[KEY,BKEY,MKEY,OKEY,AKEY,QKEY,GKEY,RKEY,SKEY].forEach(k=>{try{localStorage.removeItem(k)}catch(e){}});
+  goals=[];recur=[];customCats={out:[],in:[]};applyCats();[KEY,BKEY,MKEY,OKEY,AKEY,QKEY,GKEY,RKEY,SKEY,CKEY].forEach(k=>{try{localStorage.removeItem(k)}catch(e){}});
   account=null; data=sample(); budget={'อาหาร':4000,'ช้อปปิ้ง':2000,'บันเทิง':1500}; merchants={}; owners=''; quota={};
   $('setsheet').hidden=true; render(); showAuth();
 };
