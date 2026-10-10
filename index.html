@@ -723,7 +723,7 @@ h1{font-weight:500}
 :root[data-theme="dark"][data-palette="lavender"]{--t-allow:#2e2458;--t-allow-fg:#e6dcff;--t-mood:#4a1d36;--t-mood-fg:#ffd9ec;--surface:#141311}
 :root[data-theme="dark"][data-palette="sunshine"]{--t-allow:#3d340c;--t-allow-fg:#fff0b3;--t-mood:#4a2318;--t-mood-fg:#ffd9cc;--surface:#141311}
 body{background:var(--surface);transition:background-color .35s}
-.swatches{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.swatches{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .swatches button{border:0;background:var(--s-low);color:var(--ink);border-radius:16px;padding:10px 4px 8px;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:12px;cursor:pointer;box-shadow:inset 0 0 0 1.5px transparent;transition:box-shadow .2s,transform .2s}
 .swatches button i{width:30px;height:30px;border-radius:50%;display:block;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
 .swatches button.on{box-shadow:inset 0 0 0 2px var(--ink);font-weight:600}
@@ -1082,6 +1082,56 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{outline:none}
 .lkpad input{width:180px;height:58px;border:0;border-radius:18px;background:var(--s-low);box-shadow:inset 0 0 0 1.5px var(--ov);font-size:26px;letter-spacing:.55em;text-indent:.55em;text-align:center}
 .lkpad input:focus{box-shadow:inset 0 0 0 2px var(--ink),0 0 0 4px color-mix(in srgb,var(--ink) 10%,transparent)}
 .lkpad .btn{height:58px;border-radius:18px;padding:0 20px}
+
+.balance .labrow .label{padding-right:0!important}
+.balance .labrow{padding-right:128px}
+/* ===== Theme: ศิลาดล (celadon) — quiet, refined, Nong Ong as the one bright thing ===== */
+:root[data-palette="celadon"]{--surface:#f5f3ee;--s-low:#fffefb;--s-con:#fffefb;--s-high:#ecebe5;--s-highest:#e2e1d9;
+  --ink:#1d2420;--muted:#6c716b;--outline:#a9ada5;--ov:#e4e3dc;
+  --primary:#1d2420;--on-primary:#fffefb;--pc:#fffefb;--on-pc:#1d2420;--sc2:#e8eee9;--on-sc2:#21352b;--tc3:#f3ecdc;--on-tc3:#4f3d12;
+  --in:#2f6e52;--out:#a2502f;--in-bar:#6aa58a;--out-bar:#c48365;--warn-bar:#c9a24a;--warn:#8a6514;
+  --btn:#1f2b26;--btn-fg:#f7f5ef;
+  --t-allow:#e7efe9;--t-allow-fg:#21372c;--t-in:#ebf1ea;--t-in-fg:#244231;--t-out:#f4ebe5;--t-out-fg:#5b2f1e;--t-mood:#efede7;--t-mood-fg:#2c2c27;
+  --a1:#dcece3;--a2:#f1ebde;--a3:#e3ede8;--sbg:#e7efe9;--tone-s:28%;--halo:#bfe0cf;--gold:#b8913a;
+  --card-sh:0 1px 0 rgba(29,36,32,.03),0 18px 40px -30px rgba(29,36,32,.35);--cash-bg:linear-gradient(135deg,#eef3e6,#d9e6cc);--cash-fg:#24341b}
+@media (prefers-color-scheme: dark){:root[data-palette="celadon"]:not([data-theme="light"]){--surface:#111513;--s-low:#191e1b;--s-con:#191e1b;--s-high:#232a26;--s-highest:#2d3530;
+  --ink:#ece9e1;--muted:#a1a59d;--outline:#5f665f;--ov:#2a312c;
+  --primary:#ece9e1;--on-primary:#111513;--pc:#191e1b;--on-pc:#ece9e1;--sc2:#22302a;--on-sc2:#d6e8dd;--tc3:#352d17;--on-tc3:#ecdcae;
+  --in:#8fceb0;--out:#e6a385;--in-bar:#5f9c80;--out-bar:#c07a5a;--warn-bar:#c9a24a;--warn:#e0c07a;
+  --btn:#ebe7dc;--btn-fg:#111513;
+  --t-allow:#1e2a24;--t-allow-fg:#cfe3d6;--t-in:#1c2822;--t-in-fg:#cfe6d6;--t-out:#2c221d;--t-out-fg:#f0d6c8;--t-mood:#222623;--t-mood-fg:#e4e2da;
+  --tone-s:24%;--halo:#2c4a3c;--card-sh:none;--cash-bg:linear-gradient(135deg,#2f3a26,#1f271a);--cash-fg:#dfeccd}}
+:root[data-theme="dark"][data-palette="celadon"]{--surface:#111513;--s-low:#191e1b;--s-con:#191e1b;--s-high:#232a26;--s-highest:#2d3530;
+  --ink:#ece9e1;--muted:#a1a59d;--outline:#5f665f;--ov:#2a312c;
+  --primary:#ece9e1;--on-primary:#111513;--pc:#191e1b;--on-pc:#ece9e1;--sc2:#22302a;--on-sc2:#d6e8dd;--tc3:#352d17;--on-tc3:#ecdcae;
+  --in:#8fceb0;--out:#e6a385;--in-bar:#5f9c80;--out-bar:#c07a5a;--warn-bar:#c9a24a;--warn:#e0c07a;
+  --btn:#ebe7dc;--btn-fg:#111513;
+  --t-allow:#1e2a24;--t-allow-fg:#cfe3d6;--t-in:#1c2822;--t-in-fg:#cfe6d6;--t-out:#2c221d;--t-out-fg:#f0d6c8;--t-mood:#222623;--t-mood-fg:#e4e2da;
+  --tone-s:24%;--halo:#2c4a3c;--card-sh:none;--cash-bg:linear-gradient(135deg,#2f3a26,#1f271a);--cash-fg:#dfeccd}
+[data-palette="celadon"] #aurora i{opacity:.38}
+[data-palette="celadon"] .balance{box-shadow:var(--card-sh),inset 0 0 0 1px color-mix(in srgb,var(--gold) 22%,transparent)}
+[data-palette="celadon"] section>.cats,[data-palette="celadon"] .mix,[data-palette="celadon"] .day,[data-palette="celadon"] .upcoming,[data-palette="celadon"] .goal:not(.add),[data-palette="celadon"] .group,[data-palette="celadon"] .icard,[data-palette="celadon"] .wcard:not(.tone){box-shadow:inset 0 0 0 1px var(--ov)}
+[data-palette="celadon"] .balance .big{font-weight:400;letter-spacing:-.02em;font-size:50px}
+[data-palette="celadon"] .split b,[data-palette="celadon"] .allow b,[data-palette="celadon"] #ntbal,[data-palette="celadon"] .wcard b,[data-palette="celadon"] .goal .amt2,[data-palette="celadon"] .gnums .n,[data-palette="celadon"] .fcast b,[data-palette="celadon"] .fbig b{font-weight:400}
+[data-palette="celadon"] .balance .label,[data-palette="celadon"] .split small,[data-palette="celadon"] .allow small,[data-palette="celadon"] .nobh,[data-palette="celadon"] .uh span,[data-palette="celadon"] .sethead{letter-spacing:.06em}
+[data-palette="celadon"] section h2{font-weight:400;font-size:18px}
+[data-palette="celadon"] .panel h3,[data-palette="celadon"] h1{font-weight:400}
+[data-palette="celadon"] .tag{font-weight:500}
+/* Nong Ong: bigger, on a soft celadon halo */
+[data-palette="celadon"] .balance .pig{width:136px;height:136px;top:-10px;right:-4px}
+[data-palette="celadon"] .balance .pig::before{content:"";position:absolute;inset:10% 8% 4%;border-radius:50%;background:radial-gradient(circle at 50% 55%,var(--halo),transparent 68%);pointer-events:none}
+[data-palette="celadon"] .balance .pig svg{position:relative}
+[data-palette="celadon"] .balance .label,[data-palette="celadon"] .balance .big{padding-right:120px}
+/* quieter colour elsewhere */
+[data-palette="celadon"] .donut circle:not(.trk),[data-palette="celadon"] .legend .lb,[data-palette="celadon"] .dbar b,[data-palette="celadon"] .ichart rect{filter:saturate(.55)}
+[data-palette="celadon"] .quickamt button,[data-palette="celadon"] .quickamt button:nth-child(3n+2),[data-palette="celadon"] .quickamt button:nth-child(3n+3){background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1px var(--outline)}
+[data-palette="celadon"] .fab{box-shadow:0 16px 30px -16px rgba(20,28,24,.55)}
+[data-palette="celadon"] .recapbtn{background:var(--btn);color:var(--btn-fg)}
+[data-palette="celadon"] .festpill{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--gold) 60%,transparent)}
+[data-palette="celadon"] .festpill svg{color:var(--gold)}
+[data-palette="celadon"] .bar.b2 i.ok{background:var(--in-bar)}
+[data-palette="celadon"] .wcard.tone{filter:saturate(.68) brightness(.97)}
+[data-palette="celadon"] .goal .bar i,[data-palette="celadon"] .ring .val{filter:saturate(.45)}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i></div><div id="festfx" aria-hidden="true"></div>
@@ -1325,6 +1375,7 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{outline:none}
       <div class="seg" id="themeseg"><button type="button" data-th="auto">ตามมือถือ</button><button type="button" data-th="light">สว่าง</button><button type="button" data-th="dark">มืด</button></div>
       <label class="switch" style="background:var(--s-low)"><span><b>เอฟเฟกต์เต็มรูปแบบ</b><small>ฉากเปิดแอป เหรียญบิน พื้นหลังเคลื่อนไหว ปิดได้ถ้าอยากประหยัดแบต</small></span><input type="checkbox" id="fxon" role="switch"></label>
       <div class="swatches" id="palrow" role="radiogroup" aria-label="สีธีม">
+        <button type="button" data-pal="celadon"><i style="background:linear-gradient(135deg,#f5f3ee 50%,#8fbfa6 50%)"></i><span>ศิลาดล</span></button>
         <button type="button" data-pal="lime"><i style="background:linear-gradient(135deg,#dff3b4 50%,#e9e4ff 50%)"></i><span>มะนาว</span></button>
         <button type="button" data-pal="sakura"><i style="background:linear-gradient(135deg,#ffd6e2 50%,#ffe9c7 50%)"></i><span>ซากุระ</span></button>
         <button type="button" data-pal="sea"><i style="background:linear-gradient(135deg,#c9ecf5 50%,#d9e4ff 50%)"></i><span>ทะเล</span></button>
@@ -1642,6 +1693,7 @@ function setLang(l){
   try{renderWardrobe();applyFestPill()}catch(e){}
 }
 Object.assign(DICT,{
+'ศิลาดล':'Celadon',
 'ยินดีต้อนรับสู่เหลือเก็บ':'Welcome to Luakep','ตอนนี้เป็นข้อมูลตัวอย่าง ลองแตะเล่นได้เลย พร้อมเมื่อไรค่อยล้างแล้วเริ่มจดจริง':'This is sample data, so tap around freely. When you are ready, clear it and start for real.',
 'เพิ่มรายการ':'Add','ดูสลิป':'Slip','แตะเพื่อปิด':'Tap to close','สลิป':'Slip',
 'เหลือเก็บล็อกอยู่':'Luakep is locked','ปลดล็อก':'Unlock','ใช้ PIN แทน':'Use PIN instead','ตกลง':'OK','ล็อกอยู่':'Locked','ซ่อนหรือแสดงยอดเงิน':'Hide or show balances',
@@ -3104,7 +3156,7 @@ function applyTheme(){
   if(t==='auto'){ if(HOST_THEME) r.setAttribute('data-theme',HOST_THEME); else r.removeAttribute('data-theme') } else r.setAttribute('data-theme',t);
   document.querySelectorAll('#themeseg [data-th]').forEach(b=>b.classList.toggle('on',b.dataset.th===t));
   const dark=t==='dark'||(t==='auto'&&(HOST_THEME==='dark'||(!HOST_THEME&&!!(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches))));
-  const mt=document.querySelector('meta[name="theme-color"]'); if(mt) mt.setAttribute('content',dark?'#141311':'#f3f1ec');
+  const mt=document.querySelector('meta[name="theme-color"]'); if(mt){ const sf=(getComputedStyle(r).getPropertyValue('--surface')||'').trim(); mt.setAttribute('content',/^#[0-9a-f]{6}$/i.test(sf)?sf:(dark?'#141311':'#f3f1ec')) }
 }
 $('themeseg').addEventListener('click',e=>{const b=e.target.closest('[data-th]'); if(!b) return; prefs.theme=b.dataset.th; savePrefs(); applyTheme()});
 try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',applyTheme)}catch(e){}
@@ -3323,11 +3375,13 @@ function segPill(seg,instant){
   try{ new MutationObserver(rs=>{const done=new Set(); rs.forEach(r=>{const sg=r.target.parentElement; if(r.target.tagName==='BUTTON'&&sg&&sg.classList.contains('seg')&&!done.has(sg)){done.add(sg); segPill(sg)}})}).observe(document.body,{attributes:true,attributeFilter:['class'],subtree:true}) }catch(e){}
 })();
 /* ===== Colour palettes ===== */
-const PALETTES=['lime','sakura','sea','lavender','sunshine'];
+const PALETTES=['celadon','lime','sakura','sea','lavender','sunshine'];
+if(!prefs.luxe1){ prefs.palette='celadon'; prefs.luxe1=1; savePrefs() }
 function applyPalette(){
   const p=PALETTES.includes(prefs.palette)?prefs.palette:'lime', r=document.documentElement;
   if(p==='lime') r.removeAttribute('data-palette'); else r.setAttribute('data-palette',p);
   document.querySelectorAll('#palrow [data-pal]').forEach(b=>{const on=b.dataset.pal===p; b.classList.toggle('on',on); b.setAttribute('aria-checked',on)});
+  try{applyTheme()}catch(e){}
 }
 $('palrow').addEventListener('click',e=>{const b=e.target.closest('[data-pal]'); if(!b) return; prefs.palette=b.dataset.pal; savePrefs(); applyPalette(); try{bump(b)}catch(_){}});
 applyPalette();
