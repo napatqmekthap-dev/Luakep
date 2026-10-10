@@ -13,6 +13,7 @@
 <body>
 <title>เหลือเก็บ</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700&text=0123456789&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mitr:wght@400;500;600;700&family=Noto+Sans+Thai:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap">
 <style>
 /* Layout: Material 3 single column — top app bar that tints on scroll, primary-container hero card, list cards on surface-container, stacked extended FABs, bottom sheets with drag handle */
@@ -25,7 +26,7 @@
   --tone-bg:88%; --tone-fg:26%; --tone-s:55%; --hero-fill:rgba(255,255,255,.55);
   --e1:0 1px 2px rgba(0,0,0,.18),0 1px 3px 1px rgba(0,0,0,.08); --e3:0 1px 3px rgba(0,0,0,.18),0 4px 8px 3px rgba(0,0,0,.1);
   --c-body:#ff8a65; --c-shell:#f6c453; --c-shell-d:#c98a1f; --c-ink:#4a1f14; --c-cheek:#ff4f7b; --c-coin:#ffe08a; --c-tear:#64b5f6; --coin:#f3c44f;
-  --display:"Mitr","Noto Sans Thai",system-ui,sans-serif;
+  --display:"Kanit","Mitr","Noto Sans Thai",system-ui,sans-serif;
   --body:"Roboto","Noto Sans Thai",system-ui,-apple-system,"Segoe UI",sans-serif;
   /* aliases used by page code */
   --accent:var(--primary); --accent-ink:var(--on-primary); --soft:var(--sc2); --fill2:var(--s-high);
@@ -701,6 +702,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--ink);box-shadow:inset
 .celebrate{background:var(--t-in);color:var(--t-in-fg)}
 
 [hidden]{display:none!important}
+body{margin:0}
 /* ===== Display font: Mitr for headings and numbers ===== */
 h1,.navtitle,section h2,.balance .big,.split b,.allow b,.panel h3,.story .h,.story .n,.gnums .n,.estate b,#intro .iword,.billing b,.pcard b,.goal .amt2,.brand h2,.card h3,#amount,.sethead{font-family:var(--display)}
 .story .h,.story .n,.gnums .n,#intro .iword,.pcard b,.estate b{font-weight:600}
@@ -934,7 +936,7 @@ body.lowfx #festfx{display:none}
     <div class="quickcat" id="quickcat" hidden><input id="qcname" maxlength="24" placeholder="ชื่อหมวดใหม่" aria-label="ชื่อหมวดใหม่"><button type="button" id="qcsave">เพิ่ม</button></div>
     <div class="two">
       <label>วันที่<input type="date" id="date"></label>
-      <label>บันทึก<input id="memo" placeholder="เช่น ข้าวมันไก่"></label>
+      <label>หมายเหตุ<input id="memo" placeholder="เช่น ข้าวมันไก่"></label>
     </div>
     <label class="switch" id="recurrow"><span><b>ทำซ้ำทุกเดือน</b><small id="recurhint">ลงรายการนี้ให้อัตโนมัติทุกเดือน</small></span><input type="checkbox" id="recur" role="switch"></label>
     <div class="err" id="err"></div>
@@ -1121,7 +1123,7 @@ const DICT={
 'ไม่มีรายการในหมวดนี้':'Nothing in this category','หมวด: {0}':'Category: {0}',
 '{0}% · อีก {1}':'{0}% · {1} to go','{0}% · ต้องออมเดือนละ {1}':'{0}% · save {1} a month','{0}% · ครบเป้าแล้ว เก่งมาก!':'{0}% · Goal reached. Well done!',
 /* FAB + entry */
-'อ่านสลิป':'Scan slips','จดรายการ':'Add','แก้ไขรายการ':'Edit transaction','จำนวนเงิน (บาท)':'Amount (THB)','หมวด':'Category','วันที่':'Date','บันทึก':'Note',
+'อ่านสลิป':'Scan slips','จดรายการ':'Add','แก้ไขรายการ':'Edit transaction','จำนวนเงิน (บาท)':'Amount (THB)','หมวด':'Category','วันที่':'Date','บันทึก':'Save','หมายเหตุ':'Note',
 'เช่น ข้าวมันไก่':'e.g. Chicken rice','ทำซ้ำทุกเดือน':'Repeat every month','ลงรายการนี้ให้อัตโนมัติทุกเดือน':'Log this automatically every month',
 'ลงให้อัตโนมัติทุกวันที่ {0} ของเดือน':'Logged automatically on day {0} of every month','ลบ':'Delete','ยกเลิก':'Cancel','บันทึกการแก้ไข':'Save changes',
 'ใส่จำนวนเงินที่มากกว่า 0':'Enter an amount above 0','ใส่จำนวนเงินที่มากกว่า {0}':'Enter an amount above {0}','เลือกวันที่':'Pick a date',
@@ -1243,7 +1245,7 @@ Object.assign(DICT,{
 'แอป':'App','การเงิน':'Money','การอ่านสลิป':'Slip reading','ข้อมูล':'Data','เหลือเก็บเดือนนี้':'Kept this month','เก็บได้ {0} ของรายรับ':'Kept {0} of income',
 'ค้นหาร้าน บันทึก หมวด หรือจำนวนเงิน':'Search shop, note, category or amount','ค้นหารายการ':'Search transactions','ล้างคำค้น':'Clear search',
 'ไว้ทีหลัง':'Later','สำรองเลย':'Back up now','หมวดหมู่':'Categories','เพิ่มหมวดของคุณเองได้ หมวดที่มากับแอปแก้หรือลบไม่ได้':'Add your own categories. Built-in ones cannot be edited or deleted.','ชื่อหมวด':'Category name','เช่น สัตว์เลี้ยง, ประกัน, ทำบุญ':'e.g. Pets, Insurance, Donations','สี':'Colour','บันทึกหมวด':'Save category','+ เพิ่มหมวด':'+ Add category','ชื่อหมวดใหม่':'New category name','เพิ่ม':'Add',
-'ยอดยกมาและยอดเริ่มต้น':'Carry-over & opening balance','ยกยอดคงเหลือจากเดือนก่อน':'Carry over previous balance','เงินที่เหลือของเดือนก่อนๆ จะรวมเข้ามาในยอดคงเหลือเดือนนี้':'Money left from earlier months is added to this month’s balance','ยอดเงินเริ่มต้น (บาท)':'Opening balance (THB)','เช่น เงินในบัญชีวันที่เริ่มใช้แอป':'e.g. what you had when you started','คงเหลือทั้งหมด':'Total balance',
+'ยอดยกมาและยอดเริ่มต้น':'Carry-over & opening balance','ยกยอดคงเหลือจากเดือนก่อน':'Carry over previous balance','เงินที่เหลือของเดือนก่อนๆ จะรวมเข้ามาในยอดคงเหลือเดือนนี้':'Money left from earlier months is added to this month’s balance','ยอดเงินเริ่มต้น (บาท)':'Opening balance (THB)','เช่น เงินในบัญชีวันที่เริ่มใช้แอป':'e.g. your balance on day one','คงเหลือทั้งหมด':'Total balance',
 'จดไป {0} รายการ มาดูกันว่าเงินไปไหนบ้าง':'{0} transactions logged. Let’s see where the money went.',
 'เหลือเก็บ {0} หรือ {1} ของรายรับ':'You kept {0}, or {1} of your income','ใช้เกินรายรับไป {0}':'Spent {0} more than you earned','ยังไม่มีรายรับในเดือนนี้':'No income this month yet',
 'คิดเป็น {0} ของรายจ่ายทั้งหมด':'That is {0} of all your spending','รวม {0} เจอกันบ่อยจนเจ้าของร้านน่าจะจำได้แล้ว':'{0} in total. The owner probably knows you by now.',
@@ -1957,8 +1959,8 @@ async function makeCard(d){
   try{await document.fonts.ready}catch(e){}
   const W=1080,H=1920,c=document.createElement('canvas'); c.width=W;c.height=H; const g=c.getContext('2d');
   {const ft=g.fillText.bind(g), mt=g.measureText.bind(g); g.fillText=(t,x,y)=>ft(tr(String(t)),x,y); g.measureText=t=>mt(tr(String(t)));}
-  const F='"Noto Sans Thai","Roboto",sans-serif', FD='"Mitr","Noto Sans Thai",sans-serif';
-  try{await document.fonts.load('600 40px Mitr')}catch(e){}
+  const F='"Noto Sans Thai","Roboto",sans-serif', FD='"Kanit","Mitr","Noto Sans Thai",sans-serif';
+  try{await Promise.all([document.fonts.load('600 40px Mitr','เก็บ'),document.fonts.load('600 40px Kanit','0123456789')])}catch(e){}
   const rr=(x,y,w,h,r,fill)=>{g.fillStyle=fill;g.beginPath();if(g.roundRect)g.roundRect(x,y,w,h,r);else g.rect(x,y,w,h);g.fill()};
   const txt=(t,x,y,size,weight,color,alpha)=>{g.globalAlpha=alpha==null?1:alpha;g.fillStyle=color;g.font=weight>=700?`600 ${size}px ${FD}`:`${weight} ${size}px ${F}`;g.fillText(t,x,y);g.globalAlpha=1};
   const fnt=(w,s)=>w>=700?`600 ${s}px ${FD}`:`${w} ${s}px ${F}`;
@@ -2101,7 +2103,7 @@ let catType='out', catEdit=null, catIcon='dots', catHue=CHUES[0], catDelArmed=nu
 function renderCatList(){
   const list=CATS[catType];
   $('catlist').innerHTML=list.map(c=>{const cu=customCats[catType].find(x=>x.name===c), n=data.filter(r=>r.cat===c&&!r.demo).length;
-    return `<div class="catrow">${ic(c,'sm')}<span class="nm">${esc(c)}</span><small class="num">${n?L(`${n} รายการ`,`${n} items`):''}</small>${cu?`<button data-ed="${esc(c)}">${L('แก้ไข','Edit')}</button><button class="del" data-del="${esc(c)}">${catDelArmed===c?(n?L(`ย้าย ${n} รายการไป “อื่นๆ” แล้วลบ`,`Move ${n} to Other and delete`):L('แตะอีกครั้งเพื่อลบ','Tap again to delete')):L('ลบ','Delete')}</button>`:''}</div>`}).join('');
+    return `<div class="catrow">${ic(c,'sm')}<span class="nm">${esc(c)}</span><small class="num">${n?L(`${n} รายการ`,`${n} ${n===1?'item':'items'}`):''}</small>${cu?`<button data-ed="${esc(c)}">${L('แก้ไข','Edit')}</button><button class="del" data-del="${esc(c)}">${catDelArmed===c?(n?L(`ย้าย ${n} รายการไป “อื่นๆ” แล้วลบ`,`Move ${n} to Other and delete`):L('แตะอีกครั้งเพื่อลบ','Tap again to delete')):L('ลบ','Delete')}</button>`:''}</div>`}).join('');
   [...$('catseg').children].forEach(b=>b.classList.toggle('on',b.dataset.ct===catType));
 }
 function openCatForm(c){
@@ -2277,7 +2279,7 @@ function renderReview(){
       <label class="head" style="flex-direction:row;color:var(--ink)"><input type="checkbox" id="rvon${x.i}" ${x.on?'checked':''}>${ic(x.cat,'xs')}สลิปที่ ${x.i+1}${x.dup?'<span class="tag">บันทึกไปแล้ว</span>':''}${x.remembered?'<span class="tag">จำร้านได้</span>':''}</label>
       ${x.transfer?'<div class="why">โอนระหว่างบัญชีตัวเอง ไม่นับเป็นรายรับหรือรายจ่าย ติ๊กถ้าต้องการบันทึก</div>':''}
       <div class="two"><select id="rvcat${x.i}" aria-label="หมวด">${catOptions(x.type+'|'+x.cat)}</select><input id="rvamt${x.i}" class="amt-in num" inputmode="decimal" value="${x.amount}" aria-label="จำนวนเงิน"></div>
-      <div class="two"><input type="date" id="rvdate${x.i}" value="${x.date}" aria-label="วันที่"><input id="rvmemo${x.i}" value="${esc(x.memo)}" placeholder="บันทึก" aria-label="บันทึก"></div>
+      <div class="two"><input type="date" id="rvdate${x.i}" value="${x.date}" aria-label="วันที่"><input id="rvmemo${x.i}" value="${esc(x.memo)}" placeholder="หมายเหตุ" aria-label="หมายเหตุ"></div>
       ${x.note?`<div class="why">${esc(x.note)}</div>`:''}
     </div></div>`;
   }).join('');
