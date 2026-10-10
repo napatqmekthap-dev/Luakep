@@ -1,9 +1,16 @@
-const CACHE='luakep-v25';
+const CACHE='luakep-v26';
 const SHELL=['./','index.html','manifest.webmanifest','icon-192.png','icon-512.png','icon-maskable-512.png','icon-monochrome-512.png','sc-expense.png','sc-income.png','sc-search.png'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(SHELL)));self.skipWaiting()});
-self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE&&k!=='kp-state').map(k=>caches.delete(k)))));self.clients.claim()});
+self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE&&k!=='kp-state'&&k!=='kp-share').map(k=>caches.delete(k)))));self.clients.claim()});
 // Network first for the app page so updates show up right away; cache as offline fallback.
 self.addEventListener('fetch',e=>{
+  // Slips shared from another app (Android share sheet) arrive as a POST
+  if(e.request.method==='POST'&&new URL(e.request.url).pathname.endsWith('/share-target')){
+    e.respondWith((async()=>{ try{ const fd=await e.request.formData(), files=fd.getAll('slips').filter(f=>f&&f.size), c=await caches.open('kp-share');
+      for(let i=0;i<files.length;i++) await c.put('./__share/'+i,new Response(files[i],{headers:{'content-type':files[i].type||'image/png'}}));
+      return Response.redirect('./?share='+files.length,303) }catch(err){ return Response.redirect('./',303) } })());
+    return;
+  }
   if(e.request.method!=='GET') return;
   const isPage=e.request.mode==='navigate'||e.request.url.endsWith('/index.html');
   if(isPage){

@@ -943,9 +943,40 @@ body.lowfx #cats .bar i::after,body.lowfx .pig.sleepy svg,body.lowfx .pig.nap sv
 .panel>.btn{flex:none}
 .group .remtime{flex-direction:row;align-items:center;justify-content:space-between;text-align:left}
 @media (prefers-reduced-motion: reduce){.ichart .bi,.ichart .bo{animation:none}}
+
+/* ===== Lock, privacy, tips ===== */
+#lockscr{position:fixed;inset:0;z-index:90;background:var(--surface);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:24px;text-align:center}
+#lockscr.out{animation:fadeout .38s forwards}
+#lockscr>*{flex:none}
+.lkjar{width:150px;height:150px}.lkjar svg{width:100%;height:100%;overflow:visible}
+.lkt{font-family:var(--display);font-size:26px;font-weight:600}
+#lockscr small{color:var(--muted);font-size:14px;max-width:280px}
+#lockscr .btn.save{min-width:200px;margin-top:8px}
+.lkpin{border:0;background:none;color:var(--ink);text-decoration:underline;font:inherit;font-size:14px;cursor:pointer;padding:8px}
+.lkpad{display:flex;gap:8px}.lkpad input{width:150px;text-align:center;font-size:22px;letter-spacing:.4em}
+body.locked{overflow:hidden}
+.labrow{display:flex;align-items:center;gap:6px}
+.eyebtn{width:30px;height:30px;border:0;border-radius:50%;background:transparent;color:var(--muted);display:grid;place-items:center;cursor:pointer;padding:0}
+.eyebtn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.eyebtn .ec{display:none}.eyebtn.off .ec{display:inline}.eyebtn.off .eo{display:none}
+body.privacy .balance .big,body.privacy .balance .carry,body.privacy .split b,body.privacy .allow b,body.privacy #ntbal,body.privacy .wcard b,body.privacy #list .amt,body.privacy .dayhead .num,body.privacy .oweb b,body.privacy .mood b{filter:blur(9px);transition:filter .25s}
+.lockset{display:flex;gap:8px}.lockset input{flex:1}
+.group .remtime select{max-width:150px}
+.tipb{position:fixed;z-index:70;background:var(--btn);color:var(--btn-fg);border-radius:20px;padding:12px 12px 12px 10px;display:grid;grid-template-columns:44px 1fr;gap:4px 10px;align-items:center;box-shadow:0 18px 40px -14px rgba(0,0,0,.45);animation:tipin .45s cubic-bezier(.17,1.3,.4,1)}
+.tipb.out{animation:fadeout .22s forwards}
+.tipb .tj{width:44px;height:44px;grid-row:span 2}.tipb .tj svg{width:100%;height:100%;overflow:visible}
+.tipb p{margin:0;font-size:14px;line-height:1.45}
+.tipb button{justify-self:end;border:0;background:var(--btn-fg);color:var(--btn);border-radius:999px;padding:6px 14px;font:inherit;font-size:13px;font-weight:600;cursor:pointer}
+.tipb .tarr{position:absolute;left:var(--ax);width:14px;height:14px;background:var(--btn);transform:translateX(-50%) rotate(45deg);border-radius:3px}
+.tipb.below .tarr{top:-6px}.tipb.above .tarr{bottom:-6px}
+@keyframes tipin{from{opacity:0;transform:translateY(8px) scale(.92)}}
+@media (prefers-reduced-motion: reduce){.tipb,#lockscr.out{animation:none}}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i></div><div id="festfx" aria-hidden="true"></div>
+<div id="lockscr" hidden role="dialog" aria-modal="true" aria-label="ล็อกอยู่"><div class="lkjar" id="lkjar"></div><b class="lkt">เหลือเก็บล็อกอยู่</b><small id="lkmsg"></small>
+  <button class="btn save" id="lkbtn" type="button">ปลดล็อก</button><button class="lkpin" id="lkpinbtn" type="button">ใช้ PIN แทน</button>
+  <div class="lkpad" id="lkpad" hidden><input id="lkpin" type="password" inputmode="numeric" maxlength="6" autocomplete="off" aria-label="PIN"><button class="btn" id="lkpinok" type="button">ตกลง</button></div></div>
 <div id="intro" hidden aria-hidden="true"><div class="ishine"></div><div class="icoin"></div><div class="ijar" id="ijar"></div><div class="iword">เหลือเก็บ</div><div class="itag">กินเหลือเก็บ เติมโอ่งทุกเดือน</div></div>
 <!-- Sign-up / sign-in -->
 <div class="auth" id="auth" hidden>
@@ -1036,7 +1067,7 @@ body.lowfx #cats .bar i::after,body.lowfx .pig.sleepy svg,body.lowfx .pig.nap sv
   <div class="balance">
     <div class="pig" id="pig" role="img" aria-label="น้องโอ่ง"></div>
     <div class="festpill" id="festpill" hidden></div>
-    <div class="label" id="ballabel">คงเหลือเดือนนี้</div>
+    <div class="labrow"><div class="label" id="ballabel">คงเหลือเดือนนี้</div><button class="eyebtn" id="eyebtn" type="button" aria-label="ซ่อนหรือแสดงยอดเงิน"><svg viewBox="0 0 24 24"><path class="eo" d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12zM12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/><path class="ec" d="M3 3l18 18M10.6 5.1A10 10 0 0 1 12 5c6.5 0 10 7 10 7a17 17 0 0 1-3.2 4.1M6.6 6.6A17 17 0 0 0 2 12s3.5 7 10 7a9.6 9.6 0 0 0 5.4-1.6"/></svg></button></div>
     <div class="big num" id="bal">฿0</div>
     <div class="carry num" id="carry" hidden></div>
     <div class="allow" id="allow" hidden></div>
@@ -1193,6 +1224,19 @@ body.lowfx #cats .bar i::after,body.lowfx .pig.sleepy svg,body.lowfx .pig.nap sv
     <div class="group">
       <h4>เสียง</h4>
       <label class="switch" style="background:var(--s-low)"><span><b>เสียงเหรียญ</b><small>เสียงกริ๊งเมื่อเงินเข้าโอ่ง และเสียงเมื่อแตะน้องโอ่ง</small></span><input type="checkbox" id="sndon" role="switch"></label>
+    </div>
+    <div class="group" id="lockgroup">
+      <h4>ล็อกแอป</h4>
+      <label class="switch" style="background:var(--s-low)"><span><b>ล็อกด้วยลายนิ้วมือหรือสแกนหน้า</b><small>ใช้ระบบปลดล็อกของมือถือ และตั้ง PIN สำรองไว้เผื่อสแกนไม่ผ่าน</small></span><input type="checkbox" id="lockon" role="switch"></label>
+      <div class="lockset" id="lockset" hidden><input id="lockpin1" type="password" inputmode="numeric" maxlength="6" autocomplete="new-password" placeholder="ตั้ง PIN สำรอง 4–6 หลัก" aria-label="PIN สำรอง"><button class="btn save" id="lockgo" type="button">เปิดล็อก</button></div>
+      <label class="remtime" id="lockdelayrow">ล็อกเมื่อออกจากแอปนาน<select id="lockdelay"><option value="0">ทันที</option><option value="60">1 นาที</option><option value="300">5 นาที</option><option value="900">15 นาที</option></select></label>
+      <label class="switch" style="background:var(--s-low)"><span><b>ซ่อนยอดเงิน</b><small>เบลอตัวเลขบนหน้าหลัก แตะรูปตาเพื่อสลับ</small></span><input type="checkbox" id="privon" role="switch"></label>
+      <small class="hint" id="lockmsg"></small>
+    </div>
+    <div class="group" id="tipsgroup">
+      <h4>คำแนะนำการใช้งาน</h4>
+      <button class="btn" id="tipsreset" type="button">ให้น้องโอ่งแนะนำอีกครั้ง</button>
+      <small class="hint" id="tipsmsg"></small>
     </div>
     <div class="group" id="remgroup">
       <h4>แจ้งเตือน</h4>
@@ -1482,6 +1526,10 @@ function setLang(l){
   try{renderWardrobe();applyFestPill()}catch(e){}
 }
 Object.assign(DICT,{
+'เหลือเก็บล็อกอยู่':'Luakep is locked','ปลดล็อก':'Unlock','ใช้ PIN แทน':'Use PIN instead','ตกลง':'OK','ล็อกอยู่':'Locked','ซ่อนหรือแสดงยอดเงิน':'Hide or show balances',
+'ล็อกแอป':'App lock','ล็อกด้วยลายนิ้วมือหรือสแกนหน้า':'Lock with fingerprint or face','ใช้ระบบปลดล็อกของมือถือ และตั้ง PIN สำรองไว้เผื่อสแกนไม่ผ่าน':'Uses your phone unlock, plus a backup PIN in case scanning fails','ตั้ง PIN สำรอง {0}–{1} หลัก':'Set a {0}–{1} digit backup PIN','PIN สำรอง':'Backup PIN','เปิดล็อก':'Turn on lock',
+'ล็อกเมื่อออกจากแอปนาน':'Lock after leaving the app for','ทันที':'Immediately','{0} นาที':'{0} min','ซ่อนยอดเงิน':'Hide balances','เบลอตัวเลขบนหน้าหลัก แตะรูปตาเพื่อสลับ':'Blur amounts on the home screen; tap the eye to switch',
+'คำแนะนำการใช้งาน':'Tips','ให้น้องโอ่งแนะนำอีกครั้ง':'Show Nong Ong’s tips again',
 'โอน':'Transfer','กระเป๋า':'Wallet','โอนจาก':'From','ไปที่':'To','หารบิลกับเพื่อน':'Split with friends','จ่ายแทนเพื่อน แล้วให้แอปจำว่าใครค้างเท่าไร':'Pay for friends and let the app track who owes what','ชื่อเพื่อน คั่นด้วยจุลภาค เช่น ต้น, บี':'Friends, separated by commas','ชื่อเพื่อน':'Friend names','หารบิล':'Split',
 'ภาพรวม {0} เดือน':'{0}-month overview','แนวโน้ม หมวดที่เปลี่ยนไป และคาดการณ์สิ้นเดือน':'Trends, category changes and a month-end forecast','เพื่อนค้างจ่าย':'Friends who owe you',
 'กระเป๋าเงิน':'Wallets','แยกเงินสด บัญชีธนาคาร และบัตรเครดิต โอนระหว่างกระเป๋าได้โดยไม่นับเป็นรายรับรายจ่าย':'Keep cash, bank accounts and credit cards apart. Transfers between them are not counted as income or spending.','ชื่อ เช่น เงินสด, KBank, บัตร KTC':'Name, e.g. Cash, KBank, Visa','ชื่อกระเป๋า':'Wallet name','เงินสด':'Cash','ธนาคาร':'Bank','บัตรเครดิต':'Credit card','ยอดเริ่มต้น (บาท)':'Starting balance (THB)','บัตรเครดิตที่มียอดค้าง ให้ใส่เป็นเลขติดลบ':'For a card with a balance owed, enter a negative number','บันทึกกระเป๋า':'Save wallet','+ เพิ่มกระเป๋า':'+ Add wallet',
@@ -2124,6 +2172,7 @@ function openEntry(rec){
   $('err').textContent=''; chips(); showSheet('sheet'); $('delentry').hidden=!rec;
   $('recur').checked=false; $('recurrow').hidden=!!rec||type==='tr'; updateRecurHint(); $('quickcat').hidden=true;
   if(!rec) setTimeout(()=>$('amount').focus(),50);
+  if(!rec) setTimeout(()=>{try{tip('split')}catch(e){}},900);
 }
 $('add').onclick=()=>openEntry(null);
 function updateRecurHint(){const d=$('date').value; $('recurhint').textContent=d?`ลงให้อัตโนมัติทุกวันที่ ${+d.slice(8,10)} ของเดือน`:'ลงรายการนี้ให้อัตโนมัติทุกเดือน'}
@@ -2515,14 +2564,14 @@ $('recurlist').onclick=e=>{const b=e.target.closest('button[data-r]');if(!b)retu
 function openSet(focusBudget){
   $('budgets').innerHTML=CATS.out.map((c,i)=>`<label><span class="cl">${ic(c,'xs')}${c}</span><input class="num" id="b${i}" inputmode="numeric" placeholder="ไม่ตั้งงบ" value="${budget[c]||''}"></label>`).join('');
   ['bmsg','cmsg','rmsg'].forEach(id=>{$(id).textContent='';$(id).classList.remove('ok-msg')});
-  $('owners').value=owners; $('omsg').textContent=''; renderMerchants(); renderAccount(); renderRecurList(); catDelArmed=null; $('catform').hidden=true; $('addcat').hidden=false; renderCatList(); renderLastBackup(); renderWList(); renderSnaps(); applyRem(); $('wform').hidden=true; $('wadd').hidden=false; wDelArmed=null; $('carryon').checked=!!prefs.carry; $('opening').value=prefs.opening||''; $('carrymsg').textContent='';
+  $('owners').value=owners; $('omsg').textContent=''; renderMerchants(); renderAccount(); renderRecurList(); catDelArmed=null; $('catform').hidden=true; $('addcat').hidden=false; renderCatList(); renderLastBackup(); try{applyLockUI()}catch(e){} renderWList(); renderSnaps(); applyRem(); $('wform').hidden=true; $('wadd').hidden=false; wDelArmed=null; $('carryon').checked=!!prefs.carry; $('opening').value=prefs.opening||''; $('carrymsg').textContent='';
   $('out').hidden=true; $('restoretext').value=''; restoreArmed=false; $('restorebtn').textContent='กู้คืน'; $('restorebtn').classList.remove('danger');
   showSheet('setsheet'); if(typeof setPage==='function') { if(focusBudget) setOpenFor($('b0')); else setPage(null) }
   if(focusBudget) setTimeout(()=>$('b0').focus(),50);
 }
 $('openset').onclick=()=>openSet(false);
 $('editbudget').onclick=()=>openSet(true);
-$('closeset').onclick=()=>hideSheet('setsheet');
+$('closeset').onclick=()=>{hideSheet('setsheet'); try{maybeTips()}catch(e){}};
 $('setsheet').onclick=e=>{if(e.target.id==='setsheet')hideSheet('setsheet')};
 function msg(id,text,ok){$(id).textContent=text;$(id).classList.toggle('ok-msg',!!ok)}
 $('savebudget').onclick=()=>{
@@ -2647,7 +2696,7 @@ let sampleFn=null, imgLim=null, rvItems=[], rvCtl=null, thumbs=[];
   if(!l||!l.images) return;
   imgLim=l.images; $('scan').hidden=false; $('slipfile').accept=l.images.mediaTypes.join(',');
 })();
-$('scan').onclick=()=>{ if(quotaLeft()<=0){openPlans(`สแกนสลิปครบ ${planLimit()} ใบของเดือนนี้แล้ว สมัครผู้สนับสนุนเพื่ออ่านได้ ${PLAN.plus} ใบต่อเดือน`);return} $('slipfile').click() };
+$('scan').onclick=()=>{ if(sampleFn&&quotaLeft()<=0){openPlans(`สแกนสลิปครบ ${planLimit()} ใบของเดือนนี้แล้ว สมัครผู้สนับสนุนเพื่ออ่านได้ ${PLAN.plus} ใบต่อเดือน`);return} $('slipfile').click() };
 
 const catOptions=sel=>`<optgroup label="รายจ่าย">${CATS.out.map(c=>`<option value="out|${c}" ${sel==='out|'+c?'selected':''}>${c}</option>`).join('')}</optgroup>`+
   `<optgroup label="รายรับ">${CATS.in.map(c=>`<option value="in|${c}" ${sel==='in|'+c?'selected':''}>${c}</option>`).join('')}</optgroup>`;
@@ -2675,8 +2724,9 @@ const ERRS={not_granted:'ยังไม่ได้อนุญาตให้�
 function closeReview(){ if(rvCtl) rvCtl.abort(); rvCtl=null; thumbs.forEach(u=>URL.revokeObjectURL(u)); thumbs=[]; hideSheet('rvsheet') }
 $('rvcancel').onclick=closeReview;
 
-$('slipfile').onchange=async e=>{
-  let files=[...e.target.files]; e.target.value=''; if(!files.length||!sampleFn) return;
+$('slipfile').onchange=e=>{ const files=[...e.target.files]; e.target.value=''; handleSlips(files) };
+async function handleSlips(files){
+  if(!files.length) return; if(!sampleFn) return readSlipsLocal(files);
   const max=imgLim?.maxCount||5, extra=files.length>max; files=files.slice(0,max);
   const left=quotaLeft(); if(left<=0){openPlans(`สแกนสลิปครบ ${planLimit()} ใบของเดือนนี้แล้ว`);return}
   const cut=files.length>left; if(cut) files=files.slice(0,left);
@@ -2690,7 +2740,18 @@ $('slipfile').onchange=async e=>{
     const res=await sampleFn.json(slipPrompt(files.length),{images:files,signal:rvCtl.signal});
     const arr=Array.isArray(res)?res:[res];
     useQuota(files.length);
-    rvItems=files.map((f,i)=>{
+    rvItems=mapSlips(files,arr);
+    renderReview();
+  }catch(err){
+    $('rvstatus').hidden=true;
+    if(err&&err.code==='cancelled') return;
+    if(err&&(err.code==='not_granted'||err.code==='sampling_disabled'||err.code==='images_unavailable')) $('scan').hidden=true;
+    $('rvmsg').textContent=(err&&ERRS[err.code])||'อ่านสลิปไม่สำเร็จ ลองใหม่อีกครั้ง';
+    $('rvcancel').textContent='ปิด';
+  }finally{ rvCtl=null }
+}
+function mapSlips(files,arr){
+  return files.map((f,i)=>{
       const r=arr.find(x=>x&&+x.slip===i+1)||arr[i]||{ok:false,reason:'ไม่พบผลของสลิปนี้'};
       if(r.ok===false||!(+r.amount>0)) return {i,bad:r.reason||'อ่านยอดเงินไม่ได้'};
       let type=r.type==='in'?'in':'out', transfer=false;
@@ -2705,15 +2766,8 @@ $('slipfile').onchange=async e=>{
       const ref=String(r.ref||'').trim(), dup=!!ref&&data.some(x=>x.ref===ref);
       return {i,type,cat,amount:Math.round(+r.amount*100)/100,date,memo,note:String(r.note||'').slice(0,80),ref,dup,transfer,remembered,on:!dup&&!transfer};
     });
-    renderReview();
-  }catch(err){
-    $('rvstatus').hidden=true;
-    if(err&&err.code==='cancelled') return;
-    if(err&&(err.code==='not_granted'||err.code==='sampling_disabled'||err.code==='images_unavailable')) $('scan').hidden=true;
-    $('rvmsg').textContent=(err&&ERRS[err.code])||'อ่านสลิปไม่สำเร็จ ลองใหม่อีกครั้ง';
-    $('rvcancel').textContent='ปิด';
-  }finally{ rvCtl=null }
-};
+}
+
 
 function renderReview(){
   $('rvstatus').hidden=true;
@@ -2731,7 +2785,7 @@ function renderReview(){
     </div></div>`;
   }).join('');
   $('rvsave').hidden=!good.length; $('rvcancel').textContent='ยกเลิก'; updateRvCount();
-  $('rvtitle').textContent+=` · เหลือ ${quotaLeft()} ใบเดือนนี้`;
+  if(sampleFn) $('rvtitle').textContent+=` · เหลือ ${quotaLeft()} ใบเดือนนี้`;
   if(!ownerList().length&&good.length){$('rvmsg').textContent='ใส่ชื่อเจ้าของบัญชีใน ⚙ เพื่อให้แยกเงินเข้าและการโอนเข้าบัญชีตัวเองได้แม่นขึ้น';$('rvmsg').classList.remove('ok-msg')}
 }
 function syncRv(){
@@ -2862,11 +2916,11 @@ try{$('brandcrab').innerHTML=pigSVG('great')}catch(e){}
 (function organizeSettings(){
   const panel=$('setsheet').querySelector('.panel'); const groups=[...panel.querySelectorAll(':scope>.group')];
   const byTitle=t=>groups.find(g=>{const h=g.querySelector('h4');return h&&h.textContent.trim()===t});
-  const I={lang:'M12 3a9 9 0 1 0 0 18 9 9 0 1 0 0-18zM3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18',acct:'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21c1-4 4.5-6 8-6s7 2 8 6',theme:'M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9z',ward:'M10 6a2 2 0 1 1 3 1.7c-.6.4-1 .9-1 1.6V10M12 10l-8.4 6.3c-.8.6-.4 1.7.6 1.7h15.6c1 0 1.4-1.1.6-1.7z',snd:'M4 9v6h4l5 4V5L8 9zM16 9.5a3.5 3.5 0 0 1 0 5M18.5 7a7 7 0 0 1 0 10',bell:'M6 16V11a6 6 0 0 1 12 0v5l2 2H4zM10 20a2 2 0 0 0 4 0',wal:'M3 7h15a3 3 0 0 1 3 3v7a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3zM3 7l12-4v4M16 14h2',
+  const I={lang:'M12 3a9 9 0 1 0 0 18 9 9 0 1 0 0-18zM3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18',acct:'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21c1-4 4.5-6 8-6s7 2 8 6',theme:'M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9z',ward:'M10 6a2 2 0 1 1 3 1.7c-.6.4-1 .9-1 1.6V10M12 10l-8.4 6.3c-.8.6-.4 1.7.6 1.7h15.6c1 0 1.4-1.1.6-1.7z',snd:'M4 9v6h4l5 4V5L8 9zM16 9.5a3.5 3.5 0 0 1 0 5M18.5 7a7 7 0 0 1 0 10',bell:'M6 16V11a6 6 0 0 1 12 0v5l2 2H4zM10 20a2 2 0 0 0 4 0',lock:'M6 11h12v10H6zM8 11V8a4 4 0 0 1 8 0v3M12 15v2',tip:'M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z',wal:'M3 7h15a3 3 0 0 1 3 3v7a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3zM3 7l12-4v4M16 14h2',
     carry:'M4 12h13M13 6l6 6-6 6',budget:'M12 3v9h9A9 9 0 1 1 12 3zM15 3.5A9 9 0 0 1 20.5 9H15z',recur:'M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3M18 3v4h-4M6 21v-4h4',
     cats:'M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z',owner:'M3 6h18v12H3zM8 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM5 16c.5-1.5 1.7-2.3 3-2.3s2.5.8 3 2.3M14 10h4M14 14h3',
     shop:'M4 9l1.5-5h13L20 9M4 9v11h16V9M4 9h16M9 20v-6h6v6',bk:'M12 3v12M7 10l5 5 5-5M5 21h14',rs:'M12 15V3M7 8l5-5 5 5M5 21h14'};
-  const plan=[['แอป','--t-mood',[['ภาษา / Language','lang'],['ธีม','theme'],['ตู้เสื้อผ้าน้องโอ่ง','ward'],['เสียง','snd'],['แจ้งเตือน','bell'],['บัญชี','acct']]],
+  const plan=[['แอป','--t-mood',[['ภาษา / Language','lang'],['ธีม','theme'],['ตู้เสื้อผ้าน้องโอ่ง','ward'],['เสียง','snd'],['แจ้งเตือน','bell'],['ล็อกแอป','lock'],['คำแนะนำการใช้งาน','tip'],['บัญชี','acct']]],
     ['การเงิน','--t-allow',[['ยอดยกมาและยอดเริ่มต้น','carry'],['กระเป๋าเงิน','wal'],['งบรายจ่ายต่อเดือน','budget'],['รายการประจำ','recur'],['หมวดหมู่','cats']]],
     ['การอ่านสลิป','--t-in',[['ชื่อเจ้าของบัญชี','owner'],['ร้านที่แอปจำได้','shop']]],
     ['ข้อมูล','--t-out',[['สำรองข้อมูล','bk'],['กู้คืนข้อมูล','rs']]]];
@@ -3197,9 +3251,232 @@ $('festpill').addEventListener('click',()=>{const p=$('pig'); if(p) p.click()});
 renderWardrobe(); applyFestPill(); applyFestFx();
 
 applyFx();
+
+/* ===== On-device slip reading (installed app) ===== */
+/* Thai bank-slip text parser: turns OCR text into {ok,type,amount,date,time,from,to,memo,ref,note,cat} */
+const SLIP_TH_M={'มค':1,'กพ':2,'มีค':3,'เมย':4,'พค':5,'มิย':6,'กค':7,'สค':8,'กย':9,'ตค':10,'พย':11,'ธค':12,
+  'มกราคม':1,'กุมภาพันธ์':2,'มีนาคม':3,'เมษายน':4,'พฤษภาคม':5,'มิถุนายน':6,'กรกฎาคม':7,'สิงหาคม':8,'กันยายน':9,'ตุลาคม':10,'พฤศจิกายน':11,'ธันวาคม':12};
+const SLIP_EN_M={jan:1,feb:2,mar:3,apr:4,may:5,jun:6,jul:7,aug:8,sep:9,oct:10,nov:11,dec:12};
+const SLIP_CAT_KW=[
+  ['เดินทาง',/(MRT|BTS|GRAB(?! ?FOOD)|BOLT|ทางด่วน|EXPRESSWAY|PTT|ปตท|บางจาก|BANGCHAK|SHELL|ESSO|CALTEX|รถไฟ|แท็กซี่|TAXI|AIRASIA|NOK ?AIR|THAI ?AIRWAYS)/i],
+  ['บิล/ค่าน้ำไฟ',/(การไฟฟ้า|การประปา|\bPEA\b|\bMEA\b|\bMWA\b|\bPWA\b|\bAIS\b|TRUE ?MOVE|TRUE ?ONLINE|\bDTAC\b|3BB|ค่าไฟ|ค่าน้ำ|INTERNET|อินเทอร์เน็ต)/i],
+  ['สุขภาพ',/(โรงพยาบาล|HOSPITAL|คลินิก|CLINIC|ร้านยา|เภสัช|PHARMA|BOOTS|WATSONS|ทันตกรรม|DENTAL)/i],
+  ['บันเทิง',/(MAJOR|SF CINEMA|NETFLIX|SPOTIFY|YOUTUBE|STEAM|PLAYSTATION|DISNEY|คาราโอเกะ)/i],
+  ['ช้อปปิ้ง',/(SHOPEE|LAZADA|CENTRAL|ROBINSON|LOTUS|BIG ?C|MAKRO|UNIQLO|H&M|IKEA|HOMEPRO|POWER ?BUY|\bTOPS\b|เซ็นทรัล|โลตัส|บิ๊กซี|แม็คโคร)/i],
+  ['อาหาร',/(FOOD|ฟู้ด|ร้านอาหาร|ข้าว|ก๋วยเตี๋ยว|ส้มตำ|หมูกระทะ|ชาบู|CAFE|COFFEE|กาแฟ|AMAZON|STARBUCKS|7-?ELEVEN|เซเว่น|\bMK\b|KFC|MCDONALD|แมคโดนัลด์|PIZZA|BURGER|BAKERY|เบเกอรี่|LINE ?MAN|FOODPANDA|ROBINHOOD)/i]
+];
+const SLIP_GAP=' ';
+function slipNorm(t){
+  return String(t||'').normalize('NFC').replace(/ํา/g,'ำ').replace(/[๐-๙]/g,d=>String(d.charCodeAt(0)-0x0E50))
+    .replace(/[​ \t]/g,' ').replace(/ {3,}/g,' '+SLIP_GAP+' ').replace(/ {2}/g,' ');
+}
+function parseSlipText(raw){
+  const text=slipNorm(raw), lines=text.split(/\n/).map(l=>l.trim()).filter(Boolean);
+  const cols=l=>l.split(SLIP_GAP).map(x=>x.trim()).filter(Boolean), flat=l=>l.split(SLIP_GAP).map(x=>x.trim()).filter(Boolean).join(' ');
+  const RE_PAID=/(ที่ชำระ|ยอดชำระ|ชำระทั้งสิ้น|ยอดสุทธิ|สุทธิ|Paid|Net amount|Total paid)/i, RE_AMT=/(จำนวน|ยอด|รวม|Amount|Total)/i,
+    RE_BAD=/(ค่าธรรมเนียม|Fee|ส่วนลด|สิทธิ|คูปอง|Coupon|Discount|คงเหลือ|Balance|แต้ม|Point)/i;
+  /* amounts */
+  const cands=[];
+  lines.forEach((l0,i)=>{ const l=flat(l0), prev=flat(lines[i-1]||'');
+    const push=(v,neg,unit)=>{ if(!(v>0)) return; let sc=0; if(RE_PAID.test(l)) sc+=6; if(RE_AMT.test(l)) sc+=4; else if(RE_AMT.test(prev)&&!RE_BAD.test(prev)) sc+=3; if(unit) sc+=2; if(neg||RE_BAD.test(l)) sc-=8; cands.push({v,sc,i}) };
+    let m, re=/(-?)\s?(\d{1,3}(?:,\d{3})+|\d+)\.(\d{2})(?![\d:])\s*(บาท|THB|฿)?/g;
+    while((m=re.exec(l))) push(parseFloat(m[2].replace(/,/g,'')+'.'+m[3]),!!m[1],m[4]);
+    re=/(-?)\s?(\d{1,3}(?:,\d{3})+|\d+)\s(\d{2})\s*(บาท|THB)/g;
+    while((m=re.exec(l))) push(parseFloat(m[2].replace(/,/g,'')+'.'+m[3]),!!m[1],m[4]);
+    re=/(-?)\s?(\d{1,3}(?:,\d{3})+|\d+)\s*(บาท|THB)/g;
+    while((m=re.exec(l))){ const before=l.slice(0,m.index+m[0].length-m[3].length).trim(); if(!/(\.\d{2}|\s\d{2})$/.test(before)) push(parseFloat(m[2].replace(/,/g,'')),!!m[1],m[3]) }
+  });
+  cands.sort((a,b)=>b.sc-a.sc||b.v-a.v);
+  const amount=cands.length&&cands[0].sc>-5?cands[0].v:0;
+  /* date + time */
+  let date='', time='';
+  for(const l0 of lines){ const l=flat(l0);
+    let m=l.match(/(\d{1,2})\s*([ก-ฮ]{1,3}\.?\s?[ก-ฮ]{1,2}\.?|มกราคม|กุมภาพันธ์|มีนาคม|เมษายน|พฤษภาคม|มิถุนายน|กรกฎาคม|สิงหาคม|กันยายน|ตุลาคม|พฤศจิกายน|ธันวาคม)\s*(\d{4}|\d{2})(?!\d)/);
+    if(!date&&m){ const mo=SLIP_TH_M[m[2].replace(/[.\s]/g,'')]; if(mo){ let y=+m[3]; if(y<100) y+=2500; if(y>2400) y-=543; date=`${y}-${String(mo).padStart(2,'0')}-${String(+m[1]).padStart(2,'0')}` } }
+    if(!date){ m=l.match(/(\d{1,2})\s*(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\.?,?\s*(\d{4}|\d{2})(?!\d)/i);
+      if(m){ let y=+m[3]; if(y<100) y+=2000; if(y>2400) y-=543; date=`${y}-${String(SLIP_EN_M[m[2].toLowerCase().slice(0,3)]).padStart(2,'0')}-${String(+m[1]).padStart(2,'0')}` } }
+    if(!date){ m=l.match(/(\d{1,2})\/(\d{1,2})\/(\d{4}|\d{2})(?!\d)/); if(m&&+m[2]>=1&&+m[2]<=12){ let y=+m[3]; if(y<100) y+=(y>40?2500:2000); if(y>2400) y-=543; date=`${y}-${String(+m[2]).padStart(2,'0')}-${String(+m[1]).padStart(2,'0')}` } }
+    if(!time){ const t=l.match(/(?:^|\D)([01]?\d|2[0-3])[:.]([0-5]\d)(?:\s*น\.?)?(?!\d)/); if(t&&!/(\d{1,3},\d{3}|\.\d{2}\s*(บาท|THB))/.test(l)&&(date||/น\.|:/.test(l))) time=String(+t[1]).padStart(2,'0')+':'+t[2] }
+    if(date&&time) break;
+  }
+  if(date){ const d=new Date(date+'T00:00'), y=+date.slice(0,4); if(isNaN(d)||y<2015||y>2100||+date.slice(8,10)>31||+date.slice(8,10)<1) date='' }
+  /* names */
+  const B='(?=$|[\\s:'+SLIP_GAP+'])';
+  const RE_FROM=new RegExp('^(จาก|From|ผู้โอน|ผู้ชำระ|ผู้จ่าย|Sender|Payer)'+B+'[:\\s'+SLIP_GAP+']*','i'), RE_TO=new RegExp('^(ไปยัง|ไปที่|To|ผู้รับ(?:เงิน)?|ร้านค้า|Merchant|Receiver|Payee|ถึง)'+B+'[:\\s'+SLIP_GAP+']*','i');
+  const RE_SKIP=/(สำเร็จ|Success|เลขที่|รหัส|Ref|อ้างอิง|จำนวน|Amount|ค่าธรรมเนียม|Fee|บาท|THB|วันที่|เวลา|Date|Time|ธ\.|ธนาคาร|Bank|พร้อมเพย์|PromptPay|Prompt Pay|e-?Wallet|บัญชี|Account|สแกน|Scan|QR|บันทึก|Memo|ยอด|สิทธิ|ส่วนลด|คงเหลือ)/i;
+  const strip=l=>l.replace(/\s*(สาขา|Branch)\s.*$/i,'').trim();
+  const nameOk=l=>{ if(!l) return false; l=strip(l); const letters=(l.match(/[A-Za-zก-๛]/g)||[]).length, digits=(l.match(/\d/g)||[]).length;
+    return l.length>=2&&l.length<=48&&!RE_SKIP.test(l)&&letters>=2&&digits<=letters*.4&&!/^[xX\-*\d\s]+$/.test(l) };
+  const valueAfter=(i,re)=>{ const rest=flat(lines[i].replace(re,'')); if(nameOk(rest)) return strip(rest);
+    for(let k=i+1;k<Math.min(lines.length,i+3);k++){ if(RE_FROM.test(lines[k])||RE_TO.test(lines[k])) break; const v=flat(lines[k]); if(nameOk(v)) return strip(v) } return '' };
+  let from='', to='';
+  lines.forEach((l,i)=>{ if(!from&&RE_FROM.test(l)) from=valueAfter(i,RE_FROM); else if(!to&&RE_TO.test(l)) to=valueAfter(i,RE_TO) });
+  if(!from||!to){
+    const hdr=lines.findIndex(l=>/(\d{1,2}:\d{2}|\d{4})/.test(l)&&/(\d{1,2}\s*[ก-ฮ]|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec|\/)/i.test(l));
+    const pool=lines.slice(Math.max(0,hdr+1)).filter(l=>!RE_FROM.test(l)&&!RE_TO.test(l)).map(l=>{const c=cols(l); return strip(c.length>1?c[c.length-1]:c[0])})
+      .filter(l=>nameOk(l)&&l!==from&&l!==to&&!/^[^\sA-Za-zก-๛]{1,3}$/.test(l));
+    if(!from&&pool[0]) from=pool.shift(); if(!to&&pool[0]) to=pool.shift();
+  }
+  const clean=s=>s.replace(/\s*(xxx|XXX|\*{2,})[-\w*]*$/,'').replace(/\s{2,}/g,' ').trim();
+  from=clean(from); to=clean(to);
+  const type=/(รับเงิน|ได้รับ|เงินเข้า|Received|Money in|Incoming)/i.test(lines.slice(0,6).join(' '))?'in':'out';
+  /* reference */
+  let ref='';
+  lines.forEach((l,i)=>{ if(ref||!/(เลขที่รายการ|รหัสอ้างอิง|เลขที่อ้างอิง|อ้างอิง|Ref|Transaction ?ID|Trans\. ?ID)/i.test(l)) return;
+    const toks=(flat(l)+' '+flat(lines[i+1]||'')).match(/[A-Za-z0-9]{8,}/g)||[]; const t=toks.filter(x=>/\d/.test(x)).sort((a,b)=>b.length-a.length)[0]; if(t) ref=t });
+  /* discounts */
+  let note=''; const disc=lines.map(flat).find(l=>/(สิทธิ|ส่วนลด|คูปอง|คนละครึ่ง|Discount)/i.test(l)&&/\d/.test(l));
+  if(disc){ const full=cands.filter(c=>c.sc>=0&&c.v>amount).sort((a,b)=>b.v-a.v)[0]; note=disc.slice(0,60)+(full?` · ราคาเต็ม ${full.v}`:'') }
+  const short=s=>s.replace(/^(นางสาว|นาย|นาง|น\.ส\.|ด\.ช\.|ด\.ญ\.)\s*/,'').replace(/^(MRS|MR|MS|MISS)\.?\s+/i,'').trim();
+  const memo=short(type==='in'?from:to).slice(0,40);
+  let cat='';
+  if(type==='in') cat=/(บริษัท|จำกัด|CO\.|LTD|COMPANY|เงินเดือน|SALARY|PAYROLL)/i.test(from)?'เงินเดือน':'';
+  else { const hay=(to+' '+memo).toUpperCase(); for(const [c,re] of SLIP_CAT_KW){ if(re.test(hay)){cat=c;break} } }
+  return amount>0?{ok:true,type,amount,date,time,from,to,memo,ref,note,cat}:{ok:false,reason:'อ่านยอดเงินไม่ได้'};
+}
+
+
+const OCR_BASE=(()=>{try{return new URL('ocr/',location.href).href}catch(e){return 'ocr/'}})();
+let ocrWorker=null, ocrLoading=null, ocrProg=null;
+function ocrReady(){ try{return localStorage.getItem('kp-ocr-ok')==='1'}catch(e){return false} }
+async function ocrInit(){
+  if(ocrWorker) return ocrWorker;
+  if(!ocrLoading) ocrLoading=(async()=>{
+    if(!window.Tesseract) await new Promise((ok,no)=>{const sc=document.createElement('script'); sc.src=OCR_BASE+'tesseract.min.js'; sc.onload=ok; sc.onerror=()=>no(new Error('load')); document.head.appendChild(sc)});
+    const w=await Tesseract.createWorker('tha+eng',1,{workerPath:OCR_BASE+'worker.min.js',corePath:OCR_BASE,langPath:OCR_BASE+'lang',gzip:true,workerBlobURL:false,logger:m=>{try{ocrProg&&ocrProg(m)}catch(e){}}});
+    try{localStorage.setItem('kp-ocr-ok','1')}catch(e){} ocrWorker=w; return w })();
+  try{ return await ocrLoading }catch(e){ ocrLoading=null; throw e }
+}
+async function prepSlip(file){
+  const bmp=await createImageBitmap(file); const sc=bmp.width<1000?Math.min(3,1300/bmp.width):bmp.width>2200?2200/bmp.width:1;
+  const c=document.createElement('canvas'); c.width=Math.round(bmp.width*sc); c.height=Math.round(bmp.height*sc);
+  const g=c.getContext('2d'); g.filter='grayscale(1) contrast(1.15)'; g.imageSmoothingQuality='high'; g.drawImage(bmp,0,0,c.width,c.height); try{bmp.close()}catch(e){} return c;
+}
+async function readSlipsLocal(files){
+  files=files.slice(0,10); thumbs=files.map(f=>URL.createObjectURL(f)); rvItems=[];
+  $('rvlist').innerHTML=''; $('rvmsg').textContent=''; $('rvmsg').classList.remove('ok-msg');
+  $('rvstatus').hidden=false; $('rvsave').hidden=true; $('rvcancel').textContent=L('ยกเลิก','Cancel'); showSheet('rvsheet');
+  const st=t=>{$('rvstatustext').textContent=t}; let cancelled=false; rvCtl={abort(){cancelled=true}};
+  st(ocrReady()?L('กำลังเตรียมตัวอ่านสลิป...','Getting the slip reader ready...'):L('โหลดตัวอ่านสลิปครั้งแรก ประมาณ 8 MB ครั้งต่อไปไม่ต้องโหลดอีก','Downloading the slip reader once, about 8 MB'));
+  ocrProg=m=>{ if(m&&/load|initializ/i.test(m.status||'')&&m.progress!=null&&!ocrReady()) st(L(`โหลดตัวอ่านสลิป ${Math.round(m.progress*100)}%`,`Downloading the slip reader ${Math.round(m.progress*100)}%`)) };
+  try{
+    const w=await ocrInit(); const arr=[];
+    for(let i=0;i<files.length;i++){ if(cancelled) return;
+      st(L(`กำลังอ่านสลิป ${i+1}/${files.length} ในเครื่อง`,`Reading slip ${i+1} of ${files.length} on this phone`));
+      try{ const {data}=await w.recognize(await prepSlip(files[i])); const r=parseSlipText(data.text||''); arr.push(r.ok?{slip:i+1,...r,cat:r.cat||'อื่นๆ',note:[r.time,r.note].filter(Boolean).join(' · ')}:{slip:i+1,ok:false,reason:L('อ่านยอดเงินไม่ได้ ลองแคปหน้าจอสลิปให้ชัดขึ้น','Could not find the amount. Try a clearer screenshot.')}) }
+      catch(e){ arr.push({slip:i+1,ok:false,reason:L('อ่านรูปนี้ไม่ได้','Could not read this image')}) }
+    }
+    if(cancelled) return;
+    rvItems=mapSlips(files,arr); renderReview();
+    if(rvItems.some(x=>!x.bad)){ $('rvmsg').textContent=L('อ่านในเครื่องแล้ว ไม่ได้ส่งรูปไปไหน ตรวจยอดเงินและวันที่ก่อนบันทึก','Read on this phone; nothing was uploaded. Check the amount and date before saving.'); $('rvmsg').classList.remove('ok-msg') }
+  }catch(err){ $('rvstatus').hidden=true; $('rvmsg').textContent=L('โหลดตัวอ่านสลิปไม่สำเร็จ ต่อเน็ตแล้วลองใหม่','Could not load the slip reader. Connect to the internet and try again.'); $('rvcancel').textContent=L('ปิด','Close') }
+  finally{ rvCtl=null; ocrProg=null }
+}
+if(window.STANDALONE&&typeof createImageBitmap==='function'){ $('scan').hidden=false; $('slipfile').accept='image/*' }
+/* Slips shared from a bank app (Android share sheet) */
+(async function(){
+  const qs=new URLSearchParams(location.search), n=+qs.get('share'); if(!n||!('caches' in window)) return;
+  history.replaceState(null,'',location.pathname);
+  try{ const c=await caches.open('kp-share'), files=[];
+    for(let i=0;i<n;i++){ const r=await c.match('./__share/'+i); if(r){ const b=await r.blob(); files.push(new File([b],'slip'+(i+1)+'.'+((b.type.split('/')[1]||'png').replace('jpeg','jpg')),{type:b.type||'image/png'})) } await c.delete('./__share/'+i) }
+    if(files.length) afterUnlock(()=>setTimeout(()=>handleSlips(files),400));
+  }catch(e){}
+})();
+
+/* ===== App lock (fingerprint / face via the phone, backup PIN) + hide balances ===== */
+const b64=buf=>btoa(String.fromCharCode(...new Uint8Array(buf))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+const unb64=s=>{s=s.replace(/-/g,'+').replace(/_/g,'/'); while(s.length%4) s+='='; return Uint8Array.from(atob(s),c=>c.charCodeAt(0))};
+const rnd=n=>crypto.getRandomValues(new Uint8Array(n));
+async function pinHash(pin,salt){ const d=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(salt+':'+pin)); return b64(d) }
+let lockOpen=false, lockHiddenAt=0, unlockQ=[], pinFails=0, pinWait=0;
+function afterUnlock(fn){ if(lockOpen) unlockQ.push(fn); else fn() }
+function showLock(){
+  if(!prefs.lock||!prefs.lock.on||lockOpen) return; lockOpen=true;
+  $('lkjar').innerHTML=jarSVG('none',null); $('lkpad').hidden=true; $('lkpin').value=''; $('lkmsg').textContent=prefs.lock.cred?L('ใช้ลายนิ้วมือหรือสแกนหน้าเพื่อเปิด','Use your fingerprint or face to open'):L('ใส่ PIN เพื่อเปิด','Enter your PIN to open');
+  $('lkbtn').hidden=!prefs.lock.cred; if(!prefs.lock.cred){$('lkpad').hidden=false; $('lkpinbtn').hidden=true; setTimeout(()=>$('lkpin').focus(),100)} else $('lkpinbtn').hidden=false;
+  $('lockscr').hidden=false; document.body.classList.add('locked');
+  if(prefs.lock.cred&&document.visibilityState==='visible') setTimeout(bioUnlock,350);
+}
+function openLock(){
+  $('lkjar').innerHTML=jarSVG('great',null); bump($('lkjar')); sfx('bloop');
+  setTimeout(()=>{ $('lockscr').classList.add('out'); setTimeout(()=>{$('lockscr').hidden=true; $('lockscr').classList.remove('out'); document.body.classList.remove('locked'); lockOpen=false; const q=unlockQ; unlockQ=[]; q.forEach(f=>{try{f()}catch(e){}})},380) },300);
+}
+async function bioCheck(){
+  const c=prefs.lock&&prefs.lock.cred; if(!c||!navigator.credentials||!window.PublicKeyCredential) return false;
+  try{ await navigator.credentials.get({publicKey:{challenge:rnd(32),allowCredentials:[{type:'public-key',id:unb64(c),transports:['internal','hybrid']}],userVerification:'required',timeout:60000}}); return true }catch(e){ return false }
+}
+async function bioUnlock(){ if(await bioCheck()) openLock(); else { $('lkmsg').textContent=L('ปลดล็อกไม่สำเร็จ ลองอีกครั้งหรือใช้ PIN','Not unlocked. Try again or use your PIN'); } }
+async function pinUnlock(){
+  if(Date.now()<pinWait){ $('lkmsg').textContent=L('ลองใหม่อีกครั้งในอีกสักครู่','Try again in a moment'); return }
+  const v=$('lkpin').value.trim(); if(!v) return;
+  if(await pinHash(v,prefs.lock.salt)===prefs.lock.pin){ pinFails=0; openLock() }
+  else { pinFails++; shake($('lkpad')); $('lkpin').value=''; if(pinFails>=5){pinWait=Date.now()+30000; pinFails=0} $('lkmsg').textContent=L('PIN ไม่ถูกต้อง','Wrong PIN') }
+}
+$('lkbtn').onclick=bioUnlock;
+$('lkpinbtn').onclick=()=>{$('lkpad').hidden=false; $('lkpinbtn').hidden=true; setTimeout(()=>$('lkpin').focus(),60)};
+$('lkpinok').onclick=pinUnlock; $('lkpin').addEventListener('keydown',e=>{if(e.key==='Enter') pinUnlock()});
+document.addEventListener('visibilitychange',()=>{ if(!prefs.lock||!prefs.lock.on) return;
+  if(document.visibilityState==='hidden') lockHiddenAt=Date.now();
+  else if(lockHiddenAt&&Date.now()-lockHiddenAt>=(+prefs.lock.delay||0)*1000) showLock() });
+function applyLockUI(){
+  const on=!!(prefs.lock&&prefs.lock.on); $('lockon').checked=on; $('lockset').hidden=true; $('lockdelay').value=String((prefs.lock&&prefs.lock.delay)||0);
+  $('lockdelayrow').hidden=!on; $('privon').checked=!!prefs.privacy;
+  $('lockmsg').textContent=on?(prefs.lock.cred?L('เปิดอยู่ ใช้ลายนิ้วมือหรือสแกนหน้า และมี PIN สำรอง','On: fingerprint or face, with a backup PIN'):L('เปิดอยู่ ใช้ PIN (มือถือเครื่องนี้หรือหน้านี้ใช้ลายนิ้วมือไม่ได้)','On with PIN only (fingerprint is not available here)')):'';
+}
+$('lockon').addEventListener('change',async e=>{
+  if(e.target.checked){ $('lockset').hidden=false; $('lockpin1').value=''; setTimeout(()=>$('lockpin1').focus(),60); e.target.checked=false; return }
+  e.target.checked=true; const ok=(await bioCheck())||(await (async()=>{const v=prompt(L('ใส่ PIN เพื่อปิดล็อก','Enter your PIN to turn off the lock')); return v!=null&&await pinHash(v.trim(),prefs.lock.salt)===prefs.lock.pin})());
+  if(ok){ prefs.lock={on:false}; savePrefs(); applyLockUI(); msg('lockmsg',L('ปิดล็อกแล้ว','Lock turned off'),true) } else applyLockUI();
+});
+$('lockgo').onclick=async()=>{
+  const pin=$('lockpin1').value.trim(); if(!/^\d{4,6}$/.test(pin)){ msg('lockmsg',L('ตั้ง PIN เป็นตัวเลข 4–6 หลัก','Use a 4–6 digit PIN')); return }
+  const salt=b64(rnd(12)); let cred=null;
+  try{ if(window.PublicKeyCredential&&navigator.credentials&&(await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable())){
+    const c=await navigator.credentials.create({publicKey:{challenge:rnd(32),rp:{name:'Luakep'},user:{id:rnd(16),name:'luakep',displayName:'เหลือเก็บ'},pubKeyCredParams:[{type:'public-key',alg:-7},{type:'public-key',alg:-257}],authenticatorSelection:{authenticatorAttachment:'platform',userVerification:'required',residentKey:'discouraged'},timeout:60000,attestation:'none'}});
+    if(c) cred=b64(c.rawId) } }catch(e){ cred=null }
+  prefs.lock={on:true,cred,salt,pin:await pinHash(pin,salt),delay:+$('lockdelay').value||0}; savePrefs(); applyLockUI();
+  msg('lockmsg',cred?L('เปิดล็อกแล้ว ครั้งหน้าที่เปิดแอปจะถามลายนิ้วมือ','Lock is on. Next time you open the app it will ask for your fingerprint'):L('เปิดล็อกด้วย PIN แล้ว ที่นี่ใช้ลายนิ้วมือไม่ได้','Lock is on with your PIN. Fingerprint is not available here'),true);
+};
+$('lockdelay').addEventListener('change',e=>{ if(prefs.lock&&prefs.lock.on){prefs.lock.delay=+e.target.value||0; savePrefs()} });
+function applyPrivacy(){ document.body.classList.toggle('privacy',!!prefs.privacy); const b=$('eyebtn'); if(b){b.classList.toggle('off',!!prefs.privacy); b.setAttribute('aria-pressed',!!prefs.privacy)} try{$('privon').checked=!!prefs.privacy}catch(e){} }
+$('eyebtn').onclick=e=>{ e.stopPropagation(); prefs.privacy=!prefs.privacy; savePrefs(); applyPrivacy(); bump($('eyebtn')) };
+$('privon').addEventListener('change',e=>{prefs.privacy=e.target.checked; savePrefs(); applyPrivacy()});
+applyPrivacy(); applyLockUI();
+if(prefs.lock&&prefs.lock.on){ try{sessionStorage.setItem('kp-intro','1')}catch(e){} showLock() }
+
+/* ===== First-use tips from Nong Ong ===== */
+const TIPS={
+  jar:[()=>$('pig'),['แตะน้องโอ่งได้นะ น้องมีเรื่องจะบอก','Tap me, I have things to tell you']],
+  eye:[()=>$('eyebtn'),['แตะรูปตาเพื่อซ่อนยอดเงิน เวลาเปิดแอปข้างนอก','Tap the eye to hide your balances in public']],
+  swipe:[()=>document.querySelector('#list .row'),['ปัดรายการไปทางซ้ายเพื่อลบ แตะเพื่อแก้ไข','Swipe a row left to delete it, tap to edit']],
+  recap:[()=>{const b=$('openrecap');return b&&!b.hidden?b:null},['สรุปเดือนแบบสตอรี่ แล้วแชร์เป็นรูปได้','Your month as a story you can share']],
+  ins:[()=>{const b=$('openins');return b&&!b.hidden?b:null},['ดูแนวโน้ม 6 เดือน และคาดการณ์ว่าสิ้นเดือนจะเหลือเท่าไร','See 6-month trends and a month-end forecast']],
+  wallets:[()=>{const b=$('wallets');return b&&!b.hidden?b:null},['แตะการ์ดเพื่อจัดการกระเป๋า ตอนจดรายการกด "โอน" เพื่อย้ายเงินระหว่างกระเป๋า','Tap a card to manage wallets. Use "Transfer" when adding to move money between them']],
+  split:[()=>{const r=$('splitrow');return r&&!r.hidden&&!$('sheet').hidden?r:null},['จ่ายแทนเพื่อน? เปิดตรงนี้ แอปจะจำว่าใครค้างเท่าไร','Paid for friends? Turn this on and the app tracks who owes what']],
+  scan:[()=>{const b=$('scan');return b&&!b.hidden?b:null},['ส่งสลิปให้อ่านได้ หรือกดแชร์สลิปจากแอปธนาคารมาที่ "เหลือเก็บ" ก็ได้','Read slips here, or share a slip from your bank app to Luakep']]
+};
+function tipSeen(k){ return !!(prefs.tips&&prefs.tips[k]) }
+function closeTip(){ document.querySelectorAll('.tipb').forEach(t=>{t.classList.add('out'); setTimeout(()=>t.remove(),220)}) }
+function tip(k){
+  if(window.NO_TIPS||tipSeen(k)||document.querySelector('.tipb')||lockOpen||!$('intro').hidden||!$('auth').hidden) return false;
+  if(k!=='split'&&document.querySelector('.sheet:not([hidden])')) return false;
+  const el=TIPS[k][0](); if(!el) return false; const r=el.getBoundingClientRect(); if(!r.width||r.top<70||r.bottom>innerHeight-90) return false;
+  prefs.tips=prefs.tips||{}; prefs.tips[k]=1; savePrefs();
+  const b=document.createElement('div'); b.className='tipb'; b.setAttribute('role','status');
+  b.innerHTML=`<span class="tj">${jarSVG('good')}</span><p>${esc(L(TIPS[k][1][0],TIPS[k][1][1]))}</p><button type="button">${L('เข้าใจแล้ว','Got it')}</button><i class="tarr"></i>`;
+  document.body.appendChild(b); const w=Math.min(320,innerWidth-24), h=b.offsetHeight||90, below=r.bottom+h+16<innerHeight-70;
+  const left=Math.max(12,Math.min(innerWidth-w-12,r.left+r.width/2-w/2)); b.style.width=w+'px'; b.style.left=left+'px';
+  b.style.top=(below?r.bottom+12:r.top-h-12)+'px'; b.classList.add(below?'below':'above'); b.style.setProperty('--ax',Math.max(18,Math.min(w-18,r.left+r.width/2-left))+'px');
+  b.querySelector('button').onclick=closeTip; setTimeout(()=>{ if(b.isConnected) closeTip() },9000);
+  return true;
+}
+let tipT=0; function maybeTips(){ clearTimeout(tipT); tipT=setTimeout(()=>{ for(const k of ['jar','scan','eye','wallets','recap','ins','swipe']) if(!tipSeen(k)&&tip(k)) break },700) }
+addEventListener('scroll',()=>{ if(document.querySelector('.tipb')) closeTip(); maybeTips() },{passive:true});
+setTimeout(maybeTips,2600);
+$('tipsreset').onclick=()=>{ prefs.tips={}; savePrefs(); msg('tipsmsg',L('ปิดตั้งค่าแล้วน้องโอ่งจะแนะนำใหม่','Close Settings and Nong Ong will show the tips again'),true) };
 (function intro(){
   let seen=false; try{seen=sessionStorage.getItem('kp-intro')==='1'}catch(e){}
-  if(seen||!FX()||!$('auth').hidden) return;
+  if(seen||!FX()||!$('auth').hidden||lockOpen) return;
   try{sessionStorage.setItem('kp-intro','1')}catch(e){}
   const it=$('intro'); $('ijar').innerHTML=jarSVG('great'); it.hidden=false; document.body.classList.remove('enter');
   let done=false; const end=()=>{ if(done) return; done=true; it.classList.add('out'); document.body.classList.add('enter'); setTimeout(()=>{it.hidden=true;it.classList.remove('out')},560); setTimeout(()=>document.body.classList.remove('enter'),1500)};
