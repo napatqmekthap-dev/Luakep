@@ -749,6 +749,92 @@ body{background:var(--surface);transition:background-color .35s}
 @keyframes ftw{0%,100%{opacity:0;transform:scale(.5)}50%{opacity:var(--o);transform:scale(1)}}
 body.lowfx #festfx{display:none}
 @media (prefers-reduced-motion: reduce){#festfx{display:none}.festpill{animation:none}}
+
+/* ===== Round 2 polish ===== */
+.nav:not(.scrolled){background:transparent!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+.nav{transition:background .3s,backdrop-filter .3s}
+.pig .wave,.pigbig .wave,.mark .wave,.minijar .wave,.gjar .wave,.rjar .wave{animation:wave 3.2s linear infinite}
+/* add sheet */
+.panel>*{flex-shrink:0}
+.amtrow{display:flex;align-items:flex-end;gap:10px}
+.amtrow>label{flex:1;min-width:0}
+.minijar{width:78px;height:78px;flex:none;margin:0 2px 2px 0}
+.minijar svg{width:100%;height:100%;overflow:visible}
+.quickamt{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:-6px -16px 0;padding:2px 16px}
+.quickamt::-webkit-scrollbar{display:none}
+.quickamt button{flex:none;border:0;border-radius:999px;padding:7px 14px;font-family:var(--display);font-size:14px;font-weight:500;background:var(--t-allow);color:var(--t-allow-fg);cursor:pointer}
+.quickamt button:nth-child(3n+2){background:var(--t-mood);color:var(--t-mood-fg)}
+.quickamt button:nth-child(3n+3){background:var(--t-in);color:var(--t-in-fg)}
+.impact{font-size:13px;color:var(--muted);min-height:19px;margin-top:-6px;transition:color .2s}
+.impact b{color:var(--ink);font-weight:600}
+.impact.warn,.impact.warn b{color:var(--out)}
+#savebtn.tint{background:hsl(var(--sh) 42% 30%)!important;color:#fff!important;transition:background .3s}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) #savebtn.tint{background:hsl(var(--sh) 60% 78%)!important;color:#141311!important}}
+:root[data-theme="dark"] #savebtn.tint{background:hsl(var(--sh) 60% 78%)!important;color:#141311!important}
+/* daily list */
+.day{overflow:visible!important}
+.dayhead{position:sticky!important;top:calc(env(safe-area-inset-top,0px) + 64px);z-index:3!important;border-radius:26px 26px 0 0;align-items:center;gap:10px}
+.day>.rowwrap:last-child{border-radius:0 0 26px 26px}
+.dright{display:flex;align-items:center;gap:10px}
+.dbar{display:block;width:56px;height:6px;border-radius:3px;background:var(--s-high);overflow:hidden}
+.dbar b{display:block;height:100%;border-radius:3px;background:var(--out-bar)}
+.nospend{font-size:11px;font-weight:600;padding:1px 8px;border-radius:999px;background:var(--t-allow);color:var(--t-allow-fg);letter-spacing:0}
+.tag.big{background:var(--t-out);color:var(--t-out-fg)}
+.row.big .amt{font-weight:700;color:var(--t-out-fg);background:var(--t-out);padding:2px 10px;border-radius:999px}
+.nsgap{display:flex;align-items:center;gap:8px;padding:2px 14px;font-size:13px;font-weight:600;color:var(--t-allow-fg)}
+.nsgap svg{width:26px;height:26px;padding:5px;border-radius:50%;background:var(--t-allow);fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.nsgap small{margin-left:auto;font-weight:400;color:var(--muted)}
+/* goal jars */
+.goal .gjar{position:relative;width:70px;height:70px;margin:-2px 0 -4px -4px;display:block}
+.goal .gjar svg{width:100%;height:100%;overflow:visible}
+.goal .gjar .gi{position:absolute;right:-8px;bottom:2px;width:28px;height:28px;border-radius:9px;box-shadow:0 0 0 3px var(--s-low)}
+.goal.done .gjar .gi{box-shadow:0 0 0 3px var(--t-in)}
+.goal .gjar .gi svg{width:16px;height:16px}
+.goal .spk,.rjar .spk{animation:tw 1.8s ease-in-out infinite;transform-origin:center}
+.ring .mid .rjar{width:78px;height:78px;display:block;transform:translateY(-2px)}
+.ring .mid .rjar svg{width:100%;height:100%;transform:none;overflow:visible}
+.gcolors{display:flex;gap:8px;flex-wrap:wrap}
+.gcolors button{width:52px;height:52px;border:0;border-radius:16px;background:var(--s-low);padding:6px;cursor:pointer;box-shadow:inset 0 0 0 1.5px transparent}
+.gcolors button.on{box-shadow:inset 0 0 0 2px var(--ink)}
+.gcolors svg{width:100%;height:100%}
+/* story art + poses */
+.story .sart{position:absolute;left:0;top:3vh;width:min(52vw,240px);height:min(46vw,215px);pointer-events:none;z-index:0}
+.story .sart svg{width:100%;height:100%;overflow:visible}
+.story .slide>.sart{animation:artin .8s cubic-bezier(.17,1.3,.4,1) .1s both}
+@keyframes artin{from{opacity:0;transform:translateY(16px) scale(.85) rotate(-4deg)}}
+.story .cfall{animation:cfall 1.6s cubic-bezier(.5,0,.75,0) infinite both}
+@keyframes cfall{0%{transform:translateY(-30px);opacity:0}15%{opacity:1}80%{opacity:1}100%{transform:translateY(120px);opacity:0}}
+.story .arc{stroke-dashoffset:var(--len);animation:arcdraw 1.2s .35s cubic-bezier(.2,0,0,1) forwards}
+@keyframes arcdraw{to{stroke-dashoffset:0}}
+.story .stamp{transform-box:fill-box;transform-origin:center;animation:stampin .35s cubic-bezier(.17,1.6,.4,1) both}
+@keyframes stampin{from{transform:scale(0)}}
+.story .stampin{transform-box:fill-box;transform-origin:center;animation:stamp2 .5s .7s cubic-bezier(.17,1.6,.4,1) both}
+@keyframes stamp2{from{transform:scale(2.2) rotate(-25deg);opacity:0}}
+.story .circ{stroke-dasharray:1;stroke-dashoffset:1;animation:arcdraw .9s .6s ease-out forwards}
+.story .sjar svg{transform-origin:50% 90%}
+.story .sjar.p1 svg{animation:pose1 2.6s ease-in-out infinite}
+.story .sjar.p2 svg{animation:pose2 1.8s ease-in-out infinite}
+.story .sjar.p3 svg{animation:pose3 3s ease-in-out infinite}
+.story .sjar.p0 svg{animation:pose2 2.2s ease-in-out infinite}
+@keyframes pose1{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(-2deg) translateY(-6px)}}
+@keyframes pose2{0%,100%{transform:translateY(0) scale(1,1)}40%{transform:translateY(-14px) scale(.96,1.04)}60%{transform:translateY(0) scale(1.05,.95)}}
+@keyframes pose3{0%,100%{transform:rotate(7deg)}25%{transform:rotate(-5deg)}50%{transform:rotate(7deg) translateY(-4px)}}
+/* settings menu */
+.setmenu{display:flex;flex-direction:column;gap:10px}
+.setrow{display:flex;align-items:center;gap:14px;width:100%;text-align:left;border:0;background:var(--s-low);color:var(--ink);border-radius:24px;padding:14px 14px 14px 16px;cursor:pointer;font:inherit;transition:transform .15s}
+.setrow:active{transform:scale(.98)}
+.setrow .si{width:46px;height:46px;border-radius:15px;display:grid;place-items:center;flex:none}
+.setrow svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.setrow .st{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.setrow .st b{font-family:var(--display);font-size:18px;font-weight:500}
+.setrow .st small{font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.setrow .chev{color:var(--muted);flex:none}
+.setpage{display:flex;flex-direction:column;gap:14px;animation:pgin .3s cubic-bezier(.2,0,0,1)}
+@keyframes pgin{from{opacity:0;transform:translateX(24px)}}
+.setback{display:flex;align-items:center;gap:6px;border:0;background:none;color:var(--ink);font-family:var(--display);font-size:24px;font-weight:500;padding:4px 6px 4px 0;cursor:pointer;align-self:flex-start}
+.setback svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+@media (prefers-reduced-motion: reduce){.story .sart,.story .cfall,.story .arc,.story .stamp,.story .stampin,.story .circ,.story .sjar svg,.setpage,.minijar .wave,.gjar .wave,.rjar .wave{animation:none!important}.story .arc,.story .circ{stroke-dashoffset:0}}
+body.lowfx .story .cfall,body.lowfx .story .sjar svg{animation:none}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i></div><div id="festfx" aria-hidden="true"></div>
@@ -931,7 +1017,9 @@ body.lowfx #festfx{display:none}
       <button type="button" data-t="out" class="on">รายจ่าย</button>
       <button type="button" data-t="in">รายรับ</button>
     </div>
-    <label>จำนวนเงิน (บาท)<input id="amount" inputmode="decimal" placeholder="0"></label>
+    <div class="amtrow"><label>จำนวนเงิน (บาท)<input id="amount" inputmode="decimal" placeholder="0"></label><div class="minijar" id="minijar" aria-hidden="true"></div></div>
+    <div class="quickamt" id="quickamt"></div>
+    <div class="impact" id="impact" aria-live="polite"></div>
     <div><label>หมวด</label><div class="chips" id="chips"></div></div>
     <div class="quickcat" id="quickcat" hidden><input id="qcname" maxlength="24" placeholder="ชื่อหมวดใหม่" aria-label="ชื่อหมวดใหม่"><button type="button" id="qcsave">เพิ่ม</button></div>
     <div class="two">
@@ -1239,6 +1327,7 @@ function setLang(l){
   try{renderWardrobe();applyFestPill()}catch(e){}
 }
 Object.assign(DICT,{
+'ก้อนใหญ่':'Big one','ไม่ใช้เงิน':'No spend','สีโอ่ง':'Jar colour',
 'มะนาว':'Lime','ซากุระ':'Sakura','ทะเล':'Sea','ลาเวนเดอร์':'Lavender','แสงแดด':'Sunshine','สีธีม':'Colour palette','ตู้เสื้อผ้าน้องโอ่ง':'Nong Ong’s wardrobe','เสียง':'Sound','เสียงเหรียญ':'Coin sounds','เสียงกริ๊งเมื่อเงินเข้าโอ่ง และเสียงเมื่อแตะน้องโอ่ง':'A clink when money lands in the jar, and a bloop when you tap Nong Ong',
 'เอฟเฟกต์เต็มรูปแบบ':'Full effects','ฉากเปิดแอป เหรียญบิน พื้นหลังเคลื่อนไหว ปิดได้ถ้าอยากประหยัดแบต':'Opening scene, flying coins, moving background. Turn off to save battery.',
 'อีก {0} วันถึงสิ้นเดือน':'{0} days to month end','ธีม':'Theme','ตามมือถือ':'System','สว่าง':'Light','มืด':'Dark','จาก {0}':'of {0}','สำรองข้อมูลด้วยตัวเอง':'Manual backup','ทุกอย่างในแพ็กฟรี':'Everything in Free','อ่านสลิป {0} ใบต่อเดือน':'{0} slip scans a month','แนะนำ':'Recommended','เติมเงินแล้ว':'Added','ถอนเงินแล้ว':'Withdrawn',
@@ -1513,10 +1602,10 @@ function currentOutfit(){
   const f=currentFest(); return f?FEST[f][2]:null;
 }
 
-function jarSVG(m,o){
+function jarSVG(m,o,lv){
   if(o===undefined) o=currentOutfit();
   const id='j'+(++JAR_N);
-  const L={great:.86,good:.62,warn:.32,bad:.07,none:.55}[m];
+  const L=lv!=null?Math.max(.05,Math.min(.9,lv)):{great:.86,good:.62,warn:.32,bad:.07,none:.55}[m];
   const top=34, bot=106, wy=bot-(bot-top)*L;           // water surface y
   const O='#2b3b36';
   const S=`stroke="${O}" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"`;
@@ -1725,19 +1814,64 @@ function render(){
   if(filterCat&&!shown.length){$('list').innerHTML=emptyState('good',L('ไม่มีรายการในหมวดนี้','Nothing in this category'),'');return}
   if(!rows.length&&!searching){$('list').innerHTML=emptyState('none',L('ยังไม่มีรายการเดือนนี้','Nothing logged this month'),L('น้องโอ่งปิดฝารออยู่ จดรายการแรกเพื่อปลุกน้องเลย','Nong Ong is waiting under its lid. Add your first one to wake it up.'),L('จดรายการแรก','Add the first one'));return}
   const groups={}; shown.forEach(r=>(groups[r.date]=groups[r.date]||[]).push(r));
-  $('list').innerHTML=Object.entries(groups).map(([dt,rs])=>{
-    const d=new Date(dt+'T00:00'); const net=rs.reduce((s,r)=>s+(r.type==='in'?r.amount:-r.amount),0);
-    return `<div class="day"><div class="dayhead"><span>${d.toLocaleDateString(LOC(),searching?{day:'numeric',month:'short',year:'numeric'}:{weekday:'short',day:'numeric',month:'short'})}</span><span class="num">${net>=0?'+':'-'}${fmt(Math.abs(net))}</span></div>`+
-    rs.map(r=>`<div class="rowwrap"><div class="row${String(r.id)===lastAddedId?' new':''}" data-id="${r.id}">${ic(r.cat)}<div class="t" tabindex="0" role="button" aria-label="${L('แก้ไข','Edit')} ${esc(r.memo||r.cat)}"><b>${esc(r.memo||r.cat)}${r.demo?'<span class="tag">ตัวอย่าง</span>':''}${r.recurId?'<span class="tag rec">ประจำ</span>':''}</b><small>${esc(r.cat)}${r.note?' · '+esc(r.note):''}</small></div>
-      <div class="amt num ${r.type}">${r.type==='in'?'+':'-'}${fmt(r.amount)}</div></div></div>`).join('')+'</div>';
-  }).join('');
+  const dayOut={}; shown.forEach(r=>{if(r.type==='out') dayOut[r.date]=(dayOut[r.date]||0)+r.amount});
+  const maxDay=Math.max(1,...Object.values(dayOut)), mOut=shown.filter(r=>r.type==='out').reduce((s,r)=>s+r.amount,0);
+  const bigCut=shown.length>3?Math.max(1000,mOut*.2):Infinity;
+  const leaf='<svg viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-14-1 9-6 14-14 14zM5 19l7-7"/></svg>';
+  const dayHTML=([dt,rs])=>{
+    const d=new Date(dt+'T00:00'); const net=rs.reduce((s,r)=>s+(r.type==='in'?r.amount:-r.amount),0), sp=dayOut[dt]||0;
+    return `<div class="day"><div class="dayhead"><span>${d.toLocaleDateString(LOC(),searching?{day:'numeric',month:'short',year:'numeric'}:{weekday:'short',day:'numeric',month:'short'})}</span><span class="dright">${sp?`<i class="dbar" title="${fmt(sp)}"><b style="width:${Math.max(6,sp/maxDay*100).toFixed(0)}%"></b></i>`:'<span class="nospend">ไม่ใช้เงิน</span>'}<span class="num">${net>=0?'+':'-'}${fmt(Math.abs(net))}</span></span></div>`+
+    rs.map(r=>{const big=r.type==='out'&&r.amount>=bigCut; return `<div class="rowwrap"><div class="row${String(r.id)===lastAddedId?' new':''}${big?' big':''}" data-id="${r.id}">${ic(r.cat)}<div class="t" tabindex="0" role="button" aria-label="${L('แก้ไข','Edit')} ${esc(r.memo||r.cat)}"><b>${esc(r.memo||r.cat)}${big?'<span class="tag big">ก้อนใหญ่</span>':''}${r.demo?'<span class="tag">ตัวอย่าง</span>':''}${r.recurId?'<span class="tag rec">ประจำ</span>':''}</b><small>${esc(r.cat)}${r.note?' · '+esc(r.note):''}</small></div>
+      <div class="amt num ${r.type}">${r.type==='in'?'+':'-'}${fmt(r.amount)}</div></div></div>`}).join('')+'</div>';
+  };
+  const gapHTML=(n,a,b)=>{const f=x=>x.toLocaleDateString(LOC(),{day:'numeric',month:'short'}); return `<div class="nsgap">${leaf}<span>${L(`ไม่ใช้เงิน ${n} วัน`,`${n} no-spend ${n===1?'day':'days'}`)}</span><small>${n>1?`${f(a)} – ${f(b)}`:f(a)}</small></div>`};
+  if(searching||filterCat){ $('list').innerHTML=Object.entries(groups).map(dayHTML).join('') }
+  else {
+    const now=new Date(), y=view.getFullYear(), mo=view.getMonth(), isCur=y===now.getFullYear()&&mo===now.getMonth();
+    const lastD=new Date(y,mo+1,0).getDate(), latest=Math.max(...Object.keys(groups).map(k=>+k.slice(8,10)));
+    let end=isCur?Math.max(now.getDate()-1,latest):lastD; if(y>now.getFullYear()||(y===now.getFullYear()&&mo>now.getMonth())) end=latest;
+    const H=[]; let gap=[];
+    const flush=()=>{ if(gap.length){H.push(gapHTML(gap.length,gap[gap.length-1],gap[0])); gap=[]} };
+    for(let dd=end; dd>=1; dd--){ const k=y+'-'+String(mo+1).padStart(2,'0')+'-'+String(dd).padStart(2,'0');
+      if(groups[k]){flush(); H.push(dayHTML([k,groups[k]]))} else gap.push(new Date(y,mo,dd)) }
+    flush(); $('list').innerHTML=H.join('');
+  }
 }
 
 /* Entry sheet */
 function chips(){
   const list=CATS[type].includes(cat)?CATS[type]:[...CATS[type],cat];
   $('chips').innerHTML=list.map(c=>`<button type="button" data-c="${esc(c)}" class="${c===cat?'on':''}">${ic(c,'xs')}${esc(c)}</button>`).join('')+`<button type="button" class="addchip" data-add="1">+ ${L('หมวดใหม่','New category')}</button>`;
+  try{const sb=$('savebtn'); sb.style.setProperty('--sh',(ICONS[cat]||[200])[0]); sb.classList.add('tint')}catch(e){}
+  renderQuick(); updatePreview();
 }
+/* Live preview on the add sheet: mini jar, quick amounts, budget impact */
+function renderQuick(){
+  const f={}; data.forEach(r=>{if(r.type===type&&r.cat===cat&&r.amount>0) f[r.amount]=(f[r.amount]||0)+1});
+  const top=Object.entries(f).sort((a,b)=>b[1]-a[1]).slice(0,3).map(x=>+x[0]);
+  const def=type==='in'?[1000,5000,10000,20000]:[50,100,200,500,1000];
+  const vals=[...new Set([...top,...def])].slice(0,5).sort((a,b)=>a-b);
+  $('quickamt').innerHTML=vals.map(v=>`<button type="button" data-v="${v}" class="num">${fmt(v)}</button>`).join('');
+}
+$('quickamt').addEventListener('click',e=>{const b=e.target.closest('[data-v]'); if(!b) return; $('amount').value=b.dataset.v; try{bump(b)}catch(_){} updatePreview()});
+function updatePreview(){
+  const box=$('minijar'); if(!box) return;
+  const a=parseFloat(($('amount').value||'').replace(/,/g,''))||0, ym=($('date').value||iso(new Date())).slice(0,7);
+  const rows=data.filter(r=>r.date.startsWith(ym)&&String(r.id)!==String(editing));
+  let tin=rows.filter(r=>r.type==='in').reduce((s,r)=>s+r.amount,0), tout=rows.filter(r=>r.type==='out').reduce((s,r)=>s+r.amount,0);
+  const catSpent=rows.filter(r=>r.type==='out'&&r.cat===cat).reduce((s,r)=>s+r.amount,0);
+  if(type==='in') tin+=a; else tout+=a;
+  const m=moodOf(tin,tout), lv=tin>0?Math.max(0,(tin-tout)/tin):(tout?0:null);
+  box.innerHTML=jarSVG(m,undefined,lv);
+  const left=tin-tout, el=$('impact'), b=budget[cat]||0; let warn=false, t;
+  if(!a) t=L(`เดือนนี้เหลือ <b>${fmt(left)}</b>`,`<b>${fmt(left)}</b> left this month`);
+  else if(type==='in') t=L(`เงินเข้าโอ่ง เดือนนี้จะเหลือ <b>${fmt(left)}</b>`,`Into the jar: <b>${fmt(left)}</b> left this month`);
+  else if(b>0&&catSpent+a>b){warn=true; t=L(`เกินงบ${esc(cat)} <b>${fmt(catSpent+a-b)}</b>`,`<b>${fmt(catSpent+a-b)}</b> over the ${esc(tr(cat))} budget`)}
+  else if(left<0){warn=true; t=L(`ใช้เกินรายรับเดือนนี้ <b>${fmt(-left)}</b>`,`<b>${fmt(-left)}</b> over this month's income`)}
+  else t=L(`หลังรายการนี้ เดือนนี้เหลือ <b>${fmt(left)}</b>`+(b>0?` · งบ${esc(cat)}เหลือ ${fmt(b-catSpent-a)}`:''),`After this: <b>${fmt(left)}</b> left this month`+(b>0?` · ${fmt(b-catSpent-a)} left in ${esc(tr(cat))}`:''));
+  el.innerHTML=t; el.classList.toggle('warn',warn);
+}
+$('amount').addEventListener('input',updatePreview);
 function setType(t){type=t;[...$('seg').children].forEach(x=>x.classList.toggle('on',x.dataset.t===t))}
 $('chips').onclick=e=>{const b=e.target.closest('button');if(!b)return; if(b.dataset.add){$('quickcat').hidden=false;$('qcname').value='';$('qcname').focus();return} cat=b.dataset.c;chips()};
 $('qcsave').onclick=()=>{const n=$('qcname').value.trim(); if(!n){$('qcname').focus();return} if(catExists(n)){$('err').textContent=L('มีหมวดชื่อนี้อยู่แล้ว','That category already exists');return}
@@ -1756,7 +1890,7 @@ function openEntry(rec){
 }
 $('add').onclick=()=>openEntry(null);
 function updateRecurHint(){const d=$('date').value; $('recurhint').textContent=d?`ลงให้อัตโนมัติทุกวันที่ ${+d.slice(8,10)} ของเดือน`:'ลงรายการนี้ให้อัตโนมัติทุกเดือน'}
-$('date').addEventListener('change',updateRecurHint);
+$('date').addEventListener('change',()=>{updateRecurHint();updatePreview()});
 $('memo').onchange=()=>{ if(editing) return; const m=recall($('memo').value); if(m){setType(m.type);cat=m.cat;chips()} };
 $('cancel').onclick=()=>hideSheet('sheet');
 $('sheet').onclick=e=>{if(e.target.id==='sheet')hideSheet('sheet')};
@@ -1914,15 +2048,32 @@ function recapData(){
   return {month:TH_M[view.getMonth()]+' '+(view.getFullYear()+543),tin,tout,top,fav,biggest,wd,noSpend:Math.max(0,days-spendDays),days,count:rows.length,cur};
 }
 function moodOf(tin,tout){ if(!tin) return tout?'warn':'none'; const p=tout/tin; return p>1?'bad':p>.8?'warn':p>.5?'good':'great' }
+function storyArt(kind,d){
+  const C='currentColor';
+  if(kind==='coins'){ const st=(x,n)=>Array.from({length:n},(_,i)=>`<ellipse cx="${x}" cy="${150-i*11}" rx="26" ry="9" fill="#f3c44f" stroke="#b98b16" stroke-width="2"/>`).join('');
+    return `<svg viewBox="0 0 200 180">${st(52,3)}${st(104,6)}${st(156,9)}${[[40,0],[96,.5],[150,1],[120,1.5]].map(([x,dl])=>`<g class="cfall" style="animation-delay:${dl}s"><ellipse cx="${x}" cy="10" rx="11" ry="11" fill="#ffd54f" stroke="#b98b16" stroke-width="2"/><path d="M${x-3} 5v10M${x+3} 5v10" stroke="#b98b16" stroke-width="1.6"/></g>`).join('')}</svg>`}
+  if(kind==='donut'){ const pc=d.tout?d.top[1]/d.tout:0, r=70, L2=2*Math.PI*r; const k=(ICONS[d.top[0]]||[200,DOTS])[1];
+    return `<svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="${r}" fill="none" stroke="${C}" stroke-opacity=".14" stroke-width="22"/><circle class="arc" cx="100" cy="100" r="${r}" fill="none" stroke="${C}" stroke-width="22" stroke-linecap="round" stroke-dasharray="${(L2*pc).toFixed(1)} ${L2.toFixed(1)}" transform="rotate(-90 100 100)" style="--len:${(L2*pc).toFixed(1)}"/><g transform="translate(64 64) scale(3)"><path d="${k}" fill="none" stroke="${C}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></g></svg>`}
+  if(kind==='punch'){ const n=Math.min(d.fav.n,10);
+    return `<svg viewBox="0 0 220 150"><g transform="rotate(-6 110 75)"><rect x="12" y="14" width="196" height="122" rx="18" fill="${C}" fill-opacity=".1" stroke="${C}" stroke-width="3"/><rect x="30" y="32" width="90" height="10" rx="5" fill="${C}" opacity=".5"/>${Array.from({length:10},(_,i)=>{const x=46+(i%5)*32, y=78+Math.floor(i/5)*34; return i<n?`<g class="stamp" style="animation-delay:${(.25+i*.12).toFixed(2)}s"><circle cx="${x}" cy="${y}" r="12" fill="${C}"/><path d="M${x-5} ${y}l3.5 4 6.5-8" stroke="var(--sbg)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>`:`<circle cx="${x}" cy="${y}" r="12" fill="none" stroke="${C}" stroke-width="2.4" stroke-dasharray="4 4" opacity=".5"/>`}).join('')}</g></svg>`}
+  if(kind==='receipt'){
+    return `<svg viewBox="0 0 200 200"><g transform="rotate(5 100 100)"><path d="M40 12h120v170l-12-8-12 8-12-8-12 8-12-8-12 8-12-8-12 8-12-8-12 8z" fill="#fffdf6" stroke="${C}" stroke-width="3" stroke-linejoin="round"/>${[44,64,84,104].map((y,i)=>`<rect x="56" y="${y}" width="${[88,70,80,60][i]}" height="7" rx="3.5" fill="${C}" opacity=".25"/>`).join('')}<rect x="56" y="132" width="88" height="12" rx="6" fill="${C}"/></g><g class="stampin"><circle cx="150" cy="60" r="30" fill="none" stroke="#e5484d" stroke-width="4"/><circle cx="150" cy="60" r="23" fill="none" stroke="#e5484d" stroke-width="2"/><text x="150" y="70" text-anchor="middle" font-size="28" font-weight="700" fill="#e5484d" font-family="Kanit,Mitr,sans-serif">฿</text></g></svg>`}
+  if(kind==='cal'){ const hi=d.wd.indexOf(Math.max(...d.wd)), ws=LANG==='en'?['S','M','T','W','T','F','S']:['อา','จ','อ','พ','พฤ','ศ','ส'];
+    return `<svg viewBox="0 0 220 190"><rect x="10" y="22" width="200" height="160" rx="18" fill="${C}" fill-opacity=".08" stroke="${C}" stroke-width="3"/><path d="M10 40a18 18 0 0 1 18-18h164a18 18 0 0 1 18 18v14H10z" fill="${C}"/><path d="M58 10v24M162 10v24" stroke="${C}" stroke-width="6" stroke-linecap="round"/>
+      ${ws.map((w,i)=>`<text x="${30+i*27}" y="76" text-anchor="middle" font-size="12" font-weight="700" fill="${C}" font-family="Mitr,'Noto Sans Thai',sans-serif">${w}</text>`).join('')}
+      ${Array.from({length:28},(_,i)=>`<rect x="${21+(i%7)*27}" y="${88+Math.floor(i/7)*22}" width="18" height="14" rx="4" fill="${C}" opacity="${i%7===hi?.55:.14}"/>`).join('')}
+      <ellipse class="circ" cx="${30+hi*27}" cy="126" rx="17" ry="58" fill="none" stroke="#e5484d" stroke-width="4" stroke-linecap="round" pathLength="1" transform="rotate(-4 ${30+hi*27} 126)"/></svg>`}
+  return '';
+}
 function buildSlides(d){
   const S=[];
   S.push(`<div class="k">${d.cur?'เดือนนี้จนถึงวันนี้':'สรุปทั้งเดือน'}</div><h2 class="h">${L(d.month+'<br>ของคุณ','Your<br>'+tr(d.month))}</h2><div class="pigbig">${pigSVG(moodOf(d.tin,d.tout))}</div><p class="p">จดไป ${d.count} รายการ มาดูกันว่าเงินไปไหนบ้าง</p>`);
-  S.push(`<div class="k">เงินเข้า</div><div class="n num">${fmt(d.tin)}</div><div class="k" style="margin-top:12px">เงินออก</div><div class="n num">${fmt(d.tout)}</div><p class="p">${d.tin?(d.tout<=d.tin?`เหลือเก็บ ${fmt(d.tin-d.tout)} หรือ ${Math.round((1-d.tout/d.tin)*100)}% ของรายรับ`:`ใช้เกินรายรับไป ${fmt(d.tout-d.tin)}`):'ยังไม่มีรายรับในเดือนนี้'}</p>`);
-  if(d.top){const h=(ICONS[d.top[0]]||[200])[0];S.push(`<div class="k">หมวดที่ใช้มากที่สุด</div><div class="bigico" style="background:hsl(${h} 60% 50% / .55)">${ic(d.top[0]).replace(/^<span[^>]*>|<\/span>$/g,'')}</div><h2 class="h">${esc(d.top[0])}</h2><div class="n num" style="font-size:44px">${fmt(d.top[1])}</div><p class="p">คิดเป็น ${Math.round(d.top[1]/d.tout*100)}% ของรายจ่ายทั้งหมด</p>`)}
-  if(d.fav&&d.fav.n>1) S.push(`<div class="k">ขาประจำของคุณ</div><h2 class="h">${esc(d.fav.name)}</h2><div class="n num">${d.fav.n} ครั้ง</div><p class="p">รวม ${fmt(d.fav.sum)} ${d.fav.n>=4?'เจอกันบ่อยจนเจ้าของร้านน่าจะจำได้แล้ว':'ร้านนี้ถูกใจคุณแน่ๆ'}</p>`);
-  else if(d.biggest) S.push(`<div class="k">รายจ่ายก้อนใหญ่ที่สุด</div><h2 class="h">${esc(d.biggest.memo||d.biggest.cat)}</h2><div class="n num">${fmt(d.biggest.amount)}</div><p class="p">หมวด${esc(d.biggest.cat)}</p>`);
+  S.push(`<div class="sart">${storyArt('coins',d)}</div><div class="k">เงินเข้า</div><div class="n num">${fmt(d.tin)}</div><div class="k" style="margin-top:12px">เงินออก</div><div class="n num">${fmt(d.tout)}</div><p class="p">${d.tin?(d.tout<=d.tin?`เหลือเก็บ ${fmt(d.tin-d.tout)} หรือ ${Math.round((1-d.tout/d.tin)*100)}% ของรายรับ`:`ใช้เกินรายรับไป ${fmt(d.tout-d.tin)}`):'ยังไม่มีรายรับในเดือนนี้'}</p>`);
+  if(d.top){const h=(ICONS[d.top[0]]||[200])[0];S.push(`<div class="sart">${storyArt('donut',d)}</div><div class="k">หมวดที่ใช้มากที่สุด</div><h2 class="h">${esc(d.top[0])}</h2><div class="n num" style="font-size:44px">${fmt(d.top[1])}</div><p class="p">คิดเป็น ${Math.round(d.top[1]/d.tout*100)}% ของรายจ่ายทั้งหมด</p>`)}
+  if(d.fav&&d.fav.n>1) S.push(`<div class="sart">${storyArt('punch',d)}</div><div class="k">ขาประจำของคุณ</div><h2 class="h">${esc(d.fav.name)}</h2><div class="n num">${d.fav.n} ครั้ง</div><p class="p">รวม ${fmt(d.fav.sum)} ${d.fav.n>=4?'เจอกันบ่อยจนเจ้าของร้านน่าจะจำได้แล้ว':'ร้านนี้ถูกใจคุณแน่ๆ'}</p>`);
+  else if(d.biggest) S.push(`<div class="sart">${storyArt('receipt',d)}</div><div class="k">รายจ่ายก้อนใหญ่ที่สุด</div><h2 class="h">${esc(d.biggest.memo||d.biggest.cat)}</h2><div class="n num">${fmt(d.biggest.amount)}</div><p class="p">หมวด${esc(d.biggest.cat)}</p>`);
   const mx=Math.max(1,...d.wd), hi=d.wd.indexOf(Math.max(...d.wd));
-  if(d.tout) S.push(`<div class="k">วันที่กระเป๋าเบาที่สุด</div><h2 class="h">วัน${TH_D[hi]}</h2><div class="week">${d.wd.map((v,i)=>`<div class="${i===hi?'hi':''}"><span style="height:${Math.max(4,v/mx*100)}%"></span>${(LANG==='en'?['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][i]:TH_D[i].slice(0,2))}</div>`).join('')}</div><p class="p">${d.noSpend?`และมี ${d.noSpend} วันที่ไม่ใช้เงินเลย เก่งมาก`:'ทุกวันมีรายจ่าย ลองหาวันพักกระเป๋าสักวัน'}</p>`);
+  if(d.tout) S.push(`<div class="sart">${storyArt('cal',d)}</div><div class="k">วันที่กระเป๋าเบาที่สุด</div><h2 class="h">วัน${TH_D[hi]}</h2><div class="week">${d.wd.map((v,i)=>`<div class="${i===hi?'hi':''}"><span style="height:${Math.max(4,v/mx*100)}%"></span>${(LANG==='en'?['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][i]:TH_D[i].slice(0,2))}</div>`).join('')}</div><p class="p">${d.noSpend?`และมี ${d.noSpend} วันที่ไม่ใช้เงินเลย เก่งมาก`:'ทุกวันมีรายจ่าย ลองหาวันพักกระเป๋าสักวัน'}</p>`);
   S.push(`<div class="k">การ์ดสรุปของคุณ</div><img class="shot" id="shot" alt="การ์ดสรุปเดือน"><div class="acts"><button id="sshare">บันทึก / แชร์รูป</button><button class="ghost" id="sdone">เสร็จแล้ว</button></div><div class="hint" id="shint"></div>`);
   return S;
 }
@@ -1943,7 +2094,7 @@ function showSlide(i){
   st._shown=true; st.style.setProperty('--sbg',pal[0]); st.style.setProperty('--sfg',pal[1]); st.style.color=pal[1];
   [...$('sbars').children].forEach((b,k)=>{b.className=k<i?'done':k===i?(last?'done':'cur'):'';b.firstChild.style.animationDuration=dur+'ms'});
   const el=$('sslide'); const jm=i>0&&!last?(SMOOD[i]||moodOf(story.d.tin,story.d.tout)):null;
-  el.innerHTML=(i<story.slides.length-1?'<div class="blob"></div>':'')+(jm?`<div class="sjar">${jarSVG(jm)}</div>`:'')+story.slides[i]; el.style.animation='none'; void el.offsetWidth; el.style.animation='';
+  el.innerHTML=(i<story.slides.length-1?'<div class="blob"></div>':'')+(jm?`<div class="sjar p${i%4}">${jarSVG(jm)}</div>`:'')+story.slides[i]; el.style.animation='none'; void el.offsetWidth; el.style.animation='';
   if(FX()) el.querySelectorAll('.n').forEach(n=>{const t=n.textContent.trim(); if(/^฿[\d,]+$/.test(t)){const v=+t.replace(/[^\d]/g,''); n._v=0; animNum(n,v,fmt)}});
   clearTimeout(stTimer);
   if(!last) stTimer=setTimeout(()=>showSlide(i+1),dur);
@@ -2001,11 +2152,27 @@ async function shareCard(){
 }
 
 /* Goals UI */
+function gColor(g){return g.color!=null?g.color:gHue(g.icon)}
+const GJ_HUES=[150,200,330,270,40,15];
+function goalJarSVG(p,h,done){
+  const id='gj'+(++JAR_N), lv=Math.max(0,Math.min(1,p)), wy=(106-70*Math.max(.04,lv*.95)).toFixed(1), O='#2b3b36';
+  const body='M36 32C22 36 14 48 15 62C16 80 28 100 44 106Q60 109 76 106C92 100 104 80 105 62C106 48 98 36 84 32Z';
+  const S=`stroke="${O}" stroke-width="2.8" fill="none" stroke-linecap="round"`;
+  const eyes=done?`<path d="M42 62q5-6 10 0M68 62q5-6 10 0" ${S}/>`:`<circle cx="47" cy="61" r="3.6" fill="${O}"/><circle cx="73" cy="61" r="3.6" fill="${O}"/><circle cx="48.3" cy="59.6" r="1.3" fill="#fff"/><circle cx="74.3" cy="59.6" r="1.3" fill="#fff"/>`;
+  const mouth=done?`<path d="M53 69q7 9 14 0z" fill="${O}"/>`:`<path d="M54 70q6 5 12 0" ${S}/>`;
+  const bow=done?`<g transform="translate(60 30)"><path d="M0 0L-17-9v18zM0 0L17-9v18z" fill="#ff7aa8" stroke="${O}" stroke-width="2.2" stroke-linejoin="round"/><path d="M-2 3l-6 13M2 3l6 13" stroke="#ff7aa8" stroke-width="4" stroke-linecap="round"/><circle r="4.5" fill="#ff4f86" stroke="${O}" stroke-width="2"/></g><g class="spk"><path d="M12 30l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="#ffd54f"/><path d="M106 22l1.5 3.5 3.5 1.5-3.5 1.5-1.5 3.5-1.5-3.5-3.5-1.5 3.5-1.5z" fill="#ffd54f"/></g>`:'';
+  return `<svg viewBox="0 0 120 120" aria-hidden="true" style="overflow:visible"><defs><linearGradient id="${id}g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="hsl(${h} 70% 94%)"/><stop offset=".6" stop-color="hsl(${h} 50% 82%)"/><stop offset="1" stop-color="hsl(${h} 42% 68%)"/></linearGradient>
+  <linearGradient id="${id}w" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5ec4e8" stop-opacity=".85"/><stop offset="1" stop-color="#2a8fbf"/></linearGradient><clipPath id="${id}c"><path d="${body}"/></clipPath></defs>
+  <ellipse cx="60" cy="111" rx="32" ry="4" fill="#000" opacity=".1"/><path d="${body}" fill="url(#${id}g)"/>
+  <g clip-path="url(#${id}c)"><g class="wave"><path d="M-20 ${wy} q10 -4 20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 V112 H-20Z" fill="url(#${id}w)"/></g>${lv>0?`<ellipse cx="50" cy="101" rx="6" ry="2.6" fill="#f2c14e" stroke="#b98b16"/><ellipse cx="66" cy="102" rx="6" ry="2.6" fill="#f2c14e" stroke="#b98b16"/>`:''}<ellipse cx="38" cy="50" rx="7" ry="13" fill="#fff" opacity=".35" transform="rotate(25 38 50)"/></g>
+  <path d="${body}" fill="none" stroke="${O}" stroke-width="3"/><path d="M38 33Q36 27 32 25H88Q84 27 82 33Z" fill="hsl(${h} 55% 86%)" stroke="${O}" stroke-width="2.8" stroke-linejoin="round"/><rect x="30" y="20" width="60" height="7" rx="3.5" fill="hsl(${h} 60% 91%)" stroke="${O}" stroke-width="2.8"/>
+  <ellipse cx="38" cy="69" rx="5" ry="3.2" fill="#ff8fa3" opacity=".5"/><ellipse cx="82" cy="69" rx="5" ry="3.2" fill="#ff8fa3" opacity=".5"/>${eyes}${mouth}${bow}</svg>`;
+}
 function renderGoals(){
   $('goals').innerHTML=goals.map(g=>{
     const sv=gSaved(g), p=Math.min(1,sv/g.target), done=sv>=g.target, mo=monthsUntil(g.deadline);
     const sub=done?'ครบเป้าแล้ว เก่งมาก!':(g.deadline&&mo>0?`ต้องออมเดือนละ ${fmt(Math.ceil((g.target-sv)/mo))}`:`อีก ${fmt(g.target-sv)}`);
-    return `<button class="goal ${done?'done':''}" data-g="${g.id}" style="--h:${gHue(g.icon)}"><span class="gi">${gIco(g.icon)}</span><b>${esc(g.name)}${g.demo?'<span class="tag">ตัวอย่าง</span>':''}</b>
+    return `<button class="goal ${done?'done':''}" data-g="${g.id}" style="--h:${gColor(g)}"><span class="gjar">${goalJarSVG(p,gColor(g),done)}<span class="gi">${gIco(g.icon)}</span></span><b>${esc(g.name)}${g.demo?'<span class="tag">ตัวอย่าง</span>':''}</b>
       <span class="amt2 num">${fmt(sv)} <small>/ ${fmt(g.target)}</small></span><span class="bar"><i style="width:${(p*100).toFixed(1)}%"></i></span><span class="sub">${Math.round(p*100)}% · ${sub}</span></button>`;
   }).join('')+`<button class="goal add" id="goaladd"><span>+</span>เป้าหมายใหม่</button>`;
 }
@@ -2020,7 +2187,7 @@ function openGoal(id){
   const dl=g.deadline?`${TH_M[+g.deadline.slice(5,7)-1]} ${+g.deadline.slice(0,4)+543}`:'';
   $('goalpanel').innerHTML=`<div class="gbig" style="--h:${gHue(g.icon)}"><span class="gi">${gIco(g.icon)}</span><h3>${esc(g.name)}</h3></div>
     ${done?'<div class="celebrate">ครบเป้าหมายแล้ว! น้องโอ่งน้ำเต็มปริ่มเลย</div>':''}
-    <div class="gstat" style="--h:${gHue(g.icon)}"><div class="gring"><div class="ring"><svg viewBox="0 0 120 120"><circle class="trk" cx="60" cy="60" r="52"/><circle class="val" id="gringval" cx="60" cy="60" r="52" stroke-dasharray="326.73" stroke-dashoffset="${(326.73*(1-(g._p==null?p:g._p))).toFixed(2)}"/></svg><div class="mid"><span class="gi">${gIco(g.icon)}</span></div></div>
+    <div class="gstat" style="--h:${gColor(g)}"><div class="gring"><div class="ring"><svg viewBox="0 0 120 120"><circle class="trk" cx="60" cy="60" r="52"/><circle class="val" id="gringval" cx="60" cy="60" r="52" stroke-dasharray="326.73" stroke-dashoffset="${(326.73*(1-(g._p==null?p:g._p))).toFixed(2)}"/></svg><div class="mid"><span class="rjar">${goalJarSVG(p,gColor(g),done)}</span></div></div>
       <div class="gnums"><span class="pc num">${Math.round(p*100)}%</span><span class="n num">${fmt(sv)}</span><small class="num">${L('จาก','of')} ${fmt(g.target)}</small></div></div>
       <div class="row2"><span>${Math.round(p*100)}% · อีก ${fmt(Math.max(0,g.target-sv))}</span><span>${dl?`ภายใน ${dl}${mo>0&&!done?` · เดือนละ ${fmt(Math.ceil((g.target-sv)/mo))}`:''}`:'ไม่กำหนดเวลา'}</span></div></div>
     <label>จำนวนเงิน (บาท)<input id="gamt" inputmode="decimal" placeholder="0" class="num"></label>
@@ -2045,22 +2212,25 @@ function openGoal(id){
   $('gdel').onclick=()=>{ if(!gDelArmed){gDelArmed=true;$('gdel').textContent='แตะอีกครั้งเพื่อลบ';return} goals=goals.filter(x=>x.id!==g.id); saveGoals(); hideSheet('goalsheet'); render() };
 }
 function openGoalEdit(g){
-  gEditIcon=g?g.icon:'travel';
+  gEditIcon=g?g.icon:'travel'; let gEditCol=g&&g.color!=null?g.color:null;
   $('goalpanel').innerHTML=`<h3>${g?'แก้ไขเป้าหมาย':'เป้าหมายใหม่'}</h3>
     <div><label>ไอคอน</label><div class="gpicks" id="gpicks"></div></div>
+    <div><label>สีโอ่ง</label><div class="gcolors" id="gcolors"></div></div>
     <label>ชื่อเป้าหมาย<input id="gname" maxlength="40" placeholder="เช่น ทริปญี่ปุ่น, เงินสำรองฉุกเฉิน" value="${g?esc(g.name):''}"></label>
     <div class="two"><label>ยอดเป้าหมาย (บาท)<input id="gtarget" inputmode="decimal" class="num" value="${g?g.target:''}" placeholder="30000"></label>
     <label>ภายในเดือน (ไม่บังคับ)<input type="month" id="gdeadline" value="${g?g.deadline||'':''}"></label></div>
     <div class="err" id="gerr2"></div>
     <div class="actions"><button id="gcancel">ยกเลิก</button><button class="save" id="gsave">บันทึก</button></div>`;
   const pick=()=>{$('gpicks').innerHTML=Object.keys(GICONS).map(k=>`<button type="button" class="gpick ${k===gEditIcon?'on':''}" data-k="${k}" style="--h:${gHue(k)}" aria-label="${k}">${gIco(k)}</button>`).join('')};
-  pick(); $('gpicks').onclick=e=>{const b=e.target.closest('.gpick');if(b){gEditIcon=b.dataset.k;pick()}};
+  const cols=()=>{const cur=gEditCol!=null?gEditCol:gHue(gEditIcon); $('gcolors').innerHTML=GJ_HUES.map(h=>`<button type="button" data-hu="${h}" class="${h===cur?'on':''}" aria-label="${h}">${goalJarSVG(.6,h,false)}</button>`).join('')};
+  pick(); cols(); $('gpicks').onclick=e=>{const b=e.target.closest('.gpick');if(b){gEditIcon=b.dataset.k;pick();cols()}};
+  $('gcolors').onclick=e=>{const b=e.target.closest('[data-hu]');if(b){gEditCol=+b.dataset.hu;cols()}};
   showSheet('goalsheet'); if(!g) setTimeout(()=>$('gname').focus(),60);
   $('gcancel').onclick=()=>g?openGoal(g.id):(hideSheet('goalsheet'));
   $('gsave').onclick=()=>{
     const name=$('gname').value.trim(), target=parseFloat($('gtarget').value.replace(/,/g,'')), deadline=$('gdeadline').value;
     if(!name){$('gerr2').textContent='ตั้งชื่อเป้าหมาย';return} if(!(target>0)){$('gerr2').textContent='ใส่ยอดเป้าหมายที่มากกว่า 0';return}
-    if(g){Object.assign(g,{name,target,deadline,icon:gEditIcon,demo:false})} else {g={id:'g'+Date.now().toString(36),name,target,deadline,icon:gEditIcon,hist:[]};goals.push(g)}
+    if(g){Object.assign(g,{name,target,deadline,icon:gEditIcon,demo:false}); if(gEditCol!=null) g.color=gEditCol} else {g={id:'g'+Date.now().toString(36),name,target,deadline,icon:gEditIcon,hist:[]}; if(gEditCol!=null) g.color=gEditCol; goals.push(g)}
     saveGoals(); render(); openGoal(g.id);
   };
 }
@@ -2085,7 +2255,7 @@ function openSet(focusBudget){
   ['bmsg','cmsg','rmsg'].forEach(id=>{$(id).textContent='';$(id).classList.remove('ok-msg')});
   $('owners').value=owners; $('omsg').textContent=''; renderMerchants(); renderAccount(); renderRecurList(); catDelArmed=null; $('catform').hidden=true; $('addcat').hidden=false; renderCatList(); renderLastBackup(); $('carryon').checked=!!prefs.carry; $('opening').value=prefs.opening||''; $('carrymsg').textContent='';
   $('out').hidden=true; $('restoretext').value=''; restoreArmed=false; $('restorebtn').textContent='กู้คืน'; $('restorebtn').classList.remove('danger');
-  showSheet('setsheet');
+  showSheet('setsheet'); if(typeof setPage==='function') { if(focusBudget) setOpenFor($('b0')); else setPage(null) }
   if(focusBudget) setTimeout(()=>$('b0').focus(),50);
 }
 $('openset').onclick=()=>openSet(false);
@@ -2135,7 +2305,7 @@ $('catlist').onclick=e=>{
   customCats[catType]=customCats[catType].filter(x=>x.name!==c); delete ICONS[c]; save(); saveRecur(); saveCats(); catDelArmed=null; renderCatList(); render();
 };
 $('bklater').onclick=()=>{prefs.snooze=Date.now()+7*DAY;savePrefs();render()};
-$('bknow').onclick=()=>{openSet(false); setTimeout(()=>{const g=$('backup'); try{g.scrollIntoView({behavior:'smooth',block:'center'})}catch(e){} g.classList.remove('flash'); void g.offsetWidth; g.classList.add('flash')},120)};
+$('bknow').onclick=()=>{openSet(false); setOpenFor($('backup')); setTimeout(()=>{const g=$('backup'); try{g.scrollIntoView({behavior:'smooth',block:'center'})}catch(e){} g.classList.remove('flash'); void g.offsetWidth; g.classList.add('flash')},120)};
 $('savecarry').onclick=()=>{const v=parseFloat(($('opening').value||'0').replace(/,/g,'')); prefs.carry=$('carryon').checked; prefs.opening=isFinite(v)?v:0; savePrefs(); render(); msg('carrymsg',L('บันทึกแล้ว','Saved'),true)};
 $('saveowners').onclick=()=>{owners=$('owners').value.trim();store(OKEY,owners);msg('omsg',owners?'บันทึกชื่อแล้ว':'ลบชื่อแล้ว',true)};
 function renderMerchants(){
@@ -2432,6 +2602,32 @@ try{$('brandcrab').innerHTML=pigSVG('great')}catch(e){}
       span.innerHTML=`<svg viewBox="0 0 24 24"><path d="${I[ic]}"/></svg>`; h4.prepend(span); after.after(g); after=g});
   });
 })();
+/* Settings as a menu with sub-pages */
+const SET_ICON=['M8 3h8a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zM11 18h2','M3 7h15a3 3 0 0 1 3 3v7a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3zM3 7l12-4v4M16 14h2','M6 3h12v18l-3-2-3 2-3-2-3 2zM9 8h6M9 12h6M9 16h3','M12 3c4.4 0 8 1.3 8 3s-3.6 3-8 3-8-1.3-8-3 3.6-3 8-3zM4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3'];
+const SET_TONE=['--t-mood','--t-allow','--t-in','--t-out'];
+(function buildSetMenu(){
+  const panel=$('setsheet').querySelector('.panel'), heads=[...panel.querySelectorAll(':scope>.sethead')]; if(!heads.length) return;
+  const menu=document.createElement('div'); menu.className='setmenu'; menu.id='setmenu';
+  heads.forEach((h,i)=>{
+    const name=h.textContent.trim(), page=document.createElement('div'); page.className='setpage'; page.dataset.pg=i; page.hidden=true;
+    const back=document.createElement('button'); back.type='button'; back.className='setback'; back.innerHTML='<svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg>'; const bt=document.createElement('span'); bt.textContent=name; back.appendChild(bt); page.appendChild(back);
+    const items=[]; let n=h.nextElementSibling;
+    while(n&&n.classList.contains('group')){const nx=n.nextElementSibling; if(!n.hidden){const t=n.querySelector('h4'); if(t) items.push(t.lastChild.textContent.trim())} page.appendChild(n); n=nx}
+    const row=document.createElement('button'); row.type='button'; row.className='setrow'; row.dataset.pg=i;
+    row.innerHTML=`<span class="si" style="background:var(${SET_TONE[i]||'--t-mood'});color:var(${SET_TONE[i]||'--t-mood'}-fg)"><svg viewBox="0 0 24 24"><path d="${SET_ICON[i]||SET_ICON[0]}"/></svg></span><span class="st"><b></b><small></small></span><svg class="chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>`;
+    row.querySelector('b').textContent=name; const sm=row.querySelector('small'); items.forEach((t,k)=>{ if(k){sm.appendChild(document.createTextNode(' · '))} const sp=document.createElement('span'); sp.textContent=t; sm.appendChild(sp) });
+    menu.appendChild(row); h.replaceWith(page);
+  });
+  const first=panel.querySelector(':scope>.setpage'); panel.insertBefore(menu,first);
+  menu.addEventListener('click',e=>{const r=e.target.closest('.setrow'); if(r) setPage(+r.dataset.pg)});
+  panel.addEventListener('click',e=>{if(e.target.closest('.setback')) setPage(null)});
+})();
+function setPage(i){
+  const panel=$('setsheet').querySelector('.panel'); const m=$('setmenu'); if(!m) return;
+  m.hidden=i!=null; panel.querySelectorAll(':scope>.setpage').forEach(p=>{p.hidden=+p.dataset.pg!==i});
+  const h3=panel.querySelector(':scope>h3'); if(h3) h3.hidden=i!=null; panel.scrollTop=0;
+}
+function setOpenFor(el){const pg=el&&el.closest('.setpage'); setPage(pg?+pg.dataset.pg:null)}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-lang]'); if(b){e.preventDefault(); setLang(b.dataset.lang)}});
 applyLang(); try{trObs.observe(document.body,{childList:true,subtree:true,characterData:true,attributes:true,attributeFilter:TR_ATTRS})}catch(e){}
 if(window.STANDALONE){
