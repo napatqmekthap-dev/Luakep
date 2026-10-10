@@ -13,7 +13,7 @@
 <body>
 <title>เหลือเก็บ</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mitr:wght@400;500;600;700&family=Noto+Sans+Thai:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap">
 <style>
 /* Layout: Material 3 single column — top app bar that tints on scroll, primary-container hero card, list cards on surface-container, stacked extended FABs, bottom sheets with drag handle */
 :root{
@@ -25,7 +25,7 @@
   --tone-bg:88%; --tone-fg:26%; --tone-s:55%; --hero-fill:rgba(255,255,255,.55);
   --e1:0 1px 2px rgba(0,0,0,.18),0 1px 3px 1px rgba(0,0,0,.08); --e3:0 1px 3px rgba(0,0,0,.18),0 4px 8px 3px rgba(0,0,0,.1);
   --c-body:#ff8a65; --c-shell:#f6c453; --c-shell-d:#c98a1f; --c-ink:#4a1f14; --c-cheek:#ff4f7b; --c-coin:#ffe08a; --c-tear:#64b5f6; --coin:#f3c44f;
-  --display:"Roboto","Noto Sans Thai",system-ui,sans-serif;
+  --display:"Mitr","Noto Sans Thai",system-ui,sans-serif;
   --body:"Roboto","Noto Sans Thai",system-ui,-apple-system,"Segoe UI",sans-serif;
   /* aliases used by page code */
   --accent:var(--primary); --accent-ink:var(--on-primary); --soft:var(--sc2); --fill2:var(--s-high);
@@ -503,9 +503,9 @@ body.enter .fabs{animation:rise .5s .3s cubic-bezier(.2,0,0,1) both}
 /* ===== Cinematic layer ===== */
 #aurora{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
 #aurora i{position:absolute;border-radius:50%;filter:blur(60px);opacity:.55;will-change:transform}
-#aurora i:nth-child(1){width:70vw;height:70vw;max-width:520px;max-height:520px;left:-20vw;top:-10vh;background:#dff3b4;animation:drift1 22s ease-in-out infinite alternate}
-#aurora i:nth-child(2){width:60vw;height:60vw;max-width:460px;max-height:460px;right:-25vw;top:30vh;background:#e9e4ff;animation:drift2 26s ease-in-out infinite alternate}
-#aurora i:nth-child(3){width:55vw;height:55vw;max-width:420px;max-height:420px;left:10vw;bottom:-20vh;background:#ffd9cc;animation:drift3 30s ease-in-out infinite alternate}
+#aurora i:nth-child(1){width:70vw;height:70vw;max-width:520px;max-height:520px;left:-20vw;top:-10vh;background:var(--a1,#dff3b4);animation:drift1 22s ease-in-out infinite alternate}
+#aurora i:nth-child(2){width:60vw;height:60vw;max-width:460px;max-height:460px;right:-25vw;top:30vh;background:var(--a2,#e9e4ff);animation:drift2 26s ease-in-out infinite alternate}
+#aurora i:nth-child(3){width:55vw;height:55vw;max-width:420px;max-height:420px;left:10vw;bottom:-20vh;background:var(--a3,#ffd9cc);animation:drift3 30s ease-in-out infinite alternate}
 @keyframes drift1{to{transform:translate(18vw,14vh) scale(1.15)}}
 @keyframes drift2{to{transform:translate(-20vw,-12vh) scale(.9)}}
 @keyframes drift3{to{transform:translate(14vw,-16vh) scale(1.1)}}
@@ -699,9 +699,57 @@ input:focus,select:focus,textarea:focus{border-color:var(--ink);box-shadow:inset
 .langpick{border-color:var(--ov);border-radius:999px} .langpick button.on{background:var(--btn);color:var(--btn-fg)}
 .suggest{background:var(--t-allow);color:var(--t-allow-fg);border-radius:999px}
 .celebrate{background:var(--t-in);color:var(--t-in-fg)}
+
+[hidden]{display:none!important}
+/* ===== Display font: Mitr for headings and numbers ===== */
+h1,.navtitle,section h2,.balance .big,.split b,.allow b,.panel h3,.story .h,.story .n,.gnums .n,.estate b,#intro .iword,.billing b,.pcard b,.goal .amt2,.brand h2,.card h3,#amount,.sethead{font-family:var(--display)}
+.story .h,.story .n,.gnums .n,#intro .iword,.pcard b,.estate b{font-weight:600}
+.balance .big{font-weight:500;letter-spacing:-.01em}
+h1{font-weight:500}
+/* ===== Palettes ===== */
+:root[data-palette="sakura"]{--t-allow:#ffd6e2;--t-allow-fg:#5a1030;--t-mood:#ffe9c7;--t-mood-fg:#5a3d00;--surface:#f7f0f0;--a1:#ffd6e2;--a2:#ffe9c7;--a3:#e7dcff;--sbg:#ffd6e2}
+:root[data-palette="sea"]{--t-allow:#c9ecf5;--t-allow-fg:#063845;--t-mood:#d9e4ff;--t-mood-fg:#172a5c;--surface:#edf3f3;--a1:#c9ecf5;--a2:#d9e4ff;--a3:#cdeedd;--sbg:#c9ecf5}
+:root[data-palette="lavender"]{--t-allow:#e6dcff;--t-allow-fg:#2b1a61;--t-mood:#ffd9ec;--t-mood-fg:#5a1040;--surface:#f3f0f6;--a1:#e6dcff;--a2:#ffd9ec;--a3:#d9f0ff;--sbg:#e6dcff}
+:root[data-palette="sunshine"]{--t-allow:#fff0b3;--t-allow-fg:#4a3a00;--t-mood:#ffd9cc;--t-mood-fg:#4a1607;--surface:#f6f2e8;--a1:#fff0b3;--a2:#ffd9cc;--a3:#dff3b4;--sbg:#fff0b3}
+@media (prefers-color-scheme: dark){
+:root[data-palette="sakura"]:not([data-theme="light"]){--t-allow:#4a2030;--t-allow-fg:#ffd6e2;--t-mood:#3d2f0c;--t-mood-fg:#ffe9c7;--surface:#141311}
+:root[data-palette="sea"]:not([data-theme="light"]){--t-allow:#123a44;--t-allow-fg:#c9ecf5;--t-mood:#1e2a52;--t-mood-fg:#d9e4ff;--surface:#141311}
+:root[data-palette="lavender"]:not([data-theme="light"]){--t-allow:#2e2458;--t-allow-fg:#e6dcff;--t-mood:#4a1d36;--t-mood-fg:#ffd9ec;--surface:#141311}
+:root[data-palette="sunshine"]:not([data-theme="light"]){--t-allow:#3d340c;--t-allow-fg:#fff0b3;--t-mood:#4a2318;--t-mood-fg:#ffd9cc;--surface:#141311}}
+:root[data-theme="dark"][data-palette="sakura"]{--t-allow:#4a2030;--t-allow-fg:#ffd6e2;--t-mood:#3d2f0c;--t-mood-fg:#ffe9c7;--surface:#141311}
+:root[data-theme="dark"][data-palette="sea"]{--t-allow:#123a44;--t-allow-fg:#c9ecf5;--t-mood:#1e2a52;--t-mood-fg:#d9e4ff;--surface:#141311}
+:root[data-theme="dark"][data-palette="lavender"]{--t-allow:#2e2458;--t-allow-fg:#e6dcff;--t-mood:#4a1d36;--t-mood-fg:#ffd9ec;--surface:#141311}
+:root[data-theme="dark"][data-palette="sunshine"]{--t-allow:#3d340c;--t-allow-fg:#fff0b3;--t-mood:#4a2318;--t-mood-fg:#ffd9cc;--surface:#141311}
+body{background:var(--surface);transition:background-color .35s}
+.swatches{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.swatches button{border:0;background:var(--s-low);color:var(--ink);border-radius:16px;padding:10px 4px 8px;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:12px;cursor:pointer;box-shadow:inset 0 0 0 1.5px transparent;transition:box-shadow .2s,transform .2s}
+.swatches button i{width:30px;height:30px;border-radius:50%;display:block;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
+.swatches button.on{box-shadow:inset 0 0 0 2px var(--ink);font-weight:600}
+/* ===== Wardrobe ===== */
+.wnote{display:block;color:var(--muted);font-size:13px;margin:-2px 0 2px}
+.wardrobe{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:8px}
+.wardrobe button{position:relative;border:0;background:var(--s-low);color:var(--ink);border-radius:18px;padding:18px 4px 8px;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:12px;line-height:1.25;cursor:pointer;box-shadow:inset 0 0 0 1.5px transparent;transition:box-shadow .2s,background .2s}
+.wardrobe button .wj{width:62px;height:62px}
+.wardrobe button .wj svg{width:100%;height:100%;overflow:visible}
+.wardrobe button.on{background:var(--t-mood);color:var(--t-mood-fg);box-shadow:inset 0 0 0 2px currentColor;font-weight:600}
+.wardrobe button em{position:absolute;top:6px;left:6px;font-style:normal;font-size:10px;font-weight:600;background:var(--btn);color:var(--btn-fg);border-radius:999px;padding:1px 7px}
+/* ===== Festival greeting + ambient layer ===== */
+.festpill{display:inline-flex;align-items:center;gap:6px;background:var(--btn);color:var(--btn-fg);font-family:var(--display);font-size:13px;font-weight:500;padding:4px 12px 4px 8px;border-radius:999px;margin:0 0 10px;max-width:calc(100% - 104px);animation:festin .6s cubic-bezier(.17,1.4,.4,1) both;cursor:pointer}
+.festpill svg{width:16px;height:16px;flex:none}
+@keyframes festin{from{opacity:0;transform:translateY(-6px) scale(.9)}}
+#festfx{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+#festfx i{position:absolute;top:-48px;left:var(--x);width:var(--s);height:var(--s);opacity:0;animation:ffall var(--d) linear var(--dl) infinite}
+#festfx i svg{width:100%;height:100%;display:block;overflow:visible}
+#festfx i.rise{top:auto;bottom:-60px;animation-name:frise}
+#festfx i.tw{top:var(--y);animation:ftw var(--d) ease-in-out var(--dl) infinite}
+@keyframes ffall{0%{transform:translate(0,0) rotate(0);opacity:0}8%{opacity:var(--o)}88%{opacity:var(--o)}100%{transform:translate(var(--dx),112vh) rotate(var(--r));opacity:0}}
+@keyframes frise{0%{transform:translate(0,0);opacity:0}12%{opacity:var(--o)}80%{opacity:var(--o)}100%{transform:translate(var(--dx),-115vh);opacity:0}}
+@keyframes ftw{0%,100%{opacity:0;transform:scale(.5)}50%{opacity:var(--o);transform:scale(1)}}
+body.lowfx #festfx{display:none}
+@media (prefers-reduced-motion: reduce){#festfx{display:none}.festpill{animation:none}}
 </style>
 
-<div id="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+<div id="aurora" aria-hidden="true"><i></i><i></i><i></i></div><div id="festfx" aria-hidden="true"></div>
 <div id="intro" hidden aria-hidden="true"><div class="ishine"></div><div class="icoin"></div><div class="ijar" id="ijar"></div><div class="iword">เหลือเก็บ</div><div class="itag">กินเหลือเก็บ เติมโอ่งทุกเดือน</div></div>
 <!-- Sign-up / sign-in -->
 <div class="auth" id="auth" hidden>
@@ -791,6 +839,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--ink);box-shadow:inset
 
   <div class="balance">
     <div class="pig" id="pig" role="img" aria-label="น้องโอ่ง"></div>
+    <div class="festpill" id="festpill" hidden></div>
     <div class="label" id="ballabel">คงเหลือเดือนนี้</div>
     <div class="big num" id="bal">฿0</div>
     <div class="carry num" id="carry" hidden></div>
@@ -909,6 +958,22 @@ input:focus,select:focus,textarea:focus{border-color:var(--ink);box-shadow:inset
       <h4>ธีม</h4>
       <div class="seg" id="themeseg"><button type="button" data-th="auto">ตามมือถือ</button><button type="button" data-th="light">สว่าง</button><button type="button" data-th="dark">มืด</button></div>
       <label class="switch" style="background:var(--s-low)"><span><b>เอฟเฟกต์เต็มรูปแบบ</b><small>ฉากเปิดแอป เหรียญบิน พื้นหลังเคลื่อนไหว ปิดได้ถ้าอยากประหยัดแบต</small></span><input type="checkbox" id="fxon" role="switch"></label>
+      <div class="swatches" id="palrow" role="radiogroup" aria-label="สีธีม">
+        <button type="button" data-pal="lime"><i style="background:linear-gradient(135deg,#dff3b4 50%,#e9e4ff 50%)"></i><span>มะนาว</span></button>
+        <button type="button" data-pal="sakura"><i style="background:linear-gradient(135deg,#ffd6e2 50%,#ffe9c7 50%)"></i><span>ซากุระ</span></button>
+        <button type="button" data-pal="sea"><i style="background:linear-gradient(135deg,#c9ecf5 50%,#d9e4ff 50%)"></i><span>ทะเล</span></button>
+        <button type="button" data-pal="lavender"><i style="background:linear-gradient(135deg,#e6dcff 50%,#ffd9ec 50%)"></i><span>ลาเวนเดอร์</span></button>
+        <button type="button" data-pal="sunshine"><i style="background:linear-gradient(135deg,#fff0b3 50%,#ffd9cc 50%)"></i><span>แสงแดด</span></button>
+      </div>
+    </div>
+    <div class="group">
+      <h4>ตู้เสื้อผ้าน้องโอ่ง</h4>
+      <small class="wnote" id="wnote"></small>
+      <div class="wardrobe" id="wardrobe"></div>
+    </div>
+    <div class="group">
+      <h4>เสียง</h4>
+      <label class="switch" style="background:var(--s-low)"><span><b>เสียงเหรียญ</b><small>เสียงกริ๊งเมื่อเงินเข้าโอ่ง และเสียงเมื่อแตะน้องโอ่ง</small></span><input type="checkbox" id="sndon" role="switch"></label>
     </div>
     <div class="group">
       <h4>บัญชี</h4>
@@ -1169,8 +1234,10 @@ function setLang(l){
   LANG=l; try{localStorage.setItem(LKEY,l)}catch(e){}
   applyLang(); if(typeof render==='function') render();
   if(typeof setMoodForce==='function') setMoodForce();
+  try{renderWardrobe();applyFestPill()}catch(e){}
 }
 Object.assign(DICT,{
+'มะนาว':'Lime','ซากุระ':'Sakura','ทะเล':'Sea','ลาเวนเดอร์':'Lavender','แสงแดด':'Sunshine','สีธีม':'Colour palette','ตู้เสื้อผ้าน้องโอ่ง':'Nong Ong’s wardrobe','เสียง':'Sound','เสียงเหรียญ':'Coin sounds','เสียงกริ๊งเมื่อเงินเข้าโอ่ง และเสียงเมื่อแตะน้องโอ่ง':'A clink when money lands in the jar, and a bloop when you tap Nong Ong',
 'เอฟเฟกต์เต็มรูปแบบ':'Full effects','ฉากเปิดแอป เหรียญบิน พื้นหลังเคลื่อนไหว ปิดได้ถ้าอยากประหยัดแบต':'Opening scene, flying coins, moving background. Turn off to save battery.',
 'อีก {0} วันถึงสิ้นเดือน':'{0} days to month end','ธีม':'Theme','ตามมือถือ':'System','สว่าง':'Light','มืด':'Dark','จาก {0}':'of {0}','สำรองข้อมูลด้วยตัวเอง':'Manual backup','ทุกอย่างในแพ็กฟรี':'Everything in Free','อ่านสลิป {0} ใบต่อเดือน':'{0} slip scans a month','แนะนำ':'Recommended','เติมเงินแล้ว':'Added','ถอนเงินแล้ว':'Withdrawn',
 'แอป':'App','การเงิน':'Money','การอ่านสลิป':'Slip reading','ข้อมูล':'Data','เหลือเก็บเดือนนี้':'Kept this month','เก็บได้ {0} ของรายรับ':'Kept {0} of income',
@@ -1358,7 +1425,94 @@ let type='out', cat=CATS.out[0], armed=null, editing=null;
 
 /* Mascot: น้องโอ่ง — a celadon water jar; the water inside is the money left this month */
 let JAR_N=0;
-function jarSVG(m){
+/* ===== Wardrobe: outfits for Nong Ong ===== */
+function outfitLayers(o,id,wy){
+  const O='#2b3b36', S=(c,w)=>`stroke="${c||O}" stroke-width="${w||2.2}" stroke-linejoin="round" stroke-linecap="round"`;
+  const clip=inner=>`<g clip-path="url(#${id}c)">${inner}</g>`;
+  const R={shirt:'',neck:'',head:'',props:'',water:''};
+  switch(o){
+  case 'party':
+    R.head=`<path d="M47 21L60-8L73 21Z" fill="#7c5cff" ${S()}/><path d="M52 12l15 3M49 18l21 2" stroke="#ffd54f" stroke-width="3"/><circle cx="60" cy="-9" r="4.5" fill="#ff6b9a" ${S(0,1.8)}/>`;
+    R.props=`<rect x="6" y="28" width="5" height="3" fill="#ffd54f" transform="rotate(20 8 29)"/><rect x="108" y="44" width="5" height="3" fill="#7c5cff" transform="rotate(-25 110 45)"/><circle cx="12" cy="48" r="2" fill="#ff6b9a"/><circle cx="104" cy="28" r="2" fill="#5ec4e8"/>`;break;
+  case 'kids':
+    R.head=`<path d="M41 22a19 14 0 0 1 38 0Z" fill="#ffd54f" ${S()}/><path d="M60 8.2a19 14 0 0 1 19 13.8H60Z" fill="#ff6b6b"/><path d="M41 22a19 14 0 0 1 38 0Z" fill="none" ${S()}/><path d="M60 8v-6" ${S()}/><ellipse cx="52" cy="1" rx="8" ry="2.6" fill="#5ec4e8" ${S(0,1.8)}/><ellipse cx="68" cy="1" rx="8" ry="2.6" fill="#7c5cff" ${S(0,1.8)}/>`;
+    R.props=`<path d="M110 79Q116 62 113 46" ${S('#6b665e',1.4)} fill="none"/><ellipse cx="113" cy="36" rx="9" ry="11" fill="#ff6b6b" ${S()}/><path d="M110 31q2-3 5-2" stroke="#fff" stroke-width="2" fill="none" opacity=".7"/>`;break;
+  case 'love':
+    R.head=`<path d="M60 18L42 9v18zM60 18l18-9v18z" fill="#ff7aa8" ${S()}/><circle cx="60" cy="18" r="4.5" fill="#ff4f86" ${S()}/>`;
+    R.props=`<path d="M104 30c-3-4-9-1-6 4l6 5 6-5c3-5-3-8-6-4z" fill="#ff6b9a"/><path d="M14 40c-2-3-7-1-5 3l5 4 5-4c2-4-3-6-5-3z" fill="#ff9fc0"/>`;break;
+  case 'cny':
+    R.head=`<path d="M38 22a22 12 0 0 1 44 0Z" fill="#d7263d" ${S()}/><path d="M38 22h44" stroke="#f3c44f" stroke-width="3"/><circle cx="60" cy="8" r="4.2" fill="#d7263d" ${S(0,1.8)}/>`;
+    R.neck=`<path d="M34 34q26 9 52 0v6q-26 9-52 0z" fill="#d7263d" ${S()}/><path d="M36 37q24 8 48 0" stroke="#f3c44f" stroke-width="1.6" fill="none"/>`;
+    R.shirt=clip(`<path d="M0 84Q60 92 120 84V120H0z" fill="#d7263d" opacity=".92"/><path d="M0 84Q60 92 120 84" stroke="#f3c44f" stroke-width="2.4" fill="none"/><circle cx="60" cy="98" r="5" fill="#f3c44f"/><rect x="58" y="96" width="4" height="4" fill="#d7263d"/>`);
+    R.props=`<rect x="0" y="72" width="13" height="18" rx="2" fill="#d7263d" ${S(0,1.8)}/><circle cx="6.5" cy="81" r="3.2" fill="#f3c44f"/>`;break;
+  case 'buddhist': case 'candle':
+    R.shirt=clip(`<path d="M104 58L20 100l6 12L110 70z" fill="#ffffff" ${S('#c9c3b5',1.4)}/><path d="M102 64L23 104" stroke="#e8e2d4" stroke-width="1.2" stroke-dasharray="2 3"/>`);
+    R.head=`<path d="M38 22c-6-8-2-15 4-16c-1 6 1 10 4 13c0-7 4-12 9-13c-3 6-3 11-1 16z" fill="#ff9fc0" ${S(0,1.8)}/><path d="M36 22c3-3 8-4 13-2" stroke="#5fbf75" stroke-width="2.4" fill="none"/>`;
+    if(o==='candle') R.props=`<rect x="104" y="44" width="10" height="38" rx="2" fill="#ffd54f" ${S()}/><path d="M104 54h10M104 64h10" stroke="#e0a92e" stroke-width="1.4"/><path d="M109 44v-4" ${S()}/><path d="M109 40c-4-4-2-9 0-12c2 3 4 8 0 12z" fill="#ff9f43"/><circle cx="109" cy="34" r="7" fill="#ffd54f" opacity=".25"/>`;
+    break;
+  case 'songkran':
+    R.shirt=clip(`<path d="M0 82Q60 90 120 82V120H0z" fill="#2f9be0"/><g fill="#fff">${[[30,92],[52,100],[74,90],[92,100],[42,108],[66,108],[84,110],[20,104]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="3"/><circle cx="${x}" cy="${y}" r="1.2" fill="#ffd54f"/>`).join('')}</g><path d="M60 84l-6 10M60 84l6 10" stroke="#1d6fa8" stroke-width="2"/>`);
+    R.neck=`<g><rect x="40" y="41" width="15" height="9" rx="4" fill="#1f1f1f" ${S(0,1.6)}/><rect x="65" y="41" width="15" height="9" rx="4" fill="#1f1f1f" ${S(0,1.6)}/><path d="M55 45h10" ${S(0,1.6)}/><path d="M43 43l4 0" stroke="#fff" stroke-width="1.4" opacity=".6"/></g>`;
+    R.props=`<path d="M104 70h12l2 5h-8l-2 6h-4z" fill="#ff9f43" ${S(0,1.8)}/><path d="M118 72q5 0 7 4" stroke="#5ec4e8" stroke-width="2" fill="none"/><circle cx="12" cy="40" r="2.4" fill="#5ec4e8"/><circle cx="7" cy="52" r="1.8" fill="#5ec4e8"/>`;break;
+  case 'mother':
+    R.neck=`<path d="M34 37q26 12 52 0" stroke="#d8e9ff" stroke-width="1" fill="none"/>`+Array.from({length:11},(_,i)=>{const t=i/10, x=34+52*t, y=37+12*(1-Math.pow(2*t-1,2))*0.75;return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3.2" fill="#fff" ${S('#c9c3b5',1)}/>`}).join('')+`<path d="M60 46l-4 12M60 46l4 12" stroke="#4a8fe0" stroke-width="3" stroke-linecap="round"/><circle cx="60" cy="46" r="3.4" fill="#4a8fe0"/>`;
+    break;
+  case 'father':
+    R.neck=`<path d="M60 40l-12-6v12zM60 40l12-6v12z" fill="#ffd54f" ${S()}/><circle cx="60" cy="40" r="3.2" fill="#f0b400" ${S(0,1.6)}/>`;
+    R.head=`<g transform="translate(84 14)"><path d="M0 0c-4-6 2-10 6-6c4-6 10 0 4 5c6 3 2 10-4 7c-1 6-9 5-8-1c-6-1-5-8 2-5z" fill="#ffd54f" ${S(0,1.6)}/><circle cx="2" cy="2" r="2" fill="#f0b400"/></g>`;break;
+  case 'moon':
+    R.head=`<path d="M38 22c3 3 44 3 44 0" ${S()} fill="none"/><ellipse cx="47" cy="4" rx="5" ry="15" fill="#fff" ${S()} transform="rotate(-12 47 4)"/><ellipse cx="47" cy="5" rx="2.2" ry="10" fill="#ffc2d4" transform="rotate(-12 47 5)"/><ellipse cx="73" cy="4" rx="5" ry="15" fill="#fff" ${S()} transform="rotate(12 73 4)"/><ellipse cx="73" cy="5" rx="2.2" ry="10" fill="#ffc2d4" transform="rotate(12 73 5)"/>`;
+    R.props=`<circle cx="7" cy="80" r="8" fill="#c98a3a" ${S()}/><circle cx="7" cy="80" r="4.5" fill="none" stroke="#a86a22" stroke-width="1.4"/><path d="M112 34v6" ${S()}/><ellipse cx="112" cy="50" rx="8" ry="10" fill="#ff6b3d" ${S()}/><path d="M104 50h16M112 40v20" stroke="#ffd54f" stroke-width="1.2"/><path d="M110 60v5M114 60v5" stroke="#ffd54f" stroke-width="1.6"/>`;break;
+  case 'kinje':
+    R.neck=clip(`<rect x="0" y="40" width="120" height="9" fill="#ffd54f"/><path d="M0 40h120M0 49h120" stroke="#e0a92e" stroke-width="1"/><text x="60" y="47.6" text-anchor="middle" font-size="8" font-weight="700" fill="#d7263d" font-family="Mitr,'Noto Sans Thai',sans-serif">เจ</text>`);
+    R.props=`<path d="M108 82V40" ${S()}/><path d="M108 40l13 6-13 6z" fill="#ffd54f" ${S(0,1.8)}/><text x="112.5" y="49" text-anchor="middle" font-size="5.5" font-weight="700" fill="#d7263d" font-family="Mitr,'Noto Sans Thai',sans-serif">เจ</text>`;break;
+  case 'thai':
+    R.shirt=clip(`<path d="M106 56L20 98l6 14L112 68z" fill="#e0a92e" ${S('#9c6b10',1.4)}/><path d="M104 62L24 102" stroke="#fff3c4" stroke-width="1.4" stroke-dasharray="1 4"/><path d="M0 92Q60 100 120 92V120H0z" fill="#b5326b" opacity=".9"/><path d="M0 96Q60 104 120 96" stroke="#f3c44f" stroke-width="1.6" fill="none"/>`);
+    R.head=`<path d="M48 21l2-9 4-3 2-8 4-7 4 7 2 8 4 3 2 9z" fill="#f3c44f" ${S(0,1.8)}/><path d="M50 15h20M53 8h14" stroke="#c98a1f" stroke-width="1.4"/><circle cx="60" cy="16" r="2" fill="#d7263d"/>`;
+    R.water=`<g transform="translate(60 ${wy-1})"><path d="M-14 0q14 8 28 0z" fill="#5fbf75" ${S(0,1.4)}/><path d="M-8-1c0-6 3-9 8-10c5 1 8 4 8 10z" fill="#ff9fc0" ${S(0,1.2)}/><path d="M0-11v-5" stroke="#fff" stroke-width="1.6"/><path d="M0-16c-2-2-1-4 0-5c1 1 2 3 0 5z" fill="#ffb84d"/></g>`;break;
+  case 'santa':
+    R.head=`<path d="M40 22C42 4 64-6 86 8c4 3 4 7 0 9C80 8 66 6 80 22z" fill="#e23b3b" ${S()}/><rect x="36" y="16" width="48" height="8" rx="4" fill="#fff" ${S()}/><circle cx="88" cy="14" r="5" fill="#fff" ${S()}/>`;
+    R.neck=`<path d="M34 34q26 9 52 0v7q-26 9-52 0z" fill="#2f9e6a" ${S()}/><path d="M78 40l4 16 8-2-5-15z" fill="#2f9e6a" ${S()}/><path d="M40 37h4M50 40h4M60 41h4M70 40h4" stroke="#fff" stroke-width="2"/>`;break;
+  }
+  return R;
+}
+const OUTFITS=['party','kids','love','cny','buddhist','candle','songkran','mother','moon','kinje','thai','father','santa'];
+const OUTFIT_NAME={auto:['ตามเทศกาล','By festival'],none:['ไม่ใส่ชุด','No outfit'],party:['ปาร์ตี้ปีใหม่','New Year party'],kids:['หมวกใบพัดวันเด็ก','Kids\' day cap'],love:['โบว์วาเลนไทน์','Valentine bow'],
+  cny:['ชุดตรุษจีน','Chinese New Year'],buddhist:['ชุดขาวไปวัด','Temple whites'],candle:['แห่เทียนพรรษา','Lent candle'],songkran:['เสื้อลายดอกสงกรานต์','Songkran shirt'],mother:['มาลัยมะลิวันแม่','Jasmine garland'],
+  moon:['หูกระต่ายไหว้พระจันทร์','Moon festival ears'],kinje:['ผ้าคาดหัวกินเจ','Vegetarian festival'],thai:['ชุดไทยลอยกระทง','Loy Krathong Thai dress'],father:['โบว์วันพ่อ','Father\'s Day bow'],santa:['ซานต้า','Santa']};
+/* ===== Thai festival calendar ===== */
+const FEST={newyear:['สวัสดีปีใหม่','Happy New Year','party','confetti'],kids:['สุขสันต์วันเด็ก','Happy Children\'s Day','kids','confetti'],love:['สุขสันต์วันวาเลนไทน์','Happy Valentine\'s Day','love','hearts'],
+  cny:['ซินเจียยู่อี่ ซินนี้ฮวดไช้','Happy Chinese New Year','cny','lanterns'],makha:['วันมาฆบูชา','Makha Bucha Day','buddhist','glow'],visakha:['วันวิสาขบูชา','Visakha Bucha Day','buddhist','glow'],
+  asanha:['วันอาสาฬหบูชา','Asahna Bucha Day','buddhist','glow'],phansa:['วันเข้าพรรษา','Buddhist Lent begins','candle','glow'],okphansa:['วันออกพรรษา','End of Buddhist Lent','buddhist','glow'],
+  songkran:['สุขสันต์วันสงกรานต์','Happy Songkran','songkran','drops'],mother:['สุขสันต์วันแม่','Happy Mother\'s Day','mother','petals'],moon:['เทศกาลไหว้พระจันทร์','Mid-Autumn Festival','moon','stars'],
+  kinje:['เทศกาลกินเจ','Vegetarian Festival','kinje','petals'],loy:['สุขสันต์วันลอยกระทง','Happy Loy Krathong','thai','sky'],father:['สุขสันต์วันพ่อ','Happy Father\'s Day','father','petals'],xmas:['Merry Christmas','Merry Christmas','santa','snow']};
+const OUTFIT_FX={party:'confetti',kids:'confetti',love:'hearts',cny:'lanterns',buddhist:'glow',candle:'glow',songkran:'drops',mother:'petals',moon:'stars',kinje:'petals',thai:'sky',father:'petals',santa:'snow'};
+// Lunar-calendar dates change every year: add new years here.
+const LUNAR={2026:[['cny','2026-02-15','2026-02-19'],['makha','2026-03-03','2026-03-03'],['visakha','2026-05-31','2026-05-31'],['asanha','2026-07-29','2026-07-29'],['phansa','2026-07-30','2026-07-30'],
+  ['moon','2026-09-24','2026-09-25'],['kinje','2026-10-10','2026-10-18'],['okphansa','2026-10-26','2026-10-26'],['loy','2026-11-22','2026-11-24']],
+  2027:[['cny','2027-02-04','2027-02-08'],['moon','2027-09-14','2027-09-15']]};
+function festivalOn(d){
+  const k=iso(d), y=d.getFullYear(), md=k.slice(5);
+  for(const [f,a,b] of (LUNAR[y]||[])) if(k>=a&&k<=b) return f;
+  if(md>='12-30'||md<='01-02') return 'newyear';
+  const jan1=new Date(y,0,1), firstSat=1+((6-jan1.getDay()+7)%7), kidsDay=firstSat+7;
+  if(d.getMonth()===0&&(d.getDate()===kidsDay||d.getDate()===kidsDay-1)) return 'kids';
+  if(md==='02-13'||md==='02-14') return 'love';
+  if(md>='04-12'&&md<='04-16') return 'songkran';
+  if(md==='08-11'||md==='08-12') return 'mother';
+  if(md==='12-04'||md==='12-05') return 'father';
+  if(md>='12-23'&&md<='12-26') return 'xmas';
+  return null;
+}
+function currentFest(){try{return festivalOn(new Date())}catch(e){return null}}
+function currentOutfit(){
+  const p=(typeof prefs!=='undefined'&&prefs&&prefs.outfit)||'auto';
+  if(p==='none') return null; if(p!=='auto') return p;
+  const f=currentFest(); return f?FEST[f][2]:null;
+}
+
+function jarSVG(m,o){
+  if(o===undefined) o=currentOutfit();
   const id='j'+(++JAR_N);
   const L={great:.86,good:.62,warn:.32,bad:.07,none:.55}[m];
   const top=34, bot=106, wy=bot-(bot-top)*L;           // water surface y
@@ -1394,7 +1548,8 @@ function jarSVG(m){
   const coins=(m!=='bad')?`<g opacity=".95"><ellipse cx="48" cy="100" rx="6" ry="2.6" fill="#f2c14e" stroke="#b98b16" stroke-width="1"/><ellipse cx="60" cy="102" rx="6" ry="2.6" fill="#f2c14e" stroke="#b98b16" stroke-width="1"/><ellipse cx="72" cy="100" rx="6" ry="2.6" fill="#f2c14e" stroke="#b98b16" stroke-width="1"/></g>`:'';
   const lid=m==='none'?`<path d="M28 22q32-16 64 0v4H28z" fill="#c9915a" stroke="${O}" stroke-width="2.4" stroke-linejoin="round"/><rect x="55" y="8" width="10" height="7" rx="3" fill="#a87443" stroke="${O}" stroke-width="2"/><path d="M36 22h48" stroke="#a87443" stroke-width="2" stroke-linecap="round"/>`:'';
   const leaf=(m==='great')?`<g><ellipse cx="90" cy="20" rx="11" ry="5" fill="#5fbf75" stroke="${O}" stroke-width="2" transform="rotate(-18 90 20)"/><path d="M82 23l15-6" stroke="#3f9a57" stroke-width="1.6"/><path d="M86 14c2-8 10-8 11-1c-4 3-8 3-11 1z" fill="#ff9fb8" stroke="${O}" stroke-width="1.8"/></g>`:'';
-  return `<svg viewBox="0 0 120 120" aria-hidden="true">
+  const W=o?outfitLayers(o,id,wy):{shirt:'',neck:'',head:'',props:'',water:''};
+  return `<svg viewBox="0 0 120 120" aria-hidden="true" style="overflow:visible">
   <defs>
     <linearGradient id="${id}g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d9f2e3"/><stop offset=".55" stop-color="#a9dcc0"/><stop offset="1" stop-color="#7cc2a0"/></linearGradient>
     <linearGradient id="${id}w" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5ec4e8" stop-opacity=".85"/><stop offset="1" stop-color="#2a8fbf" stop-opacity=".95"/></linearGradient>
@@ -1407,13 +1562,15 @@ function jarSVG(m){
     ${coins}${(m==='great'||m==='good'||m==='warn')?`<g class="bubs"><circle class="bub" cx="40" cy="100" r="2.2" fill="#ffffff" opacity=".7"/><circle class="bub b2" cx="66" cy="102" r="1.6" fill="#ffffff" opacity=".7"/><circle class="bub b3" cx="80" cy="98" r="2.6" fill="#ffffff" opacity=".6"/></g>`:''}
     <path d="M30 44c8-5 14 2 22-2s14-6 22-1 12 4 18 0" stroke="#ffffff" stroke-width="2.2" fill="none" opacity=".5" stroke-linecap="round"/>
     <path d="M24 86c10 4 18-2 26 2s16 4 24 0 16-4 22 0" stroke="#ffffff" stroke-width="2" fill="none" opacity=".35" stroke-linecap="round"/>
+    ${W.water}
     <ellipse cx="38" cy="50" rx="7" ry="13" fill="#fff" opacity=".35" transform="rotate(25 38 50)"/>
   </g>
   <g clip-path="url(#${id}c)" opacity=".55"><path d="M10 42Q60 50 110 42" stroke="#4f9e7c" stroke-width="2.4" fill="none"/><path d="M10 47Q60 55 110 47" stroke="#4f9e7c" stroke-width="1.2" fill="none" stroke-dasharray="2 4"/><path d="M10 97Q60 104 110 97" stroke="#4f9e7c" stroke-width="2.4" fill="none"/></g>
   <path d="${body}" fill="none" stroke="${O}" stroke-width="2.8"/>
   <path d="M38 33Q36 27 32 25H88Q84 27 82 33Z" fill="#bfe6cf" stroke="${O}" stroke-width="2.6" stroke-linejoin="round"/><rect x="30" y="20" width="60" height="7" rx="3.5" fill="#cfeedb" stroke="${O}" stroke-width="2.6"/>
+  ${W.shirt}
   <path d="M18 72q-8-1-9 7M102 72q8-1 9 7" ${S}/>
-  ${lid}${leaf}${cheeks}<g class="eyes">${eyes}</g>${mouth}${extra}
+  ${W.neck}${o?'':lid}${W.head}${o?'':leaf}${W.props}${cheeks}<g class="eyes">${eyes}</g>${mouth}${extra}
 </svg>`;
 }
 
@@ -1437,6 +1594,7 @@ function setMood(tin,tout,overCats){
 
 /* Celebration: coins + pastel confetti */
 function celebrate(){
+  sfx('chime');
   if(RM()) return;
   const c=document.createElement('canvas'); c.className='confetti'; const dpr=Math.min(2,devicePixelRatio||1);
   c.width=innerWidth*dpr; c.height=innerHeight*dpr; document.body.appendChild(c); const g=c.getContext('2d'); if(!g){c.remove();return} g.scale(dpr,dpr);
@@ -1485,7 +1643,7 @@ const SAYS={great:[['เก็บเก่งมาก!','Great saving!'],['น�
   warn:[['เริ่มแห้งแล้วนะ...','Getting low...'],['ระวังหน่อยน้า','Careful now'],['ช่วยเติมน้ำหน่อย','Fill me up?']],bad:[['ฮือ โอ่งแห้ง','I am dry...'],['เดือนหน้าสู้ใหม่','Next month!']],none:[['zzz...','zzz...'],['ปลุกด้วยการจดรายการ','Wake me with a log']]};
 $('pig').addEventListener('click',e=>{
   e.stopPropagation(); const p=$('pig'); p.classList.remove('wobble'); void p.offsetWidth; p.classList.add('wobble');
-  const c=centerOf(p); if(FX()) splash(c.x,c.y-10,7);
+  const c=centerOf(p); if(FX()) splash(c.x,c.y-10,7); sfx('bloop');
   const opts=SAYS[lastMood]||SAYS.good, pick=opts[Math.floor(Math.random()*opts.length)];
   document.querySelectorAll('.say').forEach(x=>x.remove()); const sb=document.createElement('div'); sb.className='say'; sb.textContent=L(pick[0],pick[1]); p.parentElement.appendChild(sb); setTimeout(()=>sb.remove(),2500);
   try{navigator.vibrate&&navigator.vibrate(8)}catch(_){}
@@ -1618,7 +1776,7 @@ $('form').onsubmit=e=>{
   const fromPt=centerOf($('savebtn')), jarPt=centerOf($('pig'));
   hideSheet('sheet'); editing=null; render();
   if(!wasEdit&&FX()){
-    if(rec.type==='in') flyCoin(fromPt,jarPt,()=>{splash(jarPt.x,jarPt.y-20,10);bump($('pig'))});
+    if(rec.type==='in') flyCoin(fromPt,jarPt,()=>{splash(jarPt.x,jarPt.y-20,10);bump($('pig'));sfx('clink')});
     else flyCoin(jarPt,centerOf($('add')),()=>{});
   }
   toast(wasEdit?L('บันทึกการแก้ไขแล้ว','Changes saved'):L('บันทึกแล้ว','Saved')); bump($('bal')); bump($('pig'));
@@ -1799,10 +1957,12 @@ async function makeCard(d){
   try{await document.fonts.ready}catch(e){}
   const W=1080,H=1920,c=document.createElement('canvas'); c.width=W;c.height=H; const g=c.getContext('2d');
   {const ft=g.fillText.bind(g), mt=g.measureText.bind(g); g.fillText=(t,x,y)=>ft(tr(String(t)),x,y); g.measureText=t=>mt(tr(String(t)));}
-  const F='"Noto Sans Thai","Roboto",sans-serif';
+  const F='"Noto Sans Thai","Roboto",sans-serif', FD='"Mitr","Noto Sans Thai",sans-serif';
+  try{await document.fonts.load('600 40px Mitr')}catch(e){}
   const rr=(x,y,w,h,r,fill)=>{g.fillStyle=fill;g.beginPath();if(g.roundRect)g.roundRect(x,y,w,h,r);else g.rect(x,y,w,h);g.fill()};
-  const txt=(t,x,y,size,weight,color,alpha)=>{g.globalAlpha=alpha==null?1:alpha;g.fillStyle=color;g.font=`${weight} ${size}px ${F}`;g.fillText(t,x,y);g.globalAlpha=1};
-  const fit=(t,max,size,weight)=>{let s=size;g.font=`${weight} ${s}px ${F}`;while(g.measureText(t).width>max&&s>28){s-=4;g.font=`${weight} ${s}px ${F}`}return s};
+  const txt=(t,x,y,size,weight,color,alpha)=>{g.globalAlpha=alpha==null?1:alpha;g.fillStyle=color;g.font=weight>=700?`600 ${size}px ${FD}`:`${weight} ${size}px ${F}`;g.fillText(t,x,y);g.globalAlpha=1};
+  const fnt=(w,s)=>w>=700?`600 ${s}px ${FD}`:`${w} ${s}px ${F}`;
+  const fit=(t,max,size,weight)=>{let s=size;g.font=fnt(weight,s);while(g.measureText(t).width>max&&s>28){s-=4;g.font=fnt(weight,s)}return s};
   g.fillStyle='#f3f1ec'; g.fillRect(0,0,W,H);
   txt('สรุปการเงินของฉัน',90,170,44,600,'#6b665e');
   txt(d.month,90,280,fit(tr(d.month),900,96,800),800,'#1f1f1f');
@@ -1813,7 +1973,7 @@ async function makeCard(d){
   const big=fmt(Math.abs(left)); txt(big,110,570,fit(big,500,104,800),800,'#1f1f1f');
   if(d.tin) txt(left>=0?`เก็บได้ ${pct}% ของรายรับ`:`ใช้เกินรายรับ ${fmt(-left)}`,110,640,36,600,left>=0?'#13703e':'#c2410c');
   try{
-    const svg=jarSVG(moodOf(d.tin,d.tout)).replace(/var\(--([\w-]+)\)/g,(m,n)=>PIGC[n]||'#000').replace(/currentColor/g,'#2b3b36').replace('<svg ','<svg xmlns="http://www.w3.org/2000/svg" width="420" height="420" ');
+    const svg=jarSVG(moodOf(d.tin,d.tout)).replace(/var\(--([\w-]+)\)/g,(m,n)=>PIGC[n]||'#000').replace(/currentColor/g,'#2b3b36').replace('viewBox="0 0 120 120"','viewBox="-9 -18 138 138"').replace('<svg ','<svg xmlns="http://www.w3.org/2000/svg" width="420" height="420" ');
     const img=new Image(); const u=URL.createObjectURL(new Blob([svg],{type:'image/svg+xml'}));
     await new Promise((ok,no)=>{img.onload=ok;img.onerror=no;img.src=u}); g.drawImage(img,620,360,380,380); URL.revokeObjectURL(u);
   }catch(e){}
@@ -1874,7 +2034,7 @@ function openGoal(id){
     const before=gSaved(g); g._p=Math.min(1,before/g.target);
     const fp=centerOf($('gdep'));
     g.hist=g.hist||[]; g.hist.push({date:iso(new Date()),amount:sign*Math.round(a*100)/100}); delete g._p_unused; saveGoals(); render(); openGoal(g.id);
-    if(sign>0&&FX()){const rp=centerOf(document.querySelector('.ring')); flyCoin(fp,rp,()=>splash(rp.x,rp.y,8))}
+    if(sign>0){ if(FX()){const rp=centerOf(document.querySelector('.ring')); flyCoin(fp,rp,()=>{splash(rp.x,rp.y,8);sfx('clink')})} else sfx('clink') }
     if(sign>0&&before<g.target&&gSaved(g)>=g.target){celebrate();toast(L(`ครบเป้า “${g.name}” แล้ว!`,`“${g.name}” reached!`))} else toast(sign>0?L('เติมเงินแล้ว','Added'):L('ถอนเงินแล้ว','Withdrawn'));
     try{navigator.vibrate&&navigator.vibrate(10)}catch(e){} };
   $('gdep').onclick=()=>move(1); $('gwd').onclick=()=>move(-1);
@@ -2253,11 +2413,11 @@ try{$('brandcrab').innerHTML=pigSVG('great')}catch(e){}
 (function organizeSettings(){
   const panel=$('setsheet').querySelector('.panel'); const groups=[...panel.querySelectorAll(':scope>.group')];
   const byTitle=t=>groups.find(g=>{const h=g.querySelector('h4');return h&&h.textContent.trim()===t});
-  const I={lang:'M12 3a9 9 0 1 0 0 18 9 9 0 1 0 0-18zM3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18',acct:'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21c1-4 4.5-6 8-6s7 2 8 6',theme:'M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9z',
+  const I={lang:'M12 3a9 9 0 1 0 0 18 9 9 0 1 0 0-18zM3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18',acct:'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21c1-4 4.5-6 8-6s7 2 8 6',theme:'M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9z',ward:'M10 6a2 2 0 1 1 3 1.7c-.6.4-1 .9-1 1.6V10M12 10l-8.4 6.3c-.8.6-.4 1.7.6 1.7h15.6c1 0 1.4-1.1.6-1.7z',snd:'M4 9v6h4l5 4V5L8 9zM16 9.5a3.5 3.5 0 0 1 0 5M18.5 7a7 7 0 0 1 0 10',
     carry:'M4 12h13M13 6l6 6-6 6',budget:'M12 3v9h9A9 9 0 1 1 12 3zM15 3.5A9 9 0 0 1 20.5 9H15z',recur:'M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3M18 3v4h-4M6 21v-4h4',
     cats:'M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z',owner:'M3 6h18v12H3zM8 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM5 16c.5-1.5 1.7-2.3 3-2.3s2.5.8 3 2.3M14 10h4M14 14h3',
     shop:'M4 9l1.5-5h13L20 9M4 9v11h16V9M4 9h16M9 20v-6h6v6',bk:'M12 3v12M7 10l5 5 5-5M5 21h14',rs:'M12 15V3M7 8l5-5 5 5M5 21h14'};
-  const plan=[['แอป','--t-mood',[['ภาษา / Language','lang'],['ธีม','theme'],['บัญชี','acct']]],
+  const plan=[['แอป','--t-mood',[['ภาษา / Language','lang'],['ธีม','theme'],['ตู้เสื้อผ้าน้องโอ่ง','ward'],['เสียง','snd'],['บัญชี','acct']]],
     ['การเงิน','--t-allow',[['ยอดยกมาและยอดเริ่มต้น','carry'],['งบรายจ่ายต่อเดือน','budget'],['รายการประจำ','recur'],['หมวดหมู่','cats']]],
     ['การอ่านสลิป','--t-in',[['ชื่อเจ้าของบัญชี','owner'],['ร้านที่แอปจำได้','shop']]],
     ['ข้อมูล','--t-out',[['สำรองข้อมูล','bk'],['กู้คืนข้อมูล','rs']]]];
@@ -2291,7 +2451,76 @@ $('themeseg').addEventListener('click',e=>{const b=e.target.closest('[data-th]')
 try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',applyTheme)}catch(e){}
 applyTheme();
 function applyFx(){document.body.classList.toggle('lowfx',prefs.fx===false); const sw=$('fxon'); if(sw) sw.checked=prefs.fx!==false}
-$('fxon').addEventListener('change',()=>{prefs.fx=$('fxon').checked; savePrefs(); applyFx()});
+$('fxon').addEventListener('change',()=>{prefs.fx=$('fxon').checked; savePrefs(); applyFx(); applyFestFx()});
+/* ===== Colour palettes ===== */
+const PALETTES=['lime','sakura','sea','lavender','sunshine'];
+function applyPalette(){
+  const p=PALETTES.includes(prefs.palette)?prefs.palette:'lime', r=document.documentElement;
+  if(p==='lime') r.removeAttribute('data-palette'); else r.setAttribute('data-palette',p);
+  document.querySelectorAll('#palrow [data-pal]').forEach(b=>{const on=b.dataset.pal===p; b.classList.toggle('on',on); b.setAttribute('aria-checked',on)});
+}
+$('palrow').addEventListener('click',e=>{const b=e.target.closest('[data-pal]'); if(!b) return; prefs.palette=b.dataset.pal; savePrefs(); applyPalette(); try{bump(b)}catch(_){}});
+applyPalette();
+/* ===== Sound: tiny WebAudio synth, no files ===== */
+let AC=null;
+function audio(){ if(prefs.sound===false) return null; try{AC=AC||new (window.AudioContext||window.webkitAudioContext)(); if(AC.state==='suspended') AC.resume(); return AC}catch(e){return null} }
+function tone(a,f,t0,dur,type,vol,f2){const o=a.createOscillator(),g=a.createGain(); o.type=type; o.frequency.setValueAtTime(f,t0); if(f2) o.frequency.exponentialRampToValueAtTime(f2,t0+dur);
+  g.gain.setValueAtTime(.0001,t0); g.gain.exponentialRampToValueAtTime(vol,t0+.006); g.gain.exponentialRampToValueAtTime(.0001,t0+dur); o.connect(g); g.connect(a.destination); o.start(t0); o.stop(t0+dur+.03)}
+const SFX={
+  clink(a,t){ [[2637,.09],[3951,.05],[5274,.03]].forEach(([f,v])=>tone(a,f,t,.32,'sine',v)); [[3136,.07],[4699,.035]].forEach(([f,v])=>tone(a,f,t+.085,.42,'sine',v)) },
+  bloop(a,t){ tone(a,320,t,.16,'sine',.12,880); tone(a,660,t+.07,.12,'sine',.05,1200) },
+  chime(a,t){ [1047,1319,1568,2093].forEach((f,i)=>{tone(a,f,t+i*.09,.6,'triangle',.07); tone(a,f*2,t+i*.09,.3,'sine',.02)}) }
+};
+function sfx(k){ const a=audio(); if(!a) return; try{SFX[k](a,a.currentTime+.01)}catch(e){} }
+function applySound(){ const sw=$('sndon'); if(sw) sw.checked=prefs.sound!==false }
+$('sndon').addEventListener('change',()=>{prefs.sound=$('sndon').checked; savePrefs(); applySound(); if(prefs.sound) sfx('clink')});
+applySound();
+/* ===== Festival greeting, ambient layer, wardrobe ===== */
+const FFX_SHAPES={
+  confetti:i=>`<svg viewBox="0 0 10 10"><rect x="1" y="3" width="8" height="4" rx="1" fill="${['#ff6b9a','#7c5cff','#ffd54f','#5ec4e8','#5fbf75'][i%5]}"/></svg>`,
+  hearts:i=>`<svg viewBox="0 0 20 20"><path d="M10 17l-6.5-6C.5 8 2.5 3 6.5 3.5c1.6.2 2.8 1.2 3.5 2.4.7-1.2 1.9-2.2 3.5-2.4 4-.5 6 4.5 3 7.5z" fill="${['#ff6b9a','#ff9fc0','#ff4f86'][i%3]}"/></svg>`,
+  lanterns:()=>`<svg viewBox="0 0 20 30"><path d="M10 0v4" stroke="#b98b16" stroke-width="1.4"/><rect x="6" y="3" width="8" height="3" rx="1" fill="#f3c44f"/><ellipse cx="10" cy="14" rx="9" ry="9" fill="#d7263d"/><path d="M10 5v18M3 14h14" stroke="#f3c44f" stroke-width=".9" opacity=".8"/><rect x="6" y="22" width="8" height="2.5" rx="1" fill="#f3c44f"/><path d="M8 25v4M10 25v5M12 25v4" stroke="#f3c44f" stroke-width="1"/></svg>`,
+  glow:()=>`<svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#ffd54f" opacity=".25"/><circle cx="10" cy="10" r="3.5" fill="#ffd54f"/></svg>`,
+  drops:()=>`<svg viewBox="0 0 12 18"><path d="M6 1C4 6 1 9 1 12a5 5 0 0 0 10 0c0-3-3-6-5-11z" fill="#5ec4e8" opacity=".9"/><path d="M4 12a2 2 0 0 0 2 2" stroke="#fff" stroke-width="1.2" fill="none"/></svg>`,
+  petals:(i,o)=>{const c=o==='mother'?['#ffffff','#e8f2ff']:o==='kinje'?['#ffd54f','#ffe48a']:o==='father'?['#ffd54f','#ffc233']:['#ff9fc0','#ffd6e2']; return `<svg viewBox="0 0 16 16"><path d="M8 1c4 3 5 9 0 14C3 10 4 4 8 1z" fill="${c[i%2]}" stroke="rgba(0,0,0,.12)" stroke-width=".6"/></svg>`},
+  stars:i=>`<svg viewBox="0 0 20 20"><path d="M10 1l2.2 6.5L19 10l-6.8 2.5L10 19l-2.2-6.5L1 10l6.8-2.5z" fill="${i%3?'#ffd54f':'#ffe9a8'}"/></svg>`,
+  sky:()=>`<svg viewBox="0 0 20 26"><circle cx="10" cy="13" r="10" fill="#ff9f43" opacity=".18"/><path d="M4 4h12l-2 16H6z" fill="#ffb35c"/><path d="M4 4h12" stroke="#c9741f" stroke-width="1.2"/><ellipse cx="10" cy="18" rx="2.2" ry="2.6" fill="#fff3c4"/></svg>`,
+  snow:()=>`<svg viewBox="0 0 20 20"><g stroke="#9fc9e8" stroke-width="1.6" stroke-linecap="round"><path d="M10 2v16M3 6l14 8M17 6L3 14"/></g><circle cx="10" cy="10" r="2" fill="#cfe6f5"/></svg>`
+};
+const FFX_MODE={confetti:'fall',hearts:'rise',lanterns:'rise',glow:'rise',drops:'fall',petals:'fall',stars:'tw',sky:'rise',snow:'fall'};
+function applyFestFx(){
+  const box=$('festfx'); if(!box) return; box.innerHTML='';
+  const o=currentOutfit(), k=o&&OUTFIT_FX[o]; if(!k||!FX()) return;
+  const mode=FFX_MODE[k], n=mode==='tw'?16:12, R=(a,b)=>a+Math.random()*(b-a), H=[];
+  for(let i=0;i<n;i++){
+    const sz=k==='lanterns'||k==='sky'?R(20,34):k==='glow'||k==='stars'?R(10,20):R(10,18);
+    const st=`--x:${R(0,96).toFixed(1)}%;--y:${R(2,60).toFixed(1)}%;--s:${sz.toFixed(0)}px;--d:${(mode==='rise'?R(14,24):mode==='tw'?R(2.6,5):R(9,16)).toFixed(1)}s;--dl:-${R(0,20).toFixed(1)}s;--dx:${R(-60,60).toFixed(0)}px;--r:${R(-360,360).toFixed(0)}deg;--o:${(k==='glow'?R(.5,.85):R(.55,.9)).toFixed(2)}`;
+    H.push(`<i class="${mode==='fall'?'':mode}" style="${st}">${FFX_SHAPES[k](i,o)}</i>`);
+  }
+  box.innerHTML=H.join('');
+}
+function applyFestPill(){
+  const el=$('festpill'); if(!el) return; const f=currentFest();
+  if(!f){el.hidden=true; return}
+  el.innerHTML=`<svg viewBox="0 0 24 24"><path d="M12 2l2.4 6.9L21 12l-6.6 3.1L12 22l-2.4-6.9L3 12l6.6-3.1z" fill="currentColor"/></svg><span>${esc(L(FEST[f][0],FEST[f][1]))}</span>`; el.hidden=false;
+}
+function renderWardrobe(){
+  const w=$('wardrobe'); if(!w) return; const cur=prefs.outfit||'auto', f=currentFest(), today=f?FEST[f][2]:null;
+  w.innerHTML=['auto','none',...OUTFITS].map(k=>{const o=k==='auto'?today:k==='none'?null:k;
+    return `<button type="button" data-o="${k}" class="${k===cur?'on':''}" aria-pressed="${k===cur}">${k!=='auto'&&k===today?`<em>${L('วันนี้','Today')}</em>`:''}<span class="wj">${jarSVG('good',o)}</span><span>${esc(L(OUTFIT_NAME[k][0],OUTFIT_NAME[k][1]))}</span></button>`}).join('');
+  $('wnote').textContent=f?L(`วันนี้ตรงกับ${FEST[f][0].replace(/^สุขสันต์/,'')} น้องโอ่งแต่งชุดให้อัตโนมัติ`,`Today is ${FEST[f][1].replace(/^Happy /,'')}. Nong Ong dresses up automatically.`)
+    :L('ช่วงนี้ไม่มีเทศกาล น้องโอ่งจะแต่งตัวเองเมื่อถึงวันสำคัญ หรือเลือกชุดเองได้เลย','No festival right now. Nong Ong dresses up on special days, or pick an outfit yourself.');
+}
+function refreshOutfit(){
+  lastMood=null; try{render()}catch(e){}
+  try{$('brandcrab').innerHTML=pigSVG('great')}catch(e){} try{if($('planjar')) $('planjar').innerHTML=jarSVG('great')}catch(e){}
+  renderWardrobe(); applyFestFx(); applyFestPill();
+}
+$('wardrobe').addEventListener('click',e=>{const b=e.target.closest('[data-o]'); if(!b) return; prefs.outfit=b.dataset.o; savePrefs(); refreshOutfit();
+  const nb=$('wardrobe').querySelector(`[data-o="${b.dataset.o}"]`); try{bump(nb)}catch(_){} sfx('bloop')});
+$('festpill').addEventListener('click',()=>{const p=$('pig'); if(p) p.click()});
+renderWardrobe(); applyFestPill(); applyFestFx();
+
 applyFx();
 (function intro(){
   let seen=false; try{seen=sessionStorage.getItem('kp-intro')==='1'}catch(e){}
