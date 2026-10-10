@@ -1155,6 +1155,27 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{outline:none}
 @keyframes glint{0%{transform:translateX(0)}18%{transform:translateX(190px)}100%{transform:translateX(190px)}}
 body.lowfx .glint{display:none!important}
 @media (prefers-reduced-motion: reduce){.glint{display:none!important}}
+
+/* ===== Tax helper ===== */
+.taxrow{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--s-low);border-radius:20px;padding:12px 14px;flex-direction:row!important}
+.taxrow span{display:flex;flex-direction:column;gap:2px;min-width:0}.taxrow b{font-weight:500;font-size:15px}.taxrow small{color:var(--muted);font-size:12px}
+.taxrow select{max-width:52%;height:auto;min-height:44px;padding:8px 12px;line-height:1.4;border-radius:14px;font-family:"Noto Sans Thai","Roboto",system-ui,sans-serif;font-size:14px}
+select{font-family:"Noto Sans Thai","Roboto",system-ui,sans-serif}
+select,.taxrow,.taxrow *{letter-spacing:0}
+select{font-weight:400}
+.tag.taxt{background:var(--tc3);color:var(--on-tc3)}
+.taxbtn{background:var(--tc3);color:var(--on-tc3)}
+.txr{display:flex;flex-direction:column;gap:6px;padding:4px 0}
+.txr+.txr{border-top:1px solid var(--ov);padding-top:10px}
+.txh{display:flex;justify-content:space-between;gap:10px;font-size:14px}.txh small{color:var(--muted)}
+.txm{display:flex;justify-content:space-between;align-items:center;gap:10px}.txm small{color:var(--muted);font-size:12px}
+.txm label{display:flex;flex-direction:row;align-items:center;gap:8px;margin-left:auto;font-size:12px;color:var(--muted)}
+.txm input{width:120px;height:36px;text-align:right;border-radius:12px;font-size:14px}
+.txinc{display:flex;flex-direction:column;gap:6px}
+.txinc input{font-family:var(--display);font-size:22px;text-align:right}
+.txs{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:14px}
+.stp{display:flex;align-items:center;gap:10px}.stp button{width:34px;height:34px;border-radius:50%;border:0;background:var(--s-high);color:var(--ink);font-size:18px;cursor:pointer}.stp b{min-width:16px;text-align:center}
+.mv .up2{color:var(--in);font-weight:600;font-size:13px;min-width:86px;text-align:right}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i></div><div id="festfx" aria-hidden="true"></div>
@@ -1282,6 +1303,11 @@ body.lowfx .glint{display:none!important}
     <span class="go">›</span>
   </button>
 
+  <button class="insbtn taxbtn" id="opentax" hidden>
+    <span class="spark"><svg viewBox="0 0 24 24"><path d="M7 3h10l3 3v15H4V3zM8 9h8M8 13h8M8 17h5"/></svg></span>
+    <span><b id="taxbtnt">ลดหย่อนภาษี</b><small id="taxbtns">ดูว่ายังลดหย่อนได้อีกเท่าไร</small></span>
+    <span class="go">›</span>
+  </button>
   <button class="insbtn" id="openins" hidden>
     <span class="spark"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span>
     <span><b>ภาพรวม 6 เดือน</b><small>แนวโน้ม หมวดที่เปลี่ยนไป และคาดการณ์สิ้นเดือน</small></span>
@@ -1371,6 +1397,7 @@ body.lowfx .glint{display:none!important}
     <label class="switch" id="recurrow"><span><b>ทำซ้ำทุกเดือน</b><small id="recurhint">ลงรายการนี้ให้อัตโนมัติทุกเดือน</small></span><input type="checkbox" id="recur" role="switch"></label>
     <label class="switch" id="splitrow"><span><b>หารบิลกับเพื่อน</b><small>จ่ายแทนเพื่อน แล้วให้แอปจำว่าใครค้างเท่าไร</small></span><input type="checkbox" id="splitchk" role="switch"></label>
     <div class="splitbox" id="splitbox" hidden><input id="splitnames" maxlength="120" placeholder="ชื่อเพื่อน คั่นด้วยจุลภาค เช่น ต้น, บี" aria-label="ชื่อเพื่อน"><div class="chips" id="fchips"></div><div class="splitsum" id="splitsum"></div></div>
+    <label class="taxrow" id="taxrow"><span><b>ลดหย่อนภาษีได้</b><small>เช่น เบี้ยประกัน กองทุน เงินบริจาค</small></span><select id="taxsel" aria-label="ประเภทลดหย่อน"></select></label>
     <div class="err" id="err"></div>
     <div class="actions">
       <button type="button" id="delentry" class="danger" hidden>ลบ</button>
@@ -1382,6 +1409,7 @@ body.lowfx .glint{display:none!important}
 
 <div class="sheet" id="friendsheet" hidden><div class="panel" id="friendpanel"></div></div>
 <div class="sheet" id="inssheet" hidden><div class="panel" id="inspanel"></div></div>
+<div class="sheet" id="taxsheet" hidden><div class="panel" id="taxpanel"></div></div>
 
 <div id="imgview" hidden role="dialog" aria-label="ดูสลิป"><img id="imgviewimg" alt="สลิป"><small>แตะเพื่อปิด</small></div>
 
@@ -1716,6 +1744,7 @@ function setLang(l){
   try{renderWardrobe();applyFestPill()}catch(e){}
 }
 Object.assign(DICT,{
+'ลดหย่อนภาษีได้':'Tax deductible','เช่น เบี้ยประกัน กองทุน เงินบริจาค':'e.g. insurance, funds, donations','ประเภทลดหย่อน':'Deduction type','ลดหย่อนภาษี':'Tax deductions','ดูว่ายังลดหย่อนได้อีกเท่าไร':'See how much room you have left','ลดหย่อน':'Tax',
 'ศิลาดล':'Celadon',
 'ยินดีต้อนรับสู่เหลือเก็บ':'Welcome to Luakep','ตอนนี้เป็นข้อมูลตัวอย่าง ลองแตะเล่นได้เลย พร้อมเมื่อไรค่อยล้างแล้วเริ่มจดจริง':'This is sample data, so tap around freely. When you are ready, clear it and start for real.',
 'เพิ่มรายการ':'Add','ดูสลิป':'Slip','แตะเพื่อปิด':'Tap to close','สลิป':'Slip',
@@ -2223,7 +2252,7 @@ function render(){
   $('demo').hidden=!data.some(r=>r.demo); if(!$('demo').hidden&&!$('demojar').firstChild) $('demojar').innerHTML=jarSVG('great');
   renderBackupBanner();
   renderAllowance(rows,tin,tout,carryAmt);
-  renderGoals(); renderUpcoming(); renderWallets(); renderOwe(); try{$('openins').hidden=data.length<5}catch(e){}
+  renderGoals(); renderUpcoming(); renderWallets(); renderOwe(); try{$('openins').hidden=data.length<5; renderTaxBtn()}catch(e){}
   $('openrecap').hidden=rows.length<3;
   $('recaptitle').textContent=`สรุป${TH_M[view.getMonth()]}ของคุณ`;
 
@@ -2264,7 +2293,7 @@ function render(){
   const dayHTML=([dt,rs])=>{
     const d=new Date(dt+'T00:00'); const net=rs.reduce((s,r)=>s+NET(r),0), sp=dayOut[dt]||0;
     return `<div class="day"><div class="dayhead"><span>${d.toLocaleDateString(LOC(),searching?{day:'numeric',month:'short',year:'numeric'}:{weekday:'short',day:'numeric',month:'short'})}</span><span class="dright">${sp?`<i class="dbar" title="${fmt(sp)}"><b style="width:${Math.max(6,sp/maxDay*100).toFixed(0)}%"></b></i>`:'<span class="nospend">ไม่ใช้เงิน</span>'}<span class="num">${net>=0?'+':'-'}${fmt(Math.abs(net))}</span></span></div>`+
-    rs.map(r=>{const big=r.type==='out'&&r.amount>=bigCut; return `<div class="rowwrap"><div class="row${String(r.id)===lastAddedId?' new':''}${big?' big':''}" data-id="${r.id}">${ic(r.cat)}<div class="t" tabindex="0" role="button" aria-label="${L('แก้ไข','Edit')} ${esc(rTitle(r))}"><b>${esc(rTitle(r))}</b><small>${big?'<span class="tag big">ก้อนใหญ่</span>':''}${r.type==='lend'?'<span class="tag split">หารบิล</span>':''}${r.recurId?'<span class="tag rec">ประจำ</span>':''}${r.demo?'<span class="tag">ตัวอย่าง</span>':''}${esc(rSub(r))}${r.note?' · '+esc(r.note):''}</small></div>
+    rs.map(r=>{const big=r.type==='out'&&r.amount>=bigCut; return `<div class="rowwrap"><div class="row${String(r.id)===lastAddedId?' new':''}${big?' big':''}" data-id="${r.id}">${ic(r.cat)}<div class="t" tabindex="0" role="button" aria-label="${L('แก้ไข','Edit')} ${esc(rTitle(r))}"><b>${esc(rTitle(r))}</b><small>${big?'<span class="tag big">ก้อนใหญ่</span>':''}${r.type==='lend'?'<span class="tag split">หารบิล</span>':''}${r.recurId?'<span class="tag rec">ประจำ</span>':''}${r.tax?'<span class="tag taxt">ลดหย่อน</span>':''}${r.demo?'<span class="tag">ตัวอย่าง</span>':''}${esc(rSub(r))}${r.note?' · '+esc(r.note):''}</small></div>
       <div class="amt num ${r.type}">${r.type==='in'||r.type==='back'?'+':r.type==='tr'?'':'-'}${fmt(r.amount)}</div></div></div>`}).join('')+'</div>';
   };
   const gapHTML=(n,a,b)=>{const f=x=>x.toLocaleDateString(LOC(),{day:'numeric',month:'short'}); return `<div class="nsgap">${leaf}<span>${L(`ไม่ใช้เงิน ${n} วัน`,`${n} no-spend ${n===1?'day':'days'}`)}</span><small>${n>1?`${f(a)} – ${f(b)}`:f(a)}</small></div>`};
@@ -2324,7 +2353,7 @@ let wSel='w0', wFrom='w0', wTo=null;
 function syncEntryMode(){
   const isTr=type==='tr', multi=wallets.length>1;
   $('segtr').hidden=!multi&&!isTr; $('catpick').hidden=isTr; $('quickamt').hidden=isTr; $('wpick').hidden=isTr||!multi; $('trpick').hidden=!isTr;
-  $('splitrow').hidden=type!=='out'||!!editing; if(type!=='out'){$('splitchk').checked=false; $('splitbox').hidden=true}
+  $('splitrow').hidden=type!=='out'||!!editing; $('taxrow').hidden=type!=='out'; if(type!=='out'){$('splitchk').checked=false; $('splitbox').hidden=true}
   if(isTr) $('recurrow').hidden=true; else $('recurrow').hidden=!!editing;
   renderWChips();
 }
@@ -2359,7 +2388,7 @@ function openEntry(rec){
   $('ftitle').textContent=rec?'แก้ไขรายการ':'จดรายการ';
   $('savebtn').textContent=rec?'บันทึกการแก้ไข':'บันทึก';
   wSel=rec?wOf(rec):(wallets.some(w=>w.id===prefs.lastW)?prefs.lastW:'w0'); if(rec&&rec.type==='tr'){wFrom=rec.from;wTo=rec.to} else {wFrom=wSel;wTo=null}
-  $('splitchk').checked=false; $('splitbox').hidden=true; $('splitnames').value='';
+  $('splitchk').checked=false; $('splitbox').hidden=true; $('splitnames').value=''; fillTaxSel(); $('taxsel').value=rec&&rec.tax||'';
   setType(rec?rec.type:'out'); cat=rec?rec.cat:CATS.out[0];
   $('amount').value=rec?rec.amount:''; $('memo').value=rec?rec.memo:''; $('date').value=rec?rec.date:iso(new Date());
   $('err').textContent=''; chips(); showSheet('sheet'); $('delentry').hidden=!rec;
@@ -2370,7 +2399,7 @@ function openEntry(rec){
 $('add').onclick=()=>openEntry(null);
 function updateRecurHint(){const d=$('date').value; $('recurhint').textContent=d?`ลงให้อัตโนมัติทุกวันที่ ${+d.slice(8,10)} ของเดือน`:'ลงรายการนี้ให้อัตโนมัติทุกเดือน'}
 $('date').addEventListener('change',()=>{updateRecurHint();updatePreview()});
-$('memo').onchange=()=>{ if(editing) return; const m=recall($('memo').value); if(m){setType(m.type);cat=m.cat;chips()} };
+$('memo').onchange=()=>{ if(editing) return; const m=recall($('memo').value); if(m){setType(m.type);cat=m.cat;chips()} const t=(prefs.taxMemo||{})[norm($('memo').value)]; if(t&&type==='out') $('taxsel').value=t };
 $('cancel').onclick=()=>hideSheet('sheet');
 $('sheet').onclick=e=>{if(e.target.id==='sheet')hideSheet('sheet')};
 $('form').onsubmit=e=>{
@@ -2383,7 +2412,9 @@ $('form').onsubmit=e=>{
   else { rec.w=wSel; prefs.lastW=wSel }
   const doSplit=!editing&&type==='out'&&$('splitchk').checked, sp=doSplit?splitInfo(rec.amount):null;
   if(doSplit&&!sp.names.length){$('err').textContent=L('ใส่ชื่อเพื่อนที่หารด้วย','Add at least one friend');$('splitnames').focus();return}
-  prefs.lastLogDay=iso(new Date()); savePrefs();
+  prefs.lastLogDay=iso(new Date());
+  { const tk=type==='out'?$('taxsel').value:''; if(tk) rec.tax=tk; else if(editing) rec.tax=''; if(tk&&rec.memo){prefs.taxMemo=prefs.taxMemo||{}; prefs.taxMemo[norm(rec.memo)]=tk} }
+  savePrefs();
   if(editing){const i=data.findIndex(r=>String(r.id)===editing); if(i>-1) data[i]={...data[i],...rec,demo:false}}
   else{
     const id=Date.now().toString(36);
@@ -2862,7 +2893,7 @@ function parseBackup(text){
   const arr=Array.isArray(o)?o:o&&Array.isArray(o.data)?o.data:null;
   if(!arr) throw new Error('shape');
   const clean=arr.filter(r=>r&&['in','out','tr','lend','back'].includes(r.type)&&+r.amount>0&&/^\d{4}-\d{2}-\d{2}$/.test(r.date))
-    .map((r,i)=>({id:String(r.id||('r'+i+Date.now().toString(36))),type:r.type,amount:+r.amount,cat:String(r.cat||'อื่นๆ'),memo:String(r.memo||''),note:String(r.note||''),ref:String(r.ref||''),date:r.date,...(r.recurId?{recurId:String(r.recurId)}:{}),...(r.w?{w:String(r.w)}:{}),...(r.from?{from:String(r.from),to:String(r.to)}:{}),...(r.who?{who:String(r.who)}:{}),...(r.split?{split:String(r.split)}:{}),...(r.demo?{demo:true}:{})}));
+    .map((r,i)=>({id:String(r.id||('r'+i+Date.now().toString(36))),type:r.type,amount:+r.amount,cat:String(r.cat||'อื่นๆ'),memo:String(r.memo||''),note:String(r.note||''),ref:String(r.ref||''),date:r.date,...(r.recurId?{recurId:String(r.recurId)}:{}),...(r.w?{w:String(r.w)}:{}),...(r.from?{from:String(r.from),to:String(r.to)}:{}),...(r.who?{who:String(r.who)}:{}),...(r.split?{split:String(r.split)}:{}),...(r.tax?{tax:String(r.tax)}:{}),...(r.demo?{demo:true}:{})}));
   return {data:clean,budget:o&&o.budget&&typeof o.budget==='object'?o.budget:null,merchants:o&&o.merchants&&typeof o.merchants==='object'?o.merchants:null,goals:o&&Array.isArray(o.goals)?o.goals:null,recur:o&&Array.isArray(o.recur)?o.recur:null,cats:o&&o.cats&&Array.isArray(o.cats.out)?o.cats:null,prefs:o&&o.prefs&&typeof o.prefs==='object'?o.prefs:null,wallets:o&&Array.isArray(o.wallets)&&o.wallets.length?o.wallets:null,friends:o&&Array.isArray(o.friends)?o.friends:null,skipped:arr.length-clean.length};
 }
 function applyBackup(p){
@@ -3308,6 +3339,91 @@ function openInsights(){
 }
 $('openins').onclick=openInsights;
 $('inssheet').onclick=e=>{if(e.target.id==='inssheet')hideSheet('inssheet')};
+
+/* ===== Tax deduction helper (Thai personal income tax, tax year = calendar year) ===== */
+// Caps checked Oct 2569 against Revenue Dept-based summaries: SSO 875/mo from 1 Jan 2569 (max 10,500);
+// Thai ESG 30% / 300,000 for units bought 2567–2569 (Ministerial Reg. 395), outside the 500k retirement cap;
+// Thai ESGX 2569 only for LTF-switched units (50,000/yr); SSF ended after 2567; Easy E-Receipt 2569 not run.
+const TAX_ITEMS=[
+  ['sso','ประกันสังคม','Social security','manual'],['life','เบี้ยประกันชีวิต','Life insurance','tag'],['health','เบี้ยประกันสุขภาพ','Health insurance','tag'],
+  ['parenthealth','ประกันสุขภาพพ่อแม่','Parents’ health insurance','tag'],['pvd','กองทุนสำรองเลี้ยงชีพ','Provident fund','manual'],['rmf','RMF','RMF','tag'],
+  ['pension','ประกันบำนาญ','Pension insurance','tag'],['thaiesg','Thai ESG','Thai ESG','tag'],['esgx','Thai ESGX (โยกจาก LTF)','Thai ESGX (from LTF)','manual'],
+  ['homeloan','ดอกเบี้ยบ้าน','Home loan interest','tag'],['donate2x','บริจาคการศึกษา/โรงพยาบาลรัฐ (2 เท่า)','Education / state hospital donation (2×)','tag'],
+  ['donate','บริจาคทั่วไป','General donation','tag'],['party','บริจาคพรรคการเมือง','Political party donation','tag'],['solar','ติดโซลาร์เซลล์บนหลังคาบ้าน','Rooftop solar','tag']];
+const TAX_BR=[[150000,0],[300000,.05],[500000,.10],[750000,.15],[1000000,.20],[2000000,.25],[5000000,.30],[Infinity,.35]];
+function taxOf(net){ let t=0, lo=0; for(const [hi,r] of TAX_BR){ if(net>lo) t+=(Math.min(net,hi)-lo)*r; lo=hi } return Math.round(t) }
+function taxYear(){ return new Date().getFullYear() }
+function taxPrefs(){ prefs.tax=prefs.tax||{}; const t=prefs.tax; t.manual=t.manual||{}; t.fam=t.fam||{spouse:false,kids:0,kids2:0,parents:0}; return t }
+function fillTaxSel(){ const el=$('taxsel'); if(!el||el.options.length) return; el.innerHTML=`<option value="">${L('ไม่ใช่','No')}</option>`+TAX_ITEMS.filter(x=>x[3]==='tag').map(x=>`<option value="${x[0]}">${esc(L(x[1],x[2]))}</option>`).join('') }
+function taxSums(){ const y=String(taxYear()), t=taxPrefs(), s={}; data.forEach(r=>{ if(!r.demo&&r.tax&&r.type==='out'&&r.date.startsWith(y)) s[r.tax]=(s[r.tax]||0)+r.amount });
+  Object.entries(t.manual).forEach(([k,v])=>{ if(+v>0) s[k]=(s[k]||0)+(+v) }); return s }
+function taxIncome(){ const t=taxPrefs(); if(+t.income>0) return {v:+t.income,est:false};
+  const y=String(taxYear()), now=new Date(), rs=data.filter(r=>!r.demo&&r.type==='in'&&r.date.startsWith(y)), sal=rs.filter(r=>r.cat==='เงินเดือน'), base=sal.length?sal:rs;
+  const sum=base.reduce((a,r)=>a+r.amount,0), months=Math.max(1,new Set(base.map(r=>r.date.slice(0,7))).size||now.getMonth()+1);
+  return {v:Math.round(sum/months*12),est:true} }
+function taxCalc(s,income){
+  const f=taxPrefs().fam, mn=(...a)=>Math.max(0,Math.min(...a)), u={};
+  const expense=Math.min(income*.5,100000);
+  u.family=60000+(f.spouse?60000:0)+30000*(+f.kids||0)+60000*(+f.kids2||0)+30000*Math.min(4,+f.parents||0);
+  u.sso=mn(s.sso||0,10500); u.health=mn(s.health||0,25000); u.life=mn(s.life||0,100000-u.health); u.parenthealth=mn(s.parenthealth||0,15000);
+  u.pension=mn(s.pension||0,income*.15,200000); u.pvd=mn(s.pvd||0,income*.15,500000); u.rmf=mn(s.rmf||0,income*.3,500000);
+  let ret=u.pension+u.pvd+u.rmf; if(ret>500000){ const k=500000/ret; u.pension*=k; u.pvd*=k; u.rmf*=k; ret=500000 }
+  u.thaiesg=mn(s.thaiesg||0,income*.3,300000); u.esgx=mn(s.esgx||0,50000); u.homeloan=mn(s.homeloan||0,100000); u.party=mn(s.party||0,10000); u.solar=mn(s.solar||0,200000);
+  const before=Math.max(0,income-expense-u.family-u.sso-u.health-u.life-u.parenthealth-ret-u.thaiesg-u.esgx-u.homeloan-u.party-u.solar), cap10=before*.1;
+  u.donate2x=mn((s.donate2x||0)*2,cap10); u.donate=mn(s.donate||0,cap10-u.donate2x);
+  const net=Math.max(0,before-u.donate2x-u.donate), tax=taxOf(net), rate=(TAX_BR.find(b=>net<=b[0])||[0,0])[1];
+  const caps={sso:10500,life:100000-u.health,health:25000,parenthealth:15000,pension:Math.min(income*.15,200000),pvd:Math.min(income*.15,500000),rmf:Math.min(income*.3,500000),thaiesg:Math.min(income*.3,300000),esgx:50000,homeloan:100000,party:10000,solar:200000,donate:cap10,donate2x:cap10/2};
+  const used=Object.values(u).reduce((a,v)=>a+v,0)-u.family;
+  return {u,caps,tax,net,rate,expense,ret,used};
+}
+function taxRoom(s,income){
+  const base=taxCalc(s,income), out=[];
+  for(const k of ['thaiesg','rmf','pension','life','health','parenthealth']){
+    const cur=s[k]||0; let room=Math.max(0,base.caps[k]-(k==='health'||k==='life'?base.u[k]:cur)); if(['rmf','pension'].includes(k)) room=Math.min(room,Math.max(0,500000-base.ret));
+    if(room<500) continue; const t=taxCalc({...s,[k]:cur+room},income); const save=base.tax-t.tax; if(save>0) out.push({k,room:Math.round(room),save});
+  }
+  return out.sort((a,b)=>b.save-a.save);
+}
+function renderTaxBtn(){ const b=$('opentax'); if(!b) return; b.hidden=data.length<5; if(b.hidden) return;
+  const s=taxSums(), inc=taxIncome().v, c=taxCalc(s,inc), r=taxRoom(s,inc);
+  $('taxbtnt').textContent=L(`ลดหย่อนภาษี ปี ${taxYear()+543}`,`Tax deductions ${taxYear()}`);
+  $('taxbtns').textContent=r.length?L(`ยังประหยัดภาษีได้อีกประมาณ ${fmt(r.reduce((a,x)=>Math.max(a,x.save),0))}`,`You could still save about ${fmt(r.reduce((a,x)=>Math.max(a,x.save),0))} in tax`):L(`ใช้สิทธิ์แล้ว ${fmt(Math.round(c.used))}`,`${fmt(Math.round(c.used))} claimed`);
+}
+function openTax(){
+  const t=taxPrefs(), s=taxSums(), inc=taxIncome(), c=taxCalc(s,inc.v), room=taxRoom(s,inc.v), y=taxYear(), f=t.fam;
+  const nm=k=>{const x=TAX_ITEMS.find(z=>z[0]===k); return x?L(x[1],x[2]):k};
+  const tagSum=k=>data.filter(r=>!r.demo&&r.tax===k&&r.type==='out'&&r.date.startsWith(String(y))).reduce((a,r)=>a+r.amount,0);
+  const row=k=>{ const cap=Math.max(0,c.caps[k]||0), used=c.u[k]||0, p=cap?Math.min(1,used/cap):0, tg=tagSum(k), man=+t.manual[k]||0;
+    return `<div class="txr"><div class="txh"><span>${esc(nm(k))}</span><small class="num">${fmt(Math.round(used))} / ${fmt(Math.round(cap))}</small></div><div class="bar b2"><i class="ok" style="width:${(p*100).toFixed(1)}%"></i></div>
+      <div class="txm">${tg?`<small>${L(`จากรายการที่จด ${fmt(tg)}`,`${fmt(tg)} from logged items`)}</small>`:''}<label>${L('เพิ่มเอง','Add')}<input class="num" inputmode="decimal" data-tm="${k}" value="${man||''}" placeholder="0"></label></div></div>`};
+  const grp=(title,keys)=>`<div class="icard"><b class="subh">${title}</b>${keys.map(row).join('')}</div>`;
+  const step=(k,v,lab)=>`<div class="txs"><span>${lab}</span><span class="stp"><button type="button" data-st="${k}" data-d="-1">−</button><b class="num">${v}</b><button type="button" data-st="${k}" data-d="1">+</button></span></div>`;
+  $('taxpanel').innerHTML=`<h3>${L(`ลดหย่อนภาษี ปีภาษี ${y+543}`,`Tax deductions ${y}`)}</h3>
+    <small class="hint">${L(`เงินได้ ม.ค.–ธ.ค. ${y+543} ยื่นแบบต้นปี ${y+544}`,`Income Jan–Dec ${y}, filed early ${y+1}`)}</small>
+    <div class="fcast"><small>${L('ภาษีทั้งปีโดยประมาณ','Estimated tax for the year')}</small><b class="num">${fmt(c.tax)}</b><span>${L(`เงินได้สุทธิ ${fmt(Math.round(c.net))} · อัตราภาษีขั้นสูงสุดที่ใช้ ${Math.round(c.rate*100)}% · ลดหย่อนแล้ว ${fmt(Math.round(c.used+c.u.family))}`,`Net taxable ${fmt(Math.round(c.net))} · top rate ${Math.round(c.rate*100)}% · deductions ${fmt(Math.round(c.used+c.u.family))}`)}</span></div>
+    <label class="txinc">${L('เงินได้ทั้งปี (บาท)','Income for the year (THB)')}<input class="num" id="taxinc" inputmode="decimal" value="${+t.income>0?t.income:''}" placeholder="${fmt(inc.v).replace('฿','')}"></label>
+    <small class="hint">${inc.est?L('ถ้าไม่กรอก แอปประมาณจากรายรับที่จด เฉลี่ยต่อเดือนคูณ 12','Left blank, the app estimates from your logged income × 12'):''}</small>
+    ${room.length?`<div class="icard"><b class="subh">${L('ยังใช้สิทธิ์ได้อีก','Room left this year')}</b>${room.slice(0,3).map(x=>`<div class="mv"><span class="nm">${esc(nm(x.k))}</span><small class="num">${L('เหลือ','room')} ${fmt(x.room)}</small><span class="num up2">${L('ประหยัด','save')} ~${fmt(x.save)}</span></div>`).join('')}<small class="hint">${L('ประหยัดได้ = ภาษีที่ลดลงถ้าใช้สิทธิ์รายการนั้นเต็ม ไม่ใช่คำแนะนำให้ซื้อ','Savings = tax reduction if that item were maxed out. Not a recommendation to buy.')}</small></div>`:''}
+    <div class="icard"><b class="subh">${L('ครอบครัว','Family')}</b>
+      <label class="switch" style="background:var(--s-low)"><span><b>${L('คู่สมรสไม่มีเงินได้','Spouse with no income')}</b></span><input type="checkbox" id="txsp" role="switch" ${f.spouse?'checked':''}></label>
+      ${step('kids',+f.kids||0,L('บุตร (คนละ 30,000)','Children (30,000 each)'))}${step('kids2',+f.kids2||0,L('บุตรคนที่ 2 ขึ้นไป เกิดตั้งแต่ปี 2561 (คนละ 60,000)','2nd+ child born 2018 or later (60,000 each)'))}${step('parents',+f.parents||0,L('พ่อแม่อายุ 60+ รายได้ไม่เกิน 30,000 (คนละ 30,000)','Parents 60+, income ≤30,000 (30,000 each)'))}</div>
+    ${grp(L('ประกันและประกันสังคม','Insurance & social security'),['sso','life','health','parenthealth'])}
+    ${grp(L('กองทุนและการออมเพื่อเกษียณ','Funds & retirement savings'),['pvd','rmf','pension','thaiesg','esgx'])}
+    ${grp(L('บ้านและเงินบริจาค','Home & donations'),['homeloan','donate2x','donate','party','solar'])}
+    <small class="hint">${L('ใส่เงินที่จ่ายจริง แอปตัดตามเพดานให้เอง RMF + กองทุนสำรองเลี้ยงชีพ + ประกันบำนาญ รวมกันไม่เกิน 500,000 · ประกันชีวิต + สุขภาพ รวมไม่เกิน 100,000 · บริจาครวมไม่เกิน 10% ของเงินได้หลังหักค่าลดหย่อน','Enter what you actually paid; the app applies the caps. RMF + provident fund + pension insurance ≤500,000 combined · life + health ≤100,000 · donations ≤10% of income after deductions')}</small>
+    <small class="hint">${L('เป็นการประมาณเพื่อวางแผนเท่านั้น ไม่ใช่คำแนะนำทางภาษี เพดานอ้างอิงเกณฑ์ปีภาษี 2569 ณ ต.ค. 2569 และไม่รวมภาษีที่ถูกหัก ณ ที่จ่ายไปแล้ว ตรวจกับกรมสรรพากรก่อนยื่นจริง','Planning estimate only, not tax advice. Caps follow 2569 rules as of Oct 2569 and ignore tax already withheld. Check with the Revenue Department before filing.')}</small>
+    <div class="actions"><button class="btn" id="taxclose">${L('ปิด','Close')}</button></div>`;
+  showSheet('taxsheet');
+}
+$('opentax').onclick=openTax;
+$('taxsheet').onclick=e=>{if(e.target.id==='taxsheet')hideSheet('taxsheet')};
+$('taxpanel').addEventListener('click',e=>{ if(e.target.id==='taxclose'){hideSheet('taxsheet');renderTaxBtn();return}
+  const b=e.target.closest('[data-st]'); if(!b) return; const t=taxPrefs(), k=b.dataset.st, mx=k==='parents'?4:9; t.fam[k]=Math.max(0,Math.min(mx,(+t.fam[k]||0)+(+b.dataset.d))); savePrefs(); const sc=$('taxpanel').scrollTop; openTax(); $('taxpanel').scrollTop=sc });
+$('taxpanel').addEventListener('change',e=>{ const t=taxPrefs(), el=e.target, sc=$('taxpanel').scrollTop;
+  if(el.id==='txsp') t.fam.spouse=el.checked;
+  else if(el.id==='taxinc') t.income=parseFloat((el.value||'').replace(/,/g,''))||0;
+  else if(el.dataset.tm) t.manual[el.dataset.tm]=parseFloat((el.value||'').replace(/,/g,''))||0;
+  else return; savePrefs(); openTax(); $('taxpanel').scrollTop=sc; renderTaxBtn() });
 /* ===== Data safety: persistent storage + daily restore points ===== */
 function renderPersist(p){ const el=$('persistst'); if(!el) return; el.textContent=p?L('มือถือจะไม่ลบข้อมูลของแอปนี้เอง','This phone will not clear the app data on its own'):L('ถ้าพื้นที่เต็ม Chrome อาจลบข้อมูลแอปได้ ติดตั้งแอปลงหน้าจอหลักและสำรองไฟล์ไว้เสมอ','If storage runs low, Chrome may clear app data. Install the app and keep a backup file.') }
 try{ if(navigator.storage&&navigator.storage.persisted){ navigator.storage.persisted().then(p=>p?p:(navigator.storage.persist?navigator.storage.persist():false)).then(renderPersist,()=>renderPersist(false)) } else renderPersist(false) }catch(e){}
