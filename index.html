@@ -298,6 +298,13 @@ textarea{min-height:90px;font-size:13px;resize:vertical}
 .legend em{font-style:normal;color:var(--muted);font-size:13px}
 .legend button.on em{color:inherit}
 /* Filter chip */
+.search{display:flex;align-items:center;gap:8px;background:var(--s-high);border-radius:28px;padding:0 6px 0 16px;height:48px}
+.search svg{width:22px;height:22px;flex:none;fill:none;stroke:var(--muted);stroke-width:2;stroke-linecap:round}
+.search input{flex:1;min-width:0;border:0;background:transparent;padding:0;height:100%;font-size:16px;box-shadow:none!important}
+.search input::-webkit-search-cancel-button{display:none}
+.search button{width:40px;height:40px;border-radius:50%;border:0;background:none;color:var(--muted);font-size:16px;cursor:pointer}
+.sresult{font-size:13px;color:var(--muted);padding:0 4px}
+.sresult b{color:var(--ink);font-weight:500}
 .fchip{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;height:32px;border-radius:8px;border:0;background:var(--sc2);color:var(--on-sc2);font-size:14px;font-weight:500;padding:0 8px 0 12px;cursor:pointer}
 .fchip::after{content:"✕";font-size:12px}
 /* Swipe */
@@ -547,6 +554,8 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   <section>
     <h2><span>รายการ</span><small>แตะเพื่อแก้ไข · ปัดซ้ายเพื่อลบ</small></h2>
     <div class="upcoming" id="upcoming" hidden></div>
+    <div class="search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input id="q" type="search" enterkeyhint="search" autocomplete="off" placeholder="ค้นหาร้าน บันทึก หมวด หรือจำนวนเงิน" aria-label="ค้นหารายการ"><button type="button" id="qclear" hidden aria-label="ล้างคำค้น">✕</button></div>
+    <div class="sresult" id="sresult" hidden></div>
     <button class="fchip" id="fchip" hidden></button>
     <div id="list"></div>
   </section>
@@ -874,6 +883,7 @@ function setLang(l){
   if(typeof setMoodForce==='function') setMoodForce();
 }
 Object.assign(DICT,{
+'ค้นหาร้าน บันทึก หมวด หรือจำนวนเงิน':'Search shop, note, category or amount','ค้นหารายการ':'Search transactions','ล้างคำค้น':'Clear search',
 'ไว้ทีหลัง':'Later','สำรองเลย':'Back up now','หมวดหมู่':'Categories','เพิ่มหมวดของคุณเองได้ หมวดที่มากับแอปแก้หรือลบไม่ได้':'Add your own categories. Built-in ones cannot be edited or deleted.','ชื่อหมวด':'Category name','เช่น สัตว์เลี้ยง, ประกัน, ทำบุญ':'e.g. Pets, Insurance, Donations','สี':'Colour','บันทึกหมวด':'Save category','+ เพิ่มหมวด':'+ Add category','ชื่อหมวดใหม่':'New category name','เพิ่ม':'Add',
 'ยอดยกมาและยอดเริ่มต้น':'Carry-over & opening balance','ยกยอดคงเหลือจากเดือนก่อน':'Carry over previous balance','เงินที่เหลือของเดือนก่อนๆ จะรวมเข้ามาในยอดคงเหลือเดือนนี้':'Money left from earlier months is added to this month’s balance','ยอดเงินเริ่มต้น (บาท)':'Opening balance (THB)','เช่น เงินในบัญชีวันที่เริ่มใช้แอป':'e.g. what you had when you started','คงเหลือทั้งหมด':'Total balance',
 'จดไป {0} รายการ มาดูกันว่าเงินไปไหนบ้าง':'{0} transactions logged. Let’s see where the money went.',
@@ -1175,14 +1185,23 @@ function render(){
   }).join(''):'<div class="empty">ยังไม่มีรายจ่ายเดือนนี้</div>';
   renderMix(spent,tout);
 
-  $('fchip').hidden=!filterCat; if(filterCat) $('fchip').textContent='หมวด: '+filterCat;
-  const shown=filterCat?rows.filter(r=>r.cat===filterCat):rows;
+  const q=($('q').value||'').trim(); const searching=!!q;
+  $('qclear').hidden=!searching; $('sresult').hidden=!searching;
+  $('fchip').hidden=!filterCat||searching; if(filterCat) $('fchip').textContent='หมวด: '+filterCat;
+  let shown=filterCat?rows.filter(r=>r.cat===filterCat):rows;
+  if(searching){
+    shown=searchData(q);
+    const so=shown.filter(r=>r.type==='out').reduce((a,r)=>a+r.amount,0), si=shown.filter(r=>r.type==='in').reduce((a,r)=>a+r.amount,0);
+    $('sresult').innerHTML=L(`พบ <b>${shown.length}</b> รายการจากทุกเดือน${so?` · จ่ายรวม <b>${fmt(so)}</b>`:''}${si?` · รับรวม <b>${fmt(si)}</b>`:''}`,
+      `<b>${shown.length}</b> found across all months${so?` · <b>${fmt(so)}</b> spent`:''}${si?` · <b>${fmt(si)}</b> received`:''}`);
+    if(!shown.length){$('list').innerHTML=`<div class="empty">${esc(L(`ไม่พบรายการที่ตรงกับ “${q}”`,`Nothing matches “${q}”`))}</div>`;return}
+  }
   if(filterCat&&!shown.length){$('list').innerHTML='<div class="empty">ไม่มีรายการในหมวดนี้</div>';return}
-  if(!rows.length){$('list').innerHTML='<div class="empty">ยังไม่มีรายการ แตะ “+ จดรายการ” เพื่อเริ่ม</div>';return}
+  if(!rows.length&&!searching){$('list').innerHTML='<div class="empty">ยังไม่มีรายการ แตะ “+ จดรายการ” เพื่อเริ่ม</div>';return}
   const groups={}; shown.forEach(r=>(groups[r.date]=groups[r.date]||[]).push(r));
   $('list').innerHTML=Object.entries(groups).map(([dt,rs])=>{
     const d=new Date(dt+'T00:00'); const net=rs.reduce((s,r)=>s+(r.type==='in'?r.amount:-r.amount),0);
-    return `<div class="day"><div class="dayhead"><span>${d.toLocaleDateString(LOC(),{weekday:'short',day:'numeric',month:'short'})}</span><span class="num">${net>=0?'+':'-'}${fmt(Math.abs(net))}</span></div>`+
+    return `<div class="day"><div class="dayhead"><span>${d.toLocaleDateString(LOC(),searching?{day:'numeric',month:'short',year:'numeric'}:{weekday:'short',day:'numeric',month:'short'})}</span><span class="num">${net>=0?'+':'-'}${fmt(Math.abs(net))}</span></div>`+
     rs.map(r=>`<div class="rowwrap"><div class="row" data-id="${r.id}">${ic(r.cat)}<div class="t" tabindex="0" role="button" aria-label="${L('แก้ไข','Edit')} ${esc(r.memo||r.cat)}"><b>${esc(r.memo||r.cat)}${r.demo?'<span class="tag">ตัวอย่าง</span>':''}${r.recurId?'<span class="tag rec">ประจำ</span>':''}</b><small>${esc(r.cat)}${r.note?' · '+esc(r.note):''}</small></div>
       <div class="amt num ${r.type}">${r.type==='in'?'+':'-'}${fmt(r.amount)}</div></div></div>`).join('')+'</div>';
   }).join('');
@@ -1244,6 +1263,20 @@ $('fchip').onclick=()=>{filterCat=null;render()};
 $('cleardemo').onclick=()=>{data=data.filter(r=>!r.demo);goals=goals.filter(g=>!g.demo);recur=recur.filter(r=>!r.demo);save();saveGoals();saveRecur();render()};
 
 /* Daily allowance */
+/* Search */
+function searchData(q){
+  const terms=q.toLowerCase().split(/\s+/).filter(Boolean);
+  return data.filter(r=>{
+    const amt=String(r.amount), amtF=fmt(r.amount).replace('฿','');
+    const hay=[r.memo,r.note,r.cat,EN_CAT[r.cat]||'',r.type==='in'?L('รายรับ','income'):L('รายจ่าย','expense'),amt,amtF].join(' ').toLowerCase();
+    return terms.every(t=>{const tn=t.replace(/[฿,]/g,''); return hay.includes(t)||(tn&&/^\d+(\.\d+)?$/.test(tn)&&amt===tn)});
+  }).sort((a,b)=>b.date.localeCompare(a.date)||String(b.id).localeCompare(String(a.id)));
+}
+let qT=null;
+$('q').addEventListener('input',()=>{clearTimeout(qT);qT=setTimeout(render,150)});
+$('q').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('q').blur()} if(e.key==='Escape'){$('q').value='';render()}});
+$('qclear').onclick=()=>{$('q').value='';render();$('q').focus()};
+
 function renderAllowance(rows,tin,tout,carryAmt){ carryAmt=carryAmt||0;
   const el=$('allow'), now=new Date();
   const curY=now.getFullYear(), curM=now.getMonth(), vy=view.getFullYear(), vm=view.getMonth();
@@ -1469,6 +1502,7 @@ function openGoalEdit(g){
 
 /* Upcoming recurring + list in settings */
 function renderUpcoming(){
+  if(($('q').value||'').trim()){$('upcoming').hidden=true;return}
   const now=new Date(), isCur=view.getFullYear()===now.getFullYear()&&view.getMonth()===now.getMonth();
   const up=isCur?upcomingFor(now):[];
   $('upcoming').hidden=!up.length; if(!up.length) return;
