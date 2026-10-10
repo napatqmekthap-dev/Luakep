@@ -2003,6 +2003,15 @@ if(window.STANDALONE){
   $('acctemail').closest('.group').hidden=true;
 } else if(!account) showAuth();
 render();
+/* Home-screen shortcuts: ?add=out | ?add=in | ?find=1 */
+try{
+  const qs=new URLSearchParams(location.search), add=qs.get('add'), find=qs.get('find');
+  if((add||find)&&account){
+    history.replaceState(null,'',location.pathname);
+    if(add==='out'||add==='in'){ openEntry(null); if(add==='in'){setType('in');cat=CATS.in[0];chips()} }
+    else if(find){ setTimeout(()=>{const q=$('q'); try{q.scrollIntoView({block:'center'})}catch(e){} q.focus()},150) }
+  }
+}catch(e){}
 </script>
 
 <script>
