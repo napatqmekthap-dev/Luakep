@@ -1446,6 +1446,19 @@ body.lowfx #wxfx .wr,body.lowfx #wxfx .wsn,body.lowfx #wxfx .wlf,body.lowfx #wxf
 .credit b{font:500 13px var(--display);letter-spacing:.12em;color:var(--ink)}
 .credit small{font-size:12px;letter-spacing:.06em}
 .credit i{display:block;width:28px;height:1px;background:var(--gold,var(--ov));opacity:.7}
+
+/* ===== V270 Nong Ong speaks ===== */
+.pig .mouth{transform-box:fill-box;transform-origin:50% 35%}
+.pig.talking .mouth{animation:talk .15s ease-in-out infinite alternate}
+.pig.talking svg{animation:talkbob .34s ease-in-out infinite alternate!important}
+@keyframes talk{0%{transform:scale(1,.55)}60%{transform:scale(.92,1.45)}100%{transform:scale(1.04,1.1)}}
+@keyframes talkbob{to{transform:translateY(-1.5px) rotate(-1deg)}}
+.say.speaking{animation:none!important;opacity:1}
+.say.speaking::after{content:"";display:inline-block;width:14px;height:10px;margin-left:6px;vertical-align:-1px;background:linear-gradient(currentColor,currentColor) 0 50%/2px 40% no-repeat,linear-gradient(currentColor,currentColor) 6px 50%/2px 90% no-repeat,linear-gradient(currentColor,currentColor) 12px 50%/2px 60% no-repeat;animation:eq .5s ease-in-out infinite alternate;opacity:.75}
+@keyframes eq{to{background-size:2px 90%,2px 35%,2px 100%}}
+.vrow{display:flex;gap:10px;align-items:center;justify-content:space-between}
+.vrow .btn{flex:none;padding:0 16px;height:40px}
+@media (prefers-reduced-motion: reduce){.pig.talking .mouth,.pig.talking svg,.say.speaking::after{animation:none!important}}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i></div><div id="festfx" aria-hidden="true"></div>
@@ -2405,7 +2418,7 @@ function jarSVG(m,o,lv,sk,wx){
   <path d="M38 33Q36 27 32 25H88Q84 27 82 33Z" fill="${sk===5?'#f3d98a':'#bfe6cf'}" stroke="${O}" stroke-width="2.6" stroke-linejoin="round"/><rect x="30" y="20" width="60" height="7" rx="3.5" fill="${sk>=3?'#f2d98c':'#cfeedb'}" stroke="${O}" stroke-width="2.6"/>${sk===5?'<g class="spk"><path d="M8 58l1.6 4 4 1.6-4 1.6L8 69l-1.6-3.8-4-1.6 4-1.6z" fill="#ffd54f"/><path d="M112 70l1.2 3 3 1.2-3 1.2-1.2 3-1.2-3-3-1.2 3-1.2z" fill="#ffd54f"/></g>':''}
   ${W.shirt}
   <path d="M18 72q-8-1-9 7M102 72q8-1 9 7" ${S}/>
-  ${W.neck}${o?'':lid}${W.head}${o?'':leaf}${W.props}${cheeks}<g class="look"><g class="eyes">${eyes}</g></g>${mouth}${extra}${W.face||''}${wx?wxLayers(o,m):''}
+  ${W.neck}${o?'':lid}${W.head}${o?'':leaf}${W.props}${cheeks}<g class="look"><g class="eyes">${eyes}</g></g><g class="mouth">${mouth}</g>${extra}${W.face||''}${wx?wxLayers(o,m):''}
 </svg>`;
 }
 
@@ -4705,6 +4718,52 @@ $('pig').addEventListener('pointerdown',e=>{ if(!FX()) return; const svg=$('pig'
 /* Developer credit at the foot of the settings menu */
 (function(){ const m=$('setmenu'); if(!m||m.querySelector('.credit')) return; const c=document.createElement('div'); c.className='credit';
   c.innerHTML=`<span class="cj">${jarSVG('great',null,null,1)}</span><i></i><b>Developed by Napat Mekthap</b><small>${L('เหลือเก็บ · กินเหลือเก็บ เติมโอ่งทุกเดือน','Luakep · fill the jar every month')}</small>`; m.appendChild(c) })();
+
+/* ===== V270 Nong Ong speaks (on-device text-to-speech) ===== */
+const VOICE={ok:typeof window!=='undefined'&&'speechSynthesis' in window&&typeof SpeechSynthesisUtterance!=='undefined', lastTap:0, cur:null};
+function vMode(){ return prefs.voice||'tap' }
+function pickVoice(lang){ try{ const vs=speechSynthesis.getVoices(); const want=lang==='th'?/^th/i:/^en/i;
+  const c=vs.filter(v=>want.test(v.lang)); return c.find(v=>/female|หญิง|kanya|premwadee|narisa|samantha|google/i.test(v.name))||c[0]||null }catch(e){ return null } }
+function speakText(t){ t=String(t||'').replace(/[\u{1F300}-\u{1FAFF}\u2600-\u27BF]/gu,'');
+  const th=LANG!=='en';
+  t=t.replace(/-?฿\s?([\d,]+(?:\.\d+)?)/g,(m,n)=>(m.startsWith('-')?(th?'ลบ ':'minus '):'')+n+(th?' บาท':' baht'));
+  t=t.replace(/(\d+)°/g,(m,n)=>n+(th?' องศา':' degrees'));
+  if(th) t=t.replace(/zzz\.*/gi,'ครอก ฟี้');
+  return t.replace(/\.{2,}/g,'… ').trim() }
+function nongSpeak(text,bubble){ if(!VOICE.ok||vMode()==='off'||document.body.classList.contains('locked')) return;
+  try{ speechSynthesis.cancel() }catch(e){}
+  const u=new SpeechSynthesisUtterance(speakText(text)); const lang=LANG==='en'?'en':'th'; const v=pickVoice(lang);
+  u.lang=lang==='th'?'th-TH':'en-US'; try{ if(v) u.voice=v }catch(e){} u.pitch=1.65; u.rate=lang==='th'?1.05:1.08; u.volume=1;
+  const p=$('pig'); VOICE.cur=u;
+  u.onstart=()=>{ if(VOICE.cur!==u) return; if(p&&FX()) p.classList.add('talking'); if(bubble&&bubble.isConnected){ bubble.classList.add('speaking'); clearTimeout(bubble._rm) } };
+  const done=()=>{ if(VOICE.cur!==u) return; VOICE.cur=null; if(p) p.classList.remove('talking');
+    if(bubble&&bubble.isConnected){ bubble.classList.remove('speaking'); bubble.animate([{opacity:1},{opacity:0,transform:'translateY(-6px)'}],{duration:350,fill:'forwards'}).onfinish=()=>Element.prototype.remove.call(bubble) } };
+  u.onend=done; u.onerror=done;
+  try{ speechSynthesis.speak(u) }catch(e){ done() }
+  setTimeout(()=>{ if(VOICE.cur===u&&!speechSynthesis.speaking) done() },15000) }
+try{ if(VOICE.ok){ speechSynthesis.getVoices(); speechSynthesis.onvoiceschanged=()=>{ try{renderVoiceSet()}catch(e){} } } }catch(e){}
+addEventListener('pointerdown',()=>{VOICE.lastTap=Date.now()},{capture:true,passive:true});
+document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='hidden'&&VOICE.ok) try{speechSynthesis.cancel()}catch(e){} });
+/* Every speech bubble near the jar is spoken: always in "always" mode, or when it came from a tap in "tap" mode */
+(function(){ const host=$('pig')&&$('pig').parentElement; if(!host) return;
+  try{ new MutationObserver(ms=>ms.forEach(m=>m.addedNodes.forEach(n=>{ if(n.nodeType!==1||!n.classList.contains('say')) return; const mode=vMode(); if(mode==='off') return;
+    const tapped=Date.now()-VOICE.lastTap<1800; if(mode==='tap'&&!tapped) return;
+    n.remove=function(){ if(n.classList.contains('speaking')) n._pend=1; else Element.prototype.remove.call(n) };
+    setTimeout(()=>{ if(n.isConnected) nongSpeak(n.textContent,n) },60) }))).observe(host,{childList:true}) }catch(e){} })();
+/* Settings: voice options in the sound group */
+function renderVoiceSet(){ const sel=$('vmode'); if(!sel) return; sel.value=vMode(); const note=$('vnote'); if(!note) return;
+  if(!VOICE.ok){ note.textContent=L('มือถือเครื่องนี้ไม่รองรับเสียงพูด','This phone has no text-to-speech'); return }
+  const has=pickVoice(LANG==='en'?'en':'th'); note.textContent=has?L(`ใช้เสียงของมือถือ (${has.name}) พูดในเครื่อง ไม่ส่งข้อความไปไหน`,`Uses your phone's voice (${has.name}), on the device only`)
+    :L('ยังไม่พบเสียงภาษาไทยในเครื่อง ติดตั้ง “Google Text-to-speech” แล้วเพิ่มภาษาไทยในการตั้งค่าเสียงของมือถือ','No voice found yet. Add one in your phone’s text-to-speech settings.') }
+(function(){ const sw=$('sndon'), g=sw&&sw.closest('.group'); if(!g) return; const box=document.createElement('div');
+  box.innerHTML=`<div class="vrow"><label class="remtime" style="flex:1">${L('น้องโอ่งพูด','Nong Ong talks')}<select id="vmode"><option value="tap">${L('เมื่อแตะ','When tapped')}</option><option value="always">${L('ทุกครั้งที่บ่น','Every time')}</option><option value="off">${L('ปิด','Off')}</option></select></label><button type="button" class="btn" id="vtest">${L('ลองฟัง','Try it')}</button></div><small class="wnote" id="vnote" style="display:block;margin:4px 2px"></small>`;
+  g.appendChild(box);
+  $('vmode').addEventListener('change',e=>{ prefs.voice=e.target.value; savePrefs(); if(e.target.value==='off'&&VOICE.ok) try{speechSynthesis.cancel()}catch(_){} });
+  $('vtest').addEventListener('click',()=>{ if(prefs.voice==='off'){ prefs.voice='tap'; savePrefs(); $('vmode').value='tap' }
+    const p=$('pig'), t=L('สวัสดี! เราชื่อน้องโอ่ง จะช่วยเก็บเงินให้เต็มโอ่งเลย','Hi! I am Nong Ong. Let’s fill this jar together!');
+    if(!VOICE.ok){ toast(L('เครื่องนี้ไม่รองรับเสียงพูด','No text-to-speech on this phone')); return }
+    nongSpeak(t,null); toast(L('น้องโอ่งกำลังพูด','Nong Ong is talking')) });
+  renderVoiceSet() })();
 </script>
 
 <script>
