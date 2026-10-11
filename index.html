@@ -853,8 +853,7 @@ body.lowfx .story .cfall,body.lowfx .story .sjar svg{animation:none}
 #ntjar svg{width:100%;height:100%;overflow:visible}
 #ntjar .wave{animation:wave 3.2s linear infinite}
 #ntbal{font-family:var(--display);font-size:20px;font-weight:500}
-.balance{transform:scale(calc(1 - var(--hp,0) * .07));transform-origin:50% 100%;opacity:calc(1 - var(--hp,0) * .55)}
-.balance .pig{scale:calc(1 - var(--hp,0) * .3)}
+.balance{transform-origin:50% 100%;will-change:transform,opacity}
 /* odometer */
 .odr{display:inline-block;position:relative;overflow:hidden;vertical-align:top}
 .odr .n{display:inline-block;animation:odin .6s var(--d) cubic-bezier(.2,1.3,.4,1) both}
@@ -1353,15 +1352,15 @@ html{overscroll-behavior-y:contain}
 .wxpill svg{width:22px;height:22px;flex:none;overflow:visible}
 .wxpill .t{font-family:var(--display);font-size:15px}
 .wxpill small{color:var(--muted);font:400 12px var(--body)}
-#wxfx{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;--rc:rgba(60,95,130,.42);--cl:rgba(118,132,146,.17);--fl:#fff}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) #wxfx{--rc:rgba(190,215,255,.30);--cl:rgba(220,230,240,.07)}}
-:root[data-theme="dark"] #wxfx{--rc:rgba(190,215,255,.30);--cl:rgba(220,230,240,.07)}
+#wxfx{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;--rc:rgba(60,95,130,.42);--cl:rgb(118,132,146);--co:.17;--fl:#fff}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) #wxfx{--rc:rgba(190,215,255,.30);--cl:rgb(220,230,240);--co:.07}}
+:root[data-theme="dark"] #wxfx{--rc:rgba(190,215,255,.30);--cl:rgb(220,230,240);--co:.07}
 #wxfx .tint{position:absolute;inset:0}
 #wxfx .wsun{position:absolute;right:-70px;top:-70px;width:250px;height:250px;border-radius:50%;background:radial-gradient(circle,rgba(255,226,140,.95) 0 17%,rgba(255,210,110,.45) 18%,rgba(255,210,110,0) 62%)}
 #wxfx .wsun::before{content:"";position:absolute;inset:-30%;border-radius:50%;background:repeating-conic-gradient(rgba(255,214,120,.22) 0 6deg,transparent 6deg 18deg);-webkit-mask:radial-gradient(circle,#000 18%,transparent 62%);mask:radial-gradient(circle,#000 18%,transparent 62%);animation:rays 40s linear infinite}
 #wxfx .wmoon{position:absolute;right:42px;top:58px;width:56px;height:56px;border-radius:50%;box-shadow:-13px 9px 0 0 #f4e7b8;filter:drop-shadow(0 0 14px rgba(244,231,184,.6));transform:rotate(-20deg)}
-#wxfx .wcloud{position:absolute;left:0;top:var(--y);width:var(--w);height:calc(var(--w)*.36);border-radius:999px;background:var(--cl);animation:wcl var(--d) linear var(--dl) infinite;filter:blur(1.5px)}
-#wxfx .wcloud::before,#wxfx .wcloud::after{content:"";position:absolute;border-radius:50%;background:inherit}
+#wxfx .wcloud{position:absolute;left:0;top:var(--y);width:var(--w);height:calc(var(--w)*.36);border-radius:999px;background:var(--cl);opacity:var(--co);box-shadow:0 0 5px 2px var(--cl);will-change:transform;animation:wcl var(--d) linear var(--dl) infinite}
+#wxfx .wcloud::before,#wxfx .wcloud::after{content:"";position:absolute;border-radius:50%;background:inherit;box-shadow:inherit}
 #wxfx .wcloud::before{width:46%;height:120%;left:16%;top:-58%}
 #wxfx .wcloud::after{width:34%;height:92%;left:50%;top:-38%}
 @keyframes wcl{from{transform:translateX(-120%)}to{transform:translateX(calc(100vw + 20%))}}
@@ -1602,6 +1601,29 @@ body.lowfx .ncap,body.lowfx .nspill .fl1,body.lowfx .nspill .fl2,body.lowfx .wxd
 .impghost{position:fixed;z-index:70;pointer-events:none;margin:0;border-radius:14px;background:var(--s-low);box-shadow:0 12px 30px -14px rgba(0,0,0,.45);overflow:hidden}
 @media (prefers-reduced-motion: reduce){.badge:not(.off) .md::after{animation:none;display:none}.onb-jar .wlvl{transition:none}}
 body.lowfx .badge:not(.off) .md::after{display:none}
+
+/* ===== V330 performance: same look, far less work per frame ===== */
+/* sheen bands move with transform (GPU) instead of repainting the background */
+.balance::after{content:none}
+.dust .shband{position:absolute;top:0;bottom:0;left:0;width:42%;background:linear-gradient(105deg,transparent,var(--sheen,rgba(255,255,255,.42)) 45%,rgba(255,226,150,.22) 55%,transparent);transform:translateX(-130%) skewX(-12deg);animation:shband 10s ease-in-out 2.2s infinite;will-change:transform}
+@keyframes shband{0%,72%{transform:translateX(-130%) skewX(-12deg)}90%,100%{transform:translateX(320%) skewX(-12deg)}}
+.recapbtn::after{inset:0 auto 0 0;width:42%;background:linear-gradient(105deg,transparent,rgba(255,255,255,.16) 45%,rgba(255,226,150,.14) 55%,transparent);background-size:auto;transform:translateX(-130%) skewX(-12deg);animation:shband 7s ease-in-out 4s infinite;will-change:transform}
+#cats .bar i{overflow:hidden}
+#cats .bar i::after{inset:0 auto 0 0;width:45%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.5) 50%,transparent);background-size:auto;animation:liquidT 3.2s linear infinite;will-change:transform}
+@keyframes liquidT{from{transform:translateX(-110%)}to{transform:translateX(260%)}}
+.badge:not(.off) .md::after{background:radial-gradient(circle 17px at 50% 61%,rgba(255,255,255,.6),transparent 75%);-webkit-mask:none;mask:none;opacity:0;animation:mdflash 6s ease-in-out infinite;animation-delay:calc(var(--gi,0)*.55s + 1s)}
+@keyframes mdflash{0%,80%,100%{opacity:0}88%{opacity:1}}
+/* rain = a few tiled layers sliding down (one GPU layer each) */
+#wxfx .wrl{position:absolute;left:0;right:calc(var(--tw) * -1);top:calc(var(--th) * -1);bottom:0;background-repeat:repeat;animation:wrl var(--d) linear infinite;will-change:transform}
+@keyframes wrl{to{transform:translate(calc(var(--tw) * -1),var(--th))}}
+#wxfx .wcloud,#wxfx .wheat,#wxfx .wfog{filter:none}
+/* previews stay still: only the selected outfit / finish moves */
+.wardrobe button:not(.on) svg *,.skins button:not(.on) svg *,.badges svg *,#demojar svg *,.gjar svg *,#lkjar svg .wave{animation:none!important}
+/* pause what you cannot see: hero jar when scrolled away or behind a sheet, mini jar until the header collapses, everything while scrolling */
+#nav:not(.compact) #ntjar svg,#nav:not(.compact) #ntjar svg *{animation-play-state:paused!important}
+body.heroOff .balance .pig svg,body.heroOff .balance .pig svg *,body.heroOff .dust *,
+body.sheeting .balance .pig svg,body.sheeting .balance .pig svg *,body.sheeting .dust *,body.sheeting #festfx *,body.sheeting .recapbtn::after,body.sheeting #cats .bar i::after{animation-play-state:paused!important}
+.pig svg{will-change:transform}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i></div><div id="festfx" aria-hidden="true"></div>
@@ -2655,7 +2677,7 @@ $('pig').addEventListener('click',e=>{
 let parT=0;
 addEventListener('scroll',()=>{ if(!FX()||parT) return; parT=requestAnimationFrame(()=>{parT=0; const y=Math.min(300,scrollY); $('pig').style.translate=`0 ${y*.18}px`; sloshKick((scrollY-(window._sly??scrollY))*.035); window._sly=scrollY; pigRot()})},{passive:true});
 const SL={a:0,v:0,run:0};
-function pigRot(){const p=$('pig'); if(!p) return; p.style.rotate=`${(Math.min(300,scrollY)*.02+SL.a).toFixed(2)}deg`; p.style.setProperty('--ws',(-SL.a*.9).toFixed(2)+'deg')}
+function pigRot(){const p=$('pig'); if(!p) return; const r=(Math.min(300,scrollY)*.02+SL.a).toFixed(1); if(p._r!==r){ p._r=r; p.style.rotate=r+'deg' } const ws=(-SL.a*.9).toFixed(1); if(p._ws!==ws){ p._ws=ws; const t=p.querySelector('.tiltw'); if(t) t.style.setProperty('--ws',ws+'deg') } }
 function sloshKick(dv){ if(!FX()) return; SL.v+=Math.max(-3.2,Math.min(3.2,dv)); if(!SL.run) SL.run=requestAnimationFrame(sloshStep) }
 function sloshStep(){ SL.v+=-SL.a*.11; SL.v*=.9; SL.a+=SL.v; SL.a=Math.max(-14,Math.min(14,SL.a)); pigRot(); if(Math.abs(SL.a)>.04||Math.abs(SL.v)>.04) SL.run=requestAnimationFrame(sloshStep); else {SL.a=0;SL.v=0;SL.run=0;pigRot()} }
 /* Motion helpers */
@@ -3947,9 +3969,9 @@ applyRem(); remSync();
   const hero=document.querySelector('.balance'), nav=$('nav'); if(!hero||!nav) return;
   try{ new IntersectionObserver(([e])=>nav.classList.toggle('compact',!e.isIntersecting&&e.boundingClientRect.top<0),{rootMargin:'-72px 0px 0px 0px'}).observe(hero) }catch(e){}
   let raf=0; addEventListener('scroll',()=>{ if(raf) return; raf=requestAnimationFrame(()=>{raf=0;
-    if(!FX()){hero.style.removeProperty('--hp');return}
+    const pg=$('pig'); if(!FX()){hero.style.transform='';hero.style.opacity='';return}
     const r=hero.getBoundingClientRect(), p=Math.max(0,Math.min(1,(72-r.top)/Math.max(1,r.height)));
-    hero.style.setProperty('--hp',p.toFixed(3)) }) },{passive:true});
+    if(Math.abs(p-(hero._hp||0))<.004) return; hero._hp=p; hero.style.transform=p?`scale(${(1-p*.07).toFixed(4)})`:''; hero.style.opacity=p?(1-p*.55).toFixed(3):''; if(pg&&!pg.closest('.wrap.pull')) pg.style.scale=p?(1-p*.3).toFixed(3):'' }) },{passive:true});
 })();
 /* Nong Ong looks at your finger, naps when idle, gets sleepy at night */
 (function(){
@@ -4020,7 +4042,7 @@ const FFX_MODE={confetti:'fall',hearts:'rise',lanterns:'rise',glow:'rise',drops:
 function applyFestFx(){
   const box=$('festfx'); if(!box) return; box.innerHTML='';
   const o=currentOutfit(), k=o&&OUTFIT_FX[o]; if(!k||!FX()) return;
-  const mode=FFX_MODE[k], n=mode==='tw'?16:12, R=(a,b)=>a+Math.random()*(b-a), H=[];
+  const mode=FFX_MODE[k], n=mode==='tw'?10:8, R=(a,b)=>a+Math.random()*(b-a), H=[];
   for(let i=0;i<n;i++){
     const sz=k==='lanterns'||k==='sky'?R(20,34):k==='glow'||k==='stars'?R(10,20):R(10,18);
     const st=`--x:${R(0,96).toFixed(1)}%;--y:${R(2,60).toFixed(1)}%;--s:${sz.toFixed(0)}px;--d:${(mode==='rise'?R(14,24):mode==='tw'?R(2.6,5):R(9,16)).toFixed(1)}s;--dl:-${R(0,20).toFixed(1)}s;--dx:${R(-60,60).toFixed(0)}px;--r:${R(-360,360).toFixed(0)}deg;--o:${(k==='glow'?R(.5,.85):R(.55,.9)).toFixed(2)}`;
@@ -4352,7 +4374,7 @@ function monthSlide(dir){ if(!FX()) return; let i=0;
     if(Math.abs(dx)>70){ go=true; x0=null; $(dx<0?'next':'prev').click(); try{navigator.vibrate&&navigator.vibrate(6)}catch(_){} } },{passive:true});
   b.addEventListener('pointerup',()=>{x0=null},{passive:true}); })();
 /* Gold dust rising inside the balance card */
-(function(){ const b=document.querySelector('.balance'); if(!b||b.querySelector('.dust')) return; const d=document.createElement('div'); d.className='dust'; d.setAttribute('aria-hidden','true'); d.innerHTML='<b></b><b></b><b></b><b></b><b></b>'; b.insertBefore(d,b.firstChild) })();
+(function(){ const b=document.querySelector('.balance'); if(!b||b.querySelector('.dust')) return; const d=document.createElement('div'); d.className='dust'; d.setAttribute('aria-hidden','true'); d.innerHTML='<b></b><b></b><b></b><b></b><b></b><i class="shband"></i>'; b.insertBefore(d,b.firstChild) })();
 /* Nong Ong idle tricks: hop, look around, blow bubbles */
 function overlayOpen(){ return !!(document.querySelector('.sheet:not([hidden])')||($('fabs')&&$('fabs').classList.contains('open'))||document.body.classList.contains('locked')||!$('story').hidden||($('intro')&&!$('intro').hidden)) }
 function idleTrick(){ const p=$('pig'); if(!p||!FX()||document.visibilityState!=='visible'||overlayOpen()||document.body.classList.contains('lowfx')) return;
@@ -4708,7 +4730,13 @@ function wxBuildFx(k){ let fx=$('wxfx'); if(!fx){ fx=document.createElement('div
   if(!k){ [...fx.children].forEach(o=>FX()?o.animate([{opacity:1},{opacity:0}],{duration:900,fill:'forwards'}).onfinish=()=>o.remove():o.remove()); return }
   const R=(a,b)=>a+Math.random()*(b-a), rep=(n,f)=>Array.from({length:n},(_,i)=>f(i)).join('');
   const cloud=(n,y0,y1)=>rep(n,i=>`<i class="wcloud" style="--y:${R(y0,y1).toFixed(0)}vh;--w:${R(150,280).toFixed(0)}px;--d:${R(55,95).toFixed(0)}s;--dl:-${R(0,90).toFixed(0)}s"></i>`);
-  const rain=(n,h0,h1,d0,d1)=>rep(n,()=>`<i class="wr" style="--x:${R(-5,125).toFixed(1)}%;--h:${R(h0,h1).toFixed(0)}px;--d:${R(d0,d1).toFixed(2)}s;--dl:-${R(0,2).toFixed(2)}s"></i>`);
+  const rainL=(layers,speed,dens=1)=>{ const dark=(()=>{ const c=getComputedStyle(document.body).backgroundColor.match(/\d+/g)||[255,255,255]; return (+c[0]+ +c[1]+ +c[2])<300 })(), col=dark?'rgba(190,215,255,.36)':'rgba(60,95,130,.44)';
+    // one unrotated layer per depth; streaks slant along (-W,H) so translating by (-W,H) loops seamlessly
+    return Array.from({length:layers},(_,i)=>{ const W=64+i*24, H=W*4, n=Math.round((7+i*2)*dens), sw=(1.1+i*.35).toFixed(2); let lines='';
+      for(let j=0;j<n;j++){ const x=R(0,W), y=R(0,H), l=R(20,36)+i*8, dx=-l*W/H; for(const ox of [-W,0,W]) for(const oy of [-H,0,H]) lines+=`<path d='M${(x+ox).toFixed(1)} ${(y+oy).toFixed(1)}l${dx.toFixed(1)} ${l.toFixed(1)}'/>` }
+      const svg=`<svg xmlns='http://www.w3.org/2000/svg' width='${W}' height='${H}'><g stroke='${col}' stroke-width='${sw}' stroke-linecap='round' fill='none'>${lines}</g></svg>`;
+      const url=`url('data:image/svg+xml,${encodeURIComponent(svg).replace(/'/g,'%27')}')`;
+      return `<i class="wrl" style="background-image:${url};--tw:${W}px;--th:${H}px;--d:${(H/170*1.05/speed/(1+i*.35)).toFixed(2)}s"></i>` }).join('') };
   const rip=n=>rep(n,()=>`<i class="wrip" style="--x:${R(4,96).toFixed(1)}%;--y:${R(1,14).toFixed(1)}vh;--dl:-${R(0,1.6).toFixed(2)}s"></i>`);
   const T={rain:'linear-gradient(180deg,rgba(60,80,100,.20),transparent 65%)',drizzle:'linear-gradient(180deg,rgba(80,100,120,.13),transparent 60%)',storm:'linear-gradient(180deg,rgba(30,36,52,.38),rgba(30,36,52,.10) 70%)',cloudy:'linear-gradient(180deg,rgba(110,122,134,.16),transparent 60%)',fog:'linear-gradient(180deg,rgba(205,210,216,.30),rgba(205,210,216,.18))',hot:'radial-gradient(120% 70% at 90% 0%,rgba(255,140,60,.28),transparent 60%)',sun:'radial-gradient(110% 60% at 90% 0%,rgba(255,206,120,.22),transparent 60%)',partly:'radial-gradient(110% 60% at 90% 0%,rgba(255,206,120,.14),transparent 60%)',snow:'linear-gradient(180deg,rgba(200,218,238,.24),transparent 70%)',wind:'',night:'',nightcloud:''}[k]||'';
   let h=`<div class="tint" style="background:${T}"></div>`;
@@ -4717,10 +4745,10 @@ function wxBuildFx(k){ let fx=$('wxfx'); if(!fx){ fx=document.createElement('div
   if(k==='night'||k==='nightcloud') h+=`<div class="wmoon"></div>`;
   if(k==='partly'||k==='nightcloud') h+=cloud(3,4,26);
   if(k==='cloudy') h+=cloud(6,2,40);
-  if(k==='drizzle') h+=cloud(4,2,22)+rain(26,18,34,1.1,1.6);
-  if(k==='rain') h+=cloud(5,0,22)+rain(70,26,52,.55,.9)+rip(10);
-  if(k==='storm') h+=cloud(7,0,26)+rain(110,34,66,.42,.7)+rip(14)+'<div class="wflash"></div>';
-  if(k==='snow') h+=cloud(3,0,18)+rep(46,()=>`<i class="wsn" style="--x:${R(0,100).toFixed(1)}%;--s:${R(3,7).toFixed(1)}px;--d:${R(7,14).toFixed(1)}s;--dl:-${R(0,14).toFixed(1)}s"></i>`);
+  if(k==='drizzle') h+=cloud(4,2,22)+rainL(1,.9,.7);
+  if(k==='rain') h+=cloud(5,0,22)+rainL(1,1,1.5)+rip(6);
+  if(k==='storm') h+=cloud(6,0,26)+rainL(2,1.35,1.2)+rip(8)+'<div class="wflash"></div>';
+  if(k==='snow') h+=cloud(3,0,18)+rep(28,()=>`<i class="wsn" style="--x:${R(0,100).toFixed(1)}%;--s:${R(3,7).toFixed(1)}px;--d:${R(7,14).toFixed(1)}s;--dl:-${R(0,14).toFixed(1)}s"></i>`);
   if(k==='fog') h+=rep(4,i=>`<i class="wfog" style="--y:${(i*24-6)}vh;--d:${R(14,24).toFixed(0)}s;--dl:-${R(0,10).toFixed(0)}s"></i>`);
   if(k==='wind') h+=cloud(3,2,24)+rep(9,()=>`<i class="wlf" style="--y:${R(8,85).toFixed(0)}vh;--d:${R(4,7).toFixed(1)}s;--dl:-${R(0,7).toFixed(1)}s">${LEAF}</i>`)+rep(10,()=>`<i class="wgust" style="--y:${R(5,90).toFixed(0)}vh;--d:${R(1.6,2.8).toFixed(1)}s;--dl:-${R(0,3).toFixed(1)}s"></i>`);
   const old=[...fx.children]; const lay=document.createElement('div'); lay.className='wxl'; lay.innerHTML=h; fx.appendChild(lay);
@@ -4850,7 +4878,7 @@ function wxGearIn(){ if(!FX()) return; requestAnimationFrame(()=>{ const p=$('pi
 /* 6. rain splashes on the top edge of the balance card */
 function cardSplash(on,heavy){ const b=document.querySelector('.balance'); if(!b) return; let el=b.querySelector('.bsplash'); if(!on||!FX()){ if(el) el.remove(); return }
   if(!el){ el=document.createElement('div'); el.className='bsplash'; el.setAttribute('aria-hidden','true'); b.appendChild(el) }
-  const n=heavy?18:11; el.innerHTML=Array.from({length:n},()=>`<i style="--x:${(Math.random()*98).toFixed(1)}%;--d:${(.7+Math.random()*.7).toFixed(2)}s;--dl:-${(Math.random()*1.4).toFixed(2)}s"></i>`).join('') }
+  const n=heavy?10:7; el.innerHTML=Array.from({length:n},()=>`<i style="--x:${(Math.random()*98).toFixed(1)}%;--d:${(.7+Math.random()*.7).toFixed(2)}s;--dl:-${(Math.random()*1.4).toFixed(2)}s"></i>`).join('') }
 /* 7. tap the water inside the jar: ripples where you touch */
 $('pig').addEventListener('pointerdown',e=>{ if(!FX()) return; const svg=$('pig').querySelector('svg'), g=svg&&svg.querySelector('.ripl'); if(!g) return; const r=svg.getBoundingClientRect();
   const x=(e.clientX-r.left)/r.width*120, y=(e.clientY-r.top)/r.height*120, wy=+g.dataset.wy||60; if(y<wy+1||y>106||x<16||x>104) return;
@@ -5309,6 +5337,10 @@ function impFly(gs,done){ if(!gs.length){ done(); return } const L0=$('list'); t
   gs.forEach((g,i)=>{ document.body.appendChild(g); const r=g.getBoundingClientRect(), dy=ty-r.top+i*6, dx=(lr.left+16)-r.left;
     g.animate([{transform:'none',opacity:1},{transform:`translate(${dx*.4}px,${dy*.3-30}px) scale(1.02) rotate(${(i%2?1:-1)*2}deg)`,opacity:1,offset:.35},{transform:`translate(${dx}px,${dy}px) scale(.85)`,opacity:0}],{duration:620,delay:i*70,easing:'cubic-bezier(.4,0,.6,1)',fill:'backwards'}).onfinish=()=>g.remove() });
   setTimeout(done,420+Math.min(gs.length,10)*70) }
+
+/* ===== V330 performance helpers ===== */
+(function(){ const hero=document.querySelector('.balance'); if(hero){ try{ new IntersectionObserver(([e])=>document.body.classList.toggle('heroOff',!e.isIntersecting)).observe(hero) }catch(e){} }
+  setInterval(()=>{ const on=!!document.querySelector('.sheet:not([hidden])'); if(on!==document.body.classList.contains('sheeting')) document.body.classList.toggle('sheeting',on) },400) })();
 </script>
 
 <script>
