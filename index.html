@@ -1273,6 +1273,18 @@ select{font-weight:400}
 .leaffly{position:fixed;width:22px;height:22px;z-index:65;pointer-events:none;margin:-11px}
 .leaffly svg{width:100%;height:100%}
 @media (prefers-reduced-motion: reduce){.ncap,.nspill,.nspill .fl1,.nspill .fl2,#todfx i,.gstamp.slam{animation:none!important}#lockscr.out{animation:fadeout .38s forwards;-webkit-mask:none;mask:none}.coinsl{transition:none}}
+
+/* ===== V230 polish ===== */
+.nw{white-space:nowrap}
+.remtime input{max-width:none;min-width:136px;width:auto}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .gstamp{background:color-mix(in srgb,var(--s-low) 80%,transparent)}}
+:root[data-theme="dark"] .gstamp{background:color-mix(in srgb,var(--s-low) 80%,transparent)}
+html{overscroll-behavior-y:contain}
+.wrap.pull>*{translate:0 var(--pull,0px)}
+.wallets{perspective:700px}
+.heart{position:fixed;z-index:65;pointer-events:none;width:22px;height:22px;margin:-11px}
+.heart svg{width:100%;height:100%;display:block}
+.wallets .wcard{transition:scale .15s linear,rotate .15s linear}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i></div><div id="festfx" aria-hidden="true"></div>
@@ -2346,9 +2358,9 @@ function render(){
     const total=carryAmt+tin-tout-depThis+lendNet;
     $('ballabel').textContent=L('คงเหลือทั้งหมด','Total balance'); animNum($('bal'),total,sgn);
     $('carry').hidden=false;
-    $('carry').textContent=L(`ยกมา ${sgn(carryAmt)} · เดือนนี้ ${tin-tout>=0?'+':''}${sgn(tin-tout)}${depThis?` · เก็บเข้าเป้า ${sgn(-depThis)}`:''}`,
-      `${sgn(carryAmt)} brought forward · ${tin-tout>=0?'+':''}${sgn(tin-tout)} this month${depThis?` · ${sgn(-depThis)} to goals`:''}`);
-    if(lendNet) $('carry').textContent+=L(` · หารบิล ${sgn(lendNet)}`,` · split bills ${sgn(lendNet)}`);
+    const pm=v=>(v>=0?'+':'')+sgn(v), parts=[L(`ยกมา ${sgn(carryAmt)}`,`${sgn(carryAmt)} brought forward`),L(`เดือนนี้ ${pm(tin-tout)}`,`${pm(tin-tout)} this month`)];
+    if(depThis) parts.push(L(`เก็บเข้าเป้า ${sgn(-depThis)}`,`${sgn(-depThis)} to goals`)); if(lendNet) parts.push(L(`หารบิล ${sgn(lendNet)}`,`split bills ${sgn(lendNet)}`));
+    $('carry').innerHTML=parts.map(t=>`<span class="nw">${esc(t)}</span>`).join(' · ');
   } else { $('ballabel').textContent=L('คงเหลือเดือนนี้','Left this month'); animNum($('bal'),tin-tout,sgn); $('carry').hidden=true }
   try{$('ntbal').textContent=sgn($('bal')._v)}catch(e){}
   $('demo').hidden=!data.some(r=>r.demo); if(!$('demo').hidden&&!$('demojar').firstChild) $('demojar').innerHTML=jarSVG('great');
@@ -2549,7 +2561,7 @@ $('list').onclick=e=>{
 $('list').onkeydown=e=>{if((e.key==='Enter'||e.key===' ')&&e.target.classList.contains('t')){e.preventDefault();e.target.click()}};
 $('prev').onclick=()=>{view.setMonth(view.getMonth()-1);filterCat=null;render()};
 $('next').onclick=()=>{view.setMonth(view.getMonth()+1);filterCat=null;render()};
-$('fchip').onclick=()=>{filterCat=null;render()};
+$('fchip').onclick=()=>{filterCat=null;flipList(render)};
 $('cleardemo').onclick=()=>{data=data.filter(r=>!r.demo);goals=goals.filter(g=>!g.demo);recur=recur.filter(r=>!r.demo);save();saveGoals();saveRecur();render()};
 
 /* Daily allowance */
@@ -2567,7 +2579,7 @@ function searchData(q){
   }).sort((a,b)=>b.date.localeCompare(a.date)||String(b.id).localeCompare(String(a.id)));
 }
 let qT=null;
-$('q').addEventListener('input',()=>{clearTimeout(qT);qT=setTimeout(render,150)});
+$('q').addEventListener('input',()=>{clearTimeout(qT);qT=setTimeout(()=>flipList(render),150)});
 $('q').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('q').blur()} if(e.key==='Escape'){$('q').value='';render()}});
 $('qclear').onclick=()=>{$('q').value='';render();$('q').focus()};
 
@@ -2610,7 +2622,7 @@ function renderMix(spent,tout){
   <div class="legend">${list.slice(0,6).map(([c,v])=>`<button data-c="${esc(c)}" class="${filterCat===c?'on':''}">${ic(c,'xs')}<span>${esc(c)}<small class="num">${fmt(v)}</small></span><em class="num">${Math.round(v/tout*100)}%</em><b class="lb" style="--w:${(v/list[0][1]*100).toFixed(1)};background:hsl(${(ICONS[c]||[200])[0]} 62% var(--dl))"></b></button>`).join('')}</div>`;
 }
 $('cats').addEventListener('click',e=>{ const b=e.target.closest('[data-sb]'); if(!b) return; const c=b.dataset.sb; openSet(false); const i=CATS.out.indexOf(c); const inp=$('b'+i); if(inp){ setOpenFor(inp); setTimeout(()=>{ try{inp.scrollIntoView({block:'center'})}catch(_){} inp.focus(); inp.classList.add('flash') },120) } });
-$('mix').onclick=e=>{const t=e.target.closest('[data-c]'); if(!t) return; const c=t.getAttribute('data-c'); filterCat=filterCat===c?null:c; render(); if(filterCat) $('fchip').scrollIntoView({behavior:'smooth',block:'start'})};
+$('mix').onclick=e=>{const t=e.target.closest('[data-c]'); if(!t) return; const c=t.getAttribute('data-c'); filterCat=filterCat===c?null:c; flipList(render); if(filterCat) $('fchip').scrollIntoView({behavior:'smooth',block:'start'})};
 
 /* Swipe to delete + undo */
 let suppressClick=false, undoBuf=null, snackT=null;
@@ -3319,7 +3331,7 @@ function applyTheme(){
   const dark=t==='dark'||(t==='auto'&&(HOST_THEME==='dark'||(!HOST_THEME&&!!(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches))));
   const mt=document.querySelector('meta[name="theme-color"]'); if(mt){ const sf=(getComputedStyle(r).getPropertyValue('--surface')||'').trim(); mt.setAttribute('content',/^#[0-9a-f]{6}$/i.test(sf)?sf:(dark?'#141311':'#f3f1ec')) }
 }
-$('themeseg').addEventListener('click',e=>{const b=e.target.closest('[data-th]'); if(!b) return; prefs.theme=b.dataset.th; savePrefs(); applyTheme()});
+$('themeseg').addEventListener('click',e=>{const b=e.target.closest('[data-th]'); if(!b||prefs.theme===b.dataset.th) return; vtReveal(b,()=>{prefs.theme=b.dataset.th; savePrefs(); applyTheme()})});
 try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',applyTheme)}catch(e){}
 applyTheme();
 function applyFx(){document.body.classList.toggle('lowfx',prefs.fx===false); const sw=$('fxon'); if(sw) sw.checked=prefs.fx!==false}
@@ -3347,7 +3359,7 @@ $('wallets').addEventListener('click',e=>{ if(e.target.closest('.wcard')){ openS
 let wEdit=null, wKind='cash', wDelArmed=null;
 function renderWList(){
   const KL={cash:L('เงินสด','Cash'),bank:L('ธนาคาร','Bank'),card:L('บัตรเครดิต','Credit card')};
-  $('wlist').innerHTML=wallets.map(w=>{const b=walletBal(w.id); return `<div class="catrow">${wIco(w.kind,'sm')}<span class="nm">${esc(wName(w))}</span><small class="num">${KL[w.kind]||''} · ${(b<0?'-':'')+fmt(Math.abs(b))}</small><button data-wed="${w.id}">${L('แก้ไข','Edit')}</button>${w.id!=='w0'?`<button data-wdel="${w.id}" class="${wDelArmed===w.id?'danger':''}">${wDelArmed===w.id?L('แตะอีกครั้ง','Tap again'):L('ลบ','Delete')}</button>`:''}</div>`}).join('');
+  $('wlist').innerHTML=wallets.map(w=>{const b=walletBal(w.id); return `<div class="catrow">${wIco(w.kind,'sm')}<span class="nm">${esc(wName(w))}</span><small class="num">${KL[w.kind]?KL[w.kind]+' · ':''}${(b<0?'-':'')+fmt(Math.abs(b))}</small><button data-wed="${w.id}">${L('แก้ไข','Edit')}</button>${w.id!=='w0'?`<button data-wdel="${w.id}" class="${wDelArmed===w.id?'danger':''}">${wDelArmed===w.id?L('แตะอีกครั้ง','Tap again'):L('ลบ','Delete')}</button>`:''}</div>`}).join('');
 }
 function openWForm(w){
   wEdit=w?w.id:null; wKind=w?w.kind:'cash'; $('wform').hidden=false; $('wadd').hidden=true; $('wmsg').textContent='';
@@ -3629,7 +3641,7 @@ function applyPalette(){
   document.querySelectorAll('#palrow [data-pal]').forEach(b=>{const on=b.dataset.pal===p; b.classList.toggle('on',on); b.setAttribute('aria-checked',on)});
   try{applyTheme()}catch(e){}
 }
-$('palrow').addEventListener('click',e=>{const b=e.target.closest('[data-pal]'); if(!b) return; prefs.palette=b.dataset.pal; savePrefs(); applyPalette(); try{bump(b)}catch(_){}});
+$('palrow').addEventListener('click',e=>{const b=e.target.closest('[data-pal]'); if(!b||prefs.palette===b.dataset.pal) return; vtReveal(b,()=>{prefs.palette=b.dataset.pal; savePrefs(); applyPalette()}); try{bump(b)}catch(_){}});
 applyPalette();
 /* ===== Sound: tiny WebAudio synth, no files ===== */
 let AC=null;
@@ -3995,7 +4007,8 @@ function monthSlide(dir){ if(!FX()) return; let i=0;
 /* Gold dust rising inside the balance card */
 (function(){ const b=document.querySelector('.balance'); if(!b||b.querySelector('.dust')) return; const d=document.createElement('div'); d.className='dust'; d.setAttribute('aria-hidden','true'); d.innerHTML='<b></b><b></b><b></b><b></b><b></b>'; b.insertBefore(d,b.firstChild) })();
 /* Nong Ong idle tricks: hop, look around, blow bubbles */
-function idleTrick(){ const p=$('pig'); if(!p||!FX()||document.visibilityState!=='visible') return;
+function overlayOpen(){ return !!(document.querySelector('.sheet:not([hidden])')||($('fabs')&&$('fabs').classList.contains('open'))||document.body.classList.contains('locked')||!$('story').hidden||($('intro')&&!$('intro').hidden)) }
+function idleTrick(){ const p=$('pig'); if(!p||!FX()||document.visibilityState!=='visible'||overlayOpen()) return;
   if(p.classList.contains('nap')||p.classList.contains('sleepy')||lastMood==='none') return;
   const r=p.getBoundingClientRect(); if(r.bottom<60||r.top>innerHeight) return;
   const k=Math.floor(Math.random()*3);
@@ -4028,7 +4041,7 @@ function pourOut(pt,amt){ if(!FX()||!pt.vis) return;
   for(let i=0;i<n;i++) setTimeout(()=>{ const d=document.createElement('div'); d.className='drop'; d.style.left=mx+'px'; d.style.top=my+'px'; const sz=4+Math.random()*5; d.style.width=d.style.height=sz+'px'; document.body.appendChild(d);
     const vx=-(30+Math.random()*50), fall=160+Math.random()*120;
     d.animate([{transform:'translate(0,0)',opacity:.95},{transform:`translate(${vx*.6}px,${-10+Math.random()*8}px)`,opacity:.95,offset:.25},{transform:`translate(${vx}px,${fall}px) scale(.6)`,opacity:0}],{duration:700+Math.random()*300,easing:'cubic-bezier(.3,0,.8,.6)'}).onfinish=()=>d.remove() },i*(dur/n));
-  const b=$('bal'), br=b&&b.getBoundingClientRect(); if(br&&br.bottom>0){ const l=document.createElement('div'); l.className='pourlbl num'; l.textContent='-'+fmt(amt); l.style.left=(br.left+br.width*.4)+'px'; l.style.top=(br.top+br.height*.6)+'px'; document.body.appendChild(l);
+  const b=$('bal'), br=b&&b.getBoundingClientRect(); if(br&&br.bottom>0&&!document.body.classList.contains('privacy')){ const l=document.createElement('div'); l.className='pourlbl num'; l.textContent='-'+fmt(amt); l.style.left=(br.left+br.width*.4)+'px'; l.style.top=(br.top+br.height*.6)+'px'; document.body.appendChild(l);
     l.animate([{transform:'translate(-50%,-50%)',opacity:0},{transform:'translate(-50%,-20%)',opacity:1,offset:.2},{transform:'translate(-50%,120%)',opacity:0}],{duration:1500,easing:'cubic-bezier(.3,0,.6,1)'}).onfinish=()=>l.remove() }
   try{sfx('bloop')}catch(e){} }
 /* 3. Goal reached: overflow, gold fireworks, stamp, keepsake image */
@@ -4071,7 +4084,8 @@ function flipList(fn){ if(!FX()){fn();return}
   document.querySelectorAll('#list>*').forEach(d=>{ const k=key(d); if(!days.has(k)) return; const dy=days.get(k)-d.getBoundingClientRect().top; dd.set(d,dy);
     if(Math.abs(dy)>1) d.animate([{transform:`translateY(${dy}px)`},{transform:'none'}],{duration:420,easing:'cubic-bezier(.2,.85,.25,1)'}) });
   document.querySelectorAll('#list .row[data-id]').forEach(r=>{ if(!rows.has(r.dataset.id)) return; const par=r.closest('#list>*'); const dy=rows.get(r.dataset.id)-r.getBoundingClientRect().top-(dd.get(par)||0);
-    if(Math.abs(dy)>1) r.animate([{transform:`translateY(${dy}px)`},{transform:'none'}],{duration:420,easing:'cubic-bezier(.2,.85,.25,1)'}) }) }
+    if(Math.abs(dy)>1) r.animate([{transform:`translateY(${dy}px)`},{transform:'none'}],{duration:420,easing:'cubic-bezier(.2,.85,.25,1)'}) });
+  let k=0; document.querySelectorAll('#list .row[data-id]').forEach(r=>{ if(rows.has(r.dataset.id)) return; const b=r.getBoundingClientRect(); if(b.top>innerHeight||b.bottom<0||k>12) return; r.animate([{opacity:0,transform:'translateY(10px) scale(.97)'},{opacity:1,transform:'none'}],{duration:380,delay:60+k++*35,easing:'cubic-bezier(.2,.85,.25,1)',fill:'backwards'}) }) }
 function shatterRow(id){ if(!FX()) return; const r=document.querySelector(`#list .row[data-id="${CSS.escape(String(id))}"]`); if(!r) return;
   let rc=r.getBoundingClientRect(); const wrap=r.parentElement; if(rc.right<20&&wrap) rc=wrap.getBoundingClientRect(); if(rc.bottom<0||rc.top>innerHeight) return;
   if(r.getBoundingClientRect().right>20){ const g=r.cloneNode(true); g.classList.add('rowghost'); g.classList.remove('new'); Object.assign(g.style,{left:rc.left+'px',top:rc.top+'px',width:rc.width+'px',height:rc.height+'px',transform:'none'}); document.body.appendChild(g);
@@ -4124,10 +4138,55 @@ function leavesIn(n){ if(!FX()) return; const p=$('pig'); if(!p) return; const t
     l.animate(K,{duration:1800+Math.random()*500,easing:'cubic-bezier(.3,.1,.5,1)'}).onfinish=()=>{ l.remove(); splash(ex,ey+8,4); bump(p) } },i*260) }
 const FLAME='<svg viewBox="0 0 24 24"><path class="fl1" d="M12 2c1 4 6 6 6 12a6 6 0 0 1-12 0c0-3 2-5 3-7 0 2 1 3 2 3 0-3-1-5 1-8z" fill="#ff8a3d"/><path class="fl2" d="M12 11c1 2 3 3 3 6a3 3 0 0 1-6 0c0-2 1-3 2-4 0 1 .5 1.5 1 1.5 0-1.5-.5-2.5 0-3.5z" fill="#ffd34d"/></svg>';
 function renderStreak(){ const b=$('nspill'); if(!b) return; const n=nsStreak(); b.hidden=n<2; if(n>=2) b.innerHTML=FLAME+'<span>'+L(`ไม่ใช้เงินมา ${n} วันติด`,`${n}-day no-spend streak`)+'</span>';
-  if(n>=1){ const k='kp-nsleaf', today=iso(new Date()); let seen=''; try{seen=localStorage.getItem(k)||''}catch(e){} if(seen!==today){ try{localStorage.setItem(k,today)}catch(e){} setTimeout(()=>leavesIn(Math.min(8,2+n)),1400) } } }
+  if(n>=1){ const k='kp-nsleaf', today=iso(new Date()); let seen=''; try{seen=localStorage.getItem(k)||''}catch(e){} if(seen!==today){ try{localStorage.setItem(k,today)}catch(e){} (function go(k){ setTimeout(()=>{ if(overlayOpen()&&k<30) go(k+1); else leavesIn(Math.min(8,2+n)) },k?1000:1400) })(0) } } }
 $('nspill').addEventListener('click',()=>leavesIn(Math.min(8,2+nsStreak())));
 { const _r2=render; render=function(){ const o=_r2.apply(this,arguments); try{renderStreak()}catch(e){} return o } }
 renderStreak();
+
+/* ===== V230 more effects ===== */
+/* Pull down at the top: page stretches, jar stretches, release = hop + splash */
+(function(){ const w=document.querySelector('.wrap'); if(!w) return; let y0=null,d=0;
+  addEventListener('touchstart',e=>{ if(!FX()||scrollY>2||overlayOpen()||e.touches.length>1) {y0=null;return} y0=e.touches[0].clientY; d=0 },{passive:true});
+  addEventListener('touchmove',e=>{ if(y0==null) return; const dy=e.touches[0].clientY-y0; if(dy<=0||scrollY>2){ if(d){d=0; set(0)} return }
+    d=Math.min(110,dy*.42); set(d) },{passive:true});
+  const set=v=>{ w.classList.toggle('pull',!!v); w.style.setProperty('--pull',v.toFixed(1)+'px'); const p=$('pig'); if(p) p.style.scale=v?`${(1-v/900).toFixed(3)} ${(1+v/420).toFixed(3)}`:'' };
+  addEventListener('touchend',()=>{ if(y0==null) return; y0=null; const was=d; d=0; if(!was) return;
+    const from=was; const t0=performance.now(); const step=t=>{ const k=Math.min(1,(t-t0)/520), e=Math.exp(-6*k)*Math.cos(k*11); set(from*Math.max(-.25,e)); if(k<1) requestAnimationFrame(step); else set(0) }; requestAnimationFrame(step);
+    if(was>70){ const p=$('pig'), c=centerOf(p); setTimeout(()=>{ splash(c.x,c.y-20,10); p.animate([{transform:'none'},{transform:'translateY(-18px) scale(.95,1.06)',offset:.4},{transform:'scale(1.05,.93)',offset:.75},{transform:'none'}],{duration:600,easing:'ease-out'}); sloshKick(6); try{sfx('bloop');navigator.vibrate&&navigator.vibrate(8)}catch(_){} },120) } },{passive:true});
+})();
+/* Long-press Nong Ong to pet: hearts float up */
+const HEART='<svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-9.5-9.2C1 8.4 3.2 4.5 6.9 4.5c2.1 0 3.6 1.2 5.1 3 1.5-1.8 3-3 5.1-3 3.7 0 5.9 3.9 4.4 7.3C19.5 16.4 12 21 12 21z" fill="#ff7d96" stroke="#c94a63" stroke-width="1.4"/></svg>';
+(function(){ const p=$('pig'); let t=0, petted=false, x0=0, y0=0;
+  p.addEventListener('pointerdown',e=>{ petted=false; x0=e.clientX; y0=e.clientY; clearTimeout(t); t=setTimeout(()=>{ if(!FX()) return; petted=true; pet() },480) });
+  p.addEventListener('pointermove',e=>{ if(Math.hypot(e.clientX-x0,e.clientY-y0)>10) clearTimeout(t) });
+  ['pointerup','pointercancel','pointerleave'].forEach(ev=>p.addEventListener(ev,()=>clearTimeout(t)));
+  p.addEventListener('click',e=>{ if(petted){ e.stopImmediatePropagation(); petted=false } },true);
+  p.addEventListener('contextmenu',e=>e.preventDefault());
+  function pet(){ const c=centerOf(p); p.animate([{transform:'none'},{transform:'scale(1.06,.94)'},{transform:'scale(.97,1.04)'},{transform:'none'}],{duration:700,easing:'ease-in-out'});
+    for(let i=0;i<7;i++) setTimeout(()=>{ const h=document.createElement('div'); h.className='heart'; h.innerHTML=HEART; h.style.left=(c.x+(Math.random()-.5)*50)+'px'; h.style.top=(c.y-10)+'px'; document.body.appendChild(h);
+      const dx=(Math.random()-.5)*60; h.animate([{transform:'translate(0,0) scale(.3)',opacity:0},{transform:`translate(${dx*.4}px,-30px) scale(1)`,opacity:1,offset:.25},{transform:`translate(${dx}px,-110px) scale(.8) rotate(${dx/3}deg)`,opacity:0}],{duration:1400+Math.random()*400,easing:'ease-out'}).onfinish=()=>h.remove() },i*110);
+    try{navigator.vibrate&&navigator.vibrate([10,60,10]); sfx('bloop')}catch(_){}
+    document.querySelectorAll('.say').forEach(x=>x.remove()); const sb=document.createElement('div'); sb.className='say'; sb.textContent=L('ชอบจัง ลูบอีกนะ','Aww, more pats please'); p.parentElement.appendChild(sb); setTimeout(()=>sb.remove(),2200) }
+})();
+/* Wallet cards: carousel depth while scrolling sideways */
+function walletDepth(){ const box=$('wallets'); if(!box||box.hidden||!FX()) return; const r=box.getBoundingClientRect(), mid=r.left+r.width/2;
+  if(box.scrollWidth<=box.clientWidth+2){ box.querySelectorAll('.wcard').forEach(c=>{c.style.scale='';c.style.rotate=''}); return }
+  box.querySelectorAll('.wcard').forEach(c=>{ const b=c.getBoundingClientRect(), d=Math.max(-1,Math.min(1,(b.left+b.width/2-mid)/(r.width*.75))); c.style.scale=String((1-Math.abs(d)*.07).toFixed(3)); c.style.rotate=`y ${(-d*14).toFixed(1)}deg` }) }
+{ let raf=0; document.addEventListener('scroll',e=>{ if(e.target&&e.target.id==='wallets'&&!raf) raf=requestAnimationFrame(()=>{raf=0;walletDepth()}) },{capture:true,passive:true}); }
+{ const _r3=render; render=function(){ const o=_r3.apply(this,arguments); try{walletDepth()}catch(e){} return o } }
+/* Welcome back after a while away */
+{ let away=0; document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='hidden'){away=Date.now();return}
+  if(away&&Date.now()-away>60000&&FX()) afterUnlock(()=>setTimeout(()=>{ if(overlayOpen()) return; const p=$('pig'); if(!p) return; p.classList.remove('nap');
+    p.animate([{transform:'none'},{transform:'translateY(-12px) rotate(-6deg)',offset:.3},{transform:'translateY(0) rotate(5deg)',offset:.6},{transform:'none'}],{duration:800,easing:'ease-out'});
+    document.querySelectorAll('.say').forEach(x=>x.remove()); const sb=document.createElement('div'); sb.className='say'; sb.textContent=L('กลับมาแล้ว! คิดถึงนะ','Welcome back!'); p.parentElement.appendChild(sb); setTimeout(()=>sb.remove(),2400) },500)) }); }
+/* Shake the phone: coins rattle inside the jar */
+{ let last=0, lt=0; addEventListener('devicemotion',e=>{ const a=e.accelerationIncludingGravity; if(!a||!FX()||overlayOpen()) return; const m=Math.hypot(a.x||0,a.y||0,a.z||0), now=Date.now();
+  if(Math.abs(m-last)>18&&now-lt>1600){ lt=now; const p=$('pig'), c=p&&centerOf(p); if(!c||!c.vis) {last=m;return}
+    p.animate([{transform:'none'},{transform:'translateX(-7px) rotate(-6deg)'},{transform:'translateX(7px) rotate(6deg)'},{transform:'translateX(-5px) rotate(-4deg)'},{transform:'translateX(4px) rotate(3deg)'},{transform:'none'}],{duration:600});
+    sloshKick(9); splash(c.x,c.y-10,8); try{sfx('clink');setTimeout(()=>sfx('clink'),140);navigator.vibrate&&navigator.vibrate([15,40,15])}catch(_){}
+    const al=$('allow'); const txt=al&&!al.hidden?(al.querySelector('b')||al).textContent.trim():''; document.querySelectorAll('.say').forEach(x=>x.remove()); const sb=document.createElement('div'); sb.className='say'; sb.textContent=txt&&!document.body.classList.contains('privacy')?txt:L('กรุ๊งกริ๊ง!','Jingle jingle!'); p.parentElement.appendChild(sb); setTimeout(()=>sb.remove(),2600) }
+  last=m },{passive:true}); }
+$('pig').addEventListener('click',()=>{ try{ if(window.DeviceMotionEvent&&typeof DeviceMotionEvent.requestPermission==='function') DeviceMotionEvent.requestPermission().catch(()=>{}) }catch(e){} },{once:true});
 </script>
 
 <script>
