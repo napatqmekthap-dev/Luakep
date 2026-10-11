@@ -1,4 +1,4 @@
-const CACHE='luakep-v52';
+const CACHE='luakep-v53';
 const SHELL=['./','index.html','manifest.webmanifest','icon-192.png','apple-touch-icon.png','icon-512.png','icon-maskable-512.png','icon-monochrome-512.png','sc-expense.png','sc-income.png','sc-search.png'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(SHELL)));self.skipWaiting()});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE&&k!=='kp-state'&&k!=='kp-share').map(k=>caches.delete(k)))));self.clients.claim()});
@@ -29,9 +29,13 @@ const ymd=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+Stri
 async function remind(){
   const c=await caches.open('kp-state'), r=await c.match('./__kp-remind.json'); if(!r) return;
   const st=await r.json(), now=new Date(), today=ymd(now), sent=st.sent||{}; let changed=false;
-  if(st.eve){ const [h,m]=(st.time||'20:00').split(':').map(Number);
-    if((now.getHours()>h||(now.getHours()===h&&now.getMinutes()>=m))&&now.getHours()<23&&st.lastLog!==today&&!sent['eve'+today]){
-      await self.registration.showNotification(st.t.eveTitle,{body:st.t.eveBody,icon:'icon-192.png',badge:'icon-monochrome-512.png',tag:'kp-eve',data:{url:'./?add=out'}}); sent['eve'+today]=1; changed=true } }
+  if(st.eve||st.sum){ const [h,m]=(st.time||'20:00').split(':').map(Number);
+    if((now.getHours()>h||(now.getHours()===h&&now.getMinutes()>=m))&&now.getHours()<23){
+      if(st.lastLog!==today){ if(st.eve&&!sent['eve'+today]){ // not logged yet: a gentle nudge, firmer when a streak is about to break
+        const y=ymd(new Date(now.getFullYear(),now.getMonth(),now.getDate()-1)), risk=st.streak>=2&&st.streakEnd===y&&st.t.riskTitle;
+        await self.registration.showNotification(risk?st.t.riskTitle:st.t.eveTitle,{body:risk?st.t.riskBody:st.t.eveBody,icon:'icon-192.png',badge:'icon-monochrome-512.png',tag:'kp-eve',data:{url:'./?add=out'}}); sent['eve'+today]=1; changed=true } }
+      else if(st.sum&&st.day===today&&st.t.sumTitle&&!sent['sum'+today]){ // logged today: the day's wrap-up
+        await self.registration.showNotification(st.t.sumTitle,{body:st.t.sumBody,icon:'icon-192.png',badge:'icon-monochrome-512.png',tag:'kp-sum',data:{url:'./?eve=1'}}); sent['sum'+today]=1; changed=true } } }
   if(st.rec){ for(const u of (st.up||[])){ const diff=Math.round((new Date(u.date+'T00:00')-new Date(today+'T00:00'))/864e5);
     if(diff===1&&!sent['r'+u.id+u.date]){ await self.registration.showNotification(u.title,{body:u.body,icon:'icon-192.png',badge:'icon-monochrome-512.png',tag:'kp-r'+u.id,data:{url:'./'}}); sent['r'+u.id+u.date]=1; changed=true } } }
   if(changed){ const keep={}; Object.keys(sent).filter(k=>k.slice(-10)>=ymd(new Date(Date.now()-14*864e5))).forEach(k=>keep[k]=1); st.sent=keep;

@@ -1634,6 +1634,67 @@ body.lowfx .badge:not(.off) .md::after{display:none}
 body.heroOff .balance .pig svg,body.heroOff .balance .pig svg *,body.heroOff .dust *,
 body.sheeting .balance .pig svg,body.sheeting .balance .pig svg *,body.sheeting .dust *,body.sheeting #festfx *,body.sheeting .recapbtn::after,body.sheeting #cats .bar i::after{animation-play-state:paused!important}
 .pig svg{will-change:transform}
+/* ===== V340 daily habit ===== */
+.evecard{display:flex;align-items:center;gap:14px;border:0;width:100%;text-align:left;cursor:pointer;font:inherit;border-radius:26px;padding:14px 16px;margin:12px 0 0;color:#f4f1ff;background:linear-gradient(125deg,#22304a,#38406e 55%,#6d5a92);position:relative;overflow:hidden}
+.evecard::before{content:"";position:absolute;inset:0;background:radial-gradient(1.5px 1.5px at 72% 28%,#fff8,transparent),radial-gradient(1px 1px at 84% 62%,#fff7,transparent),radial-gradient(1.5px 1.5px at 92% 20%,#fff9,transparent),radial-gradient(1px 1px at 63% 74%,#fff6,transparent);pointer-events:none}
+.evecard .em{width:40px;height:40px;border-radius:13px;display:grid;place-items:center;background:#ffffff1f;flex:none}
+.evecard .em svg{width:22px;height:22px;fill:#ffe7a3;stroke:none}
+.evecard .tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}.evecard .tx b{font-weight:600}.evecard small{opacity:.85;font-size:13px}.evecard small b{font-weight:600}
+.evecard .go{font-size:24px;opacity:.6}
+.ev-k{text-align:center;font:500 12px var(--display);letter-spacing:.08em;color:var(--muted);margin-bottom:-8px}
+.ev-top{display:flex;align-items:center;justify-content:center;gap:10px}
+.ev-jar{width:104px;height:104px}.ev-jar svg{width:100%;height:100%;overflow:visible}
+.ev-ring{position:relative;width:128px;height:128px}.ev-ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ev-ring circle{fill:none;stroke-width:10;stroke-linecap:round}.ev-ring .bg{stroke:var(--surface)}.ev-ring .fg{stroke:var(--t-in-fg,#2f6e52)}.ev-ring.over .fg{stroke:var(--t-out-fg,#a2502f)}
+.ev-c{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}.ev-c b{font:500 21px var(--display)}.ev-c small{color:var(--muted);font-size:11.5px}
+.ev-line{text-align:center;margin:-4px 0 0;font:500 15px var(--display)}
+.ev-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:8px}
+.ev-stats>div{background:var(--surface);border-radius:16px;padding:10px 12px;display:flex;flex-direction:column;gap:2px}
+.ev-stats small{color:var(--muted);font-size:12px}.ev-stats b{font:500 17px var(--display)}
+.ev-stats .ok b{color:var(--t-in-fg)}.ev-stats .bad b{color:var(--t-out-fg)}.ev-stats .gold b{color:var(--gold,#b8913a)}
+.ev-list{display:flex;flex-direction:column;gap:2px;background:var(--surface);border-radius:16px;padding:6px 10px}
+.ev-row{display:flex;align-items:center;gap:10px;padding:6px 0;font-size:14px}.ev-row span:not(.ico){flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ev-row b{font-weight:500}.ev-row b.in{color:var(--t-in-fg)}.ev-more{color:var(--muted);font-size:12px;padding:4px 0 2px}
+.paychip{display:flex;align-items:center;gap:12px;width:100%;border:0;font:inherit;text-align:left;cursor:pointer;color:var(--ink);background:var(--surface);border-radius:20px;padding:10px 14px;margin:0 0 8px}
+.paychip .pi{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;background:color-mix(in srgb,var(--gold,#b8913a) 18%,transparent);color:var(--gold,#b8913a);flex:none}
+.paychip .pi svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.paychip .pt{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}.paychip .pt b{font-weight:600;font-size:14.5px}.paychip small{color:var(--muted);font-size:12.5px}.paychip small b{font-weight:600;font-size:inherit;color:var(--ink)}
+.paychip .pp{display:block;height:4px;border-radius:9px;background:color-mix(in srgb,var(--gold,#b8913a) 16%,transparent);margin-top:6px;overflow:hidden}.paychip .pp u{display:block;height:100%;border-radius:inherit;background:var(--gold,#b8913a)}
+.paychip.soon .pi{background:var(--gold,#b8913a);color:#fff}
+.paychip.today{background:linear-gradient(120deg,#f6e3a8,#e9c46a);color:#3b2d0a}.paychip.today small{color:#5b4714}.paychip.today .pi{background:#fff8;color:#7a5a12}.paychip.today .pp{display:none}
+body.privacy .paychip small b,body.privacy .evecard small b,body.privacy #calsec h2 small{filter:blur(9px);transition:filter .25s}
+#calsec{--cok:#dcece1;--cokf:#2f6e52;--cnr:#f8e5cd;--cnrf:#a0601d;--cov:#f4d5ca;--covf:#a23f24;--cns:#f4e8c2;--cnsf:#7a5a12;--cnsd:#d0a13a}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) #calsec{--cok:#1d3a2b;--cokf:#9fd8b5;--cnr:#46321a;--cnrf:#f2c48a;--cov:#4b241b;--covf:#ffad98;--cns:#3a321a;--cnsf:#f0d07a;--cnsd:#e2b84f}}
+:root[data-theme="dark"] #calsec{--cok:#1d3a2b;--cokf:#9fd8b5;--cnr:#46321a;--cnrf:#f2c48a;--cov:#4b241b;--covf:#ffad98;--cns:#3a321a;--cnsf:#f0d07a;--cnsd:#e2b84f}
+#calsec .calwrap{background:var(--s-low);border-radius:16px;padding:14px;box-shadow:var(--e1)}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.cal .ch{text-align:center;font-size:11.5px;color:var(--muted);padding-bottom:2px}
+.cal .cd{position:relative;aspect-ratio:1;border:0;border-radius:11px;font:500 13px var(--display);display:grid;place-items:center;cursor:pointer;color:var(--ink);background:var(--surface);padding:0;font-variant-numeric:tabular-nums;transition:transform .15s}
+.cal .cd:active{transform:scale(.92)}
+.cal .cd.ok{background:var(--cok);color:var(--cokf)}
+.cal .cd.near{background:var(--cnr);color:var(--cnrf)}
+.cal .cd.over{background:var(--cov);color:var(--covf)}
+.cal .cd.ns{background:var(--cns);color:var(--cnsf)}
+.cal .cd.ns i{position:absolute;top:4px;right:4px;width:5px;height:5px;border-radius:50%;background:var(--cnsd)}
+.cal .cd.fut{background:transparent;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--muted) 25%,transparent);color:var(--muted);cursor:default}
+.cal .cd.pre{background:transparent;color:color-mix(in srgb,var(--muted) 55%,transparent);cursor:default}
+.cal .cd.td{box-shadow:0 0 0 2px var(--ink)}
+.cal .cd.pk{box-shadow:0 0 0 2px var(--gold,#b8913a);transform:scale(1.06)}
+.cal.fresh .cd{animation:cdin .45s cubic-bezier(.2,.85,.25,1) backwards;animation-delay:calc(var(--i) * 14ms)}
+@keyframes cdin{from{opacity:0;transform:scale(.6)}}
+.callg{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:12px;font-size:12px;color:var(--muted)}
+.callg span{display:inline-flex;align-items:center;gap:6px}.callg b{color:var(--ink);font-weight:500}
+.callg i{width:10px;height:10px;border-radius:4px;background:var(--surface)}.callg .ok i{background:var(--cokf)}.callg .near i{background:var(--cnrf)}.callg .over i{background:var(--covf)}.callg .ns i{background:var(--cnsd)}
+.caldet{margin-top:12px;background:var(--surface);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.caldet .cdh{display:flex;justify-content:space-between;gap:10px;font-size:14.5px}.caldet .cdh b{font-weight:600}.caldet small{color:var(--muted);font-size:12.5px}
+.caldet .cdl{display:flex;flex-direction:column;gap:4px}.caldet .cdl span{display:flex;align-items:center;gap:8px;font-size:13.5px}.caldet .cdl b{margin-left:auto;font-weight:500}
+.caldet #calgo{align-self:flex-start;border:0;background:none;padding:2px 0;font:500 13.5px var(--display);color:var(--ink);cursor:pointer}
+body.privacy .caldet .num,body.privacy .caldet .cdl b{filter:blur(9px)}
+#list .day.flash{animation:flash 1.5s ease;border-radius:18px}
+.wkbtn{background:var(--t-allow);color:var(--t-allow-fg)}
+#story .wkt{display:flex;flex-direction:column;gap:8px;margin-top:14px}#story .wkt p{margin:0;font-size:15px;opacity:.92}#story .wkt b{font-weight:600}
+body.lowfx .cal.fresh .cd{animation:none}
+#payday{min-width:168px;max-width:62%}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i></div><div id="festfx" aria-hidden="true"></div>
@@ -1922,6 +1983,7 @@ body.sheeting .balance .pig svg,body.sheeting .balance .pig svg *,body.sheeting 
     <div class="group" id="remgroup">
       <h4>แจ้งเตือน</h4>
       <label class="switch" style="background:var(--s-low)"><span><b>เตือนให้จดตอนค่ำ</b><small>ถ้าวันนั้นยังไม่ได้จดอะไรเลย</small></span><input type="checkbox" id="remeve" role="switch"></label>
+      <label class="switch" style="background:var(--s-low)"><span><b>สรุปยอดของวันตอนค่ำ</b><small>ถ้าวันนั้นจดแล้ว ส่งยอดที่ใช้และงบที่เหลือให้ดู</small></span><input type="checkbox" id="remsum" role="switch"></label>
       <label class="remtime">เวลาเตือน<input type="time" id="remtime" value="20:00"></label>
       <label class="switch" style="background:var(--s-low)"><span><b>เตือนก่อนรายการประจำ</b><small>ล่วงหน้า 1 วันก่อนถึงวันจ่าย</small></span><input type="checkbox" id="remrec" role="switch"></label>
       <small class="hint" id="remnote"></small>
@@ -1947,6 +2009,12 @@ body.sheeting .balance .pig svg,body.sheeting .balance .pig svg *,body.sheeting 
       <label>ยอดเงินเริ่มต้น (บาท)<input id="opening" inputmode="decimal" class="num" placeholder="เช่น เงินในบัญชีวันที่เริ่มใช้แอป"></label>
       <button class="btn save" id="savecarry">บันทึก</button>
       <div class="err" id="carrymsg"></div>
+    </div>
+    <div class="group" id="paygroup">
+      <h4>วันเงินเดือนออก</h4>
+      <p>ใช้นับถอยหลังบนหน้าหลัก และบอกว่าถึงวันนั้นใช้ได้วันละเท่าไร</p>
+      <label class="remtime">เงินเดือนออกทุก<select id="payday"></select></label>
+      <small class="hint" id="paynote"></small>
     </div>
     <div class="group" id="walletgroup">
       <h4>กระเป๋าเงิน</h4>
@@ -2200,6 +2268,7 @@ function applyLang(){
   trBusy=true; try{ trTree(document.body) } finally{ trBusy=false }
   document.querySelectorAll('[data-lang]').forEach(b=>b.classList.toggle('on',b.dataset.lang===LANG));
 }
+Object.assign(DICT,{'วัน{0}ออก':'Payday','{0}ออกทุก':'Paid on','สรุปยอดของวันตอนค่ำ':'Evening summary','ถ้าวันนั้นจดแล้ว ส่งยอดที่ใช้และงบที่เหลือให้ดู':'If you logged that day, see what you spent and what is left','ใช้นับถอยหลังบนหน้าหลัก และบอกว่าถึงวันนั้นใช้ได้วันละเท่าไร':'Counts down on the home screen and shows how much you can spend a day until then'});
 function setLang(l){
   LANG=l; try{localStorage.setItem(LKEY,l)}catch(e){}
   applyLang(); if(typeof render==='function') render();
@@ -2782,7 +2851,7 @@ function renderCore(){
   const leaf='<svg viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-14-1 9-6 14-14 14zM5 19l7-7"/></svg>';
   const dayHTML=([dt,rs])=>{
     const d=new Date(dt+'T00:00'); const net=rs.reduce((s,r)=>s+NET(r),0), sp=dayOut[dt]||0;
-    return `<div class="day"><div class="dayhead"><span>${d.toLocaleDateString(LOC(),searching?{day:'numeric',month:'short',year:'numeric'}:{weekday:'short',day:'numeric',month:'short'})}</span><span class="dright">${sp?`<i class="dbar" title="${fmt(sp)}"><b style="width:${Math.max(6,sp/maxDay*100).toFixed(0)}%"></b></i>`:'<span class="nospend">ไม่ใช้เงิน</span>'}<span class="num">${net>=0?'+':'-'}${fmt(Math.abs(net))}</span></span></div>`+
+    return `<div class="day" data-d="${dt}"><div class="dayhead"><span>${d.toLocaleDateString(LOC(),searching?{day:'numeric',month:'short',year:'numeric'}:{weekday:'short',day:'numeric',month:'short'})}</span><span class="dright">${sp?`<i class="dbar" title="${fmt(sp)}"><b style="width:${Math.max(6,sp/maxDay*100).toFixed(0)}%"></b></i>`:'<span class="nospend">ไม่ใช้เงิน</span>'}<span class="num">${net>=0?'+':'-'}${fmt(Math.abs(net))}</span></span></div>`+
     rs.map(r=>{const big=r.type==='out'&&r.amount>=bigCut; return `<div class="rowwrap"><span class="swd" aria-hidden="true">${SWI('del')}<b>${L('ลบ','Delete')}</b></span>${r.type==='in'||r.type==='out'?`<span class="swc" aria-hidden="true">${SWI('dup')}<b>${L('จดซ้ำวันนี้','Log again today')}</b></span>`:''}<div class="row${String(r.id)===lastAddedId?' new':''}${big?' big':''}" data-id="${r.id}">${ic(r.cat)}<div class="t" tabindex="0" role="button" aria-label="${L('แก้ไข','Edit')} ${esc(rTitle(r))}"><b>${esc(rTitle(r))}</b><small>${big?'<span class="tag big">ก้อนใหญ่</span>':''}${r.type==='lend'?'<span class="tag split">หารบิล</span>':''}${r.recurId?'<span class="tag rec">ประจำ</span>':''}${r.tax?'<span class="tag taxt">ลดหย่อน</span>':''}${r.demo?'<span class="tag">ตัวอย่าง</span>':''}${esc(rSub(r))}${r.note?' · '+esc(r.note):''}</small></div>
       <div class="amt num ${r.type}">${r.type==='in'||r.type==='back'?'+':r.type==='tr'?'':'-'}${fmt(r.amount)}</div></div></div>`}).join('')+'</div>';
   };
@@ -3110,11 +3179,12 @@ function showSlide(i){
   else st.style.background=pal[0];
   st._shown=true; st.style.setProperty('--sbg',pal[0]); st.style.setProperty('--sfg',pal[1]); st.style.color=pal[1];
   [...$('sbars').children].forEach((b,k)=>{b.className=k<i?'done':k===i?(last?'done':'cur'):'';b.firstChild.style.animationDuration=dur+'ms'});
-  const el=$('sslide'); const jm=i>0&&!last?(SMOOD[i]||moodOf(story.d.tin,story.d.tout)):null;
+  const el=$('sslide'); const jm=i>0&&!last?(story.mood||SMOOD[i]||moodOf(story.d.tin,story.d.tout)):null;
   el.innerHTML=(i<story.slides.length-1?'<div class="blob"></div>':'')+(jm?`<div class="sjar p${i%4}">${jarSVG(jm)}</div>`:'')+story.slides[i]; el.style.animation='none'; void el.offsetWidth; el.style.animation='';
   if(FX()) el.querySelectorAll('.n').forEach(n=>{const t=n.textContent.trim(); if(/^฿[\d,]+$/.test(t)){const v=+t.replace(/[^\d]/g,''); n._v=0; animNum(n,v,fmt)}});
   clearTimeout(stTimer);
   if(!last) stTimer=setTimeout(()=>showSlide(i+1),dur);
+  else if(story.weekly){ const b=$('sdone'); if(b) b.onclick=closeStoryVT }
   else { makeCard(story.d).then(blob=>{ if(!story||!blob) return; story.blob=blob; $('shot').src=URL.createObjectURL(blob) }).catch(()=>{ if($('shint')) $('shint').textContent=tr('กดค้างที่รูปแล้วเลือกบันทึก') }); $('sshare').onclick=shareCard; $('sdone').onclick=closeStoryVT }
 }
 function vtReveal(el,update,closing){
@@ -3653,9 +3723,9 @@ try{$('brandcrab').innerHTML=pigSVG('great')}catch(e){}
   const I={lang:'M12 3a9 9 0 1 0 0 18 9 9 0 1 0 0-18zM3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18',acct:'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21c1-4 4.5-6 8-6s7 2 8 6',theme:'M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9z',ward:'M10 6a2 2 0 1 1 3 1.7c-.6.4-1 .9-1 1.6V10M12 10l-8.4 6.3c-.8.6-.4 1.7.6 1.7h15.6c1 0 1.4-1.1.6-1.7z',snd:'M4 9v6h4l5 4V5L8 9zM16 9.5a3.5 3.5 0 0 1 0 5M18.5 7a7 7 0 0 1 0 10',bell:'M6 16V11a6 6 0 0 1 12 0v5l2 2H4zM10 20a2 2 0 0 0 4 0',lock:'M6 11h12v10H6zM8 11V8a4 4 0 0 1 8 0v3M12 15v2',tip:'M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z',wal:'M3 7h15a3 3 0 0 1 3 3v7a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3zM3 7l12-4v4M16 14h2',
     carry:'M4 12h13M13 6l6 6-6 6',budget:'M12 3v9h9A9 9 0 1 1 12 3zM15 3.5A9 9 0 0 1 20.5 9H15z',recur:'M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3M18 3v4h-4M6 21v-4h4',
     cats:'M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z',owner:'M3 6h18v12H3zM8 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM5 16c.5-1.5 1.7-2.3 3-2.3s2.5.8 3 2.3M14 10h4M14 14h3',
-    shop:'M4 9l1.5-5h13L20 9M4 9v11h16V9M4 9h16M9 20v-6h6v6',bk:'M12 3v12M7 10l5 5 5-5M5 21h14',rs:'M12 15V3M7 8l5-5 5 5M5 21h14'};
+    shop:'M4 9l1.5-5h13L20 9M4 9v11h16V9M4 9h16M9 20v-6h6v6',pay:'M4 5h16v15H4zM4 10h16M9 3v4M15 3v4M12 13v4M10.5 14.2c0-.7.7-1.2 1.5-1.2s1.5.4 1.5 1-.7 1-1.5 1-1.5.4-1.5 1 .7 1 1.5 1 1.5-.5 1.5-1.2',bk:'M12 3v12M7 10l5 5 5-5M5 21h14',rs:'M12 15V3M7 8l5-5 5 5M5 21h14'};
   const plan=[['แอป','--t-mood',[['ภาษา / Language','lang'],['ธีม','theme'],['ตู้เสื้อผ้าน้องโอ่ง','ward'],['เสียง','snd'],['แจ้งเตือน','bell'],['ล็อกแอป','lock'],['คำแนะนำการใช้งาน','tip'],['บัญชี','acct']]],
-    ['การเงิน','--t-allow',[['ยอดยกมาและยอดเริ่มต้น','carry'],['กระเป๋าเงิน','wal'],['งบรายจ่ายต่อเดือน','budget'],['รายการประจำ','recur'],['หมวดหมู่','cats']]],
+    ['การเงิน','--t-allow',[['ยอดยกมาและยอดเริ่มต้น','carry'],['วันเงินเดือนออก','pay'],['กระเป๋าเงิน','wal'],['งบรายจ่ายต่อเดือน','budget'],['รายการประจำ','recur'],['หมวดหมู่','cats']]],
     ['การอ่านสลิป','--t-in',[['ชื่อเจ้าของบัญชี','owner'],['ร้านที่แอปจำได้','shop']]],
     ['ข้อมูล','--t-out',[['สำรองข้อมูล','bk'],['กู้คืนข้อมูล','rs']]]];
   const anchor=panel.querySelector(':scope>h3');
@@ -3942,7 +4012,7 @@ setTimeout(async()=>{ const all=await snapList(); if(!all.some(s=>s.key===iso(ne
 prefs.rem=prefs.rem||{};
 function remNote(){
   const el=$('remnote'); const off=!window.STANDALONE||!('Notification' in window)||!('serviceWorker' in navigator);
-  ['remeve','remrec','remtime'].forEach(id=>$(id).disabled=off);
+  ['remeve','remsum','remrec','remtime'].forEach(id=>$(id).disabled=off);
   el.textContent=off?L('ใช้ได้เฉพาะแอปที่ติดตั้งลงมือถือแล้ว','Only works in the app installed on your phone'):
     Notification.permission==='denied'?L('มือถือบล็อกการแจ้งเตือนของแอปนี้อยู่ เปิดได้ในการตั้งค่าแอปของมือถือ','Notifications are blocked for this app. Allow them in your phone settings.'):
     L('Chrome เป็นคนเลือกจังหวะส่งแจ้งเตือน อาจช้ากว่าเวลาที่ตั้งไว้บ้าง','Chrome decides exactly when to deliver, so it may arrive a little later than set');
@@ -3956,20 +4026,25 @@ function upcomingSoon(){
 async function remSync(){
   if(!window.STANDALONE||!('serviceWorker' in navigator)||!('caches' in window)) return;
   try{ const c=await caches.open('kp-state'), old=await c.match('./__kp-remind.json'), prev=old?await old.json():{};
-    const st={eve:!!prefs.rem.eve,time:prefs.rem.time||'20:00',rec:!!prefs.rem.rec,lastLog:prefs.lastLogDay||'',up:upcomingSoon(),sent:prev.sent||{},
-      t:{eveTitle:L('วันนี้ยังไม่ได้จดเลยนะ','Nothing logged today'),eveBody:L('น้องโอ่งรออยู่ แตะเพื่อจดรายการของวันนี้','Nong Ong is waiting. Tap to log today.')}};
+    const B=curBudget(), S=curLogStreak(), priv=!!prefs.privacy;
+    const sumTitle=!B.nToday?'':B.spentToday===0?L('วันนี้ไม่ได้ใช้เงินเลย เก่งมาก!','No spending today. Brilliant!'):priv?L('สรุปวันนี้พร้อมแล้ว','Today’s wrap-up is ready'):L(`สรุปวันนี้: ใช้ไป ${fmt(B.spentToday)}`,`Today: ${fmt(B.spentToday)} spent`);
+    const sumBody=priv||!B.ok||!(B.perDay>0)?L('แตะเพื่อดูสรุปของวันนี้','Tap to see today’s wrap-up'):B.leftToday>=0?L(`ยังเหลือในงบวันนี้ ${fmt(Math.floor(B.leftToday))} · พรุ่งนี้ใช้ได้ ${fmt(Math.floor(B.tomorrow))}`,`${fmt(Math.floor(B.leftToday))} under today’s budget · ${fmt(Math.floor(B.tomorrow))} for tomorrow`):L(`เกินงบวันนี้ ${fmt(Math.round(-B.leftToday))} · พรุ่งนี้ใช้ได้ ${fmt(Math.floor(B.tomorrow))}`,`${fmt(Math.round(-B.leftToday))} over today · ${fmt(Math.floor(B.tomorrow))} for tomorrow`);
+    const st={eve:!!prefs.rem.eve,sum:!!prefs.rem.sum,time:prefs.rem.time||'20:00',rec:!!prefs.rem.rec,lastLog:prefs.lastLogDay||'',day:B.today,streak:S.n,streakEnd:S.end,up:upcomingSoon(),sent:prev.sent||{},
+      t:{eveTitle:L('วันนี้ยังไม่ได้จดเลยนะ','Nothing logged today'),eveBody:L('น้องโอ่งรออยู่ แตะเพื่อจดรายการของวันนี้','Nong Ong is waiting. Tap to log today.'),
+        riskTitle:L(`จดติดกันมา ${S.n} วันแล้ว อย่าให้ขาดนะ`,`${S.n}-day streak. Don’t break it!`),riskBody:L('แตะเพื่อจดของวันนี้ ใช้ไม่ถึงนาที','Tap to log today. Takes under a minute.'),sumTitle,sumBody}};
     await c.put('./__kp-remind.json',new Response(JSON.stringify(st),{headers:{'content-type':'application/json'}}));
     const reg=await navigator.serviceWorker.ready;
-    if(reg.periodicSync){ if(st.eve||st.rec){ try{await reg.periodicSync.register('kp-remind',{minInterval:2*3600*1000})}catch(e){} } else { try{await reg.periodicSync.unregister('kp-remind')}catch(e){} } }
+    if(reg.periodicSync){ if(st.eve||st.sum||st.rec){ try{await reg.periodicSync.register('kp-remind',{minInterval:2*3600*1000})}catch(e){} } else { try{await reg.periodicSync.unregister('kp-remind')}catch(e){} } }
   }catch(e){}
 }
-function applyRem(){ $('remeve').checked=!!prefs.rem.eve; $('remrec').checked=!!prefs.rem.rec; $('remtime').value=prefs.rem.time||'20:00'; remNote() }
+function applyRem(){ $('remsum').checked=!!prefs.rem.sum; try{renderPayGroup()}catch(e){} $('remeve').checked=!!prefs.rem.eve; $('remrec').checked=!!prefs.rem.rec; $('remtime').value=prefs.rem.time||'20:00'; remNote() }
 async function remToggle(key,on){
-  if(on){ let p=Notification.permission; if(p==='default'){ try{p=await Notification.requestPermission()}catch(e){} } if(p!=='granted'){ $(key==='eve'?'remeve':'remrec').checked=false; remNote(); return } }
+  if(on){ let p=Notification.permission; if(p==='default'){ try{p=await Notification.requestPermission()}catch(e){} } if(p!=='granted'){ $({eve:'remeve',sum:'remsum',rec:'remrec'}[key]).checked=false; remNote(); return } }
   prefs.rem[key]=on; savePrefs(); remNote(); remSync();
 }
 $('remeve').addEventListener('change',e=>remToggle('eve',e.target.checked));
 $('remrec').addEventListener('change',e=>remToggle('rec',e.target.checked));
+$('remsum').addEventListener('change',e=>remToggle('sum',e.target.checked));
 $('remtime').addEventListener('change',e=>{prefs.rem.time=e.target.value||'20:00'; savePrefs(); remSync()});
 document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='hidden') remSync() });
 applyRem(); remSync();
@@ -5258,8 +5333,8 @@ $('carry').addEventListener('click',openExplain); $('ballabel').addEventListener
   afterRender(fix); fix() }
 
 /* ===== V310 help guide, what's new, feedback ===== */
-const APP_VER='1.52', NEWS_VER='1.52'; // APP_VER = '1.'+sw cache number, bumped every release; NEWS_VER = last release that shows the What's new popup
-const CHANGELOG=[["1.52","2026-10-11","ใส่เลขเวอร์ชันทุกครั้งที่อัปเดต และดูประวัติทุกเวอร์ชันย้อนหลังได้","Every update now has a version number, with the full version history"],["1.51","2026-10-11","เอฟเฟกต์ลื่นขึ้น: ฝนแบบใหม่ เมฆนุ่มขึ้น ลดภาพเคลื่อนไหวที่วิ่งพร้อมกัน และหยุดส่วนที่มองไม่เห็น","Smoother effects: new rain, softer clouds, fewer animations at once, off-screen motion paused"],["1.50","2026-10-11","น้ำในโอ่งขึ้นตามตอนพิมพ์ยอดเงินเริ่มต้น ที่มายอดเงินนับเลขขึ้น รายการนำเข้าหล่นลงในรายการ ตู้โชว์มีประกาย","Water rises as you type the opening balance, balance explainer counts up, imported rows drop in, cabinet glints"],["1.49","2026-10-11","จัดระเบียบเบื้องหลังและเพิ่มชุดทดสอบอัตโนมัติ ให้แอปเสถียรขึ้น","Behind-the-scenes tidy-up and automated tests for a steadier app"],["1.48","2026-10-11","คู่มือวิธีใช้ หน้ามีอะไรใหม่ และส่งความเห็นถึงผู้พัฒนาทาง LINE","How-to guide, What’s new, and feedback to the developer on LINE"],["1.47","2026-10-11","น้ำในโอ่งลดตามเงินที่เหลือจริง และเปิดครั้งแรกเป็นภาษาไทย","Water level follows the money you have left; Thai on first launch"],["1.46","2026-10-11","ครั้งแรกเริ่มจากโอ่งว่าง แล้วน้องโอ่งถามยอดเงินที่มี","First run starts with an empty jar and asks your starting balance"],["1.45","2026-10-11","พูดเพื่อจดรายการ สำรองข้อมูลไป Google Drive นำเข้า CSV จากธนาคาร สรุปเป็น PDF และโหมดประหยัดแบต","Speak to log, Google Drive backup, bank CSV import, PDF summary, battery saver"],["1.44","2026-10-11","ปุ่มล้างข้อมูลทั้งหมด ใน ตั้งค่า › ข้อมูล","Erase all data in Settings › Data"],["1.43","2026-10-11","น้องโอ่งพูดได้ ปากขยับตามเสียง","Nong Ong talks, with a moving mouth"],["1.42","2026-10-11","เพิ่มเครดิต Developed by Napat Mekthap","Added credit: Developed by Napat Mekthap"],["1.41","2026-10-11","ท่าทางสัมผัส (ปัด กดค้าง เขย่า) และภาพเคลื่อนไหวของสภาพอากาศ","Touch gestures (swipe, hold, shake) and weather motion"],["1.40","2026-10-11","พื้นหลังตามสภาพอากาศจริง น้องโอ่งถือร่มหรือใส่แว่นกันแดดตามอากาศ","Live weather background; Nong Ong dresses for the weather"],["1.39","2026-10-11","เลเวลน้องโอ่ง เหรียญรางวัล และชุดที่ปลดล็อกได้","Nong Ong levels, badges and unlockable outfits"],["1.38","2026-10-11","เก็บรายละเอียดทั้งแอปและเพิ่มเอฟเฟกต์","Polish pass and more effects"],["1.37","2026-10-11","น้ำเอียงตามมือถือ เทน้ำออกตอนใช้เงิน ตราประทับเมื่อครบเป้า ลบแบบแตกกระจาย และนับวันไม่ใช้เงินติดกัน","Tilting water, pour-out, goal stamp, shatter delete, no-spend streak"],["1.36","2026-10-11","ภาพเคลื่อนไหวชุดใหญ่: ค่อยๆ โผล่ตอนเลื่อน ระลอกตอนแตะ น้ำกระฉอก ปัดเปลี่ยนเดือน","Motion pack: scroll reveal, ripples, jar slosh, month swipe"],["1.35","2026-10-11","เก็บงานธีมศิลาดล และติดตั้งบนหน้าจอหลัก iPhone ได้","Celadon finishing touches and iPhone home-screen support"],["1.34","2026-10-10","ตัวช่วยลดหย่อนภาษีปี 2569: ติดป้ายรายการ เพดานลดหย่อน และประมาณภาษี","Tax deduction helper for 2026: tags, caps and estimated tax"],["1.33","2026-10-10","ลายรานเคลือบบนการ์ดยอดเงินและหน้าล็อก แสงวาบบนน้องโอ่ง","Crackle glaze on the balance card and lock screen; glint on Nong Ong"],["1.32","2026-10-10","ธีมศิลาดลทุกหน้า: สตอรี่ การ์ดแชร์ และไอคอนแอปใหม่","Celadon everywhere: story, share card and a new app icon"],["1.31","2026-10-10","ธีมศิลาดลแบบเครื่องลายคราม ตั้งเป็นค่าเริ่มต้น","Celadon porcelain theme, now the default"],["1.30","2026-10-10","ช่องกรอกเงินตัวใหญ่ หัวข้อนุ่มขึ้น ช่อง PIN สวยขึ้น","Big amount fields, calmer titles, nicer PIN field"],["1.29","2026-10-10","รายการประจำเป็นไทม์ไลน์วันครบกำหนด แตะเพื่อบอกว่าจ่ายแล้ว","Recurring items as a due-date timeline, tap to mark paid"],["1.28","2026-10-10","แถบงบบอกความเร็วการใช้จ่าย กราฟโดนัทละเอียดขึ้น ไอคอนแอปพาสเทล","Budget pace marker, richer donut chart, pastel app icon"],["1.27","2026-10-10","ปรับข้อความอ่านสลิปในเครื่องให้อ่านง่ายขึ้น","Clearer on-device slip reading note"],["1.26","2026-10-10","อ่านสลิปภาษาไทยในเครื่อง แชร์สลิปเข้าแอป ล็อกแอปด้วยลายนิ้วมือ/PIN ซ่อนยอดเงิน ปุ่ม + เมนูเดียว","On-device Thai slip reading, share slips in, fingerprint/PIN lock, hide balances, one + menu"],["1.25","2026-10-10","กระเป๋าเงินและการโอน หารบิล ภาพรวม 6 เดือน การเตือน และจุดกู้คืน","Wallets and transfers, split bills, 6-month insights, reminders, restore points"],["1.24","2026-10-10","น้ำไหลตามระดับเงิน ส่วนบนยุบตอนเลื่อน ตัวเลขหมุน แถบงบแบบของเหลว","Flowing water, collapsing header, rolling numbers, liquid budget bars"],["1.23","2026-10-10","โอ่งในหน้าจดรายการ รายการรายวันละเอียดขึ้น โอ่งเป้าหมาย เมนูตั้งค่าใหม่","Live jar when adding, richer daily list, goal jars, new settings menu"],["1.22","2026-10-10","แก้คำภาษาอังกฤษบางจุด","English wording fixes"],["1.21","2026-10-10","ชุดเทศกาลของน้องโอ่ง ฟอนต์ Mitr เสียงเหรียญ และชุดสี","Festival outfits, Mitr font, coin sounds, colour palettes"],["1.20","2026-10-10","รองรับเบราว์เซอร์ที่เล่นเอฟเฟกต์ไม่ได้","Works on browsers without effects support"],["1.19","2026-10-10","ฉากเปิดแอป น้องโอ่งขยับได้ เหรียญบิน กราฟค่อยๆ วาด","Intro scene, living mascot, flying coins, chart draw-in"],["1.18","2026-10-10","แก้การเลือกธีมในบางเบราว์เซอร์","Theme detection fix"],["1.17","2026-10-10","วงแหวนความคืบหน้าเป้าหมาย ฉลองเมื่อสำเร็จ สลับธีมสว่าง/มืด","Goal ring, celebrations, light/dark switch"],["1.16","2026-10-10","สตอรี่และการ์ดแชร์สีพาสเทล หน้าว่างมีน้องโอ่ง","Pastel story and share card, mascot empty states"],["1.15","2026-10-10","แก้ปุ่มเบียดในหน้าตั้งค่า","Fixed squashed settings buttons"],["1.14","2026-10-10","ทางลัดจากไอคอนแอป: จดรายจ่าย จดรายรับ ค้นหา","App icon shortcuts: add expense, add income, search"],["1.13","2026-10-10","ปุ่มตอบสนองตอนกด ตัวเลขนับขึ้น และแจ้งเตือนเมื่อบันทึก","Press feedback, count-up numbers, save toast"],["1.12","2026-10-10","หน้าตาใหม่ธีม Bento Pastel (สว่างและมืด)","New Bento Pastel look (light and dark)"],["1.11","2026-10-10","ค้นหาด้วยจำนวนเงินแบบตรงตัว","Search matches amounts exactly"],["1.10","2026-10-10","ค้นหารายการได้ทุกเดือน","Search across all months"],["1.9","2026-10-10","เตือนให้สำรองข้อมูล และเพิ่มหมวดหมู่เองได้","Backup reminder and custom categories"],["1.0–1.8","","รุ่นแรก: จดรายรับรายจ่าย อ่านสลิป งบรายหมวด เป้าหมายออม รายการประจำ ยอดยกมา สตอรี่สรุปเดือน ธีมมืด ติดตั้งเป็นแอปและใช้ออฟไลน์ได้","First releases: income and expenses, slip reading, budgets, savings goals, recurring items, carry-over, monthly story, dark theme, installable and offline"]];
+const APP_VER='1.53', NEWS_VER='1.53'; // APP_VER = '1.'+sw cache number, bumped every release; NEWS_VER = last release that shows the What's new popup
+const CHANGELOG=[["1.53","2026-10-11","สรุปวันนี้ตอนค่ำ แจ้งเตือนแบบรู้ใจ นับถอยหลังวันเงินเดือนออก ปฏิทินสีของเดือน และสรุปสัปดาห์ทุกวันจันทร์","Evening wrap-up, smarter reminders, payday countdown, month colour calendar and a Monday weekly recap"],["1.52","2026-10-11","ใส่เลขเวอร์ชันทุกครั้งที่อัปเดต และดูประวัติทุกเวอร์ชันย้อนหลังได้","Every update now has a version number, with the full version history"],["1.51","2026-10-11","เอฟเฟกต์ลื่นขึ้น: ฝนแบบใหม่ เมฆนุ่มขึ้น ลดภาพเคลื่อนไหวที่วิ่งพร้อมกัน และหยุดส่วนที่มองไม่เห็น","Smoother effects: new rain, softer clouds, fewer animations at once, off-screen motion paused"],["1.50","2026-10-11","น้ำในโอ่งขึ้นตามตอนพิมพ์ยอดเงินเริ่มต้น ที่มายอดเงินนับเลขขึ้น รายการนำเข้าหล่นลงในรายการ ตู้โชว์มีประกาย","Water rises as you type the opening balance, balance explainer counts up, imported rows drop in, cabinet glints"],["1.49","2026-10-11","จัดระเบียบเบื้องหลังและเพิ่มชุดทดสอบอัตโนมัติ ให้แอปเสถียรขึ้น","Behind-the-scenes tidy-up and automated tests for a steadier app"],["1.48","2026-10-11","คู่มือวิธีใช้ หน้ามีอะไรใหม่ และส่งความเห็นถึงผู้พัฒนาทาง LINE","How-to guide, What’s new, and feedback to the developer on LINE"],["1.47","2026-10-11","น้ำในโอ่งลดตามเงินที่เหลือจริง และเปิดครั้งแรกเป็นภาษาไทย","Water level follows the money you have left; Thai on first launch"],["1.46","2026-10-11","ครั้งแรกเริ่มจากโอ่งว่าง แล้วน้องโอ่งถามยอดเงินที่มี","First run starts with an empty jar and asks your starting balance"],["1.45","2026-10-11","พูดเพื่อจดรายการ สำรองข้อมูลไป Google Drive นำเข้า CSV จากธนาคาร สรุปเป็น PDF และโหมดประหยัดแบต","Speak to log, Google Drive backup, bank CSV import, PDF summary, battery saver"],["1.44","2026-10-11","ปุ่มล้างข้อมูลทั้งหมด ใน ตั้งค่า › ข้อมูล","Erase all data in Settings › Data"],["1.43","2026-10-11","น้องโอ่งพูดได้ ปากขยับตามเสียง","Nong Ong talks, with a moving mouth"],["1.42","2026-10-11","เพิ่มเครดิต Developed by Napat Mekthap","Added credit: Developed by Napat Mekthap"],["1.41","2026-10-11","ท่าทางสัมผัส (ปัด กดค้าง เขย่า) และภาพเคลื่อนไหวของสภาพอากาศ","Touch gestures (swipe, hold, shake) and weather motion"],["1.40","2026-10-11","พื้นหลังตามสภาพอากาศจริง น้องโอ่งถือร่มหรือใส่แว่นกันแดดตามอากาศ","Live weather background; Nong Ong dresses for the weather"],["1.39","2026-10-11","เลเวลน้องโอ่ง เหรียญรางวัล และชุดที่ปลดล็อกได้","Nong Ong levels, badges and unlockable outfits"],["1.38","2026-10-11","เก็บรายละเอียดทั้งแอปและเพิ่มเอฟเฟกต์","Polish pass and more effects"],["1.37","2026-10-11","น้ำเอียงตามมือถือ เทน้ำออกตอนใช้เงิน ตราประทับเมื่อครบเป้า ลบแบบแตกกระจาย และนับวันไม่ใช้เงินติดกัน","Tilting water, pour-out, goal stamp, shatter delete, no-spend streak"],["1.36","2026-10-11","ภาพเคลื่อนไหวชุดใหญ่: ค่อยๆ โผล่ตอนเลื่อน ระลอกตอนแตะ น้ำกระฉอก ปัดเปลี่ยนเดือน","Motion pack: scroll reveal, ripples, jar slosh, month swipe"],["1.35","2026-10-11","เก็บงานธีมศิลาดล และติดตั้งบนหน้าจอหลัก iPhone ได้","Celadon finishing touches and iPhone home-screen support"],["1.34","2026-10-10","ตัวช่วยลดหย่อนภาษีปี 2569: ติดป้ายรายการ เพดานลดหย่อน และประมาณภาษี","Tax deduction helper for 2026: tags, caps and estimated tax"],["1.33","2026-10-10","ลายรานเคลือบบนการ์ดยอดเงินและหน้าล็อก แสงวาบบนน้องโอ่ง","Crackle glaze on the balance card and lock screen; glint on Nong Ong"],["1.32","2026-10-10","ธีมศิลาดลทุกหน้า: สตอรี่ การ์ดแชร์ และไอคอนแอปใหม่","Celadon everywhere: story, share card and a new app icon"],["1.31","2026-10-10","ธีมศิลาดลแบบเครื่องลายคราม ตั้งเป็นค่าเริ่มต้น","Celadon porcelain theme, now the default"],["1.30","2026-10-10","ช่องกรอกเงินตัวใหญ่ หัวข้อนุ่มขึ้น ช่อง PIN สวยขึ้น","Big amount fields, calmer titles, nicer PIN field"],["1.29","2026-10-10","รายการประจำเป็นไทม์ไลน์วันครบกำหนด แตะเพื่อบอกว่าจ่ายแล้ว","Recurring items as a due-date timeline, tap to mark paid"],["1.28","2026-10-10","แถบงบบอกความเร็วการใช้จ่าย กราฟโดนัทละเอียดขึ้น ไอคอนแอปพาสเทล","Budget pace marker, richer donut chart, pastel app icon"],["1.27","2026-10-10","ปรับข้อความอ่านสลิปในเครื่องให้อ่านง่ายขึ้น","Clearer on-device slip reading note"],["1.26","2026-10-10","อ่านสลิปภาษาไทยในเครื่อง แชร์สลิปเข้าแอป ล็อกแอปด้วยลายนิ้วมือ/PIN ซ่อนยอดเงิน ปุ่ม + เมนูเดียว","On-device Thai slip reading, share slips in, fingerprint/PIN lock, hide balances, one + menu"],["1.25","2026-10-10","กระเป๋าเงินและการโอน หารบิล ภาพรวม 6 เดือน การเตือน และจุดกู้คืน","Wallets and transfers, split bills, 6-month insights, reminders, restore points"],["1.24","2026-10-10","น้ำไหลตามระดับเงิน ส่วนบนยุบตอนเลื่อน ตัวเลขหมุน แถบงบแบบของเหลว","Flowing water, collapsing header, rolling numbers, liquid budget bars"],["1.23","2026-10-10","โอ่งในหน้าจดรายการ รายการรายวันละเอียดขึ้น โอ่งเป้าหมาย เมนูตั้งค่าใหม่","Live jar when adding, richer daily list, goal jars, new settings menu"],["1.22","2026-10-10","แก้คำภาษาอังกฤษบางจุด","English wording fixes"],["1.21","2026-10-10","ชุดเทศกาลของน้องโอ่ง ฟอนต์ Mitr เสียงเหรียญ และชุดสี","Festival outfits, Mitr font, coin sounds, colour palettes"],["1.20","2026-10-10","รองรับเบราว์เซอร์ที่เล่นเอฟเฟกต์ไม่ได้","Works on browsers without effects support"],["1.19","2026-10-10","ฉากเปิดแอป น้องโอ่งขยับได้ เหรียญบิน กราฟค่อยๆ วาด","Intro scene, living mascot, flying coins, chart draw-in"],["1.18","2026-10-10","แก้การเลือกธีมในบางเบราว์เซอร์","Theme detection fix"],["1.17","2026-10-10","วงแหวนความคืบหน้าเป้าหมาย ฉลองเมื่อสำเร็จ สลับธีมสว่าง/มืด","Goal ring, celebrations, light/dark switch"],["1.16","2026-10-10","สตอรี่และการ์ดแชร์สีพาสเทล หน้าว่างมีน้องโอ่ง","Pastel story and share card, mascot empty states"],["1.15","2026-10-10","แก้ปุ่มเบียดในหน้าตั้งค่า","Fixed squashed settings buttons"],["1.14","2026-10-10","ทางลัดจากไอคอนแอป: จดรายจ่าย จดรายรับ ค้นหา","App icon shortcuts: add expense, add income, search"],["1.13","2026-10-10","ปุ่มตอบสนองตอนกด ตัวเลขนับขึ้น และแจ้งเตือนเมื่อบันทึก","Press feedback, count-up numbers, save toast"],["1.12","2026-10-10","หน้าตาใหม่ธีม Bento Pastel (สว่างและมืด)","New Bento Pastel look (light and dark)"],["1.11","2026-10-10","ค้นหาด้วยจำนวนเงินแบบตรงตัว","Search matches amounts exactly"],["1.10","2026-10-10","ค้นหารายการได้ทุกเดือน","Search across all months"],["1.9","2026-10-10","เตือนให้สำรองข้อมูล และเพิ่มหมวดหมู่เองได้","Backup reminder and custom categories"],["1.0–1.8","","รุ่นแรก: จดรายรับรายจ่าย อ่านสลิป งบรายหมวด เป้าหมายออม รายการประจำ ยอดยกมา สตอรี่สรุปเดือน ธีมมืด ติดตั้งเป็นแอปและใช้ออฟไลน์ได้","First releases: income and expenses, slip reading, budgets, savings goals, recurring items, carry-over, monthly story, dark theme, installable and offline"]];
 const DEV_CONTACT={line:'qnapat',mail:''}; // optional: the developer can put a LINE ID or e-mail here for a direct "send to developer" button
 const ERRLOG=[]; addEventListener('error',e=>{ try{ ERRLOG.push((e.message||'error')+' @'+String(e.filename||'').split('/').pop()+':'+(e.lineno||0)); if(ERRLOG.length>5) ERRLOG.shift() }catch(_){} });
 addEventListener('unhandledrejection',e=>{ try{ ERRLOG.push('promise: '+String(e.reason&&e.reason.message||e.reason).slice(0,120)); if(ERRLOG.length>5) ERRLOG.shift() }catch(_){} });
@@ -5283,9 +5358,10 @@ function openHelp(){ const P=sheetOf('helpsheet');
   P.onclick=e=>{ const b=e.target.closest('[data-try]'); if(!b) return; const k=b.dataset.try; hideSheet('helpsheet'); hideSheet('setsheet');
     setTimeout(()=>{ if(k==='voice') startVoice(); else if(k==='explain') openExplain(); else if(k==='trophy') openTrophy(); else if(k==='backup'){ openSet(); setOpenFor($('sharebk')); setTimeout(()=>$('sharebk').scrollIntoView({block:'center'}),350) } },300) } }
 /* (2) What's new — shown once after an update */
-const WHATSNEW=()=>[['book',L('มีเลขเวอร์ชันทุกครั้งที่อัปเดต','A version number for every update'),L('ดูได้ว่าแต่ละเวอร์ชันเปลี่ยนอะไร ย้อนไปถึงรุ่นแรก','See what changed in each version, back to the very first')],
- ['spark',L('เอฟเฟกต์ลื่นขึ้น','Smoother effects'),L('เปิดเอฟเฟกต์ครบก็ไม่กระตุกเหมือนเดิม หน้าตาเหมือนเดิมทุกอย่าง','All effects on without the stutter, same look')],
- ['cloud',L('ฝนและเมฆแบบใหม่','New rain and clouds'),L('สายฝนเฉียงนุ่มตา เมฆขอบนุ่ม เบาเครื่องกว่าเดิม','Soft slanted rain and clouds that are lighter on the phone')]];
+const WHATSNEW=()=>[['spark',L('สรุปวันนี้ตอนค่ำ','Evening wrap-up'),L('หลัง 6 โมงเย็นมีการ์ดสรุปว่าวันนี้ใช้ไปเท่าไร เหลือเท่าไร พรุ่งนี้ใช้ได้วันละเท่าไร','After 6 pm a card shows what you spent, what is left and tomorrow’s budget')],
+ ['money',L('นับถอยหลังเงินเดือนออก','Payday countdown'),L('บอกว่าอีกกี่วันเงินเดือนออก และถึงวันนั้นใช้ได้วันละเท่าไร ตั้งวันได้ใน ตั้งค่า › การเงิน','Days to payday and what you can spend a day until then. Set it in Settings › Money')],
+ ['target',L('ปฏิทินสีของเดือน','Spending calendar'),L('แต่ละวันเป็นสี ทองคือไม่ใช้เงิน เขียวคือในงบ ส้มแดงคือเกินงบ แตะวันเพื่อดูรายละเอียด','Gold for no-spend days, green on budget, orange-red over. Tap a day for details')],
+ ['book',L('สรุปสัปดาห์ทุกวันจันทร์','Monday weekly recap'),L('สตอรี่สั้น 3 หน้า เทียบกับสัปดาห์ก่อน และแจ้งเตือนสรุปยอดตอนค่ำเปิดได้ใน ตั้งค่า › แจ้งเตือน','A 3-page story compared with the week before. Evening summary alerts are in Settings › Reminders')]];
 function openWhatsNew(){ const P=sheetOf('wnsheet');
   P.innerHTML=`<div class="wn-jar">${jarSVG('great',undefined,null,undefined,0)}</div><div class="wn-k">${L('มีอะไรใหม่','WHAT’S NEW')} · v${APP_VER}</div><h3 style="text-align:center;margin:0">${L('น้องโอ่งอัปเดตแล้ว!','Nong Ong just got an update!')}</h3>
   <div class="wn-list">${WHATSNEW().map(([ic,t,d])=>`<div class="wn-item"><i>${ic==='jar'?'<svg viewBox="0 0 24 24"><path d="M8 4h8M9 4v2c-3 1-5 4-5 7.5C4 17.5 7 20 12 20s8-2.5 8-6.5C20 10 18 7 15 6V4M5 13c4 2 10 2 14 0"/></svg>':hsvg(ic)}</i><span><b>${t}</b><small>${d}</small></span></div>`).join('')}</div>
@@ -5359,6 +5435,170 @@ function impFly(gs,done){ if(!gs.length){ done(); return } const L0=$('list'); t
 /* ===== V330 performance helpers ===== */
 (function(){ const hero=document.querySelector('.balance'); if(hero){ try{ new IntersectionObserver(([e])=>document.body.classList.toggle('heroOff',!e.isIntersecting)).observe(hero) }catch(e){} }
   setInterval(()=>{ const on=!!document.querySelector('.sheet:not([hidden])'); if(on!==document.body.classList.contains('sheeting')) document.body.classList.toggle('sheeting',on) },400) })();
+
+/* ===== V340 daily habit: evening summary, payday countdown, month calendar, weekly recap ===== */
+function curBudget(now){ now=now||new Date();
+  const ym=iso(now).slice(0,7), today=iso(now), dim=new Date(now.getFullYear(),now.getMonth()+1,0).getDate(), daysLeft=dim-now.getDate()+1;
+  const rows=data.filter(r=>r.date.startsWith(ym)), sum=(t,f)=>rows.filter(r=>r.type===t&&(!f||f(r))).reduce((s,r)=>s+r.amount,0);
+  const tin=sum('in'), tout=sum('out'), carryAmt=prefs.carry?carryBefore(ym):0, spentToday=sum('out',r=>r.date===today);
+  let upOut=0, saved=0; try{ upOut=upcomingFor(now).filter(r=>r.type==='out').reduce((s,r)=>s+r.amount,0); saved=goalDepositsIn(ym) }catch(e){}
+  const startBal=carryAmt+tin-(tout-spentToday)-upOut-saved, perDay=startBal/daysLeft, todayRows=rows.filter(r=>r.date===today);
+  return {ok:!!(tin||carryAmt>0), today, dim, daysLeft, tin, tout, carryAmt, spentToday, startBal, perDay, leftToday:perDay-spentToday,
+    tomorrow:Math.max(0,(startBal-spentToday)/Math.max(1,daysLeft-1)), nToday:todayRows.length, todayRows};
+}
+function curLogStreak(){ const ds=new Set(data.map(r=>r.date)), d=new Date(), t=ds.has(iso(d)); if(!t) d.setDate(d.getDate()-1);
+  const end=iso(d); let n=0; while(ds.has(iso(d))&&n<2000){ n++; d.setDate(d.getDate()-1) } return {n,today:t,end:n?end:''} }
+const dShort=(ds,o)=>new Date(ds+'T00:00').toLocaleDateString(LOC(),o||{weekday:'short',day:'numeric',month:'short'});
+const habitReady=()=>data.length>0&&!!account;
+
+/* (5) Evening summary: a card from 6 pm, a sheet with today's numbers, and a smarter evening notification */
+function renderEveCard(){ let c=$('evecard'); const now=new Date(), today=iso(now);
+  const show=habitReady()&&now.getHours()>=18&&prefs.eveSeen!==today;
+  if(!show){ if(c) c.hidden=true; return }
+  if(!c){ c=document.createElement('button'); c.type='button'; c.id='evecard'; c.className='evecard'; const b=document.querySelector('.balance'); b.parentNode.insertBefore(c,b.nextSibling); c.onclick=()=>openEve() }
+  const B=curBudget(now), has=B.nToday>0;
+  const sub=!has?L('ยังไม่ได้จดเลย แตะเพื่อดูและจดก่อนนอน','Nothing logged yet. Tap to review and log'):B.spentToday===0?L('วันนี้ไม่ได้ใช้เงินเลย','No spending today'):
+    B.ok&&B.perDay>0?L(`ใช้ไป <b class="num">${fmt(B.spentToday)}</b> จากงบวันนี้ ${fmt(Math.floor(B.perDay))}`,`<b class="num">${fmt(B.spentToday)}</b> of today’s ${fmt(Math.floor(B.perDay))}`):L(`วันนี้ใช้ไป <b class="num">${fmt(B.spentToday)}</b>`,`<b class="num">${fmt(B.spentToday)}</b> spent today`);
+  c.innerHTML=`<span class="em" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></span><span class="tx"><b>${L('สรุปวันนี้','Today’s wrap-up')}</b><small>${sub}</small></span><span class="go">›</span>`;
+  if(c.hidden!==false||!c._in){ c.hidden=false; c._in=1; if(FX()) c.animate([{opacity:0,transform:'translateY(-8px) scale(.98)'},{opacity:1,transform:'none'}],{duration:420,easing:'cubic-bezier(.2,.85,.25,1)'}) }
+}
+function openEve(){ const P=sheetOf('evesheet'), B=curBudget(), S=curLogStreak(), has=B.nToday>0;
+  prefs.eveSeen=B.today; savePrefs(); renderEveCard();
+  const budgetOk=B.ok&&B.perDay>0, ratio=budgetOk?B.spentToday/B.perDay:null;
+  const mood=!has?'none':B.spentToday===0?'great':ratio==null?'good':ratio<=.6?'great':ratio<=1?'good':ratio<=1.5?'warn':'bad';
+  const line=!has?L('วันนี้ยังไม่ได้จดเลย มาจดกันก่อนนอนนะ','Nothing logged yet today. Jot it down before bed?'):B.spentToday===0?L('วันนี้ไม่ได้ใช้เงินเลย เก่งมาก!','No spending today. Brilliant!'):
+    ratio==null?L('จดครบแล้ว ขอบคุณที่มาเติมโอ่งนะ','All logged. Thanks for topping up the jar'):ratio<=.6?L('ใช้น้อยกว่างบเยอะเลย น้องโอ่งยิ้มแก้มปริ','Well under budget. Nong Ong is beaming'):ratio<=1?L('อยู่ในงบพอดี เยี่ยมเลย','Right within budget. Nice'):L('เกินงบไปนิด พรุ่งนี้ค่อยๆ ใช้นะ','A little over today. Go easy tomorrow');
+  const C=2*Math.PI*46, pct=ratio==null?(has?1:0):Math.min(1,ratio), over=ratio!=null&&ratio>1;
+  const ring=`<div class="ev-ring${over?' over':''}"><svg viewBox="0 0 108 108"><circle cx="54" cy="54" r="46" class="bg"/><circle cx="54" cy="54" r="46" class="fg" stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="${(C*(1-pct)).toFixed(1)}" data-off="${(C*(1-pct)).toFixed(1)}" data-c="${C.toFixed(1)}"/></svg><div class="ev-c"><b class="num" id="evnum">${fmt(B.spentToday)}</b><small>${budgetOk?L(`จาก ${fmt(Math.floor(B.perDay))}`,`of ${fmt(Math.floor(B.perDay))}`):L('ใช้วันนี้','spent today')}</small></div></div>`;
+  const stats=[];
+  if(budgetOk) stats.push(B.leftToday>=0?[L('เหลือวันนี้','Left today'),fmt(Math.floor(B.leftToday)),'ok']:[L('เกินงบ','Over by'),fmt(Math.round(-B.leftToday)),'bad']);
+  if(B.ok) stats.push([L('พรุ่งนี้ใช้ได้','Tomorrow'),fmt(Math.floor(B.tomorrow)),'']);
+  stats.push([L('จดติดกัน','Streak'),S.n?L(`${S.n} วัน`,`${S.n} ${S.n===1?'day':'days'}`):L('เริ่มวันนี้','Start today'),S.n>=3?'gold':'']);
+  const items=B.todayRows.slice().sort((a,b)=>(b.type==='out')-(a.type==='out')||b.amount-a.amount);
+  const list=items.length?`<div class="ev-list">${items.slice(0,6).map(r=>`<div class="ev-row">${ic(r.cat,'sm')}<span>${esc(r.memo||tr(r.cat||''))}</span><b class="num ${r.type}">${r.type==='in'||r.type==='back'?'+':r.type==='tr'?'':'-'}${fmt(r.amount)}</b></div>`).join('')}${items.length>6?`<div class="ev-more">${L(`และอีก ${items.length-6} รายการ`,`and ${items.length-6} more`)}</div>`:''}</div>`:'';
+  P.innerHTML=`<div class="ev-k">${dShort(B.today,{weekday:'long',day:'numeric',month:'long'})}</div><h3 style="text-align:center;margin:0">${L('สรุปวันนี้','Today’s wrap-up')}</h3>
+  <div class="ev-top"><div class="ev-jar">${jarSVG(mood,undefined,null,undefined,0)}</div>${ring}</div><p class="ev-line">${line}</p>
+  <div class="ev-stats">${stats.map(s=>`<div class="${s[2]}"><small>${s[0]}</small><b class="num">${s[1]}</b></div>`).join('')}</div>${list}
+  <div class="actions"><button class="btn" type="button" id="evadd">${has?L('จดเพิ่ม','Add more'):L('ไว้ก่อน','Later')}</button><button class="btn save" type="button" id="evok">${has?L('เยี่ยม','Great'):L('จดเลย','Log now')}</button></div>`;
+  showSheet('evesheet');
+  const add=()=>{ hideSheet('evesheet'); setTimeout(()=>openEntry(null),280) };
+  $('evadd').onclick=has?add:()=>hideSheet('evesheet'); $('evok').onclick=has?()=>hideSheet('evesheet'):add;
+  if(FX()){ const fg=P.querySelector('.ev-ring .fg'); fg.animate([{strokeDashoffset:fg.dataset.c},{strokeDashoffset:fg.dataset.off}],{duration:900,delay:200,easing:'cubic-bezier(.2,.85,.25,1)',fill:'backwards'});
+    const n=$('evnum'); n._v=0; setTimeout(()=>animNum(n,B.spentToday,fmt),200);
+    P.querySelectorAll('.ev-stats>div,.ev-row').forEach((e,i)=>e.animate([{opacity:0,transform:'translateY(10px)'},{opacity:1,transform:'none'}],{duration:380,delay:300+i*60,easing:'cubic-bezier(.2,.85,.25,1)',fill:'backwards'})) }
+}
+setInterval(()=>{ try{ if(document.visibilityState==='visible') renderEveCard() }catch(e){} },60000);
+
+/* (6) Payday countdown. prefs.payday: undefined = auto from salary entries, 0 = off, 1–31 = that day, 32 = last day of the month.
+   A payday on Saturday or Sunday moves to the Friday before, as most Thai employers do. */
+function detectPayday(){ const cut=iso(new Date(Date.now()-150*864e5)), xs=data.filter(r=>r.type==='in'&&r.cat==='เงินเดือน'&&r.date>=cut); if(!xs.length) return null;
+  const cnt={}; xs.forEach(r=>{ const d=new Date(r.date+'T00:00'), dim=new Date(d.getFullYear(),d.getMonth()+1,0).getDate(), day=d.getDate(); let k=day;
+    if(day>=28&&dim-day<=1) k=32; else if(d.getDay()===5&&day+2<=dim){ /* paid on a Friday because the real day fell on the weekend */ for(const w of [1,2]){ const x=new Date(d); x.setDate(day+w); if(x.getDay()===6||x.getDay()===0){ if(xs.some(o=>+o.date.slice(8)===day+w)) k=day+w } } }
+    cnt[k]=(cnt[k]||0)+1 });
+  return +Object.entries(cnt).sort((a,b)=>b[1]-a[1]||b[0]-a[0])[0][0] }
+function paydayDay(){ const p=prefs.payday; if(p===0) return null; if(p>=1&&p<=32) return p; return detectPayday() }
+function payDateIn(y,m,day){ const dim=new Date(y,m+1,0).getDate(), d=new Date(y,m,day===32?dim:Math.min(day,dim)), w=d.getDay(); if(w===6) d.setDate(d.getDate()-1); else if(w===0) d.setDate(d.getDate()-2); return d }
+function nextPayday(now){ now=now||new Date(); const day=paydayDay(); if(!day) return null; const t0=new Date(now.getFullYear(),now.getMonth(),now.getDate()), ts=iso(t0);
+  for(let k=0;k<3;k++){ const d=payDateIn(now.getFullYear(),now.getMonth()+k,day); if(d<t0) continue;
+    const lo=iso(new Date(d.getFullYear(),d.getMonth(),d.getDate()-7)); if(k<2&&data.some(r=>r.type==='in'&&r.cat==='เงินเดือน'&&r.date>=lo&&r.date<=ts)) continue; // already paid this round
+    const prev=payDateIn(now.getFullYear(),now.getMonth()+k-1,day); return {date:d,days:Math.round((d-t0)/864e5),day,cycle:Math.max(1,Math.round((d-prev)/864e5))} }
+  return null }
+function renderPayChip(){ let c=$('paychip'); const now=new Date(), cur=view.getFullYear()===now.getFullYear()&&view.getMonth()===now.getMonth(), P=habitReady()&&cur?nextPayday(now):null;
+  if(!P){ if(c) c.hidden=true; return }
+  if(!c){ c=document.createElement('button'); c.type='button'; c.id='paychip'; c.className='paychip'; const a=$('allow'); a.parentNode.insertBefore(c,a.nextSibling);
+    c.onclick=e=>{ e.stopPropagation(); const p=nextPayday(); if(p&&p.days===0){ openEntry(null); setType('in'); cat='เงินเดือน'; chips() } else { openSet(); setOpenFor($('paygroup')); setTimeout(()=>{ try{$('paygroup').scrollIntoView({block:'center'})}catch(_){} },350) } } }
+  const B=curBudget(now), ds=iso(P.date), when=dShort(ds,{weekday:'short',day:'numeric',month:'short'});
+  const head=P.days===0?L('วันนี้เงินเดือนออก!','Payday is today!'):P.days===1?L('พรุ่งนี้เงินเดือนออก','Payday is tomorrow'):L(`อีก ${P.days} วันเงินเดือนออก`,`${P.days} days to payday`);
+  const per=B.ok&&B.startBal>0&&P.days>0?Math.floor(B.startBal/P.days):null;
+  const sub=P.days===0?L('แตะเพื่อจดรายรับเงินเดือน','Tap to log your salary'):per!=null?L(`${when} · ถึงวันนั้นใช้ได้วันละ <b class="num">${fmt(per)}</b>`,`${when} · until then <b class="num">${fmt(per)}</b> a day`):when;
+  const prog=Math.max(0,Math.min(1,1-P.days/P.cycle));
+  c.classList.toggle('today',P.days===0); c.classList.toggle('soon',P.days>0&&P.days<=3);
+  c.innerHTML=`<span class="pi" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 7h18v10H3zM12 12m-2.5 0a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0-5 0M6 10v4M18 10v4"/></svg></span><span class="pt"><b>${head}</b><small>${sub}</small><i class="pp"><u style="width:${(prog*100).toFixed(1)}%"></u></i></span>`;
+  c.hidden=false }
+function renderPayGroup(){ const s=$('payday'); if(!s) return; const det=detectPayday(), v=prefs.payday;
+  const name=d=>d===32?L('วันสิ้นเดือน','Last day of the month'):L(`วันที่ ${d}`,`Day ${d}`);
+  s.innerHTML=`<option value="">${L('อัตโนมัติ','Auto')}${det?` (${name(det)})`:''}</option>`+Array.from({length:31},(_,i)=>`<option value="${i+1}">${name(i+1)}</option>`).join('')+`<option value="32">${name(32)}</option><option value="0">${L('ไม่แสดง','Hide')}</option>`;
+  s.value=v==null?'':String(v);
+  const P=nextPayday(), note=$('paynote');
+  if(note) note.textContent=v==null&&!det?L('ยังไม่รู้วันเงินเดือนออก จดรายรับหมวด “เงินเดือน” สักครั้ง หรือเลือกวันเองได้เลย','No payday yet. Log one income as “Salary”, or pick the day here.'):
+    P?L(`รอบถัดไป ${dShort(iso(P.date),{weekday:'long',day:'numeric',month:'long'})} · ถ้าตรงเสาร์-อาทิตย์ จะนับเป็นวันศุกร์ก่อนหน้า`,`Next: ${dShort(iso(P.date),{weekday:'long',day:'numeric',month:'long'})} · weekend paydays move to the Friday before`):'' }
+(function(){ const s=$('payday'); if(!s) return; s.addEventListener('change',()=>{ const v=s.value; if(v==='') delete prefs.payday; else prefs.payday=+v; savePrefs(); renderPayGroup(); render() }) })();
+
+/* (7) Month calendar: each day coloured by spending against the daily budget */
+function renderCal(){ let sec=$('calsec'); const ref=$('owesec'); if(!ref) return;
+  if(!sec){ sec=document.createElement('section'); sec.id='calsec'; ref.parentNode.insertBefore(sec,ref);
+    sec.addEventListener('click',e=>{ const b=e.target.closest('.cd[data-d]'); if(b&&!b.disabled){ calPick(b.dataset.d); return } if(e.target.closest('#calgo')) calJump(sec._pick) }) }
+  const y=view.getFullYear(), m=view.getMonth(), ym=y+'-'+String(m+1).padStart(2,'0'), dim=new Date(y,m+1,0).getDate(), lead=new Date(y,m,1).getDay(), today=iso(new Date());
+  const rows=data.filter(r=>r.date.startsWith(ym));
+  if(!habitReady()||!rows.length&&ym!==today.slice(0,7)||ym>today.slice(0,7)){ sec.hidden=true; return }
+  const outs={}, cnt={}; rows.forEach(r=>{ cnt[r.date]=(cnt[r.date]||0)+1; if(r.type==='out') outs[r.date]=(outs[r.date]||0)+r.amount });
+  const tin=rows.filter(r=>r.type==='in').reduce((s,r)=>s+r.amount,0), carryAmt=prefs.carry?carryBefore(ym):0;
+  let base=(Math.max(0,carryAmt)+tin)/dim, fromIncome=base>0;
+  if(!fromIncome){ const v=Object.values(outs).sort((a,b)=>a-b); base=v.length?v[v.length>>1]:0 }
+  const firstEver=data.reduce((a,r)=>r.date<a?r.date:a,'9999'), n={ns:0,ok:0,near:0,over:0};
+  const H=LANG==='en'?['S','M','T','W','T','F','S']:['อา','จ','อ','พ','พฤ','ศ','ส'];
+  let cells=H.map(h=>`<span class="ch">${h}</span>`).join('')+'<span class="cb"></span>'.repeat(lead);
+  for(let d=1;d<=dim;d++){ const ds=ym+'-'+String(d).padStart(2,'0'), o=outs[ds]||0;
+    const k=ds>today?'fut':ds<firstEver?'pre':!o?'ns':!(base>0)||o<=base?'ok':o<=base*1.5?'near':'over'; if(n[k]!=null) n[k]++;
+    cells+=`<button type="button" class="cd ${k}${ds===today?' td':''}${sec._pick===ds?' pk':''}" data-d="${ds}" style="--i:${d+lead}"${k==='fut'||k==='pre'?' disabled':''} aria-label="${dShort(ds)}${o?' '+fmt(o):''}"><span>${d}</span>${k==='ns'&&cnt[ds]!=null||k==='ns'?'<i></i>':''}</button>` }
+  const lg=[['ns',L('ไม่ใช้เงิน','No spend')],['ok',L('ในงบ','On budget')],['near',L('เกินนิด','A bit over')],['over',L('เกินงบ','Over')]].filter(([k])=>n[k]||k==='ok'||k==='ns');
+  sec.hidden=false;
+  sec.innerHTML=`<h2><span>${L('ปฏิทินการใช้เงิน','Spending calendar')}</span><small class="num">${base>0?(fromIncome?L(`งบวันละ ${fmt(Math.floor(base))}`,`${fmt(Math.floor(base))} a day`):L(`เทียบกับวันปกติ ${fmt(Math.floor(base))}`,`vs a typical ${fmt(Math.floor(base))}`)):''}</small></h2>
+  <div class="calwrap"><div class="cal">${cells}</div><div class="callg">${lg.map(([k,t])=>`<span class="${k}"><i></i>${t} <b class="num">${n[k]}</b></span>`).join('')}</div><div class="caldet" id="caldet" hidden></div></div>`;
+  sec._base=base;
+  if(sec._ym!==ym){ sec._ym=ym; sec._pick=null; if(FX()){ const c=sec.querySelector('.cal'); c.classList.add('fresh'); setTimeout(()=>c.classList.remove('fresh'),1400) } }
+  else if(sec._pick) calPick(sec._pick,true) }
+function calPick(ds,quiet){ const sec=$('calsec'), det=$('caldet'); if(!sec||!det) return;
+  if(sec._pick===ds&&!quiet){ sec._pick=null; det.hidden=true; sec.querySelectorAll('.cd.pk').forEach(x=>x.classList.remove('pk')); return }
+  sec._pick=ds; sec.querySelectorAll('.cd').forEach(x=>x.classList.toggle('pk',x.dataset.d===ds));
+  const rs=data.filter(r=>r.date===ds), outs=rs.filter(r=>r.type==='out').sort((a,b)=>b.amount-a.amount), o=outs.reduce((s,r)=>s+r.amount,0), base=sec._base||0;
+  const verdict=!o?L('ไม่ได้ใช้เงินเลย','No spending'):base>0?(o<=base?L(`ในงบ เหลือ ${fmt(Math.floor(base-o))}`,`On budget, ${fmt(Math.floor(base-o))} to spare`):L(`เกินงบ ${fmt(Math.round(o-base))}`,`${fmt(Math.round(o-base))} over`)):'';
+  det.innerHTML=`<div class="cdh"><b>${dShort(ds,{weekday:'long',day:'numeric',month:'short'})}</b><span class="num">${o?'-'+fmt(o):''}</span></div><small>${verdict}${rs.length?L(` · ${rs.length} รายการ`,` · ${rs.length} ${rs.length===1?'entry':'entries'}`):''}</small>
+  ${outs.length?`<div class="cdl">${outs.slice(0,3).map(r=>`<span>${ic(r.cat,'sm')}${esc(r.memo||tr(r.cat||''))}<b class="num">${fmt(r.amount)}</b></span>`).join('')}</div>`:''}${rs.length?`<button type="button" id="calgo">${L('ดูในรายการ','Show in list')} ›</button>`:''}`;
+  if(det.hidden){ det.hidden=false; if(FX()&&!quiet) det.animate([{opacity:0,transform:'translateY(-6px)'},{opacity:1,transform:'none'}],{duration:260,easing:'cubic-bezier(.2,.85,.25,1)'}) } }
+function calJump(ds){ if(!ds) return; let el=document.querySelector(`#list .day[data-d="${ds}"]`);
+  if(!el&&(filterCat||$('q').value)){ filterCat=null; $('q').value=''; render(); el=document.querySelector(`#list .day[data-d="${ds}"]`) }
+  if(!el){ toast(L('ไม่มีรายการวันนั้น','Nothing on that day')); return }
+  el.scrollIntoView({behavior:RM()?'auto':'smooth',block:'center'}); el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash'); setTimeout(()=>el.classList.remove('flash'),1600) }
+
+/* (8) Weekly recap: from Monday to Thursday, a card for last week opens a 3-page story */
+function weekOf(now,back){ const t=new Date(now.getFullYear(),now.getMonth(),now.getDate()), dow=(t.getDay()+6)%7, mon=new Date(t); mon.setDate(t.getDate()-dow-7*back);
+  return Array.from({length:7},(_,i)=>{ const d=new Date(mon); d.setDate(mon.getDate()+i); return iso(d) }) }
+function weekData(days){ const set=new Set(days), rows=data.filter(r=>set.has(r.date)), outs=rows.filter(r=>r.type==='out');
+  const wd=days.map(ds=>outs.filter(r=>r.date===ds).reduce((s,r)=>s+r.amount,0)), cats={}; outs.forEach(r=>cats[r.cat]=(cats[r.cat]||0)+r.amount);
+  const firstEver=data.reduce((a,r)=>r.date<a?r.date:a,'9999');
+  return {days,rows,count:rows.length,tin:rows.filter(r=>r.type==='in').reduce((s,r)=>s+r.amount,0),tout:wd.reduce((a,b)=>a+b,0),wd,
+    top:Object.entries(cats).sort((a,b)=>b[1]-a[1])[0]||null,logged:new Set(rows.map(r=>r.date)).size,noSpend:days.filter((ds,i)=>ds>=firstEver&&!wd[i]).length} }
+const weekLabel=days=>{ const a=new Date(days[0]+'T00:00'), b=new Date(days[6]+'T00:00'), f=(d,o)=>d.toLocaleDateString(LOC(),o);
+  return a.getMonth()===b.getMonth()?`${a.getDate()}–${f(b,{day:'numeric',month:'short'})}`:`${f(a,{day:'numeric',month:'short'})} – ${f(b,{day:'numeric',month:'short'})}` };
+function renderWeekCard(){ let c=$('wkbtn'); const now=new Date(), dow=(now.getDay()+6)%7, days=weekOf(now,1), cur=view.getFullYear()===now.getFullYear()&&view.getMonth()===now.getMonth();
+  const show=habitReady()&&cur&&dow<=3&&prefs.wkSeen!==days[0]&&weekData(days).count>0;
+  if(!show){ if(c) c.hidden=true; return }
+  if(!c){ c=document.createElement('button'); c.type='button'; c.id='wkbtn'; c.className='insbtn wkbtn'; const r=$('openrecap'); r.parentNode.insertBefore(c,r); c.onclick=()=>vtReveal(c,openWeek) }
+  c.innerHTML=`<span class="spark"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4M7 14h2M11 14h2M15 14h2"/></svg></span><span><b>${L('สรุปสัปดาห์ที่แล้ว','Last week in review')}</b><small>${weekLabel(days)} · ${L('ดูว่าเงินไปไหน เทียบกับสัปดาห์ก่อน','Where it went, compared with the week before')}</small></span><span class="go">›</span>`;
+  c.hidden=false }
+function openWeek(){ const now=new Date(), days=weekOf(now,1), d=weekData(days), p=weekData(weekOf(now,2)), B=curBudget(now);
+  prefs.wkSeen=days[0]; savePrefs();
+  const DN=LANG==='en'?['Mon','Tue','Wed','Thu','Fri','Sat','Sun']:['จ.','อ.','พ.','พฤ.','ศ.','ส.','อา.'], mx=Math.max(1,...d.wd), hi=d.wd.indexOf(Math.max(...d.wd));
+  const wm=!d.tout||(p.tout&&d.tout<=p.tout)?'great':B.ok&&B.perDay>0&&d.tout>B.perDay*7*1.3?'warn':'good';
+  const S=[];
+  S.push(`<div class="k">${L('สรุปสัปดาห์','Week in review')}</div><h2 class="h">${L('สัปดาห์ที่แล้ว<br>ของคุณ','Your<br>last week')}</h2><div class="pigbig">${pigSVG(wm)}</div><p class="p">${L(`จด ${d.count} รายการ ใน ${d.logged} จาก 7 วัน`,`${d.count} entries on ${d.logged} of 7 days`)}</p>`);
+  let cmp='';
+  if(p.tout>0&&d.tout>0){ const diff=d.tout-p.tout, pc=Math.round(Math.abs(diff)/p.tout*100);
+    cmp=diff<0?L(`น้อยกว่าสัปดาห์ก่อน ${fmt(-diff)} (−${pc}%) เก่งมาก`,`${fmt(-diff)} less than the week before (−${pc}%). Nice`):diff>0?L(`มากกว่าสัปดาห์ก่อน ${fmt(diff)} (+${pc}%)`,`${fmt(diff)} more than the week before (+${pc}%)`):L('เท่ากับสัปดาห์ก่อนพอดี','Exactly the same as the week before') }
+  else if(!d.tout) cmp=L('ไม่ได้ใช้เงินเลยทั้งสัปดาห์!','No spending all week!');
+  S.push(`<div class="k">${L('ใช้ไปทั้งสัปดาห์','Spent this week')}</div><div class="n num">${fmt(d.tout)}</div>${d.tout?`<div class="week">${d.wd.map((v,i)=>`<div class="${i===hi?'hi':''}"><span style="height:${Math.max(4,v/mx*100)}%"></span>${DN[i]}</div>`).join('')}</div>`:''}<p class="p">${cmp}</p>`);
+  const tips=[];
+  if(d.top) tips.push(L(`หมวดที่ใช้มากสุดคือ <b>${esc(d.top[0])}</b> ${fmt(d.top[1])}`,`Top category: <b>${esc(tr(d.top[0]))}</b> ${fmt(d.top[1])}`));
+  if(d.noSpend) tips.push(L(`ไม่ได้ใช้เงินเลย ${d.noSpend} วัน`,`${d.noSpend} no-spend ${d.noSpend===1?'day':'days'}`));
+  if(d.tout&&hi>=0) tips.push(L(`วันที่ใช้มากสุดคือวัน${TH_D[(hi+1)%7]}`,`Biggest day: ${EN_D[(hi+1)%7]}`));
+  S.push(`<div class="k">${L('สัปดาห์นี้ลุยต่อ','This week')}</div><h2 class="h">${B.ok&&B.perDay>0?L(`ใช้ได้วันละ<br><span class="num">${fmt(Math.floor(B.perDay))}</span>`,`<span class="num">${fmt(Math.floor(B.perDay))}</span><br>a day`):L('จดต่อทุกวันนะ','Keep logging daily')}</h2><div class="wkt">${tips.map(t=>`<p>${t}</p>`).join('')}</div><div class="acts"><button id="sdone">${L('ลุยสัปดาห์นี้','Let’s go')}</button></div>`);
+  story={d:{tin:d.tin,tout:d.tout},slides:S,i:0,weekly:true,mood:wm};
+  $('smonth').textContent=weekLabel(days); $('sbars').innerHTML=S.map(()=>'<i><b></b></i>').join('');
+  $('story').hidden=false; document.body.style.overflow='hidden'; showSlide(0); renderWeekCard() }
+
+afterRender(()=>{ renderEveCard(); renderPayChip(); renderCal(); renderWeekCard() });
+try{ const qs=new URLSearchParams(location.search); if(qs.get('eve')&&account){ history.replaceState(null,'',location.pathname); setTimeout(openEve,900) } }catch(e){}
 </script>
 
 <script>

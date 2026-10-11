@@ -5,6 +5,7 @@ Version = `1.` + the cache number in `sw.js`. Every release adds a line at the t
 
 | เวอร์ชัน | วันที่ | อะไรเปลี่ยน | What changed |
 |---|---|---|---|
+| 1.53 | 2026-10-11 | สรุปวันนี้ตอนค่ำ แจ้งเตือนแบบรู้ใจ นับถอยหลังวันเงินเดือนออก ปฏิทินสีของเดือน และสรุปสัปดาห์ทุกวันจันทร์ | Evening wrap-up, smarter reminders, payday countdown, month colour calendar and a Monday weekly recap |
 | 1.52 | 2026-10-11 | ใส่เลขเวอร์ชันทุกครั้งที่อัปเดต และดูประวัติทุกเวอร์ชันย้อนหลังได้ | Every update now has a version number, with the full version history |
 | 1.51 | 2026-10-11 | เอฟเฟกต์ลื่นขึ้น: ฝนแบบใหม่ เมฆนุ่มขึ้น ลดภาพเคลื่อนไหวที่วิ่งพร้อมกัน และหยุดส่วนที่มองไม่เห็น | Smoother effects: new rain, softer clouds, fewer animations at once, off-screen motion paused |
 | 1.50 | 2026-10-11 | น้ำในโอ่งขึ้นตามตอนพิมพ์ยอดเงินเริ่มต้น ที่มายอดเงินนับเลขขึ้น รายการนำเข้าหล่นลงในรายการ ตู้โชว์มีประกาย | Water rises as you type the opening balance, balance explainer counts up, imported rows drop in, cabinet glints |
