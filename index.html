@@ -1534,6 +1534,31 @@ body.printing #report .rpbar{position:fixed;left:0;right:0;bottom:0;display:flex
   .rp h2{break-after:avoid}.rp tr{break-inside:avoid} }
 body.lowfx .dust,body.lowfx .balance::after,body.lowfx .recapbtn::after,body.lowfx #todfx i,body.lowfx .bsplash,body.lowfx .wxspl,body.lowfx #wxfx .wcloud,body.lowfx #wxfx .wheat,body.lowfx #wxfx .wfog,body.lowfx #wxfx .wsun::before{display:none!important}
 body.lowfx .ncap,body.lowfx .nspill .fl1,body.lowfx .nspill .fl2,body.lowfx .wxdrip circle,body.lowfx .wxsweat,body.lowfx .wxfan{animation:none!important}
+
+/* ===== V300 first run: ask for the starting balance; explain the balance ===== */
+#onbsheet .panel{gap:14px;padding-top:30px}
+.onb-jar{width:150px;height:150px;margin:0 auto -4px;position:relative}
+.onb-jar svg{width:100%;height:100%;overflow:visible}
+.onb-h{font:500 24px var(--display);text-align:center;margin:0}
+.onb-p{font-size:14.5px;color:var(--muted);text-align:center;margin:0;line-height:1.6}
+.onb-q{font:500 17px var(--display);margin:6px 2px 0}
+.onb-amt{position:relative}
+.onb-amt input{width:100%;height:68px;border:0;border-radius:20px;background:var(--surface);box-shadow:inset 0 0 0 1.5px var(--ov);font:500 34px var(--display);text-align:right;padding:0 18px 0 46px;color:var(--ink)}
+.onb-amt input:focus{outline:none;box-shadow:inset 0 0 0 2px var(--ink)}
+.onb-amt span{position:absolute;left:18px;top:50%;transform:translateY(-50%);font:500 22px var(--display);color:var(--muted)}
+.onb-help{font-size:12.5px;color:var(--muted);line-height:1.55;margin:0 2px}
+.onb-quick{display:flex;flex-wrap:wrap;gap:6px}
+.onb-quick button{border:0;border-radius:999px;padding:7px 12px;background:var(--s-high);color:var(--ink);font:500 13px var(--body);cursor:pointer}
+.onb-link{border:0;background:none;color:var(--muted);text-decoration:underline;font:500 13.5px var(--body);cursor:pointer;padding:6px;align-self:center}
+.onb-steps{display:flex;justify-content:center;gap:6px;margin-top:-4px}.onb-steps i{width:6px;height:6px;border-radius:3px;background:var(--ov)}.onb-steps i.on{width:18px;background:var(--ink)}
+#carry,#ballabel{cursor:pointer}
+.why{display:inline-grid;place-items:center;width:17px;height:17px;border-radius:50%;margin-left:6px;vertical-align:1px;font:600 11px var(--body);color:var(--muted);box-shadow:inset 0 0 0 1.3px currentColor;opacity:.8}
+.expl{display:flex;flex-direction:column;border-radius:18px;background:var(--surface);overflow:hidden}
+.expl div{display:flex;justify-content:space-between;gap:12px;padding:12px 14px;border-bottom:1px solid var(--ov);font-size:14.5px}
+.expl div small{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+.expl div b{font:500 16px var(--display);white-space:nowrap}
+.expl div.tot{background:var(--s-high);border-bottom:0}.expl div.tot b{font-size:20px}
+.expl .pos{color:var(--in,#2f7d5b)}.expl .neg{color:var(--out,#b3492f)}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i></div><div id="festfx" aria-hidden="true"></div>
@@ -2177,7 +2202,7 @@ function sample(){
     ['in',3500,'ฟรีแลนซ์','',7],['out',120,'อาหาร','กาแฟ',8],['out',350,'บันเทิง','ดูหนัง',9],['out',2850,'อาหาร','ซื้อของเข้าบ้าน',9]
   ].map((r,i)=>({id:'s'+i,type:r[0],amount:r[1],cat:r[2],memo:r[3],date:d(r[4]),demo:true}));
 }
-let data=load(KEY,null); const freshSample=!Array.isArray(data); if(freshSample) data=sample();
+let data=load(KEY,null); var FIRST_RUN=!Array.isArray(data); const freshSample=FIRST_RUN&&!!window.KP_SAMPLE; if(FIRST_RUN) data=freshSample?sample():[];
 
 /* Goals + recurring state */
 const GKEY='kp-goals-v1', RKEY='kp-recur-v1';
@@ -2830,7 +2855,7 @@ $('list').onkeydown=e=>{if((e.key==='Enter'||e.key===' ')&&e.target.classList.co
 $('prev').onclick=()=>{view.setMonth(view.getMonth()-1);filterCat=null;render()};
 $('next').onclick=()=>{view.setMonth(view.getMonth()+1);filterCat=null;render()};
 $('fchip').onclick=()=>{filterCat=null;flipList(render)};
-$('cleardemo').onclick=()=>{data=data.filter(r=>!r.demo);goals=goals.filter(g=>!g.demo);recur=recur.filter(r=>!r.demo);save();saveGoals();saveRecur();render()};
+$('cleardemo').onclick=()=>{data=data.filter(r=>!r.demo);goals=goals.filter(g=>!g.demo);recur=recur.filter(r=>!r.demo);save();saveGoals();saveRecur();render(); if(!prefs.onbDone&&!data.length) setTimeout(()=>openOnboard(false),400)};
 
 /* Daily allowance */
 /* Empty states with the mascot */
@@ -4526,7 +4551,7 @@ function gameCtx(){
   c.recur=(recur||[]).some(r=>!r.demo); c.tax=R.some(r=>r.tax); c.backup=!!+prefs.lastBackup;
   const hrs=R.map(r=>{const t=parseInt(String(r.id).replace(/s\d+$/,''),36); return t>1.5e12&&t<2.5e12?new Date(t).getHours():null}).filter(h=>h!=null);
   c.night=hrs.some(h=>h>=23||h<4); c.early=hrs.some(h=>h>=4&&h<7);
-  c.kept=R.reduce((a,r)=>a+NET(r),0)+(+prefs.opening||0); return c }
+  c.kept=R.reduce((a,r)=>a+NET(r),0); return c }
 const lvOf=xp=>{let l=1; LEVELS.forEach((x,i)=>{if(xp>=x[0]) l=i+1}); return l};
 const GQ=[]; let gqBusy=false;
 function gameTick(){
@@ -5091,6 +5116,63 @@ function renderGd(){ const st=$('gdst'); if(!st) return; const g=prefs.gd||{}, h
   $('gdrs').onclick=async()=>{ if(!gdId()) return; try{ await gdToken(!GD.tok); gdRestoreLatest() }catch(e){ toast(L('เชื่อม Google Drive ไม่สำเร็จ','Could not connect Google Drive')) } };
   $('gdcid').addEventListener('change',e=>{ prefs.gd=prefs.gd||{}; prefs.gd.cid=e.target.value.trim(); prefs.gd.folder=null; savePrefs(); renderGd() });
   renderGd() })();
+
+/* ===== V300 first run & "where does this number come from" ===== */
+function loadSample(){ data=sample(); const ym=iso(new Date()).slice(0,7), d=new Date();
+  goals=[{id:'g-demo',name:'ทริปญี่ปุ่น',target:30000,icon:'travel',deadline:'',demo:true,hist:[{date:iso(new Date(d.getFullYear(),d.getMonth()-2,28)),amount:7000},{date:iso(new Date(d.getFullYear(),d.getMonth()-1,28)),amount:5000}]},...goals.filter(g=>!g.demo)];
+  recur=[{id:'rc-salary',type:'in',amount:45000,cat:'เงินเดือน',memo:'',day:1,startYM:ym,skip:[],demo:true},{id:'rc-condo',type:'out',amount:8500,cat:'ที่พัก',memo:'ค่าคอนโด',day:1,startYM:ym,skip:[],demo:true},{id:'rc-net',type:'out',amount:599,cat:'บิล/ค่าน้ำไฟ',memo:'ค่าเน็ตบ้าน',day:25,startYM:ym,skip:[],demo:true},...recur.filter(r=>!r.demo)];
+  data.forEach(r=>{ if(r.id==='s0') r.recurId='rc-salary'; if(r.id==='s1') r.recurId='rc-condo' });
+  save(); saveGoals(); saveRecur(); lastMood=null; render() }
+function openOnboard(withSample){ let sh=$('onbsheet'); if(!sh){ sh=document.createElement('div'); sh.className='sheet'; sh.id='onbsheet'; sh.hidden=true; sh.innerHTML='<div class="panel" id="onbpanel"></div>'; document.body.appendChild(sh) }
+  const P=$('onbpanel');
+  const step1=()=>{ P.innerHTML=`<div class="onb-steps"><i class="on"></i><i></i></div><div class="onb-jar">${jarSVG('great',undefined,null,undefined,0)}</div><h3 class="onb-h">${L('สวัสดี! เราชื่อน้องโอ่ง','Hi! I’m Nong Ong')}</h3>
+    <p class="onb-p">${L('จดรายรับรายจ่ายไว้ที่นี่ แล้วดูว่าเดือนนี้เหลือเก็บเท่าไร ใช้น้อยน้ำในโอ่งก็เต็ม ใช้เยอะโอ่งก็แห้ง ข้อมูลทั้งหมดอยู่ในมือถือคุณเท่านั้น','Log what comes in and goes out, and see what you get to keep. Spend less and the jar fills up. Everything stays on your phone.')}</p>
+    <div class="actions"><button class="btn save" type="button" id="onbnext">${L('เริ่มกันเลย','Let’s start')}</button></div>
+    ${withSample?`<button class="onb-link" type="button" id="onbsample">${L('ขอดูข้อมูลตัวอย่างก่อน','Show me sample data first')}</button>`:''}`;
+    $('onbnext').onclick=step2; if($('onbsample')) $('onbsample').onclick=()=>{ hideSheet('onbsheet'); loadSample(); toast(L('นี่คือข้อมูลตัวอย่าง ล้างได้ทุกเมื่อ','This is sample data. Clear it any time')) };
+    if(typeof nongSpeak==='function'&&vMode()==='always') setTimeout(()=>nongSpeak(L('สวัสดี! เราชื่อน้องโอ่ง','Hi! I am Nong Ong'),null),400) };
+  const step2=()=>{ const go=()=>{ P.innerHTML=`<div class="onb-steps"><i></i><i class="on"></i></div><div class="onb-jar" style="width:110px;height:110px">${jarSVG('good',undefined,.3,undefined,0)}</div>
+    <p class="onb-q">${L('ตอนนี้มีเงินอยู่ประมาณเท่าไร','Roughly how much money do you have right now?')}</p>
+    <div class="onb-amt"><span>฿</span><input id="onbamt" inputmode="decimal" placeholder="0" autocomplete="off"></div>
+    <div class="onb-quick">${[1000,5000,10000,50000].map(v=>`<button type="button" data-v="${v}">${fmt(v)}</button>`).join('')}</div>
+    <p class="onb-help">${L('รวมเงินในบัญชีและเงินสดที่ใช้จ่ายประจำ ไม่ต้องเป๊ะ ยอดในโอ่งจะเริ่มนับจากตัวเลขนี้ แก้ได้ทีหลังที่ ตั้งค่า › การเงิน › ยอดเงินเริ่มต้น','Add up the account and cash you spend from. A rough number is fine. The jar starts counting from here. Change it later in Settings › Money › Opening balance.')}</p>
+    <div class="actions"><button class="btn" type="button" id="onbskip">${L('ข้าม เริ่มจาก ฿0','Skip, start at ฿0')}</button><button class="btn save" type="button" id="onbgo">${L('เริ่มใช้','Start')}</button></div>`;
+    P.querySelector('.onb-quick').onclick=e=>{ const b=e.target.closest('[data-v]'); if(b){ $('onbamt').value=b.dataset.v; bump(b) } };
+    $('onbskip').onclick=()=>finish(0); $('onbgo').onclick=()=>{ const v=parseFloat(String($('onbamt').value).replace(/,/g,'')); if(!(v>=0)&&$('onbamt').value.trim()){ shake($('onbamt')); return } finish(v||0) };
+    $('onbamt').addEventListener('keydown',e=>{ if(e.key==='Enter') $('onbgo').click() }); setTimeout(()=>{try{$('onbamt').focus()}catch(_){}},250) };
+    if(FX()) P.animate([{opacity:1,transform:'none'},{opacity:0,transform:'translateX(-24px)'}],{duration:160}).onfinish=()=>{ go(); P.animate([{opacity:0,transform:'translateX(24px)'},{opacity:1,transform:'none'}],{duration:240,easing:'cubic-bezier(.2,.85,.25,1)'}) }; else go() };
+  const finish=v=>{ prefs.opening=Math.round(v*100)/100; prefs.carry=true; prefs.onbDone=1; savePrefs(); hideSheet('onbsheet'); lastMood=null; render();
+    try{ if($('opening')) $('opening').value=prefs.opening||'' }catch(_){}
+    if(v>0&&FX()){ const j=centerOf($('pig')); setTimeout(()=>{ for(let i=0;i<5;i++) setTimeout(()=>splash(j.x,j.y-20,7),i*150); bump($('pig')); sfx('clink') },350) }
+    toast(v>0?L(`เริ่มจาก ${fmt(v)} แล้ว จดรายการแรกได้เลย`,`Starting at ${fmt(v)}. Log your first entry!`):L('เริ่มจาก ฿0 จดรายการแรกได้เลย','Starting at ฿0. Log your first entry!')) };
+  step1(); showSheet('onbsheet') }
+function onbWhenReady(withSample){ let k=0; const t=()=>{ const busy=($('auth')&&!$('auth').hidden)||($('intro')&&!$('intro').hidden)||document.body.classList.contains('locked')||document.querySelector('.sheet:not([hidden])');
+  if(busy&&k++<60){ setTimeout(t,800); return } if(!prefs.onbDone&&!data.some(r=>!r.demo)) openOnboard(withSample) }; setTimeout(t,900) }
+if(FIRST_RUN&&!freshSample&&!prefs.onbDone) onbWhenReady(true);
+/* Tap the balance to see where the number comes from */
+function openExplain(){ const ym=view.getFullYear()+'-'+String(view.getMonth()+1).padStart(2,'0'), rows=data.filter(r=>r.date.startsWith(ym));
+  const tin=rows.filter(r=>r.type==='in').reduce((a,r)=>a+r.amount,0), tout=rows.filter(r=>r.type==='out').reduce((a,r)=>a+r.amount,0), lend=rows.filter(r=>r.type==='lend'||r.type==='back').reduce((a,r)=>a+NET(r),0);
+  const carry=prefs.carry?carryBefore(ym):0, open=(+prefs.opening||0)+wallets.filter(w=>w.id!=='w0').reduce((a,w)=>a+(+w.opening||0),0), dep=prefs.carry?goals.filter(g=>!g.demo).reduce((s,g)=>s+(g.hist||[]).filter(h=>h.date.startsWith(ym)).reduce((a,h)=>a+h.amount,0),0):0;
+  const total=prefs.carry?carry+tin-tout-dep+lend:tin-tout; const sg=v=>(v<0?'-':v>0?'+':'')+fmt(Math.abs(v)), mon=L(TH_M[view.getMonth()],EN_M[view.getMonth()]);
+  const line=(t,sub,v,cls)=>`<div${cls?` class="${cls}"`:''}><span>${t}${sub?`<small>${sub}</small>`:''}</span><b class="num ${v>0?'pos':v<0?'neg':''}">${cls==='tot'?(v<0?'-':'')+fmt(Math.abs(v)):sg(v)}</b></div>`;
+  let h='';
+  if(prefs.carry){ h+=line(L('ยอดเงินเริ่มต้น','Opening balance'),L('ที่ตั้งไว้ตอนเริ่มใช้แอป','What you started with'),open);
+    const prev=carry-open; if(Math.abs(prev)>.004) h+=line(L('เดือนก่อนๆ','Earlier months'),L('รายรับ − รายจ่ายก่อนเดือนนี้','Income − spending before this month'),prev); }
+  h+=line(L(`รายรับ ${mon}`,`${mon} income`),'',tin)+line(L(`รายจ่าย ${mon}`,`${mon} spending`),'',-tout);
+  if(dep) h+=line(L('เก็บเข้าเป้าหมาย','Moved to goals'),L('ยังเป็นเงินคุณ แค่แยกไว้','Still yours, just set aside'),-dep);
+  if(lend) h+=line(L('จ่ายแทนเพื่อน','Paid for friends'),L('เพื่อนยังค้างอยู่','Friends still owe this'),lend);
+  h+=line(prefs.carry?L('คงเหลือทั้งหมด','Total balance'):L('คงเหลือเดือนนี้','Left this month'),'',total,'tot');
+  const demo=data.some(r=>r.demo);
+  let sh=$('explsheet'); if(!sh){ sh=document.createElement('div'); sh.className='sheet'; sh.id='explsheet'; sh.hidden=true; sh.innerHTML='<div class="panel" id="explpanel"></div>'; document.body.appendChild(sh); sh.onclick=e=>{ if(e.target===sh) hideSheet('explsheet') }; try{attachSheetDrag(sh)}catch(_){} }
+  $('explpanel').innerHTML=`<h3>${L('ยอดนี้มาจากไหน','Where this number comes from')}</h3>${demo?`<div class="demo-note">${L('ตอนนี้เป็นข้อมูลตัวอย่าง ยังไม่ใช่เงินจริงของคุณ','This is sample data, not your real money yet')}</div>`:''}<div class="expl">${h}</div>
+    <p class="onb-help">${prefs.carry?L('แอปยกยอดคงเหลือจากเดือนก่อนมาให้ ปิดได้ใน ตั้งค่า › การเงิน ถ้าอยากดูแค่เดือนนี้','Leftovers carry over from earlier months. Turn this off in Settings › Money to see this month only.'):L('ตอนนี้ดูเฉพาะเดือนนี้ เปิด “ยกยอด” ใน ตั้งค่า › การเงิน เพื่อรวมเดือนก่อนๆ','Showing this month only. Turn on carry-over in Settings › Money to include earlier months.')}</p>
+    <div class="actions">${demo?`<button class="btn" type="button" id="exdemo">${L('ล้างตัวอย่าง เริ่มจดจริง','Clear samples and start')}</button>`:`<button class="btn" type="button" id="exopen">${L('แก้ยอดเริ่มต้น','Edit opening balance')}</button>`}<button class="btn save" type="button" id="exok">${L('เข้าใจแล้ว','Got it')}</button></div>`;
+  showSheet('explsheet'); $('exok').onclick=()=>hideSheet('explsheet');
+  if($('exdemo')) $('exdemo').onclick=()=>{ hideSheet('explsheet'); $('cleardemo').click() };
+  if($('exopen')) $('exopen').onclick=()=>{ hideSheet('explsheet'); setTimeout(()=>{ openSet(); try{setOpenFor($('opening')); setTimeout(()=>{$('opening').scrollIntoView({block:'center'}); $('opening').focus()},350)}catch(e){} },260) } }
+$('carry').addEventListener('click',openExplain); $('ballabel').addEventListener('click',openExplain);
+{ const fix=()=>{ const l=$('ballabel'); if(l&&!l.querySelector('.why')){ const w=document.createElement('span'); w.className='why'; w.textContent='?'; w.setAttribute('aria-hidden','true'); l.appendChild(w) } };
+  const _r5=render; render=function(){ const o=_r5.apply(this,arguments); try{fix()}catch(e){} return o }; fix() }
 </script>
 
 <script>
