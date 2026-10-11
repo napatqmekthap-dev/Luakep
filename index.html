@@ -1958,7 +1958,7 @@ body.lowfx .ncap,body.lowfx .nspill .fl1,body.lowfx .nspill .fl2,body.lowfx .wxd
 <script>
 /* ---------- Language (Thai / English) ---------- */
 const LKEY='kp-lang-v1';
-let LANG=(()=>{try{const v=localStorage.getItem(LKEY);if(v==='th'||v==='en')return v}catch(e){} return /^th/i.test(navigator.language||'th')?'th':'en'})();
+let LANG=(()=>{try{const v=localStorage.getItem(LKEY);if(v==='th'||v==='en')return v}catch(e){} return 'th'})();
 const LOC=()=>LANG==='en'?'en-GB':'th-TH';
 const L=(th,en)=>LANG==='en'?en:th;
 const EN_M=['January','February','March','April','May','June','July','August','September','October','November','December'];
@@ -2528,15 +2528,21 @@ function pigSVG(m){return jarSVG(m)}
 let lastMood=null, lastL=null;
 function setMood(tin,tout,overCats){
   let m, text;
-  const pct=tin>0?Math.round(tout/tin*100):0;
-  if(!tin&&!tout){m='none';text=L('เดือนนี้ยังไม่มีรายการ น้องโอ่งขอปิดฝางีบก่อนนะ','Nothing logged this month yet. Nong Ong is napping under its lid.')}
-  else if(!tin){m='warn';text=L(`ยังไม่มีรายรับเดือนนี้ แต่ใช้ไปแล้ว <b>${fmt(tout)}</b>`,`No income yet this month, but <b>${fmt(tout)}</b> already spent`)}
-  else if(tout>tin){m='bad';text=L(`โอ่งแห้งแล้ว ใช้เกินรายรับไป <b>${fmt(tout-tin)}</b> ลองดูหมวดที่ลดได้นะ`,`The jar has run dry: <b>${fmt(tout-tin)}</b> over income. See which categories you can trim.`)}
-  else if(pct>80){m='warn';text=L(`น้ำในโอ่งเหลือน้อย ใช้ไปแล้ว <b>${pct}%</b> ของรายรับ`,`The jar is running low: <b>${pct}%</b> of income spent`)}
-  else if(pct>50){m='good';text=L(`ใช้ไป <b>${pct}%</b> ของรายรับ ออมได้ ${100-pct}% กำลังดี`,`<b>${pct}%</b> of income spent, ${100-pct}% saved. Nicely balanced.`)}
-  else {m='great';text=L(`น้ำในโอ่งยังเต็ม ใช้ไปแค่ <b>${pct}%</b> ของรายรับ เยี่ยมมาก!`,`The jar is still full: only <b>${pct}%</b> of income spent. Great job!`)}
+  // Water = money left ÷ money available this month (carried-over balance + this month's income)
+  const ym=view.getFullYear()+'-'+String(view.getMonth()+1).padStart(2,'0');
+  const carry=prefs.carry?carryBefore(ym):0;
+  const lend=data.filter(r=>r.date.startsWith(ym)&&(r.type==='lend'||r.type==='back')).reduce((a,r)=>a+NET(r),0);
+  const avail=Math.max(0,carry)+tin, left=carry+tin-tout+lend, any=tin>0||tout>0||lend!==0;
+  const r=avail>0?Math.max(0,Math.min(1,left/avail)):(tout>0||lend<0?0:null), pct=r!=null?Math.round(r*100):0;
+  if(r==null){m='none';text=L('ยังไม่มีเงินในโอ่ง จดรายรับหรือใส่ยอดเงินเริ่มต้นได้เลย น้องโอ่งขอปิดฝางีบก่อนนะ','The jar is empty. Log some income or set an opening balance. Nong Ong is napping under its lid.')}
+  else if(avail<=0){m='warn';text=L(`ยังไม่มีเงินเข้าเดือนนี้ แต่ใช้ไปแล้ว <b>${fmt(tout)}</b>`,`No money in yet this month, but <b>${fmt(tout)}</b> already spent`)}
+  else if(left<=0){m='bad';text=L(`โอ่งแห้งแล้ว ใช้เกินเงินที่มีไป <b>${fmt(-left)}</b> ลองดูหมวดที่ลดได้นะ`,`The jar has run dry: <b>${fmt(-left)}</b> more than you had. See which categories you can trim.`)}
+  else if(r<.2){m='warn';text=L(`น้ำในโอ่งเหลือน้อย เหลือ <b>${fmt(left)}</b> หรือ <b>${pct}%</b> ของเงินที่มี`,`The jar is running low: <b>${fmt(left)}</b> left, <b>${pct}%</b> of what you had`)}
+  else if(r<.5){m='good';text=L(`เหลือ <b>${fmt(left)}</b> หรือ ${pct}% ของเงินที่มีเดือนนี้ กำลังดี`,`<b>${fmt(left)}</b> left, ${pct}% of this month’s money. Nicely balanced.`)}
+  else if(!any){m='great';text=L(`เริ่มเดือนด้วย <b>${fmt(left)}</b> น้ำเต็มโอ่ง จดรายการแรกได้เลย`,`Starting the month with <b>${fmt(left)}</b>. The jar is full. Log your first entry!`)}
+  else {m='great';text=L(`น้ำในโอ่งยังเต็ม เหลือ <b>${pct}%</b> ของเงินที่มีเดือนนี้ เยี่ยมมาก!`,`The jar is still full: <b>${pct}%</b> of this month’s money left. Great job!`)}
   if(overCats&&m!=='none') text+=L(` · เกินงบ ${overCats} หมวด`,` · ${overCats} ${overCats>1?'categories':'category'} over budget`);
-  const lv=tin>0?Math.max(0,(tin-tout)/tin):null, newL=lv!=null?Math.max(.05,Math.min(.9,lv)):{great:.86,good:.62,warn:.32,bad:.07,none:.55}[m];
+  const lv=m==='none'?.08:(avail>0?r:.12), newL=lv!=null?Math.max(.05,Math.min(.9,lv)):{great:.86,good:.62,warn:.32,bad:.07,none:.08}[m];
   if(m===lastMood&&lastL!=null&&Math.abs(newL-lastL)>.003){
     const p=$('pig'); p.innerHTML=jarSVG(m,undefined,lv,undefined,1); try{$('ntjar').innerHTML=jarSVG(m,undefined,lv,undefined,1)}catch(e){}
     if(FX()){const g=p.querySelector('.wlvl'); if(g) g.animate([{transform:`translateY(${(72*(newL-lastL)).toFixed(1)}px)`},{transform:'translateY(0)'}],{duration:1200,easing:'cubic-bezier(.3,1.4,.5,1)'})}
