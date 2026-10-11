@@ -85,6 +85,10 @@ await test('weekly recap numbers and evening summary',async P=>{ const p=await P
 await test('festive cards follow the outfit and can be turned off',async P=>{ const p=await P({}); const r=await p.evaluate(()=>{ const st=()=>[document.body.dataset.fest||'',!!document.querySelector('.balance .festgar')];
   prefs.outfit='cny'; refreshOutfit(); const a=st(); prefs.outfit='none'; refreshOutfit(); const b=st(); prefs.outfit='santa'; prefs.festCards=false; refreshOutfit(); const c=st(); prefs.festCards=true; applyFestTheme(); const d=st(); return [a,b,c,d] });
   eq(r,[['cny',true],['',false],['',false],['santa',true]]) });
+await test('phone tilt moves only the hero jar, never restyles the page',async P=>{ const p=await P({}); await p.evaluate(()=>{ prefs.fx=true; document.body.classList.remove('heroOff','sheeting'); window.dispatchEvent(Object.assign(new Event('deviceorientation'),{gamma:25,beta:40})) }); await p.waitForTimeout(1500);
+  const r=await p.evaluate(()=>[document.documentElement.style.getPropertyValue('--wt'),/rotate\(-2\d/.test(document.querySelector('#pig .tiltw').style.transform)]); eq(r,['',true]) });
+await test('every section that scrolled into view is visible',async P=>{ const p=await P({}); await p.evaluate(()=>{ prefs.fx=true; render() }); for(const y of [900,1800,2700,600]){ await p.evaluate(y=>scrollTo(0,y),y); await p.waitForTimeout(350) }
+  const r=await p.evaluate(()=>[...document.querySelectorAll('.scrv:not(.in)')].filter(el=>el.getBoundingClientRect().top<innerHeight).length); eq(r,0) });
 console.log('Release');
 await test('version: APP_VER = 1.<sw cache>, newest changelog entry, CHANGELOG.md in step',async P=>{ const p=await P({}); const r=await p.evaluate(()=>[APP_VER,NEWS_VER,CHANGELOG[0][0],CHANGELOG.length,CHANGELOG.every(c=>c[2]&&c[3])]);
   const cache=(fs.readFileSync(path.join(ROOT,'sw.js'),'utf8').match(/luakep-v(\d+)/)||[])[1]; eq(r[0],'1.'+cache,'APP_VER vs sw.js cache'); eq(r[2],r[0],'top changelog entry'); ok(r[4],'every entry needs Thai and English');

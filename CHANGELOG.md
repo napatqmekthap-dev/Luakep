@@ -5,6 +5,7 @@ Version = `1.` + the cache number in `sw.js`. Every release adds a line at the t
 
 | เวอร์ชัน | วันที่ | อะไรเปลี่ยน | What changed |
 |---|---|---|---|
+| 1.55 | 2026-10-11 | เลื่อนลื่นขึ้นเมื่อเปิดเอฟเฟกต์เต็ม: แก้ภาพหน่วงตอนถือมือถือ (การเอียงน้ำในโอ่ง) พื้นหลังและแถบด้านบนเบาเครื่องขึ้น และแก้บางส่วนไม่แสดงจนต้องเลื่อนขึ้นลงหลายรอบ | Smoother scrolling with full effects: fixed the phone-tilt water effect slowing everything down, lighter background and top bar, and sections that stayed invisible until you scrolled back and forth now always appear |
 | 1.54 | 2026-10-11 | การ์ดบนหน้าหลักแต่งตามเทศกาลเหมือนน้องโอ่ง: ธงประดับบนการ์ดยอดเงิน สีปุ่ม และของตกแต่งตามเทศกาล ปิดได้ในตู้เสื้อผ้า | Home cards dress up for festivals with Nong Ong: a garland on the balance card, accent colours and small decorations. Turn it off in the wardrobe |
 | 1.53 | 2026-10-11 | สรุปวันนี้ตอนค่ำ แจ้งเตือนแบบรู้ใจ นับถอยหลังวันเงินเดือนออก ปฏิทินสีของเดือน และสรุปสัปดาห์ทุกวันจันทร์ | Evening wrap-up, smarter reminders, payday countdown, month colour calendar and a Monday weekly recap |
 | 1.52 | 2026-10-11 | ใส่เลขเวอร์ชันทุกครั้งที่อัปเดต และดูประวัติทุกเวอร์ชันย้อนหลังได้ | Every update now has a version number, with the full version history |

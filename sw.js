@@ -1,4 +1,4 @@
-const CACHE='luakep-v54';
+const CACHE='luakep-v55';
 const SHELL=['./','index.html','manifest.webmanifest','icon-192.png','apple-touch-icon.png','icon-512.png','icon-maskable-512.png','icon-monochrome-512.png','sc-expense.png','sc-income.png','sc-search.png'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(SHELL)));self.skipWaiting()});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE&&k!=='kp-state'&&k!=='kp-share').map(k=>caches.delete(k)))));self.clients.claim()});
