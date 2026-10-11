@@ -68,5 +68,10 @@ await test('bank CSV import adds the ticked rows',async P=>{ const p=await P({})
 await test('erase all (keep settings): empty jar, restore point saved, theme kept',async P=>{ const p=await P({}); await p.evaluate(()=>{ prefs.palette='sea'; savePrefs(); data.push({id:'z',type:'out',amount:5,cat:'อาหาร',memo:'',date:iso(new Date())}); save() });
   await p.evaluate(()=>eraseAll(false)); await p.waitForTimeout(3200); const r=await p.evaluate(async()=>[data.length,prefs.palette,(await snapList()).some(s=>/^ก่อนล้าง/.test(s.key))]); eq(r,[0,'sea',true]) });
 await test('feedback message carries device info but no amounts',async P=>{ const p=await P({}); const t=await p.evaluate(()=>devInfo()); ok(/v\d/.test(t)&&/entries \d+/.test(t)&&!/฿/.test(t),t) });
+console.log('Release');
+await test('version: APP_VER = 1.<sw cache>, newest changelog entry, CHANGELOG.md in step',async P=>{ const p=await P({}); const r=await p.evaluate(()=>[APP_VER,NEWS_VER,CHANGELOG[0][0],CHANGELOG.length,CHANGELOG.every(c=>c[2]&&c[3])]);
+  const cache=(fs.readFileSync(path.join(ROOT,'sw.js'),'utf8').match(/luakep-v(\d+)/)||[])[1]; eq(r[0],'1.'+cache,'APP_VER vs sw.js cache'); eq(r[2],r[0],'top changelog entry'); ok(r[4],'every entry needs Thai and English');
+  ok(parseFloat(r[1].split('.')[1])<=parseFloat(r[0].split('.')[1]),'NEWS_VER must not be ahead of APP_VER');
+  const md=fs.readFileSync(path.join(ROOT,'CHANGELOG.md'),'utf8'); ok(md.includes('| '+r[0]+' |'),'CHANGELOG.md is missing '+r[0]) });
 console.log(`\n${pass} passed, ${fail} failed · ${((Date.now()-t0)/1000).toFixed(1)}s`); if(fail) console.log('Failed: '+fails.join(', '));
 await browser.close(); process.exit(fail?1:0) })();
