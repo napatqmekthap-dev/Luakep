@@ -1591,6 +1591,17 @@ body.lowfx .ncap,body.lowfx .nspill .fl1,body.lowfx .nspill .fl2,body.lowfx .wxd
 .fbinfo{font:12px/1.55 ui-monospace,Menlo,monospace;color:var(--muted);background:var(--surface);border-radius:14px;padding:10px 12px;white-space:pre-wrap;word-break:break-word;max-height:140px;overflow:auto}
 .fbchk{display:flex!important;flex-direction:row!important;gap:10px;align-items:flex-start;font-size:13.5px}
 .fbchk input{width:20px;height:20px;flex:none;appearance:auto;-webkit-appearance:checkbox;accent-color:var(--ink)}
+
+/* ===== V320 motion round ===== */
+.onb-jar .wlvl{transition:transform .9s cubic-bezier(.3,1.3,.5,1)}
+.expl div.tot b{display:inline-block}
+.badge{position:relative}
+.badge:not(.off) .md{position:relative}
+.badge:not(.off) .md::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,transparent 38%,rgba(255,255,255,.85) 50%,transparent 62%) no-repeat;background-size:260% 100%;background-position:160% 0;-webkit-mask:radial-gradient(circle 17px at 50% 61%,#000 96%,transparent);mask:radial-gradient(circle 17px at 50% 61%,#000 96%,transparent);animation:mdglint 6s ease-in-out infinite;animation-delay:calc(var(--gi,0)*.55s + 1s)}
+@keyframes mdglint{0%,78%{background-position:160% 0}96%,100%{background-position:-60% 0}}
+.impghost{position:fixed;z-index:70;pointer-events:none;margin:0;border-radius:14px;background:var(--s-low);box-shadow:0 12px 30px -14px rgba(0,0,0,.45);overflow:hidden}
+@media (prefers-reduced-motion: reduce){.badge:not(.off) .md::after{animation:none;display:none}.onb-jar .wlvl{transition:none}}
+body.lowfx .badge:not(.off) .md::after{display:none}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i></div><div id="festfx" aria-hidden="true"></div>
@@ -4642,7 +4653,7 @@ function openTrophy(hi){ const lv=GAME.level, a=LEVELS[lv-1][0], nx=LEVELS[lv], 
     <div class="xphow">${L('เก็บ XP: จดรายการวันไหนก็ได้ +10 · ทุกรายการ +3 (สูงสุดวันละ 5) · ได้เหรียญ +30 · ครบเป้าหมาย +60','Earn XP: any day you log +10 · each entry +3 (up to 5 a day) · each badge +30 · each goal reached +60')}</div>
     <div class="trsec">${L('เหรียญรางวัล','Badges')}<small>${L(`ได้แล้ว ${n}/${BADGES.length}`,`${n} of ${BADGES.length}`)}</small></div>
     <div class="badges">${BADGES.map(b=>{const on=!!got[b[0]], of=Object.keys(OUTFITS_LOCKED).find(k=>OUTFITS_LOCKED[k]===b[0]);
-      return `<button type="button" class="badge${on?'':' off'}${hi===b[0]?' new':''}" data-b="${b[0]}"><span class="md">${medalSVG(b[1],b[2],!on)}</span><b>${esc(L(b[3],b[4]))}</b><small>${on?L('ได้เมื่อ ','Earned ')+new Date(got[b[0]]+'T00:00').toLocaleDateString(LOC(),{day:'numeric',month:'short',year:'2-digit'}):esc(L(b[5],b[6]))}</small>${of?`<span class="ofit">${on?'✓ ':''}${L('ชุด','Outfit')}: ${esc(L(OUTFIT_NAME[of][0],OUTFIT_NAME[of][1]))}</span>`:''}</button>`}).join('')}</div>
+      return `<button type="button" class="badge${on?'':' off'}${hi===b[0]?' new':''}" data-b="${b[0]}" style="--gi:${BADGES.indexOf(b)%9}"><span class="md">${medalSVG(b[1],b[2],!on)}</span><b>${esc(L(b[3],b[4]))}</b><small>${on?L('ได้เมื่อ ','Earned ')+new Date(got[b[0]]+'T00:00').toLocaleDateString(LOC(),{day:'numeric',month:'short',year:'2-digit'}):esc(L(b[5],b[6]))}</small>${of?`<span class="ofit">${on?'✓ ':''}${L('ชุด','Outfit')}: ${esc(L(OUTFIT_NAME[of][0],OUTFIT_NAME[of][1]))}</span>`:''}</button>`}).join('')}</div>
     <div class="actions"><button class="btn" id="trclose" type="button">${L('ปิด','Close')}</button></div>`;
   showSheet('trophysheet'); $('trclose').onclick=()=>hideSheet('trophysheet');
   requestAnimationFrame(()=>requestAnimationFrame(()=>{ const i=$('trophypanel').querySelector('.xpbar i'); if(i) i.style.width=i.dataset.w }));
@@ -4651,7 +4662,9 @@ function openTrophy(hi){ const lv=GAME.level, a=LEVELS[lv-1][0], nx=LEVELS[lv], 
     if(k>GAME.level){ shake(b); toast(L(`ปลดล็อกที่ ${LEVELS[k-1][0]} XP`,`Unlocks at ${LEVELS[k-1][0]} XP`)); return }
     prefs.skin=k; savePrefs(); lastMood=null; _renderNoGame(); try{renderWardrobe()}catch(_){} const top=$('trophypanel').scrollTop; openTrophy(); $('trophypanel').scrollTop=top;
     const j=$('trophypanel').querySelector('.trjar'); if(FX()&&j) j.animate([{transform:'scale(.8) rotate(-6deg)'},{transform:'scale(1.06)'},{transform:'none'}],{duration:500,easing:'cubic-bezier(.3,1.4,.5,1)'}); sfx('bloop') };
-  $('trophypanel').querySelector('.badges').onclick=e=>{ const b=e.target.closest('[data-b]'); if(!b) return; if(FX()){ const m=b.querySelector('.md'); m.animate([{transform:'rotateY(0)'},{transform:'rotateY(360deg)'}],{duration:700,easing:'cubic-bezier(.2,.85,.25,1)'}) } } }
+  $('trophypanel').querySelector('.badges').onclick=e=>{ const b=e.target.closest('[data-b]'); if(!b) return; const bd=BADGES.find(x=>x[0]===b.dataset.b);
+    if(b.classList.contains('off')){ shake(b); try{navigator.vibrate&&navigator.vibrate([8,40,8])}catch(_){} toast(L(`วิธีได้: ${bd[5]}`,`How to earn: ${bd[6]}`)); return }
+    if(FX()){ const m=b.querySelector('.md'); m.animate([{transform:'rotateY(0)'},{transform:'rotateY(360deg)'}],{duration:700,easing:'cubic-bezier(.2,.85,.25,1)'}); const r=m.getBoundingClientRect(); setTimeout(()=>fireworks(r.left+r.width/2,r.top+r.height*.6,['#f2d27a','#fff3c4']),350) } } }
 $('trophysheet').onclick=e=>{if(e.target.id==='trophysheet')hideSheet('trophysheet')};
 $('lvchip').addEventListener('click',e=>{ e.stopPropagation(); openTrophy() });
 const _renderNoGame=()=>render({noGame:true});
@@ -5050,9 +5063,9 @@ function openImport(rows,name){ IMP=rows; let sh=$('impsheet'); if(!sh){ sh=docu
   const upd=()=>{ const n=$('imppanel').querySelectorAll('input[data-i]:checked').length; $('impgo').textContent=L(`นำเข้า ${n} รายการ`,`Import ${n}`); $('impgo').disabled=!n };
   $('imppanel').addEventListener('change',upd); upd(); showSheet('impsheet');
   $('impcancel').onclick=()=>hideSheet('impsheet');
-  $('impgo').onclick=()=>{ const w=$('impw')?$('impw').value:'w0', base=Date.now(); let k=0;
+  $('impgo').onclick=()=>{ const w=$('impw')?$('impw').value:'w0', base=Date.now(); let k=0; const ghosts=impGhosts();
     $('imppanel').querySelectorAll('input[data-i]:checked').forEach(c=>{ const r=IMP[+c.dataset.i]; data.push({id:(base+k++).toString(36)+'b',type:r.type,amount:r.amount,cat:r.cat,memo:r.memo,date:r.date,w,imp:1}) });
-    save(); hideSheet('impsheet'); const last=IMP.map(r=>r.date).sort().pop(); if(last){ const d=new Date(last+'T00:00'); view=new Date(d.getFullYear(),d.getMonth(),1) } flipList(render);
+    save(); hideSheet('impsheet'); hideSheet('setsheet'); const last=IMP.map(r=>r.date).sort().pop(); if(last){ const d=new Date(last+'T00:00'); view=new Date(d.getFullYear(),d.getMonth(),1) } impFly(ghosts,()=>flipList(render));
     toast(L(`นำเข้าแล้ว ${k} รายการ`,`Imported ${k}`)); if(FX()){ const j=centerOf($('pig')); for(let i=0;i<Math.min(6,k);i++) setTimeout(()=>splash(j.x,j.y-20,6),i*140); bump($('pig')) } } }
 (function(){ const rs=$('restorebtn'), g0=rs&&rs.closest('.group'); if(!g0) return; const g=document.createElement('div'); g.className='group'; g.id='impgroup';
   g.innerHTML=`<h4><span class="gh" style="--ghbg:var(--t-in);--ghfg:var(--t-in-fg)"><svg viewBox="0 0 24 24"><path d="M3 10l9-6 9 6M5 10v9M19 10v9M9 10v9M15 10v9M3 21h18"/></svg></span>${L('นำเข้าจากธนาคาร','Import from your bank')}</h4>
@@ -5170,7 +5183,8 @@ function openOnboard(withSample){ let sh=$('onbsheet'); if(!sh){ sh=document.cre
     <div class="actions"><button class="btn" type="button" id="onbskip">${L('ข้าม เริ่มจาก ฿0','Skip, start at ฿0')}</button><button class="btn save" type="button" id="onbgo">${L('เริ่มใช้','Start')}</button></div>`;
     P.querySelector('.onb-quick').onclick=e=>{ const b=e.target.closest('[data-v]'); if(b){ $('onbamt').value=b.dataset.v; bump(b) } };
     $('onbskip').onclick=()=>finish(0); $('onbgo').onclick=()=>{ const v=parseFloat(String($('onbamt').value).replace(/,/g,'')); if(!(v>=0)&&$('onbamt').value.trim()){ shake($('onbamt')); return } finish(v||0) };
-    $('onbamt').addEventListener('keydown',e=>{ if(e.key==='Enter') $('onbgo').click() }); setTimeout(()=>{try{$('onbamt').focus()}catch(_){}},250) };
+    $('onbamt').addEventListener('keydown',e=>{ if(e.key==='Enter') $('onbgo').click() }); setTimeout(()=>{try{$('onbamt').focus()}catch(_){}},250);
+    $('onbamt').addEventListener('input',()=>onbWater()); P.querySelector('.onb-quick').addEventListener('click',()=>setTimeout(()=>onbWater(true),0)); onbWater() };
     if(FX()) P.animate([{opacity:1,transform:'none'},{opacity:0,transform:'translateX(-24px)'}],{duration:160}).onfinish=()=>{ go(); P.animate([{opacity:0,transform:'translateX(24px)'},{opacity:1,transform:'none'}],{duration:240,easing:'cubic-bezier(.2,.85,.25,1)'}) }; else go() };
   const finish=v=>{ prefs.opening=Math.round(v*100)/100; prefs.carry=true; prefs.onbDone=1; savePrefs(); hideSheet('onbsheet'); lastMood=null; render();
     try{ if($('opening')) $('opening').value=prefs.opening||'' }catch(_){}
@@ -5185,7 +5199,7 @@ function openExplain(){ const ym=view.getFullYear()+'-'+String(view.getMonth()+1
   const tin=rows.filter(r=>r.type==='in').reduce((a,r)=>a+r.amount,0), tout=rows.filter(r=>r.type==='out').reduce((a,r)=>a+r.amount,0), lend=rows.filter(r=>r.type==='lend'||r.type==='back').reduce((a,r)=>a+NET(r),0);
   const carry=prefs.carry?carryBefore(ym):0, open=(+prefs.opening||0)+wallets.filter(w=>w.id!=='w0').reduce((a,w)=>a+(+w.opening||0),0), dep=prefs.carry?goals.filter(g=>!g.demo).reduce((s,g)=>s+(g.hist||[]).filter(h=>h.date.startsWith(ym)).reduce((a,h)=>a+h.amount,0),0):0;
   const total=prefs.carry?carry+tin-tout-dep+lend:tin-tout; const sg=v=>(v<0?'-':v>0?'+':'')+fmt(Math.abs(v)), mon=L(TH_M[view.getMonth()],EN_M[view.getMonth()]);
-  const line=(t,sub,v,cls)=>`<div${cls?` class="${cls}"`:''}><span>${t}${sub?`<small>${sub}</small>`:''}</span><b class="num ${v>0?'pos':v<0?'neg':''}">${cls==='tot'?(v<0?'-':'')+fmt(Math.abs(v)):sg(v)}</b></div>`;
+  const line=(t,sub,v,cls)=>`<div${cls?` class="${cls}"`:''}><span>${t}${sub?`<small>${sub}</small>`:''}</span><b class="num ${v>0?'pos':v<0?'neg':''}" data-v="${v}" data-m="${cls==='tot'?'t':'s'}">${cls==='tot'?(v<0?'-':'')+fmt(Math.abs(v)):sg(v)}</b></div>`;
   let h='';
   if(prefs.carry){ h+=line(L('ยอดเงินเริ่มต้น','Opening balance'),L('ที่ตั้งไว้ตอนเริ่มใช้แอป','What you started with'),open);
     const prev=carry-open; if(Math.abs(prev)>.004) h+=line(L('เดือนก่อนๆ','Earlier months'),L('รายรับ − รายจ่ายก่อนเดือนนี้','Income − spending before this month'),prev); }
@@ -5198,7 +5212,7 @@ function openExplain(){ const ym=view.getFullYear()+'-'+String(view.getMonth()+1
   $('explpanel').innerHTML=`<h3>${L('ยอดนี้มาจากไหน','Where this number comes from')}</h3>${demo?`<div class="demo-note">${L('ตอนนี้เป็นข้อมูลตัวอย่าง ยังไม่ใช่เงินจริงของคุณ','This is sample data, not your real money yet')}</div>`:''}<div class="expl">${h}</div>
     <p class="onb-help">${prefs.carry?L('แอปยกยอดคงเหลือจากเดือนก่อนมาให้ ปิดได้ใน ตั้งค่า › การเงิน ถ้าอยากดูแค่เดือนนี้','Leftovers carry over from earlier months. Turn this off in Settings › Money to see this month only.'):L('ตอนนี้ดูเฉพาะเดือนนี้ เปิด “ยกยอด” ใน ตั้งค่า › การเงิน เพื่อรวมเดือนก่อนๆ','Showing this month only. Turn on carry-over in Settings › Money to include earlier months.')}</p>
     <div class="actions">${demo?`<button class="btn" type="button" id="exdemo">${L('ล้างตัวอย่าง เริ่มจดจริง','Clear samples and start')}</button>`:`<button class="btn" type="button" id="exopen">${L('แก้ยอดเริ่มต้น','Edit opening balance')}</button>`}<button class="btn save" type="button" id="exok">${L('เข้าใจแล้ว','Got it')}</button></div>`;
-  showSheet('explsheet'); $('exok').onclick=()=>hideSheet('explsheet');
+  showSheet('explsheet'); explAnim(); $('exok').onclick=()=>hideSheet('explsheet');
   if($('exdemo')) $('exdemo').onclick=()=>{ hideSheet('explsheet'); $('cleardemo').click() };
   if($('exopen')) $('exopen').onclick=()=>{ hideSheet('explsheet'); setTimeout(()=>{ openSet(); try{setOpenFor($('opening')); setTimeout(()=>{$('opening').scrollIntoView({block:'center'}); $('opening').focus()},350)}catch(e){} },260) } }
 $('carry').addEventListener('click',openExplain); $('ballabel').addEventListener('click',openExplain);
@@ -5273,6 +5287,28 @@ function openFeedback(kind){ const P=sheetOf('fbsheet'); let k=kind||'bug';
   const cr=m.querySelector('.credit'); if(cr) m.insertBefore(r,cr); else m.appendChild(r);
   r.onclick=e=>{ const b=e.target.closest('[data-h]'); if(!b) return; const h=b.dataset.h; hideSheet('setsheet'); setTimeout(()=>{ if(h==='help') openHelp(); else if(h==='new') openWhatsNew(); else openFeedback('bug') },260) };
   const sm=m.querySelector('.credit small'); if(sm&&!m.querySelector('.ver')){ const v=document.createElement('small'); v.className='ver'; v.textContent='v'+APP_VER; sm.after(v) } })();
+
+/* ===== V320 motion round ===== */
+/* (1) onboarding jar: water rises with the amount being typed */
+let onbLv=null;
+function onbWater(pop){ const box=document.querySelector('#onbpanel .onb-jar'), inp=$('onbamt'); if(!box||!inp) return;
+  const v=parseFloat(String(inp.value).replace(/,/g,''))||0, lv=v>0?Math.min(.9,.22+.68*Math.log10(1+v)/Math.log10(1+100000)):.08, m=v>0?(lv>.6?'great':'good'):'none';
+  const prev=onbLv; onbLv=lv;
+  if(box._m!==m){ box._m=m; box.innerHTML=jarSVG(m,undefined,lv,undefined,0); const g=box.querySelector('.wlvl'); if(g) g.dataset.base=lv; if(g&&prev!=null&&FX()) g.animate([{transform:`translateY(${(72*(lv-prev)).toFixed(1)}px)`},{transform:'none'}],{duration:900,easing:'cubic-bezier(.3,1.3,.5,1)'}) }
+  else { const g=box.querySelector('.wlvl'); if(g){ const base=+g.dataset.base||lv; g.style.transform=`translateY(${(72*(base-lv)).toFixed(1)}px)` } }
+  if(pop&&FX()){ const r=box.getBoundingClientRect(); splash(r.left+r.width/2,r.top+r.height*.3,8); box.animate([{transform:'none'},{transform:'scale(1.06,.94)'},{transform:'none'}],{duration:380}); try{sfx('clink')}catch(_){} } }
+/* (2) "where does this come from": lines arrive one by one, numbers count, total pops */
+function explAnim(){ const rows=[...document.querySelectorAll('#explpanel .expl>div')]; if(!rows.length) return;
+  const fmtV=(v,m)=>m==='t'?(v<0?'-':'')+fmt(Math.abs(v)):(v<0?'-':v>0?'+':'')+fmt(Math.abs(v));
+  if(!FX()) return; rows.forEach((row,i)=>{ const b=row.querySelector('b[data-v]'), v=+b.dataset.v, m=b.dataset.m, d=180+i*140, tot=row.classList.contains('tot');
+    row.animate([{opacity:0,transform:'translateY(10px)'},{opacity:1,transform:'none'}],{duration:380,delay:d,easing:'cubic-bezier(.2,.85,.25,1)',fill:'backwards'});
+    b.textContent=fmtV(0,m); setTimeout(()=>{ const t0=performance.now(), dur=tot?750:520; const st=t=>{ const k=Math.min(1,(t-t0)/dur), e=1-Math.pow(1-k,3); b.textContent=fmtV(Number.isInteger(v)?Math.round(v*e):Math.round(v*e*100)/100,m); if(k<1) requestAnimationFrame(st); else { b.textContent=fmtV(v,m); if(tot){ b.animate([{transform:'scale(1)'},{transform:'scale(1.18)'},{transform:'scale(1)'}],{duration:420,easing:'cubic-bezier(.3,1.4,.5,1)'}); try{sfx('clink')}catch(_){} } } }; requestAnimationFrame(st) },d+120) }) }
+/* (3) import: ticked rows lift out of the sheet and drop into the list */
+function impGhosts(){ if(!FX()) return []; return [...$('imppanel').querySelectorAll('input[data-i]:checked')].slice(0,10).map(c=>{ const row=c.closest('.imp-row'), r=row.getBoundingClientRect(); if(r.bottom<0||r.top>innerHeight) return null; const g=row.cloneNode(true); g.classList.add('impghost'); Object.assign(g.style,{left:r.left+'px',top:r.top+'px',width:r.width+'px',height:r.height+'px'}); return g }).filter(Boolean) }
+function impFly(gs,done){ if(!gs.length){ done(); return } const L0=$('list'); try{ L0.scrollIntoView({block:'start'}) }catch(_){} const lr=L0.getBoundingClientRect(), ty=Math.max(90,Math.min(innerHeight-80,lr.top+10));
+  gs.forEach((g,i)=>{ document.body.appendChild(g); const r=g.getBoundingClientRect(), dy=ty-r.top+i*6, dx=(lr.left+16)-r.left;
+    g.animate([{transform:'none',opacity:1},{transform:`translate(${dx*.4}px,${dy*.3-30}px) scale(1.02) rotate(${(i%2?1:-1)*2}deg)`,opacity:1,offset:.35},{transform:`translate(${dx}px,${dy}px) scale(.85)`,opacity:0}],{duration:620,delay:i*70,easing:'cubic-bezier(.4,0,.6,1)',fill:'backwards'}).onfinish=()=>g.remove() });
+  setTimeout(done,420+Math.min(gs.length,10)*70) }
 </script>
 
 <script>
