@@ -5,6 +5,7 @@ Version = `1.` + the cache number in `sw.js`. Every release adds a line at the t
 
 | เวอร์ชัน | วันที่ | อะไรเปลี่ยน | What changed |
 |---|---|---|---|
+| 1.54 | 2026-10-11 | การ์ดบนหน้าหลักแต่งตามเทศกาลเหมือนน้องโอ่ง: ธงประดับบนการ์ดยอดเงิน สีปุ่ม และของตกแต่งตามเทศกาล ปิดได้ในตู้เสื้อผ้า | Home cards dress up for festivals with Nong Ong: a garland on the balance card, accent colours and small decorations. Turn it off in the wardrobe |
 | 1.53 | 2026-10-11 | สรุปวันนี้ตอนค่ำ แจ้งเตือนแบบรู้ใจ นับถอยหลังวันเงินเดือนออก ปฏิทินสีของเดือน และสรุปสัปดาห์ทุกวันจันทร์ | Evening wrap-up, smarter reminders, payday countdown, month colour calendar and a Monday weekly recap |
 | 1.52 | 2026-10-11 | ใส่เลขเวอร์ชันทุกครั้งที่อัปเดต และดูประวัติทุกเวอร์ชันย้อนหลังได้ | Every update now has a version number, with the full version history |
 | 1.51 | 2026-10-11 | เอฟเฟกต์ลื่นขึ้น: ฝนแบบใหม่ เมฆนุ่มขึ้น ลดภาพเคลื่อนไหวที่วิ่งพร้อมกัน และหยุดส่วนที่มองไม่เห็น | Smoother effects: new rain, softer clouds, fewer animations at once, off-screen motion paused |

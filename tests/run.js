@@ -82,6 +82,9 @@ await test('weekly recap numbers and evening summary',async P=>{ const p=await P
   data=[{id:'1',type:'out',amount:100,cat:'อาหาร',memo:'',date:'2026-09-07'},{id:'2',type:'out',amount:300,cat:'เดินทาง',memo:'',date:'2026-09-11'},{id:'3',type:'out',amount:50,cat:'อาหาร',memo:'',date:'2026-09-11'},{id:'4',type:'in',amount:30000,cat:'เงินเดือน',memo:'',date:t},{id:'5',type:'out',amount:120,cat:'อาหาร',memo:'',date:t}];
   const w=weekData(days), B=curBudget(); return [w.tout,w.wd,w.top,w.logged,w.noSpend,B.spentToday,B.nToday,B.ok] });
   eq(r,[450,[100,0,0,0,350,0,0],['เดินทาง',300],2,5,120,2,true]) });
+await test('festive cards follow the outfit and can be turned off',async P=>{ const p=await P({}); const r=await p.evaluate(()=>{ const st=()=>[document.body.dataset.fest||'',!!document.querySelector('.balance .festgar')];
+  prefs.outfit='cny'; refreshOutfit(); const a=st(); prefs.outfit='none'; refreshOutfit(); const b=st(); prefs.outfit='santa'; prefs.festCards=false; refreshOutfit(); const c=st(); prefs.festCards=true; applyFestTheme(); const d=st(); return [a,b,c,d] });
+  eq(r,[['cny',true],['',false],['',false],['santa',true]]) });
 console.log('Release');
 await test('version: APP_VER = 1.<sw cache>, newest changelog entry, CHANGELOG.md in step',async P=>{ const p=await P({}); const r=await p.evaluate(()=>[APP_VER,NEWS_VER,CHANGELOG[0][0],CHANGELOG.length,CHANGELOG.every(c=>c[2]&&c[3])]);
   const cache=(fs.readFileSync(path.join(ROOT,'sw.js'),'utf8').match(/luakep-v(\d+)/)||[])[1]; eq(r[0],'1.'+cache,'APP_VER vs sw.js cache'); eq(r[2],r[0],'top changelog entry'); ok(r[4],'every entry needs Thai and English');
