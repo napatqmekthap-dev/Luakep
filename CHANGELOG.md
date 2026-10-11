@@ -5,6 +5,7 @@ Version = `1.` + the cache number in `sw.js`. Every release adds a line at the t
 
 | เวอร์ชัน | วันที่ | อะไรเปลี่ยน | What changed |
 |---|---|---|---|
+| 1.56 | 2026-10-11 | ลื่นขึ้นทั้งแอป: เลื่อนรายการยาวๆ ได้ลื่นขึ้น กดบันทึกแล้วหน้าต่างปิดทันที เปลี่ยนเดือนเร็วขึ้น พิมพ์จำนวนเงินไม่สะดุด และของตกแต่งพื้นหลังหยุดพักระหว่างเลื่อน | Smoother everywhere: long lists scroll better, the sheet closes instantly on save, month changes are quicker, typing amounts no longer stutters, and background decorations rest while you scroll |
 | 1.55 | 2026-10-11 | เลื่อนลื่นขึ้นเมื่อเปิดเอฟเฟกต์เต็ม: แก้ภาพหน่วงตอนถือมือถือ (การเอียงน้ำในโอ่ง) พื้นหลังและแถบด้านบนเบาเครื่องขึ้น และแก้บางส่วนไม่แสดงจนต้องเลื่อนขึ้นลงหลายรอบ | Smoother scrolling with full effects: fixed the phone-tilt water effect slowing everything down, lighter background and top bar, and sections that stayed invisible until you scrolled back and forth now always appear |
 | 1.54 | 2026-10-11 | การ์ดบนหน้าหลักแต่งตามเทศกาลเหมือนน้องโอ่ง: ธงประดับบนการ์ดยอดเงิน สีปุ่ม และของตกแต่งตามเทศกาล ปิดได้ในตู้เสื้อผ้า | Home cards dress up for festivals with Nong Ong: a garland on the balance card, accent colours and small decorations. Turn it off in the wardrobe |
 | 1.53 | 2026-10-11 | สรุปวันนี้ตอนค่ำ แจ้งเตือนแบบรู้ใจ นับถอยหลังวันเงินเดือนออก ปฏิทินสีของเดือน และสรุปสัปดาห์ทุกวันจันทร์ | Evening wrap-up, smarter reminders, payday countdown, month colour calendar and a Monday weekly recap |

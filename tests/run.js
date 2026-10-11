@@ -89,6 +89,9 @@ await test('phone tilt moves only the hero jar, never restyles the page',async P
   const r=await p.evaluate(()=>[document.documentElement.style.getPropertyValue('--wt'),/rotate\(-2\d/.test(document.querySelector('#pig .tiltw').style.transform)]); eq(r,['',true]) });
 await test('every section that scrolled into view is visible',async P=>{ const p=await P({}); await p.evaluate(()=>{ prefs.fx=true; render() }); for(const y of [900,1800,2700,600]){ await p.evaluate(y=>scrollTo(0,y),y); await p.waitForTimeout(350) }
   const r=await p.evaluate(()=>[...document.querySelectorAll('.scrv:not(.in)')].filter(el=>el.getBoundingClientRect().top<innerHeight).length); eq(r,0) });
+await test('jar returns to its place after jumping back to the top; month change redraws',async P=>{ const p=await P({}); await p.evaluate(()=>{ prefs.fx=true }); await p.evaluate(()=>scrollTo(0,2500)); await p.waitForTimeout(500); await p.evaluate(()=>scrollTo(0,0)); await p.waitForTimeout(500);
+  const t=await p.evaluate(()=>$('pig').style.translate); const m0=await p.evaluate(()=>$('mlabel').textContent); await p.evaluate(()=>$('prev').click()); await p.waitForTimeout(400);
+  const r=await p.evaluate(()=>[$('mlabel').textContent, document.querySelector('#calsec')?1:0]); ok(t===''||/^0(px)?( 0(\.0)?px)?$/.test(t),'jar translate '+t); ok(r[0]!==m0,'month label changed') });
 console.log('Release');
 await test('version: APP_VER = 1.<sw cache>, newest changelog entry, CHANGELOG.md in step',async P=>{ const p=await P({}); const r=await p.evaluate(()=>[APP_VER,NEWS_VER,CHANGELOG[0][0],CHANGELOG.length,CHANGELOG.every(c=>c[2]&&c[3])]);
   const cache=(fs.readFileSync(path.join(ROOT,'sw.js'),'utf8').match(/luakep-v(\d+)/)||[])[1]; eq(r[0],'1.'+cache,'APP_VER vs sw.js cache'); eq(r[2],r[0],'top changelog entry'); ok(r[4],'every entry needs Thai and English');

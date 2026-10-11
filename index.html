@@ -1709,6 +1709,11 @@ body[data-fest] .cal .cd.td{box-shadow:0 0 0 2px var(--fa)}
 body[data-fest] .paychip .pp u{background:var(--fa)}
 .scr svg *,.scr svg{animation-play-state:paused!important}
 .fabs{contain:layout style}
+/* V370 smoothness: off-screen list days are not rendered until they come near; the typing jar's water glides */
+#list .day{content-visibility:auto;contain-intrinsic-size:auto 260px}
+.minijar .wlvl{transition:transform .45s cubic-bezier(.3,1.3,.5,1)}
+/* background decorations hold still while a scroll is in motion (rain keeps falling); they resume where they stopped */
+#festfx.scr *,#todfx.scr *,#aurora.scr *,#wxfx.scr .wcloud,#wxfx.scr .wrip,#wxfx.scr .wfog,#wxfx.scr .wheat,#wxfx.scr .wsun,#wxfx.scr .wsun::before,.dust.scr *{animation-play-state:paused!important}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i></div><div id="festfx" aria-hidden="true"></div>
@@ -2271,7 +2276,7 @@ function trTree(root){
   let n; while((n=w.nextNode())){ if(n.nodeType===3) trNode(n); else trEl(n) }
 }
 let trBusy=false;
-const trObs=new MutationObserver(ms=>{ if(trBusy) return; trBusy=true; try{ for(const m of ms){
+const trObs=new MutationObserver(ms=>{ if(trBusy||LANG!=='en') return; /* Thai pages need no translating */ trBusy=true; try{ for(const m of ms){
   if(m.type==='childList') m.addedNodes.forEach(trTree);
   else if(m.type==='characterData') trNode(m.target);
   else if(m.type==='attributes') trEl(m.target);
@@ -2767,8 +2772,16 @@ $('pig').addEventListener('click',e=>{
   document.querySelectorAll('.say').forEach(x=>x.remove()); const sb=document.createElement('div'); sb.className='say'; sb.textContent=L(pick[0],pick[1]); p.parentElement.appendChild(sb); setTimeout(()=>sb.remove(),2500);
   try{navigator.vibrate&&navigator.vibrate(8)}catch(_){}
 });
-let parT=0, SCY=scrollY;
-addEventListener('scroll',()=>{ SCY=scrollY; if(!FX()||parT) return; parT=requestAnimationFrame(()=>{parT=0; const y=Math.min(300,SCY), pg=$('pig'), ty=`0 ${(y*.18).toFixed(1)}px`; if(pg._ty!==ty){ pg._ty=ty; pg.style.translate=ty } sloshKick((SCY-(window._sly??SCY))*.035); window._sly=SCY; pigRot()})},{passive:true});
+/* One scroll frame for everything that follows the scroll: the position is read once, at the start of the frame,
+   then each effect writes. (Separate listeners each read scrollY or a rect after another one had written, forcing extra layouts.) */
+/* Which sections are on screen right now; entry animations only play where someone can see them */
+const ONSCREEN=new WeakSet(); const VISIO=(()=>{ try{ return new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting) ONSCREEN.add(e.target); else ONSCREEN.delete(e.target) })) }catch(e){ return null } })();
+function seen(el){ if(!el) return false; if(!VISIO) return true; if(!el._vw){ el._vw=1; VISIO.observe(el); return el.getBoundingClientRect().top<innerHeight } return ONSCREEN.has(el) }
+let SCY=scrollY, scrRaf=0; const SCROLL_FX=[];
+function scrollFrame(){ scrRaf=0; SCY=scrollY; for(const f of SCROLL_FX){ try{ f(SCY) }catch(e){} } }
+addEventListener('scroll',()=>{ window._lastScroll=performance.now(); if(!scrRaf) scrRaf=requestAnimationFrame(scrollFrame) },{passive:true});
+SCROLL_FX.push(Y=>{ if(!FX()) return; const y=Math.min(300,Y), pg=$('pig'), ty=`0 ${(y*.18).toFixed(1)}px`; if(pg._ty!==ty){ pg._ty=ty; pg.style.translate=ty }
+  if(document.body.classList.contains('heroOff')&&Y>300){ window._sly=Y; return } /* jar out of view: no wobble */ sloshKick((Y-(window._sly??Y))*.035); window._sly=Y; pigRot() });
 const SL={a:0,v:0,run:0};
 function pigRot(){const p=$('pig'); if(!p) return; const r=(Math.min(300,SCY)*.02+SL.a).toFixed(1); if(p._r!==r){ p._r=r; p.style.rotate=r+'deg' } jarTiltWrite() }
 /* The hero jar's water angle (phone tilt + slosh) and coin slide, written straight onto the jar's own elements.
@@ -2777,7 +2790,7 @@ function jarTiltWrite(){ const p=$('pig'); if(!p) return; const k=typeof TILT!==
   if(t&&t._a!==ang){ t._a=ang; t.style.transform=ang==='0.0'||ang==='-0.0'?'':`rotate(${ang}deg)` }
   const cx=(k*.22).toFixed(1), cs=p.querySelector('.coinsl'); if(cs&&cs._x!==cx){ cs._x=cx; p.querySelectorAll('.coinsl').forEach(c=>c.style.transform=cx==='0.0'||cx==='-0.0'?'':`translateX(${cx}px)`) } }
 function sloshKick(dv){ if(!FX()) return; SL.v+=Math.max(-3.2,Math.min(3.2,dv)); if(!SL.run) SL.run=requestAnimationFrame(sloshStep) }
-function sloshStep(){ SL.v+=-SL.a*.11; SL.v*=.9; SL.a+=SL.v; SL.a=Math.max(-14,Math.min(14,SL.a)); pigRot(); if(Math.abs(SL.a)>.04||Math.abs(SL.v)>.04) SL.run=requestAnimationFrame(sloshStep); else {SL.a=0;SL.v=0;SL.run=0;pigRot()} }
+function sloshStep(){ if(document.body.classList.contains('heroOff')){ SL.a=0; SL.v=0; SL.run=0; pigRot(); return } SL.v+=-SL.a*.11; SL.v*=.9; SL.a+=SL.v; SL.a=Math.max(-14,Math.min(14,SL.a)); pigRot(); if(Math.abs(SL.a)>.04||Math.abs(SL.v)>.04) SL.run=requestAnimationFrame(sloshStep); else {SL.a=0;SL.v=0;SL.run=0;pigRot()} }
 /* Motion helpers */
 const RM=()=>{try{return matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){return false}};
 function showSheet(id){const el=$(id); el.classList.remove('closing'); el.hidden=false; if(typeof cascade==='function') cascade(el)}
@@ -2848,7 +2861,7 @@ function renderCore(){
     return `<div class="cat"><div class="top"><span class="cl">${ic(c,'sm')}<span class="cn">${esc(c)}</span> <small class="num">${fmt(s)} / ${fmt(b)}</small></span>${right}</div><div class="bar b2"><i class="${cls}" style="width:${Math.min(100,p*100).toFixed(1)}%"></i>${pace!=null?`<u class="pace" style="left:${(pace*100).toFixed(1)}%" title="${L('ผ่านไปแล้วของเดือน','of the month so far')}"></u>`:''}</div>${ahead?`<div class="paceh">${L(`ใช้ไป ${Math.round(p*100)}% แต่เดือนเพิ่งผ่านไป ${Math.round(pace*100)}%`,`${Math.round(p*100)}% used with ${Math.round(pace*100)}% of the month gone`)}</div>`:''}</div>`;
   }).join('')+(noB.length?`<div class="nob"><div class="nobh">${L('ยังไม่ได้ตั้งงบ','No budget yet')}</div>${noB.map(c=>`<div class="nobr">${ic(c,'sm')}<span class="cn">${esc(c)}</span><small class="num">${fmt(spent[c])}</small><button type="button" data-sb="${esc(c)}">${L('ตั้งงบ','Set')}</button></div>`).join('')}</div>`:''):emptyState('great',L('ยังไม่มีรายจ่ายเดือนนี้','No spending this month yet'),L('น้ำในโอ่งยังเต็มปริ่ม','The jar is still full to the brim'),null,true);
   renderMix(spent,tout);
-  if(ym!==lastAnimYm&&FX()){lastAnimYm=ym; ['mix','cats'].forEach(id=>{const e=$(id); e.classList.add('fresh'); clearTimeout(e._ft); e._ft=setTimeout(()=>e.classList.remove('fresh'),1500)})}
+  if(ym!==lastAnimYm&&FX()){lastAnimYm=ym; ['mix','cats'].filter(id=>seen($(id))).forEach(id=>{const e=$(id); e.classList.add('fresh'); clearTimeout(e._ft); e._ft=setTimeout(()=>e.classList.remove('fresh'),1500)})}
 
   const q=($('q').value||'').trim(); const searching=!!q;
   $('qclear').hidden=!searching; $('sresult').hidden=!searching;
@@ -2884,9 +2897,16 @@ function renderCore(){
     const flush=()=>{ if(gap.length){H.push(gapHTML(gap.length,gap[gap.length-1],gap[0])); gap=[]} };
     for(let dd=end; dd>=1; dd--){ const k=y+'-'+String(mo+1).padStart(2,'0')+'-'+String(dd).padStart(2,'0');
       if(groups[k]){flush(); H.push(dayHTML([k,groups[k]]))} else gap.push(new Date(y,mo,dd)) }
-    flush(); $('list').innerHTML=H.join('');
+    flush(); listPut(H);
   }
 }
+/* The visible top of the list goes in now; older days follow a frame later so changing month or saving feels instant */
+let LIST_REST=null, LIST_GEN=0;
+function listPut(H){ const gen=++LIST_GEN, el=$('list'); LIST_REST=null;
+  if(H.length<=10){ el.innerHTML=H.join(''); return }
+  el.innerHTML=H.slice(0,8).join(''); LIST_REST=H.slice(8);
+  requestAnimationFrame(()=>setTimeout(()=>{ if(gen===LIST_GEN) listFlush() },0)) }
+function listFlush(){ if(!LIST_REST) return; const rest=LIST_REST; LIST_REST=null; $('list').insertAdjacentHTML('beforeend',rest.join('')); try{ revealScan() }catch(e){} }
 
 /* Entry sheet */
 function chips(){
@@ -2914,7 +2934,9 @@ function updatePreview(){
   const eff=type==='out'&&$('splitchk').checked?splitInfo(a).mine:a;
   if(type==='in') tin+=a; else if(type==='out') tout+=eff;
   const m=moodOf(tin,tout), lv=tin>0?Math.max(0,(tin-tout)/tin):(tout?0:null);
-  box.innerHTML=jarSVG(m,undefined,lv);
+  { const cl=x=>Math.max(.05,Math.min(.9,x)), key=m+'|'+(lv==null?'n':'v'), g=box._k===key&&lv!=null&&box.querySelector('.wlvl');
+    if(g) g.style.transform=`translateY(${(72*(box._base-cl(lv))).toFixed(1)}px)`; // same mood: just move the water, keep the drawing and its animations
+    else { box.innerHTML=jarSVG(m,undefined,lv); box._k=key; box._base=lv==null?null:cl(lv) } }
   box.classList.toggle('sweat',type==='out'&&a>0&&(a>=Math.max(1000,(tin-a>0?0:0)+rows.filter(r=>r.type==='in').reduce((s,r)=>s+r.amount,0)*.15)||((budget[cat]||0)>0&&catSpent+a>budget[cat])));
   const left=tin-tout, el=$('impact'), b=budget[cat]||0; let warn=false, t;
   if(type==='tr') t=wTo?L(`โอนจาก${esc(wName(wById(wFrom)))}ไป${esc(wName(wById(wTo)))} ไม่นับเป็นรายรับรายจ่าย`,`Moves money from ${esc(wName(wById(wFrom)))} to ${esc(wName(wById(wTo)))}. Not counted as income or spending.`):L('เพิ่มกระเป๋าที่สองในตั้งค่าก่อน','Add a second wallet in Settings first');
@@ -3005,15 +3027,17 @@ $('form').onsubmit=e=>{
   save(); const d=new Date(rec.date+'T00:00'); view=new Date(d.getFullYear(),d.getMonth(),1);
   const wasEdit=!!editing; if(wasEdit) lastAddedId=editing;
   const fromPt=centerOf($('savebtn')), jarPt=centerOf($('pig'));
-  hideSheet('sheet'); editing=null; render();
-  if(!wasEdit&&FX()){
-    if(rec.type==='in') flyCoin(fromPt,jarPt,()=>{splash(jarPt.x,jarPt.y-20,10);bump($('pig'));sfx('clink')});
-    else pourOut(jarPt,rec.amount);
-  }
-  toast(wasEdit?L('บันทึกการแก้ไขแล้ว','Changes saved'):L('บันทึกแล้ว','Saved')); bump($('bal')); bump($('pig'));
-  try{navigator.vibrate&&navigator.vibrate(10)}catch(e){}
-  setTimeout(()=>{lastAddedId=null},2000);
-  const nr=document.querySelector('#list .row.new'); if(nr&&!RM()) setTimeout(()=>{try{nr.scrollIntoView({behavior:'smooth',block:'center'})}catch(e){}},FX()&&!wasEdit?820:0);
+  hideSheet('sheet'); editing=null;
+  toast(wasEdit?L('บันทึกการแก้ไขแล้ว','Changes saved'):L('บันทึกแล้ว','Saved')); try{navigator.vibrate&&navigator.vibrate(10)}catch(e){}
+  // the sheet starts sliding away on this frame; the page redraws on the next one, so the close never stutters
+  requestAnimationFrame(()=>setTimeout(()=>{ render();
+    if(!wasEdit&&FX()){
+      if(rec.type==='in') flyCoin(fromPt,jarPt,()=>{splash(jarPt.x,jarPt.y-20,10);bump($('pig'));sfx('clink')});
+      else pourOut(jarPt,rec.amount);
+    }
+    bump($('bal')); bump($('pig'));
+    setTimeout(()=>{lastAddedId=null},2000);
+    let nr=document.querySelector('#list .row.new'); if(!nr&&LIST_REST){ listFlush(); nr=document.querySelector('#list .row.new') } if(nr&&!RM()) setTimeout(()=>{try{nr.scrollIntoView({behavior:'smooth',block:'center'})}catch(e){}},FX()&&!wasEdit?820:0) },0));
 };
 $('delentry').onclick=()=>{ if(!editing) return; rowMorphId=null; hideSheet('sheet'); removeEntry(editing); editing=null };
 $('list').onclick=e=>{
@@ -3023,8 +3047,12 @@ $('list').onclick=e=>{
   const rec=data.find(r=>String(r.id)===row.dataset.id); if(rec){ if(rec.type==='lend'||rec.type==='back'){openFriend(rec.who);return} rowMorph(row,()=>openEntry(rec))}
 };
 $('list').onkeydown=e=>{if((e.key==='Enter'||e.key===' ')&&e.target.classList.contains('t')){e.preventDefault();e.target.click()}};
-$('prev').onclick=()=>{view.setMonth(view.getMonth()-1);filterCat=null;render()};
-$('next').onclick=()=>{view.setMonth(view.getMonth()+1);filterCat=null;render()};
+/* Month buttons: the label changes on this frame, the page redraws right after it is painted; quick taps share one redraw */
+let monthT=0;
+function goMonth(d){ view.setMonth(view.getMonth()+d); filterCat=null; $('mlabel').textContent=TH_M[view.getMonth()]+' '+(view.getFullYear()+543);
+  if(monthT) return; monthT=requestAnimationFrame(()=>setTimeout(()=>{ monthT=0; render() },0)) }
+$('prev').onclick=()=>goMonth(-1);
+$('next').onclick=()=>goMonth(1);
 $('fchip').onclick=()=>{filterCat=null;flipList(render)};
 $('cleardemo').onclick=()=>{data=data.filter(r=>!r.demo);goals=goals.filter(g=>!g.demo);recur=recur.filter(r=>!r.demo);save();saveGoals();saveRecur();render(); if(!prefs.onbDone&&!data.length) setTimeout(()=>openOnboard(false),400)};
 
@@ -4072,10 +4100,12 @@ applyRem(); remSync();
 (function(){
   const hero=document.querySelector('.balance'), nav=$('nav'); if(!hero||!nav) return;
   try{ new IntersectionObserver(([e])=>nav.classList.toggle('compact',!e.isIntersecting&&e.boundingClientRect.top<0),{rootMargin:'-72px 0px 0px 0px'}).observe(hero) }catch(e){}
-  let raf=0; addEventListener('scroll',()=>{ if(raf) return; raf=requestAnimationFrame(()=>{raf=0;
-    const pg=$('pig'); if(!FX()){hero.style.transform='';hero.style.opacity='';return}
-    const r=hero.getBoundingClientRect(), p=Math.max(0,Math.min(1,(72-r.top)/Math.max(1,r.height)));
-    if(Math.abs(p-(hero._hp||0))<.004) return; hero._hp=p; hero.style.transform=p?`scale(${(1-p*.07).toFixed(4)})`:''; hero.style.opacity=p?(1-p*.55).toFixed(3):''; if(pg&&!pg.closest('.wrap.pull')) pg.style.scale=p?(1-p*.3).toFixed(3):'' }) },{passive:true});
+  // the card's untransformed position, measured once per render/resize instead of every frame
+  let geo=null; const measure=()=>{ let t=0, el=hero; while(el){ t+=el.offsetTop; el=el.offsetParent } geo={top:t,h:Math.max(1,hero.offsetHeight)} };
+  afterRender(()=>{ geo=null }); addEventListener('resize',()=>{ geo=null },{passive:true});
+  SCROLL_FX.unshift(y=>{ const pg=$('pig'); if(!FX()){ if(hero._hp){ hero._hp=0; hero.style.transform=''; hero.style.opacity='' } return }
+    if(!geo) measure(); const p=Math.max(0,Math.min(1,(72-(geo.top-y))/geo.h));
+    if(Math.abs(p-(hero._hp||0))<.004) return; hero._hp=p; hero.style.transform=p?`scale(${(1-p*.07).toFixed(4)})`:''; hero.style.opacity=p?(1-p*.55).toFixed(3):''; if(pg&&!pg.closest('.wrap.pull')) pg.style.scale=p?(1-p*.3).toFixed(3):'' });
 })();
 /* Nong Ong looks at your finger, naps when idle, gets sleepy at night */
 (function(){
@@ -4380,8 +4410,8 @@ $('fabscrim').onclick=closeFab;
 ['add','scan'].forEach(id=>$(id).addEventListener('click',()=>setTimeout(closeFab,10)));
 document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeFab() });
 $('imgview').onclick=()=>{ $('imgview').hidden=true; $('imgviewimg').removeAttribute('src') };
-(function(){ let lastY=scrollY, raf=0; addEventListener('scroll',()=>{ if(raf) return; raf=requestAnimationFrame(()=>{ raf=0; const y=scrollY, f=$('fabs');
-  if(y>lastY+6&&y>120) f.classList.add('mini'); else if(y<lastY-6||y<120) f.classList.remove('mini'); lastY=y }) },{passive:true}) })();
+(function(){ let lastY=scrollY, mini=false; SCROLL_FX.push(y=>{ const f=$('fabs');
+  const want=y>lastY+6&&y>120?true:(y<lastY-6||y<120)?false:mini; if(want!==mini){ mini=want; f.classList.toggle('mini',mini) } if(Math.abs(y-lastY)>6||y<120) lastY=y }) })();
 try{ new MutationObserver(syncFab).observe($('scan'),{attributes:true,attributeFilter:['hidden']}) }catch(e){}
 syncFab();
 /* ===== First-use tips from Nong Ong ===== */
@@ -4452,14 +4482,14 @@ const RVIO=(()=>{ try{ return new IntersectionObserver(es=>es.forEach(e=>{ if(e.
    While scrolling (every 250 ms) and right after it stops, reveal anything already on screen; anything scrolled past appears without animation. */
 { let st=0, last=0; const sweep=()=>{ last=performance.now(); const pend=document.querySelectorAll('.scrv:not(.in)'); if(!pend.length) return; const vh=innerHeight;
     const rs=[...pend].map(el=>[el,el.getBoundingClientRect()]); rs.forEach(([el,r])=>{ if(r.bottom<0) revealNow(el,true); else if(r.top<vh) revealNow(el) }) };
-  addEventListener('scroll',()=>{ clearTimeout(st); st=setTimeout(sweep,80); if(performance.now()-last>250) sweep() },{passive:true}); }
+  SCROLL_FX.unshift(()=>{ clearTimeout(st); st=setTimeout(sweep,120); if(performance.now()-last>300) sweep() }); }
 const RVSEEN=new WeakSet();
 function revealScan(){ if(!RVIO||!FX()) return;
-  document.querySelectorAll('.wrap>section,.wrap>.insbtn,.wrap>.recapbtn,#list .day').forEach(el=>{
-    if(RVSEEN.has(el)) return; RVSEEN.add(el); if(el.hidden) {RVSEEN.delete(el); return}
-    const r=el.getBoundingClientRect(); if(r.top<innerHeight*.98) return;
-    el.classList.add('scrv'); RVIO.observe(el) }) }
-afterRender(()=>{revealScan(); nudgeFab()});
+  // read every position first, then write: interleaving the two forced a layout per element
+  const els=[...document.querySelectorAll('.wrap>section,.wrap>.insbtn,.wrap>.recapbtn,#list .day')].filter(el=>!RVSEEN.has(el)&&!el.hidden);
+  if(!els.length) return; const vh=innerHeight*.98, below=els.filter(el=>el.getBoundingClientRect().top>=vh);
+  els.forEach(el=>RVSEEN.add(el)); below.forEach(el=>{ el.classList.add('scrv'); RVIO.observe(el) }) }
+afterRender(()=>{ requestAnimationFrame(revealScan); nudgeFab() }); // positions are read next frame, when layout is already done
 setTimeout(revealScan,60);
 /* Ink ripple at the touch point */
 const INKSEL='button,.row,.goal,.setrow,.wcard,.ucard,.chips label,.seg label';
@@ -4488,7 +4518,7 @@ function monthSlide(dir){ if(!FX()) return; let i=0;
 (function(){ const b=document.querySelector('.balance'); if(!b||b.querySelector('.dust')) return; const d=document.createElement('div'); d.className='dust'; d.setAttribute('aria-hidden','true'); d.innerHTML='<b></b><b></b><b></b><b></b><b></b><i class="shband"></i>'; b.insertBefore(d,b.firstChild) })();
 /* Nong Ong idle tricks: hop, look around, blow bubbles */
 function overlayOpen(){ return !!(document.querySelector('.sheet:not([hidden])')||($('fabs')&&$('fabs').classList.contains('open'))||document.body.classList.contains('locked')||!$('story').hidden||($('intro')&&!$('intro').hidden)) }
-function idleTrick(){ const p=$('pig'); if(!p||!FX()||document.visibilityState!=='visible'||overlayOpen()||document.body.classList.contains('lowfx')) return;
+function idleTrick(){ const p=$('pig'); if(!p||!FX()||document.visibilityState!=='visible'||overlayOpen()||document.body.classList.contains('lowfx')||document.body.classList.contains('heroOff')||p.classList.contains('scr')||performance.now()-(window._lastScroll||0)<2000) return;
   if(p.classList.contains('nap')||p.classList.contains('sleepy')||lastMood==='none') return;
   const r=p.getBoundingClientRect(); if(r.bottom<60||r.top>innerHeight) return;
   const k=Math.floor(Math.random()*3);
@@ -5361,8 +5391,8 @@ $('carry').addEventListener('click',openExplain); $('ballabel').addEventListener
   afterRender(fix); fix() }
 
 /* ===== V310 help guide, what's new, feedback ===== */
-const APP_VER='1.55', NEWS_VER='1.54'; // APP_VER = '1.'+sw cache number, bumped every release; NEWS_VER = last release that shows the What's new popup
-const CHANGELOG=[["1.55","2026-10-11","เลื่อนลื่นขึ้นเมื่อเปิดเอฟเฟกต์เต็ม: แก้ภาพหน่วงตอนถือมือถือ (การเอียงน้ำในโอ่ง) พื้นหลังและแถบด้านบนเบาเครื่องขึ้น และแก้บางส่วนไม่แสดงจนต้องเลื่อนขึ้นลงหลายรอบ","Smoother scrolling with full effects: fixed the phone-tilt water effect slowing everything down, lighter background and top bar, and sections that stayed invisible until you scrolled back and forth now always appear"],["1.54","2026-10-11","การ์ดบนหน้าหลักแต่งตามเทศกาลเหมือนน้องโอ่ง: ธงประดับบนการ์ดยอดเงิน สีปุ่ม และของตกแต่งตามเทศกาล ปิดได้ในตู้เสื้อผ้า","Home cards dress up for festivals with Nong Ong: a garland on the balance card, accent colours and small decorations. Turn it off in the wardrobe"],["1.53","2026-10-11","สรุปวันนี้ตอนค่ำ แจ้งเตือนแบบรู้ใจ นับถอยหลังวันเงินเดือนออก ปฏิทินสีของเดือน และสรุปสัปดาห์ทุกวันจันทร์","Evening wrap-up, smarter reminders, payday countdown, month colour calendar and a Monday weekly recap"],["1.52","2026-10-11","ใส่เลขเวอร์ชันทุกครั้งที่อัปเดต และดูประวัติทุกเวอร์ชันย้อนหลังได้","Every update now has a version number, with the full version history"],["1.51","2026-10-11","เอฟเฟกต์ลื่นขึ้น: ฝนแบบใหม่ เมฆนุ่มขึ้น ลดภาพเคลื่อนไหวที่วิ่งพร้อมกัน และหยุดส่วนที่มองไม่เห็น","Smoother effects: new rain, softer clouds, fewer animations at once, off-screen motion paused"],["1.50","2026-10-11","น้ำในโอ่งขึ้นตามตอนพิมพ์ยอดเงินเริ่มต้น ที่มายอดเงินนับเลขขึ้น รายการนำเข้าหล่นลงในรายการ ตู้โชว์มีประกาย","Water rises as you type the opening balance, balance explainer counts up, imported rows drop in, cabinet glints"],["1.49","2026-10-11","จัดระเบียบเบื้องหลังและเพิ่มชุดทดสอบอัตโนมัติ ให้แอปเสถียรขึ้น","Behind-the-scenes tidy-up and automated tests for a steadier app"],["1.48","2026-10-11","คู่มือวิธีใช้ หน้ามีอะไรใหม่ และส่งความเห็นถึงผู้พัฒนาทาง LINE","How-to guide, What’s new, and feedback to the developer on LINE"],["1.47","2026-10-11","น้ำในโอ่งลดตามเงินที่เหลือจริง และเปิดครั้งแรกเป็นภาษาไทย","Water level follows the money you have left; Thai on first launch"],["1.46","2026-10-11","ครั้งแรกเริ่มจากโอ่งว่าง แล้วน้องโอ่งถามยอดเงินที่มี","First run starts with an empty jar and asks your starting balance"],["1.45","2026-10-11","พูดเพื่อจดรายการ สำรองข้อมูลไป Google Drive นำเข้า CSV จากธนาคาร สรุปเป็น PDF และโหมดประหยัดแบต","Speak to log, Google Drive backup, bank CSV import, PDF summary, battery saver"],["1.44","2026-10-11","ปุ่มล้างข้อมูลทั้งหมด ใน ตั้งค่า › ข้อมูล","Erase all data in Settings › Data"],["1.43","2026-10-11","น้องโอ่งพูดได้ ปากขยับตามเสียง","Nong Ong talks, with a moving mouth"],["1.42","2026-10-11","เพิ่มเครดิต Developed by Napat Mekthap","Added credit: Developed by Napat Mekthap"],["1.41","2026-10-11","ท่าทางสัมผัส (ปัด กดค้าง เขย่า) และภาพเคลื่อนไหวของสภาพอากาศ","Touch gestures (swipe, hold, shake) and weather motion"],["1.40","2026-10-11","พื้นหลังตามสภาพอากาศจริง น้องโอ่งถือร่มหรือใส่แว่นกันแดดตามอากาศ","Live weather background; Nong Ong dresses for the weather"],["1.39","2026-10-11","เลเวลน้องโอ่ง เหรียญรางวัล และชุดที่ปลดล็อกได้","Nong Ong levels, badges and unlockable outfits"],["1.38","2026-10-11","เก็บรายละเอียดทั้งแอปและเพิ่มเอฟเฟกต์","Polish pass and more effects"],["1.37","2026-10-11","น้ำเอียงตามมือถือ เทน้ำออกตอนใช้เงิน ตราประทับเมื่อครบเป้า ลบแบบแตกกระจาย และนับวันไม่ใช้เงินติดกัน","Tilting water, pour-out, goal stamp, shatter delete, no-spend streak"],["1.36","2026-10-11","ภาพเคลื่อนไหวชุดใหญ่: ค่อยๆ โผล่ตอนเลื่อน ระลอกตอนแตะ น้ำกระฉอก ปัดเปลี่ยนเดือน","Motion pack: scroll reveal, ripples, jar slosh, month swipe"],["1.35","2026-10-11","เก็บงานธีมศิลาดล และติดตั้งบนหน้าจอหลัก iPhone ได้","Celadon finishing touches and iPhone home-screen support"],["1.34","2026-10-10","ตัวช่วยลดหย่อนภาษีปี 2569: ติดป้ายรายการ เพดานลดหย่อน และประมาณภาษี","Tax deduction helper for 2026: tags, caps and estimated tax"],["1.33","2026-10-10","ลายรานเคลือบบนการ์ดยอดเงินและหน้าล็อก แสงวาบบนน้องโอ่ง","Crackle glaze on the balance card and lock screen; glint on Nong Ong"],["1.32","2026-10-10","ธีมศิลาดลทุกหน้า: สตอรี่ การ์ดแชร์ และไอคอนแอปใหม่","Celadon everywhere: story, share card and a new app icon"],["1.31","2026-10-10","ธีมศิลาดลแบบเครื่องลายคราม ตั้งเป็นค่าเริ่มต้น","Celadon porcelain theme, now the default"],["1.30","2026-10-10","ช่องกรอกเงินตัวใหญ่ หัวข้อนุ่มขึ้น ช่อง PIN สวยขึ้น","Big amount fields, calmer titles, nicer PIN field"],["1.29","2026-10-10","รายการประจำเป็นไทม์ไลน์วันครบกำหนด แตะเพื่อบอกว่าจ่ายแล้ว","Recurring items as a due-date timeline, tap to mark paid"],["1.28","2026-10-10","แถบงบบอกความเร็วการใช้จ่าย กราฟโดนัทละเอียดขึ้น ไอคอนแอปพาสเทล","Budget pace marker, richer donut chart, pastel app icon"],["1.27","2026-10-10","ปรับข้อความอ่านสลิปในเครื่องให้อ่านง่ายขึ้น","Clearer on-device slip reading note"],["1.26","2026-10-10","อ่านสลิปภาษาไทยในเครื่อง แชร์สลิปเข้าแอป ล็อกแอปด้วยลายนิ้วมือ/PIN ซ่อนยอดเงิน ปุ่ม + เมนูเดียว","On-device Thai slip reading, share slips in, fingerprint/PIN lock, hide balances, one + menu"],["1.25","2026-10-10","กระเป๋าเงินและการโอน หารบิล ภาพรวม 6 เดือน การเตือน และจุดกู้คืน","Wallets and transfers, split bills, 6-month insights, reminders, restore points"],["1.24","2026-10-10","น้ำไหลตามระดับเงิน ส่วนบนยุบตอนเลื่อน ตัวเลขหมุน แถบงบแบบของเหลว","Flowing water, collapsing header, rolling numbers, liquid budget bars"],["1.23","2026-10-10","โอ่งในหน้าจดรายการ รายการรายวันละเอียดขึ้น โอ่งเป้าหมาย เมนูตั้งค่าใหม่","Live jar when adding, richer daily list, goal jars, new settings menu"],["1.22","2026-10-10","แก้คำภาษาอังกฤษบางจุด","English wording fixes"],["1.21","2026-10-10","ชุดเทศกาลของน้องโอ่ง ฟอนต์ Mitr เสียงเหรียญ และชุดสี","Festival outfits, Mitr font, coin sounds, colour palettes"],["1.20","2026-10-10","รองรับเบราว์เซอร์ที่เล่นเอฟเฟกต์ไม่ได้","Works on browsers without effects support"],["1.19","2026-10-10","ฉากเปิดแอป น้องโอ่งขยับได้ เหรียญบิน กราฟค่อยๆ วาด","Intro scene, living mascot, flying coins, chart draw-in"],["1.18","2026-10-10","แก้การเลือกธีมในบางเบราว์เซอร์","Theme detection fix"],["1.17","2026-10-10","วงแหวนความคืบหน้าเป้าหมาย ฉลองเมื่อสำเร็จ สลับธีมสว่าง/มืด","Goal ring, celebrations, light/dark switch"],["1.16","2026-10-10","สตอรี่และการ์ดแชร์สีพาสเทล หน้าว่างมีน้องโอ่ง","Pastel story and share card, mascot empty states"],["1.15","2026-10-10","แก้ปุ่มเบียดในหน้าตั้งค่า","Fixed squashed settings buttons"],["1.14","2026-10-10","ทางลัดจากไอคอนแอป: จดรายจ่าย จดรายรับ ค้นหา","App icon shortcuts: add expense, add income, search"],["1.13","2026-10-10","ปุ่มตอบสนองตอนกด ตัวเลขนับขึ้น และแจ้งเตือนเมื่อบันทึก","Press feedback, count-up numbers, save toast"],["1.12","2026-10-10","หน้าตาใหม่ธีม Bento Pastel (สว่างและมืด)","New Bento Pastel look (light and dark)"],["1.11","2026-10-10","ค้นหาด้วยจำนวนเงินแบบตรงตัว","Search matches amounts exactly"],["1.10","2026-10-10","ค้นหารายการได้ทุกเดือน","Search across all months"],["1.9","2026-10-10","เตือนให้สำรองข้อมูล และเพิ่มหมวดหมู่เองได้","Backup reminder and custom categories"],["1.0–1.8","","รุ่นแรก: จดรายรับรายจ่าย อ่านสลิป งบรายหมวด เป้าหมายออม รายการประจำ ยอดยกมา สตอรี่สรุปเดือน ธีมมืด ติดตั้งเป็นแอปและใช้ออฟไลน์ได้","First releases: income and expenses, slip reading, budgets, savings goals, recurring items, carry-over, monthly story, dark theme, installable and offline"]];
+const APP_VER='1.56', NEWS_VER='1.54'; // APP_VER = '1.'+sw cache number, bumped every release; NEWS_VER = last release that shows the What's new popup
+const CHANGELOG=[["1.56","2026-10-11","ลื่นขึ้นทั้งแอป: เลื่อนรายการยาวๆ ได้ลื่นขึ้น กดบันทึกแล้วหน้าต่างปิดทันที เปลี่ยนเดือนเร็วขึ้น พิมพ์จำนวนเงินไม่สะดุด และของตกแต่งพื้นหลังหยุดพักระหว่างเลื่อน","Smoother everywhere: long lists scroll better, the sheet closes instantly on save, month changes are quicker, typing amounts no longer stutters, and background decorations rest while you scroll"],["1.55","2026-10-11","เลื่อนลื่นขึ้นเมื่อเปิดเอฟเฟกต์เต็ม: แก้ภาพหน่วงตอนถือมือถือ (การเอียงน้ำในโอ่ง) พื้นหลังและแถบด้านบนเบาเครื่องขึ้น และแก้บางส่วนไม่แสดงจนต้องเลื่อนขึ้นลงหลายรอบ","Smoother scrolling with full effects: fixed the phone-tilt water effect slowing everything down, lighter background and top bar, and sections that stayed invisible until you scrolled back and forth now always appear"],["1.54","2026-10-11","การ์ดบนหน้าหลักแต่งตามเทศกาลเหมือนน้องโอ่ง: ธงประดับบนการ์ดยอดเงิน สีปุ่ม และของตกแต่งตามเทศกาล ปิดได้ในตู้เสื้อผ้า","Home cards dress up for festivals with Nong Ong: a garland on the balance card, accent colours and small decorations. Turn it off in the wardrobe"],["1.53","2026-10-11","สรุปวันนี้ตอนค่ำ แจ้งเตือนแบบรู้ใจ นับถอยหลังวันเงินเดือนออก ปฏิทินสีของเดือน และสรุปสัปดาห์ทุกวันจันทร์","Evening wrap-up, smarter reminders, payday countdown, month colour calendar and a Monday weekly recap"],["1.52","2026-10-11","ใส่เลขเวอร์ชันทุกครั้งที่อัปเดต และดูประวัติทุกเวอร์ชันย้อนหลังได้","Every update now has a version number, with the full version history"],["1.51","2026-10-11","เอฟเฟกต์ลื่นขึ้น: ฝนแบบใหม่ เมฆนุ่มขึ้น ลดภาพเคลื่อนไหวที่วิ่งพร้อมกัน และหยุดส่วนที่มองไม่เห็น","Smoother effects: new rain, softer clouds, fewer animations at once, off-screen motion paused"],["1.50","2026-10-11","น้ำในโอ่งขึ้นตามตอนพิมพ์ยอดเงินเริ่มต้น ที่มายอดเงินนับเลขขึ้น รายการนำเข้าหล่นลงในรายการ ตู้โชว์มีประกาย","Water rises as you type the opening balance, balance explainer counts up, imported rows drop in, cabinet glints"],["1.49","2026-10-11","จัดระเบียบเบื้องหลังและเพิ่มชุดทดสอบอัตโนมัติ ให้แอปเสถียรขึ้น","Behind-the-scenes tidy-up and automated tests for a steadier app"],["1.48","2026-10-11","คู่มือวิธีใช้ หน้ามีอะไรใหม่ และส่งความเห็นถึงผู้พัฒนาทาง LINE","How-to guide, What’s new, and feedback to the developer on LINE"],["1.47","2026-10-11","น้ำในโอ่งลดตามเงินที่เหลือจริง และเปิดครั้งแรกเป็นภาษาไทย","Water level follows the money you have left; Thai on first launch"],["1.46","2026-10-11","ครั้งแรกเริ่มจากโอ่งว่าง แล้วน้องโอ่งถามยอดเงินที่มี","First run starts with an empty jar and asks your starting balance"],["1.45","2026-10-11","พูดเพื่อจดรายการ สำรองข้อมูลไป Google Drive นำเข้า CSV จากธนาคาร สรุปเป็น PDF และโหมดประหยัดแบต","Speak to log, Google Drive backup, bank CSV import, PDF summary, battery saver"],["1.44","2026-10-11","ปุ่มล้างข้อมูลทั้งหมด ใน ตั้งค่า › ข้อมูล","Erase all data in Settings › Data"],["1.43","2026-10-11","น้องโอ่งพูดได้ ปากขยับตามเสียง","Nong Ong talks, with a moving mouth"],["1.42","2026-10-11","เพิ่มเครดิต Developed by Napat Mekthap","Added credit: Developed by Napat Mekthap"],["1.41","2026-10-11","ท่าทางสัมผัส (ปัด กดค้าง เขย่า) และภาพเคลื่อนไหวของสภาพอากาศ","Touch gestures (swipe, hold, shake) and weather motion"],["1.40","2026-10-11","พื้นหลังตามสภาพอากาศจริง น้องโอ่งถือร่มหรือใส่แว่นกันแดดตามอากาศ","Live weather background; Nong Ong dresses for the weather"],["1.39","2026-10-11","เลเวลน้องโอ่ง เหรียญรางวัล และชุดที่ปลดล็อกได้","Nong Ong levels, badges and unlockable outfits"],["1.38","2026-10-11","เก็บรายละเอียดทั้งแอปและเพิ่มเอฟเฟกต์","Polish pass and more effects"],["1.37","2026-10-11","น้ำเอียงตามมือถือ เทน้ำออกตอนใช้เงิน ตราประทับเมื่อครบเป้า ลบแบบแตกกระจาย และนับวันไม่ใช้เงินติดกัน","Tilting water, pour-out, goal stamp, shatter delete, no-spend streak"],["1.36","2026-10-11","ภาพเคลื่อนไหวชุดใหญ่: ค่อยๆ โผล่ตอนเลื่อน ระลอกตอนแตะ น้ำกระฉอก ปัดเปลี่ยนเดือน","Motion pack: scroll reveal, ripples, jar slosh, month swipe"],["1.35","2026-10-11","เก็บงานธีมศิลาดล และติดตั้งบนหน้าจอหลัก iPhone ได้","Celadon finishing touches and iPhone home-screen support"],["1.34","2026-10-10","ตัวช่วยลดหย่อนภาษีปี 2569: ติดป้ายรายการ เพดานลดหย่อน และประมาณภาษี","Tax deduction helper for 2026: tags, caps and estimated tax"],["1.33","2026-10-10","ลายรานเคลือบบนการ์ดยอดเงินและหน้าล็อก แสงวาบบนน้องโอ่ง","Crackle glaze on the balance card and lock screen; glint on Nong Ong"],["1.32","2026-10-10","ธีมศิลาดลทุกหน้า: สตอรี่ การ์ดแชร์ และไอคอนแอปใหม่","Celadon everywhere: story, share card and a new app icon"],["1.31","2026-10-10","ธีมศิลาดลแบบเครื่องลายคราม ตั้งเป็นค่าเริ่มต้น","Celadon porcelain theme, now the default"],["1.30","2026-10-10","ช่องกรอกเงินตัวใหญ่ หัวข้อนุ่มขึ้น ช่อง PIN สวยขึ้น","Big amount fields, calmer titles, nicer PIN field"],["1.29","2026-10-10","รายการประจำเป็นไทม์ไลน์วันครบกำหนด แตะเพื่อบอกว่าจ่ายแล้ว","Recurring items as a due-date timeline, tap to mark paid"],["1.28","2026-10-10","แถบงบบอกความเร็วการใช้จ่าย กราฟโดนัทละเอียดขึ้น ไอคอนแอปพาสเทล","Budget pace marker, richer donut chart, pastel app icon"],["1.27","2026-10-10","ปรับข้อความอ่านสลิปในเครื่องให้อ่านง่ายขึ้น","Clearer on-device slip reading note"],["1.26","2026-10-10","อ่านสลิปภาษาไทยในเครื่อง แชร์สลิปเข้าแอป ล็อกแอปด้วยลายนิ้วมือ/PIN ซ่อนยอดเงิน ปุ่ม + เมนูเดียว","On-device Thai slip reading, share slips in, fingerprint/PIN lock, hide balances, one + menu"],["1.25","2026-10-10","กระเป๋าเงินและการโอน หารบิล ภาพรวม 6 เดือน การเตือน และจุดกู้คืน","Wallets and transfers, split bills, 6-month insights, reminders, restore points"],["1.24","2026-10-10","น้ำไหลตามระดับเงิน ส่วนบนยุบตอนเลื่อน ตัวเลขหมุน แถบงบแบบของเหลว","Flowing water, collapsing header, rolling numbers, liquid budget bars"],["1.23","2026-10-10","โอ่งในหน้าจดรายการ รายการรายวันละเอียดขึ้น โอ่งเป้าหมาย เมนูตั้งค่าใหม่","Live jar when adding, richer daily list, goal jars, new settings menu"],["1.22","2026-10-10","แก้คำภาษาอังกฤษบางจุด","English wording fixes"],["1.21","2026-10-10","ชุดเทศกาลของน้องโอ่ง ฟอนต์ Mitr เสียงเหรียญ และชุดสี","Festival outfits, Mitr font, coin sounds, colour palettes"],["1.20","2026-10-10","รองรับเบราว์เซอร์ที่เล่นเอฟเฟกต์ไม่ได้","Works on browsers without effects support"],["1.19","2026-10-10","ฉากเปิดแอป น้องโอ่งขยับได้ เหรียญบิน กราฟค่อยๆ วาด","Intro scene, living mascot, flying coins, chart draw-in"],["1.18","2026-10-10","แก้การเลือกธีมในบางเบราว์เซอร์","Theme detection fix"],["1.17","2026-10-10","วงแหวนความคืบหน้าเป้าหมาย ฉลองเมื่อสำเร็จ สลับธีมสว่าง/มืด","Goal ring, celebrations, light/dark switch"],["1.16","2026-10-10","สตอรี่และการ์ดแชร์สีพาสเทล หน้าว่างมีน้องโอ่ง","Pastel story and share card, mascot empty states"],["1.15","2026-10-10","แก้ปุ่มเบียดในหน้าตั้งค่า","Fixed squashed settings buttons"],["1.14","2026-10-10","ทางลัดจากไอคอนแอป: จดรายจ่าย จดรายรับ ค้นหา","App icon shortcuts: add expense, add income, search"],["1.13","2026-10-10","ปุ่มตอบสนองตอนกด ตัวเลขนับขึ้น และแจ้งเตือนเมื่อบันทึก","Press feedback, count-up numbers, save toast"],["1.12","2026-10-10","หน้าตาใหม่ธีม Bento Pastel (สว่างและมืด)","New Bento Pastel look (light and dark)"],["1.11","2026-10-10","ค้นหาด้วยจำนวนเงินแบบตรงตัว","Search matches amounts exactly"],["1.10","2026-10-10","ค้นหารายการได้ทุกเดือน","Search across all months"],["1.9","2026-10-10","เตือนให้สำรองข้อมูล และเพิ่มหมวดหมู่เองได้","Backup reminder and custom categories"],["1.0–1.8","","รุ่นแรก: จดรายรับรายจ่าย อ่านสลิป งบรายหมวด เป้าหมายออม รายการประจำ ยอดยกมา สตอรี่สรุปเดือน ธีมมืด ติดตั้งเป็นแอปและใช้ออฟไลน์ได้","First releases: income and expenses, slip reading, budgets, savings goals, recurring items, carry-over, monthly story, dark theme, installable and offline"]];
 const DEV_CONTACT={line:'qnapat',mail:''}; // optional: the developer can put a LINE ID or e-mail here for a direct "send to developer" button
 const ERRLOG=[]; addEventListener('error',e=>{ try{ ERRLOG.push((e.message||'error')+' @'+String(e.filename||'').split('/').pop()+':'+(e.lineno||0)); if(ERRLOG.length>5) ERRLOG.shift() }catch(_){} });
 addEventListener('unhandledrejection',e=>{ try{ ERRLOG.push('promise: '+String(e.reason&&e.reason.message||e.reason).slice(0,120)); if(ERRLOG.length>5) ERRLOG.shift() }catch(_){} });
@@ -5574,7 +5604,7 @@ function renderCal(){ let sec=$('calsec'); const ref=$('owesec'); if(!ref) retur
   sec.innerHTML=`<h2><span>${L('ปฏิทินการใช้เงิน','Spending calendar')}</span><small class="num">${base>0?(fromIncome?L(`งบวันละ ${fmt(Math.floor(base))}`,`${fmt(Math.floor(base))} a day`):L(`เทียบกับวันปกติ ${fmt(Math.floor(base))}`,`vs a typical ${fmt(Math.floor(base))}`)):''}</small></h2>
   <div class="calwrap"><div class="cal">${cells}</div><div class="callg">${lg.map(([k,t])=>`<span class="${k}"><i></i>${t} <b class="num">${n[k]}</b></span>`).join('')}</div><div class="caldet" id="caldet" hidden></div></div>`;
   sec._base=base;
-  if(sec._ym!==ym){ sec._ym=ym; sec._pick=null; if(FX()){ const c=sec.querySelector('.cal'); c.classList.add('fresh'); setTimeout(()=>c.classList.remove('fresh'),1400) } }
+  if(sec._ym!==ym){ sec._ym=ym; sec._pick=null; if(FX()&&seen(sec)){ const c=sec.querySelector('.cal'); c.classList.add('fresh'); setTimeout(()=>c.classList.remove('fresh'),1400) } }
   else if(sec._pick) calPick(sec._pick,true) }
 function calPick(ds,quiet){ const sec=$('calsec'), det=$('caldet'); if(!sec||!det) return;
   if(sec._pick===ds&&!quiet){ sec._pick=null; det.hidden=true; sec.querySelectorAll('.cd.pk').forEach(x=>x.classList.remove('pk')); return }
@@ -5584,7 +5614,7 @@ function calPick(ds,quiet){ const sec=$('calsec'), det=$('caldet'); if(!sec||!de
   det.innerHTML=`<div class="cdh"><b>${dShort(ds,{weekday:'long',day:'numeric',month:'short'})}</b><span class="num">${o?'-'+fmt(o):''}</span></div><small>${verdict}${rs.length?L(` · ${rs.length} รายการ`,` · ${rs.length} ${rs.length===1?'entry':'entries'}`):''}</small>
   ${outs.length?`<div class="cdl">${outs.slice(0,3).map(r=>`<span>${ic(r.cat,'sm')}${esc(r.memo||tr(r.cat||''))}<b class="num">${fmt(r.amount)}</b></span>`).join('')}</div>`:''}${rs.length?`<button type="button" id="calgo">${L('ดูในรายการ','Show in list')} ›</button>`:''}`;
   if(det.hidden){ det.hidden=false; if(FX()&&!quiet) det.animate([{opacity:0,transform:'translateY(-6px)'},{opacity:1,transform:'none'}],{duration:260,easing:'cubic-bezier(.2,.85,.25,1)'}) } }
-function calJump(ds){ if(!ds) return; let el=document.querySelector(`#list .day[data-d="${ds}"]`);
+function calJump(ds){ if(!ds) return; listFlush(); let el=document.querySelector(`#list .day[data-d="${ds}"]`);
   if(!el&&(filterCat||$('q').value)){ filterCat=null; $('q').value=''; render(); el=document.querySelector(`#list .day[data-d="${ds}"]`) }
   if(!el){ toast(L('ไม่มีรายการวันนั้น','Nothing on that day')); return }
   el.scrollIntoView({behavior:RM()?'auto':'smooth',block:'center'}); el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash'); setTimeout(()=>el.classList.remove('flash'),1600) }
@@ -5678,7 +5708,7 @@ applyFestTheme();
 
 /* ===== V360 scroll smoothness: the jars' inner SVG motion (water, bubbles, eyes) can't run on the GPU,
    so it holds still while a scroll is in motion. The class sits on the jars only, never on <body>. ===== */
-{ let t=0, on=false; const els=()=>[$('pig'),$('ntjar')].filter(Boolean);
+{ let t=0, on=false; const els=()=>[$('pig'),$('ntjar'),$('festfx'),$('todfx'),$('aurora'),$('wxfx'),document.querySelector('.balance .dust')].filter(Boolean);
   addEventListener('scroll',()=>{ if(!on){ on=true; els().forEach(e=>e.classList.add('scr')) } clearTimeout(t); t=setTimeout(()=>{ on=false; els().forEach(e=>e.classList.remove('scr')) },160) },{passive:true}); }
 </script>
 
