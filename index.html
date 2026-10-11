@@ -1559,6 +1559,38 @@ body.lowfx .ncap,body.lowfx .nspill .fl1,body.lowfx .nspill .fl2,body.lowfx .wxd
 .expl div b{font:500 16px var(--display);white-space:nowrap}
 .expl div.tot{background:var(--s-high);border-bottom:0}.expl div.tot b{font-size:20px}
 .expl .pos{color:var(--in,#2f7d5b)}.expl .neg{color:var(--out,#b3492f)}
+
+/* ===== V310 help, what's new, feedback ===== */
+.helprow{display:flex;gap:8px;margin:16px 0 0;flex-wrap:wrap}
+.helprow button{flex:1 1 30%;min-width:96px;border:0;border-radius:18px;padding:12px 8px;display:flex;flex-direction:column;align-items:center;gap:6px;background:var(--s-low);color:var(--ink);font:500 13px var(--body);cursor:pointer;box-shadow:inset 0 0 0 1px var(--ov)}
+.helprow svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.helprow button.dot{position:relative}.helprow button.dot::after{content:"";position:absolute;top:9px;right:12px;width:8px;height:8px;border-radius:50%;background:var(--out,#c0533a)}
+.credit .ver{font-size:11px;opacity:.7}
+.hlp{display:flex;flex-direction:column;gap:10px}
+.hcard{display:grid;grid-template-columns:52px 1fr;gap:12px;align-items:start;background:var(--surface);border-radius:20px;padding:14px}
+.hcard .hi{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;background:var(--t-in);color:var(--t-in-fg)}
+.hcard .hi svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.hcard .hi.jar{background:transparent}.hcard .hi.jar svg{width:52px;height:52px;overflow:visible;stroke:none}
+.hcard>div>b{display:block;font:500 16px var(--display);margin-bottom:4px}
+.hcard li b{font-weight:600}
+#fbsheet .actions .btn{white-space:nowrap;padding:0 14px;flex:1 1 auto}
+.hcard ul{margin:0;padding-left:16px;font-size:13.5px;line-height:1.65;color:var(--ink)}
+.hcard li span{color:var(--muted)}
+.hcard .try{margin-top:8px;border:0;border-radius:999px;padding:7px 14px;background:var(--btn);color:var(--btn-fg);font:500 13px var(--body);cursor:pointer}
+.hsearch{display:flex;gap:6px;flex-wrap:wrap}.hsearch button{border:0;border-radius:999px;padding:6px 12px;background:var(--s-high);color:var(--ink);font:500 12.5px var(--body);cursor:pointer}
+.wn-jar{width:120px;height:120px;margin:0 auto -6px}.wn-jar svg{width:100%;height:100%;overflow:visible}
+.wn-k{text-align:center;font:500 12px var(--display);letter-spacing:.18em;color:var(--gold,#b8913a)}
+.wn-list{display:flex;flex-direction:column;gap:8px}
+.wn-item{display:grid;grid-template-columns:40px 1fr;gap:12px;align-items:center;background:var(--surface);border-radius:18px;padding:12px}
+.wn-item i{width:40px;height:40px;border-radius:13px;display:grid;place-items:center;background:var(--t-mood);color:var(--t-mood-fg);font-style:normal}
+.wn-item i svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.wn-item b{display:block;font:500 15px var(--display)}.wn-item small{color:var(--muted);font-size:13px;line-height:1.5}
+.fbtypes{display:flex;gap:6px;flex-wrap:wrap}.fbtypes button{border:0;border-radius:999px;padding:9px 14px;background:var(--s-high);color:var(--ink);font:500 14px var(--body);cursor:pointer}.fbtypes button.on{background:var(--btn);color:var(--btn-fg)}
+#fbtext{min-height:120px;border-radius:18px}
+.wnote a{color:inherit;font-weight:600}
+.fbinfo{font:12px/1.55 ui-monospace,Menlo,monospace;color:var(--muted);background:var(--surface);border-radius:14px;padding:10px 12px;white-space:pre-wrap;word-break:break-word;max-height:140px;overflow:auto}
+.fbchk{display:flex!important;flex-direction:row!important;gap:10px;align-items:flex-start;font-size:13.5px}
+.fbchk input{width:20px;height:20px;flex:none;appearance:auto;-webkit-appearance:checkbox;accent-color:var(--ink)}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i></div><div id="festfx" aria-hidden="true"></div>
@@ -5179,6 +5211,75 @@ function openExplain(){ const ym=view.getFullYear()+'-'+String(view.getMonth()+1
 $('carry').addEventListener('click',openExplain); $('ballabel').addEventListener('click',openExplain);
 { const fix=()=>{ const l=$('ballabel'); if(l&&!l.querySelector('.why')){ const w=document.createElement('span'); w.className='why'; w.textContent='?'; w.setAttribute('aria-hidden','true'); l.appendChild(w) } };
   const _r5=render; render=function(){ const o=_r5.apply(this,arguments); try{fix()}catch(e){} return o }; fix() }
+
+/* ===== V310 help guide, what's new, feedback ===== */
+const APP_VER='1.48';
+const DEV_CONTACT={line:'qnapat',mail:''}; // optional: the developer can put a LINE ID or e-mail here for a direct "send to developer" button
+const ERRLOG=[]; addEventListener('error',e=>{ try{ ERRLOG.push((e.message||'error')+' @'+String(e.filename||'').split('/').pop()+':'+(e.lineno||0)); if(ERRLOG.length>5) ERRLOG.shift() }catch(_){} });
+addEventListener('unhandledrejection',e=>{ try{ ERRLOG.push('promise: '+String(e.reason&&e.reason.message||e.reason).slice(0,120)); if(ERRLOG.length>5) ERRLOG.shift() }catch(_){} });
+const HI={plus:'M12 5v14M5 12h14',swipe:'M4 12h12M12 8l4 4-4 4M20 5v14',jar:'',money:'M3 7h18v10H3zM12 12m-2.5 0a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0-5 0M6 10v4M18 10v4',target:'M12 4a8 8 0 1 0 0 16a8 8 0 1 0 0-16M12 8a4 4 0 1 0 0 8a4 4 0 1 0 0-8',trophy:'M8 4h8v5a4 4 0 0 1-8 0zM8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8 20h8',cloud:'M7 18h10.5a3.8 3.8 0 0 0 .4-7.6A5.5 5.5 0 0 0 7.4 9.2 4.4 4.4 0 0 0 7 18z',shield:'M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6zM9 12l2 2 4-4',hand:'M8 13V6a1.5 1.5 0 0 1 3 0v5M11 11V4.5a1.5 1.5 0 0 1 3 0V11M14 11V6a1.5 1.5 0 0 1 3 0v7c0 4-2.5 7-6 7s-5-2-6.5-4.5L3 12a1.5 1.5 0 0 1 2.5-1.5L8 13',mic:'M9 3h6v11H9zM5 11a7 7 0 0 0 14 0M12 18v3',spark:'M12 3l1.8 4.7 4.7 1.8-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z',chat:'M4 5h16v11H9l-5 4z',book:'M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM8 7h7'};
+const hsvg=k=>`<svg viewBox="0 0 24 24"><path d="${HI[k]}"/></svg>`;
+function sheetOf(id){ let sh=$(id); if(!sh){ sh=document.createElement('div'); sh.className='sheet'; sh.id=id; sh.hidden=true; sh.innerHTML=`<div class="panel" id="${id}p"></div>`; document.body.appendChild(sh); sh.onclick=e=>{ if(e.target===sh) hideSheet(id) }; try{attachSheetDrag(sh)}catch(_){} } return $(id+'p') }
+/* (3) How to use */
+function openHelp(){ const P=sheetOf('helpsheet');
+  const card=(ic,t,items,tryLabel,tryId)=>`<div class="hcard"><span class="hi${ic==='jar'?' jar':''}">${ic==='jar'?jarSVG('great',undefined,null,undefined,0):hsvg(ic)}</span><div><b>${t}</b><ul>${items.map(x=>`<li>${x}</li>`).join('')}</ul>${tryLabel?`<button type="button" class="try" data-try="${tryId}">${tryLabel}</button>`:''}</div></div>`;
+  P.innerHTML=`<h3>${L('วิธีใช้เหลือเก็บ','How to use Luakep')}</h3><div class="hlp">
+  ${card('plus',L('จดรายการ','Logging'),[L('แตะปุ่ม <b>+</b> มุมขวาล่าง แล้วเลือก จดรายการ · พูดจด · อ่านสลิป','Tap <b>+</b> at the bottom right, then Add · Speak · Scan slips'),L('<b>พูดจด</b> พูดได้เลย เช่น “ค่ากาแฟ 60” หรือ “เงินเดือนเข้า 45,000”','<b>Speak</b>: say “coffee 60” or “salary 45,000 received”'),L('<b>อ่านสลิป</b> เลือกรูปสลิปโอนเงิน แอปอ่านในเครื่อง ไม่ส่งรูปไปไหน <span>(แอปที่ติดตั้งบนมือถือ)</span>','<b>Scan slips</b>: pick transfer slip images, read on the phone <span>(installed app)</span>'),L('แชร์รูปสลิปจากแอปธนาคารมาที่เหลือเก็บได้เลย','Share a slip from your bank app straight to Luakep')],SR?L('ลองพูดจด','Try speaking'):'','voice')}
+  ${card('jar',L('น้องโอ่งกับน้ำในโอ่ง','Nong Ong and the water'),[L('<b>น้ำในโอ่ง</b> = เงินที่เหลือ เทียบกับเงินที่มีเดือนนี้ (ยอดยกมา + รายรับ) ใช้มากน้ำก็ลด','<b>Water</b> = money left versus this month’s money (carried over + income). Spend and it drops'),L('<b>แตะ</b> น้องโอ่งพูด · <b>กดค้าง</b> ลูบหัว · <b>แตะน้ำ</b> น้ำกระเพื่อม','<b>Tap</b> to chat · <b>hold</b> to pet · <b>tap the water</b> for ripples'),L('<b>เขย่ามือถือ</b> เหรียญดังกรุ๊งกริ๊ง แล้วบอกยอดที่ใช้ได้วันนี้','<b>Shake the phone</b> to rattle the coins and hear today’s allowance'),L('ตั้งให้น้องโอ่งพูดออกเสียงได้ที่ ตั้งค่า › แอป › เสียง','Turn on talking in Settings › App › Sound')],'','')}
+  ${card('money',L('ยอดเงินบนการ์ด','The balance card'),[L('<b>แตะคำว่า “คงเหลือ”</b> ดูว่ายอดมาจากไหน','<b>Tap “Total balance”</b> to see where it comes from'),L('<b>ปัดการ์ดซ้าย/ขวา</b> เปลี่ยนเดือน','<b>Swipe the card</b> left/right to change month'),L('รูปตา ซ่อนยอดเงินเวลาอยู่ในที่สาธารณะ','The eye hides amounts in public'),L('แก้ยอดเงินเริ่มต้นได้ที่ ตั้งค่า › การเงิน','Edit the opening balance in Settings › Money')],L('ดูที่มายอดเงิน','Explain my balance'),'explain')}
+  ${card('swipe',L('ปัดและกดค้าง','Swipes and holds'),[L('<b>ปัดรายการไปซ้าย</b> ลบ (มีปุ่มเลิกทำ)','<b>Swipe an entry left</b> to delete (with undo)'),L('<b>ปัดรายการไปขวา</b> จดซ้ำวันนี้ เหมาะกับของที่ซื้อประจำ','<b>Swipe right</b> to log it again today'),L('<b>กดค้างที่รายการ</b> เมนูแก้ไข จดซ้ำ ลบ','<b>Hold an entry</b> for Edit / Log again / Delete'),L('<b>ปัดหน้าต่างลง</b> เพื่อปิด · ในตั้งค่า <b>ปัดจากขอบซ้าย</b> เพื่อย้อนกลับ','<b>Drag a sheet down</b> to close · in settings <b>swipe from the left edge</b> to go back'),L('<b>ดึงหน้าจอลง</b>ตอนอยู่บนสุด น้องโอ่งจะกระโดด','<b>Pull down</b> at the top and Nong Ong hops')],'','')}
+  ${card('target',L('งบ เป้าหมาย และรายการประจำ','Budgets, goals and repeats'),[L('<b>ตั้งงบ</b> ต่อหมวด แถบจะบอกว่าใช้เร็วกว่าเวลาที่ผ่านไปไหม','<b>Budgets</b> per category show if you spend faster than the month passes'),L('<b>เป้าหมายออม</b> แตะเพื่อเติมเงิน ครบเป้าได้ตราประทับและรูปที่ระลึก','<b>Goals</b>: tap to add money; reach one for a stamp and keepsake image'),L('ติ๊ก <b>ทำซ้ำทุกเดือน</b> ตอนจด เช่น ค่าเช่า ค่าเน็ต','Tick <b>repeat monthly</b> for rent, internet and so on'),L('<b>หารบิล</b> จ่ายแทนเพื่อนแล้วให้แอปจำว่าใครค้าง','<b>Split</b> a bill and the app remembers who owes you')],'','')}
+  ${card('trophy',L('เลื่อนขั้นและเหรียญรางวัล','Levels and badges'),[L('จดทุกวันได้ XP น้องโอ่งเลื่อนขั้นและได้ลายโอ่งใหม่','Log daily for XP; Nong Ong levels up with new jar finishes'),L('เหรียญบางอันปลดล็อกชุดพิเศษในตู้เสื้อผ้า','Some badges unlock special outfits'),L('แตะป้าย <b>Lv.</b> ใต้น้องโอ่งเพื่อเปิดตู้โชว์','Tap the <b>Lv.</b> chip under Nong Ong for the cabinet')],L('เปิดตู้โชว์','Open cabinet'),'trophy')}
+  ${card('cloud',L('อากาศ ภาษี และรายงาน','Weather, tax and reports'),[L('พื้นหลังและชุดน้องโอ่งเปลี่ยนตามอากาศจริง ตั้งเมืองได้ใน ตั้งค่า › แอป › สภาพอากาศ','Background and outfit follow the real weather; pick a city in Settings › App › Weather'),L('<b>ลดหย่อนภาษี</b> ติดป้ายรายการตอนจด แล้วดูยอดที่ลดหย่อนได้บนหน้าหลัก','<b>Tax</b>: tag entries and track deductions from the home screen'),L('<b>สรุปเป็น PDF</b> และ<b>นำเข้า CSV จากธนาคาร</b> ที่ ตั้งค่า › ข้อมูล','<b>PDF summary</b> and <b>bank CSV import</b> in Settings › Data')],'','')}
+  ${card('shield',L('ข้อมูลของคุณ','Your data'),[L('ทุกอย่างเก็บในมือถือเครื่องนี้เท่านั้น','Everything stays on this phone'),L('<b>สำรองข้อมูล</b> เป็นไฟล์ไว้ใน Drive หรือ LINE เป็นระยะ เผื่อมือถือหาย','<b>Back up</b> to a file in Drive or LINE now and then'),L('ล็อกแอปด้วยลายนิ้วมือได้ที่ ตั้งค่า › แอป','Lock the app with your fingerprint in Settings › App')],L('ไปที่สำรองข้อมูล','Go to backup'),'backup')}
+  </div><div class="actions"><button class="btn" type="button" id="hlpfb">${L('ยังสงสัย? ถามผู้พัฒนา','Still stuck? Ask the developer')}</button><button class="btn save" type="button" id="hlpok">${L('เข้าใจแล้ว','Got it')}</button></div>`;
+  showSheet('helpsheet'); $('hlpok').onclick=()=>hideSheet('helpsheet'); $('hlpfb').onclick=()=>{ hideSheet('helpsheet'); setTimeout(()=>openFeedback('q'),260) };
+  P.onclick=e=>{ const b=e.target.closest('[data-try]'); if(!b) return; const k=b.dataset.try; hideSheet('helpsheet'); hideSheet('setsheet');
+    setTimeout(()=>{ if(k==='voice') startVoice(); else if(k==='explain') openExplain(); else if(k==='trophy') openTrophy(); else if(k==='backup'){ openSet(); setOpenFor($('sharebk')); setTimeout(()=>$('sharebk').scrollIntoView({block:'center'}),350) } },300) } }
+/* (2) What's new — shown once after an update */
+const WHATSNEW=()=>[['money',L('เริ่มต้นง่ายขึ้น','Easier start'),L('ครั้งแรกน้องโอ่งถามยอดเงินที่มี และแตะยอดเงินเพื่อดูว่ามาจากไหน','First run asks what you have; tap the balance to see where it comes from')],
+ ['jar',L('น้ำในโอ่งตามเงินที่เหลือจริง','Water follows real money left'),L('ยิ่งใช้น้ำยิ่งลด คิดจากยอดยกมาและรายรับเดือนนี้','It drops as you spend, based on carried-over balance plus income')],
+ ['mic',L('พูดจด และน้องโอ่งพูดได้','Speak to log; Nong Ong talks'),L('กด + แล้วเลือก “พูดจด” ส่วนเสียงน้องโอ่งเปิดได้ในตั้งค่าเสียง','Tap + then Speak; turn on Nong Ong’s voice in Sound settings')],
+ ['book',L('วิธีใช้ และแจ้งปัญหา','Guide and feedback'),L('อยู่ท้ายหน้าตั้งค่า เจออะไรแปลกๆ บอกผู้พัฒนาได้เลย','At the bottom of Settings. Tell the developer about anything odd')]];
+function openWhatsNew(){ const P=sheetOf('wnsheet');
+  P.innerHTML=`<div class="wn-jar">${jarSVG('great',undefined,null,undefined,0)}</div><div class="wn-k">${L('มีอะไรใหม่','WHAT’S NEW')} · v${APP_VER}</div><h3 style="text-align:center;margin:0">${L('น้องโอ่งอัปเดตแล้ว!','Nong Ong just got an update!')}</h3>
+  <div class="wn-list">${WHATSNEW().map(([ic,t,d])=>`<div class="wn-item"><i>${ic==='jar'?'<svg viewBox="0 0 24 24"><path d="M8 4h8M9 4v2c-3 1-5 4-5 7.5C4 17.5 7 20 12 20s8-2.5 8-6.5C20 10 18 7 15 6V4M5 13c4 2 10 2 14 0"/></svg>':hsvg(ic)}</i><span><b>${t}</b><small>${d}</small></span></div>`).join('')}</div>
+  <div class="actions"><button class="btn" type="button" id="wnhelp">${L('ดูวิธีใช้ทั้งหมด','See the full guide')}</button><button class="btn save" type="button" id="wnok">${L('เยี่ยมเลย','Nice')}</button></div>`;
+  showSheet('wnsheet'); prefs.seenVer=APP_VER; savePrefs(); try{ $('helprow')&&$('helprow').querySelector('[data-h="new"]').classList.remove('dot') }catch(_){}
+  if(FX()) P.querySelectorAll('.wn-item').forEach((it,i)=>it.animate([{opacity:0,transform:'translateY(14px)'},{opacity:1,transform:'none'}],{duration:420,delay:150+i*90,easing:'cubic-bezier(.2,.85,.25,1)',fill:'backwards'}));
+  $('wnok').onclick=()=>hideSheet('wnsheet'); $('wnhelp').onclick=()=>{ hideSheet('wnsheet'); setTimeout(openHelp,260) } }
+(function(){ if(FIRST_RUN||!prefs.onbDone&&!data.some(r=>!r.demo)&&!data.some(r=>r.demo)){ prefs.seenVer=APP_VER; savePrefs(); return }
+  if(prefs.seenVer===APP_VER) return; let k=0; const t=()=>{ const busy=($('auth')&&!$('auth').hidden)||($('intro')&&!$('intro').hidden)||document.body.classList.contains('locked')||document.querySelector('.sheet:not([hidden])')||!$('lvup').hidden;
+  if(busy&&k++<40){ setTimeout(t,900); return } if(prefs.seenVer!==APP_VER) openWhatsNew() }; setTimeout(t,2200) })();
+/* (1) Report a problem / suggest an idea */
+function devInfo(){ const ua=navigator.userAgent, os=(ua.match(/Android [\d.]+/)||ua.match(/iPhone OS [\d_]+/)||ua.match(/Windows NT [\d.]+|Mac OS X [\d_]+/)||['?'])[0].replace(/_/g,'.'), model=(ua.match(/Android [\d.]+; ([^;)]+)/)||[])[1]||(/iPhone/.test(ua)?'iPhone':''), br=(ua.match(/(Chrome|Firefox|Version)\/[\d.]+/)||['?'])[0];
+  return [`เหลือเก็บ v${APP_VER}`,`${os}${model?' · '+model:''} · ${br}`,`${window.STANDALONE||matchMedia('(display-mode: standalone)').matches?'installed app':'browser'} · ${innerWidth}×${innerHeight} · ${LANG} · ${prefs.theme||'auto'}/${prefs.palette||'celadon'}`,`entries ${data.filter(r=>!r.demo).length} · Lv.${GAME&&GAME.level||1} · fx ${document.body.classList.contains('lowfx')?'low':'full'}`].concat(ERRLOG.length?['errors: '+ERRLOG.join(' | ')]:[]).join('\n') }
+function openFeedback(kind){ const P=sheetOf('fbsheet'); let k=kind||'bug';
+  const T={bug:L('แจ้งปัญหา','Report a problem'),idea:L('เสนอไอเดีย','Suggest an idea'),q:L('สงสัยวิธีใช้','Question'),love:L('ชมน้องโอ่ง','Say something nice')};
+  const PH={bug:L('เจออะไร ตอนทำอะไรอยู่ เช่น “กดบันทึกแล้วยอดไม่เปลี่ยน”','What happened and what were you doing?'),idea:L('อยากให้แอปทำอะไรได้อีก','What would you like the app to do?'),q:L('อยากรู้ว่าทำยังไง','What would you like to know?'),love:L('ชอบตรงไหน บอกน้องโอ่งหน่อย','What do you like?')};
+  P.innerHTML=`<h3>${L('บอกผู้พัฒนา','Tell the developer')}</h3><div class="fbtypes" id="fbt">${Object.keys(T).map(x=>`<button type="button" data-k="${x}" class="${x===k?'on':''}">${T[x]}</button>`).join('')}</div>
+    <textarea id="fbtext" placeholder="${PH[k]}"></textarea>
+    <label class="fbchk"><input type="checkbox" id="fbdev" checked><span>${L('แนบข้อมูลเครื่อง (รุ่นแอป ระบบ ขนาดจอ จำนวนรายการ) ไม่มียอดเงินหรือรายการของคุณ','Attach device info (app version, system, screen, number of entries). No amounts or entries.')}</span></label>
+    <div class="fbinfo" id="fbinfo">${esc(devInfo())}</div>
+    ${DEV_CONTACT.line?`<small class="wnote">${L(`กด “ส่งทาง LINE” แล้วเลือกแชต <b>${DEV_CONTACT.line}</b> (ผู้พัฒนา) ข้อความจะพิมพ์ไว้ให้แล้ว · ยังไม่ได้เป็นเพื่อน? <a href="https://line.me/ti/p/~${DEV_CONTACT.line}" target="_blank" rel="noopener">เพิ่มเพื่อน LINE ${DEV_CONTACT.line}</a>`,`Tap “Send via LINE” and pick the chat with <b>${DEV_CONTACT.line}</b> (the developer). Not friends yet? <a href="https://line.me/ti/p/~${DEV_CONTACT.line}" target="_blank" rel="noopener">Add ${DEV_CONTACT.line} on LINE</a>`)}</small>`:`<small class="wnote">${L('กดส่งแล้วเลือกแอปที่จะส่ง เช่น LINE แชตกับผู้พัฒนา หรืออีเมล','Tap send, then pick an app such as LINE or e-mail')}</small>`}
+    <div class="actions"><button class="btn" type="button" id="fbcancel">${L('ยกเลิก','Cancel')}</button>${DEV_CONTACT.line?`<button class="btn" type="button" id="fbother">${L('แอปอื่น','Other app')}</button>`:''}<button class="btn save" type="button" id="fbsend">${DEV_CONTACT.line?L('ส่งทาง LINE','Send via LINE'):L('ส่ง','Send')}</button></div>`;
+  showSheet('fbsheet'); setTimeout(()=>{try{$('fbtext').focus()}catch(_){}},300);
+  $('fbt').onclick=e=>{ const b=e.target.closest('[data-k]'); if(!b) return; k=b.dataset.k; $('fbt').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b)); $('fbtext').placeholder=PH[k] };
+  $('fbdev').onchange=e=>{ $('fbinfo').hidden=!e.target.checked };
+  $('fbcancel').onclick=()=>hideSheet('fbsheet');
+  const compose=()=>{ const msg=$('fbtext').value.trim(); if(!msg){ shake($('fbtext')); $('fbtext').focus(); return null } return `[เหลือเก็บ] ${T[k]}\n\n${msg}${$('fbdev').checked?'\n\n— '+devInfo():''}` };
+  if($('fbother')) $('fbother').onclick=async()=>{ const text=compose(); if(!text) return; try{ if(navigator.share){ await navigator.share({text}); hideSheet('fbsheet'); toast(L('ขอบคุณที่บอกนะ!','Thanks for telling us!')); return } }catch(e){ if(e&&e.name==='AbortError') return } try{ await navigator.clipboard.writeText(text); toast(L('คัดลอกข้อความแล้ว','Copied')); hideSheet('fbsheet') }catch(_){} };
+  $('fbsend').onclick=async()=>{ const text=compose(); if(!text) return;
+    if(DEV_CONTACT.line){ try{ await navigator.clipboard.writeText(text) }catch(_){} const w=window.open('https://line.me/R/share?text='+encodeURIComponent(text),'_blank'); if(!w) location.href='https://line.me/R/share?text='+encodeURIComponent(text); hideSheet('fbsheet'); toast(L(`เลือกแชต ${DEV_CONTACT.line} แล้วกดส่ง ขอบคุณนะ!`,`Pick the chat with ${DEV_CONTACT.line} and send. Thank you!`)); return }
+    if(DEV_CONTACT.mail){ location.href=`mailto:${DEV_CONTACT.mail}?subject=${encodeURIComponent('[เหลือเก็บ] '+T[k])}&body=${encodeURIComponent(text)}`; hideSheet('fbsheet'); return }
+    try{ if(navigator.share){ await navigator.share({text}); hideSheet('fbsheet'); toast(L('ขอบคุณที่บอกนะ!','Thanks for telling us!')); return } }catch(e){ if(e&&e.name==='AbortError') return }
+    try{ await navigator.clipboard.writeText(text); toast(L('คัดลอกข้อความแล้ว วางในแชตกับผู้พัฒนาได้เลย','Copied. Paste it into a chat with the developer')); hideSheet('fbsheet') }catch(e){ toast(L('ส่งไม่ได้ คัดลอกข้อความเองนะ','Could not send. Please copy the text')) } } }
+/* Entry points: a help row at the foot of the settings menu */
+(function(){ const m=$('setmenu'); if(!m||$('helprow')) return; const r=document.createElement('div'); r.className='helprow'; r.id='helprow';
+  r.innerHTML=`<button type="button" data-h="help">${hsvg('book')}${L('วิธีใช้','How to use')}</button><button type="button" data-h="new" class="${prefs.seenVer===APP_VER?'':'dot'}">${hsvg('spark')}${L('มีอะไรใหม่','What’s new')}</button><button type="button" data-h="fb">${hsvg('chat')}${L('แจ้งปัญหา / ไอเดีย','Feedback')}</button>`;
+  const cr=m.querySelector('.credit'); if(cr) m.insertBefore(r,cr); else m.appendChild(r);
+  r.onclick=e=>{ const b=e.target.closest('[data-h]'); if(!b) return; const h=b.dataset.h; hideSheet('setsheet'); setTimeout(()=>{ if(h==='help') openHelp(); else if(h==='new') openWhatsNew(); else openFeedback('bug') },260) };
+  const sm=m.querySelector('.credit small'); if(sm&&!m.querySelector('.ver')){ const v=document.createElement('small'); v.className='ver'; v.textContent='v'+APP_VER; sm.after(v) } })();
 </script>
 
 <script>
