@@ -1751,6 +1751,81 @@ body[data-fest] .paychip .pp u{background:var(--fa)}
 .kpnote{position:fixed;left:12px;right:12px;top:calc(10px + env(safe-area-inset-top,0px));z-index:9400;display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:18px;background:var(--btn,#1d2420);color:var(--btn-fg,#fff);font-size:14px;box-shadow:0 12px 30px -12px rgba(0,0,0,.35)}
 .kpnote span{flex:1}.kpnote button{border:0;border-radius:999px;padding:7px 12px;font:inherit;font-weight:600;background:rgba(255,255,255,.16);color:inherit;cursor:pointer}.kpnote .x{padding:4px 10px;font-size:18px;background:transparent}
 .kpnote.bad{background:#7a2e1c}
+/* V390 time + slip pictures */
+.dtrow{display:grid;grid-template-columns:1fr 132px;gap:10px}.dtrow label{min-width:0}
+.rtime{display:inline-block;margin-right:6px;font-size:11.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.row:has(>.slipth){grid-template-columns:40px 1fr auto 34px;gap:12px}
+.slipth{flex:none;width:34px;height:44px;margin:0;border-radius:8px;border:1px solid var(--ov,rgba(0,0,0,.12));background:var(--surface) center top/cover no-repeat;padding:0;cursor:zoom-in;box-shadow:0 2px 6px -3px rgba(0,0,0,.3)}
+#slipview{position:fixed;inset:0;z-index:9300;background:rgba(12,16,14,.92);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:calc(16px + env(safe-area-inset-top,0px)) 16px calc(16px + env(safe-area-inset-bottom,0px));color:#fff}
+#slipview .sv-top{text-align:center;display:flex;flex-direction:column;gap:2px}#slipview small{opacity:.75}
+#slipview img{max-width:100%;max-height:72vh;border-radius:14px;box-shadow:0 20px 50px -20px #000;background:#fff}
+#slipview .sv-x{border:0;border-radius:999px;padding:10px 22px;font:inherit;font-weight:600;background:#fff;color:#1d2420}
+/* V390 quick add */
+.qadd{display:flex;align-items:center;gap:6px;margin:0;padding:6px;border-radius:999px;background:var(--s-low);box-shadow:var(--e1),inset 0 0 0 1px var(--ov,rgba(0,0,0,.06))}
+.qadd input{flex:1;min-width:0;border:0;background:transparent;font:inherit;font-size:15px;color:var(--ink);padding:10px 4px;outline:none}
+.qadd input::placeholder{color:var(--muted)}
+.qadd button{flex:none;width:42px;height:42px;border-radius:50%;border:0;display:grid;place-items:center;cursor:pointer;background:transparent;color:var(--ink)}
+.qadd button svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.qadd .qa-go{background:var(--btn);color:var(--btn-fg)}.qadd .qa-mic{background:color-mix(in srgb,var(--ink) 7%,transparent)}
+.qadd:focus-within{box-shadow:var(--e1),inset 0 0 0 2px color-mix(in srgb,var(--gold,#b8913a) 70%,transparent)}
+.qa-said{font-size:13px;color:var(--muted);margin-bottom:-6px;word-break:break-word}
+.qa-when{display:grid;grid-template-columns:1fr 128px;gap:10px}.qa-when label{display:flex;flex-direction:column;gap:4px;font-size:12.5px;color:var(--muted)}
+.qa-list{display:flex;flex-direction:column;gap:8px}
+.qa-it{display:grid;grid-template-columns:30px 36px 1fr auto;gap:10px;align-items:center;background:var(--surface);border-radius:16px;padding:10px 12px;transition:opacity .2s}
+.qa-it.off{opacity:.45}
+.qa-chk{position:relative;width:28px;height:28px}.qa-chk input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}.qa-chk i{position:absolute;inset:0;border-radius:9px;box-shadow:inset 0 0 0 2px var(--muted);pointer-events:none}
+.qa-chk input:checked+i{background:var(--btn);box-shadow:none}.qa-chk input:checked+i::after{content:"";position:absolute;left:9px;top:5px;width:7px;height:12px;border:solid var(--btn-fg);border-width:0 2.5px 2.5px 0;transform:rotate(45deg)}
+.qa-mid{display:flex;flex-direction:column;gap:2px;min-width:0}
+.qa-mid .qa-memo{border:0;background:transparent;font:inherit;font-weight:600;font-size:15px;color:var(--ink);padding:2px 0;min-width:0}
+.qa-mid select{border:0;background:transparent;font:inherit;font-size:12.5px;color:var(--muted);padding:0;max-width:100%}
+.qa-mid em{font-style:normal;font-size:11px;color:var(--gold,#b8913a)}
+.qa-amt{display:flex;align-items:center;gap:2px;font-weight:600}.qa-amt input{width:84px;border:0;background:transparent;font:inherit;font-size:16px;text-align:right;color:inherit;padding:4px 0}
+.qa-amt.out{color:var(--t-out-fg)}.qa-amt.in{color:var(--t-in-fg)}
+.qa-sum{display:flex;justify-content:space-between;align-items:center;padding:2px 4px;color:var(--muted)}.qa-sum b{color:var(--ink);font-size:17px}
+body.privacy .qa-amt input,body.privacy .qa-sum b{filter:blur(8px)}
+/* V390 glance tiles + jar budget line */
+.glance{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.gtile{display:flex;flex-direction:column;align-items:flex-start;gap:3px;text-align:left;border:0;cursor:pointer;font:inherit;color:var(--ink);background:var(--s-low);border-radius:22px;padding:14px;box-shadow:var(--e1);min-width:0;position:relative;overflow:hidden}
+.gtile small{font-size:12.5px;color:var(--muted)}.gtile small em{font-style:normal;font-size:10.5px;padding:1px 6px;border-radius:99px;background:color-mix(in srgb,var(--muted) 14%,transparent)}
+.gtile>b{font:500 24px var(--display);line-height:1.15;letter-spacing:-.01em}.gtile>b span{font-size:15px;margin-left:1px}
+.gtile .gset{font:500 19px var(--display);color:var(--gold,#b8913a)}
+.gsub{font-size:12.5px;color:var(--muted)}
+.gchip{margin-top:6px;font-size:11.5px;line-height:1.35;padding:3px 9px;border-radius:99px;background:color-mix(in srgb,var(--muted) 12%,transparent);color:var(--muted)}
+.gchip.good{background:color-mix(in srgb,var(--t-in-fg) 14%,transparent);color:var(--t-in-fg)}.gchip.bad{background:color-mix(in srgb,var(--t-out-fg) 14%,transparent);color:var(--t-out-fg)}
+.gbars{position:absolute;right:12px;top:14px;display:flex;align-items:flex-end;gap:3px;height:30px}
+.gbars i{width:5px;border-radius:3px;background:color-mix(in srgb,var(--muted) 30%,transparent)}.gbars i.td{background:var(--gold,#b8913a)}
+.gbar{position:relative;width:100%;height:7px;border-radius:9px;background:color-mix(in srgb,var(--muted) 16%,transparent);margin-top:6px;overflow:visible}
+.gbar u{display:block;height:100%;border-radius:inherit;background:var(--t-in-fg)}.gtile.near .gbar u{background:#e0891f}.gtile.over .gbar u{background:var(--t-out-fg)}
+.gbar i{position:absolute;top:-3px;width:2px;height:13px;border-radius:2px;background:var(--ink);opacity:.55;transform:translateX(-1px)}
+.gtile.over>b{color:var(--t-out-fg)}.gtile.near>b{color:#c06f12}
+.bline{position:absolute;left:24%;right:22%;height:0;border-top:2px dashed color-mix(in srgb,var(--gold,#b8913a) 85%,transparent);pointer-events:none;z-index:2}
+.bline span{position:absolute;right:-30px;top:-9px;font:600 10px var(--display);color:var(--gold,#b8913a);background:var(--s-low);padding:1px 5px;border-radius:99px;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--gold,#b8913a) 60%,transparent)}
+.mbrow{display:flex;justify-content:space-between;align-items:center;gap:12px}.mbrow span{display:flex;flex-direction:column}.mbrow small{color:var(--muted);font-size:12px}.mbrow input{max-width:150px;text-align:right}
+body.privacy .gtile>b,body.privacy .gsub.num{filter:blur(9px)}
+/* V390 bottom tab bar */
+:root{--tabh:64px}
+#tabbar{position:fixed;left:12px;right:12px;bottom:calc(10px + env(safe-area-inset-bottom,0px));z-index:7;max-width:536px;margin:0 auto;height:var(--tabh);display:grid;grid-template-columns:repeat(4,1fr);align-items:center;padding:0 6px;border-radius:24px;background:color-mix(in srgb,var(--s-low) 97%,transparent);box-shadow:0 14px 34px -14px rgba(0,0,0,.4),inset 0 0 0 1px var(--ov,rgba(0,0,0,.07))}
+#tabbar button{position:relative;z-index:1;height:52px;border:0;background:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font:500 11.5px var(--display);color:var(--muted);cursor:pointer;border-radius:18px}
+#tabbar button svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+#tabbar button.on{color:var(--ink)}#tabbar button.on svg{stroke-width:2.3}
+#tabbar .tb-pill{position:absolute;left:0;top:6px;height:52px;border-radius:18px;background:color-mix(in srgb,var(--gold,#b8913a) 16%,transparent);transition:transform .38s cubic-bezier(.3,1.3,.5,1),width .3s;pointer-events:none}
+body[data-fest] #tabbar .tb-pill{background:color-mix(in srgb,var(--fa) 22%,transparent)}
+.fabs{bottom:calc(var(--tabh) + 22px + env(safe-area-inset-bottom,0px))!important}
+.snack{bottom:calc(var(--tabh) + 22px + env(safe-area-inset-bottom,0px))!important}
+.saved-toast{bottom:calc(var(--tabh) + 92px + env(safe-area-inset-bottom,0px))!important}
+#errbar{bottom:calc(var(--tabh) + 92px + env(safe-area-inset-bottom,0px))}
+.wrap{padding-bottom:calc(var(--tabh) + 40px)}
+body[data-tab="home"] .wrap>.tab-list,body[data-tab="home"] .wrap>.tab-stats,
+body[data-tab="list"] .wrap>.tab-home,body[data-tab="list"] .wrap>.tab-stats,
+body[data-tab="stats"] .wrap>.tab-home,body[data-tab="stats"] .wrap>.tab-list{display:none!important}
+#recentsec h2 button{border:0;background:none;font:500 14px var(--display);color:var(--gold,#b8913a);cursor:pointer;padding:4px 0}
+.recent{display:flex;flex-direction:column;background:var(--s-low);border-radius:20px;box-shadow:var(--e1);overflow:hidden}
+.rrow{display:grid;grid-template-columns:40px 1fr auto;gap:12px;align-items:center;padding:10px 14px;border:0;background:none;font:inherit;color:var(--ink);text-align:left;cursor:pointer;min-height:62px}
+.rrow:has(.slipth){grid-template-columns:40px 1fr auto 34px}
+.rrow+.rrow{box-shadow:inset 0 1px 0 var(--ov,rgba(0,0,0,.06))}
+.rrow .rt{display:flex;flex-direction:column;min-width:0}.rrow .rt b{font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rrow .rt small{color:var(--muted);font-size:12.5px}
+.rrow .amt{font-weight:600}
+body.privacy .rrow .amt{filter:blur(9px)}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i></div><div id="festfx" aria-hidden="true"></div>
@@ -1968,7 +2043,7 @@ body[data-fest] .paychip .pp u{background:var(--fa)}
     <div id="trpick" hidden><label>โอนจาก</label><div class="chips" id="wfrom"></div><label class="lbl2">ไปที่</label><div class="chips" id="wto"></div></div>
     <div class="quickcat" id="quickcat" hidden><input id="qcname" maxlength="24" placeholder="ชื่อหมวดใหม่" aria-label="ชื่อหมวดใหม่"><button type="button" id="qcsave">เพิ่ม</button></div>
     <div class="two">
-      <label>วันที่<input type="date" id="date"></label>
+      <div class="dtrow"><label>วันที่<input type="date" id="date"></label><label class="tl">เวลา<input type="time" id="etime"></label></div>
       <label>หมายเหตุ<input id="memo" placeholder="เช่น ข้าวมันไก่"></label>
     </div>
     <label class="switch" id="recurrow"><span><b>ทำซ้ำทุกเดือน</b><small id="recurhint">ลงรายการนี้ให้อัตโนมัติทุกเดือน</small></span><input type="checkbox" id="recur" role="switch"></label>
@@ -2324,7 +2399,7 @@ function applyLang(){
   trBusy=true; try{ trTree(document.body) } finally{ trBusy=false }
   document.querySelectorAll('[data-lang]').forEach(b=>b.classList.toggle('on',b.dataset.lang===LANG));
 }
-Object.assign(DICT,{'วัน{0}ออก':'Payday','{0}ออกทุก':'Paid on','สรุปยอดของวันตอนค่ำ':'Evening summary','ถ้าวันนั้นจดแล้ว ส่งยอดที่ใช้และงบที่เหลือให้ดู':'If you logged that day, see what you spent and what is left','ใช้นับถอยหลังบนหน้าหลัก และบอกว่าถึงวันนั้นใช้ได้วันละเท่าไร':'Counts down on the home screen and shows how much you can spend a day until then'});
+Object.assign(DICT,{'เวลา':'Time','วัน{0}ออก':'Payday','{0}ออกทุก':'Paid on','สรุปยอดของวันตอนค่ำ':'Evening summary','ถ้าวันนั้นจดแล้ว ส่งยอดที่ใช้และงบที่เหลือให้ดู':'If you logged that day, see what you spent and what is left','ใช้นับถอยหลังบนหน้าหลัก และบอกว่าถึงวันนั้นใช้ได้วันละเท่าไร':'Counts down on the home screen and shows how much you can spend a day until then'});
 function setLang(l){
   LANG=l; try{localStorage.setItem(LKEY,l)}catch(e){}
   applyLang(); if(typeof render==='function') render();
@@ -2385,12 +2460,13 @@ const ICONS={
   'อื่นๆ':[200,DOTS]
 };
 const ic=(c,cls='')=>{const k=ICONS[c]||[200,DOTS];return `<span class="ico ${cls}" style="--h:${k[0]}" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="${k[1]}" ${k[1]===DOTS?'stroke-width="3.2"':''}/></svg></span>`};
+const nowHM=()=>{ const d=new Date(); return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0') };
 const fmt=n=>'฿'+n.toLocaleString(LOC(),{minimumFractionDigits:0,maximumFractionDigits:2});
 const iso=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 const $=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 /* Storage that cannot fail silently: unreadable data is kept aside and never saved over; a failed save is reported */
-var CORRUPT={}, HOLD=new Set(), STORE_FAIL={}, MIRROR_READY=false, WIPING=false, MIR_T=0, MY_REV='', SYNC_T=0, QUAR=0;
+var SLIPS_HAVE=new Set(), CORRUPT={}, HOLD=new Set(), STORE_FAIL={}, MIRROR_READY=false, WIPING=false, MIR_T=0, MY_REV='', SYNC_T=0, QUAR=0;
 const load=(k,f)=>{ let r=null; try{ r=localStorage.getItem(k) }catch(e){ return f } if(r==null||r==='') return f;
   try{ return JSON.parse(r) }catch(e){ CORRUPT[k]=r; HOLD.add(k); try{ localStorage.setItem('kp-damaged-'+k,r) }catch(_){} return f } };
 const store=(k,v)=>{ if(HOLD.has(k)) return false; let s;
@@ -2484,7 +2560,7 @@ function upcomingFor(now){
     .map(r=>({...r,date:cur+'-'+String(Math.min(r.day,dim)).padStart(2,'0')})).sort((a,b)=>a.date.localeCompare(b.date));
 }
 let budget=load(BKEY,null); if(!budget||typeof budget!=='object') budget={'อาหาร':4000,'ช้อปปิ้ง':2000,'บันเทิง':1500};
-const save=()=>store(KEY,data);
+const save=()=>store(KEY,data), saveData=save;
 /* ===== Wallets, transfers, split bills ===== */
 const NET=r=>r.type==='in'||r.type==='back'?r.amount:(r.type==='out'||r.type==='lend')?-r.amount:0;
 const WKEY='kp-wallets-v1', FKEY='kp-friends-v1';
@@ -2874,7 +2950,7 @@ function renderCore(){
   postRecurring();
   const ym=view.getFullYear()+'-'+String(view.getMonth()+1).padStart(2,'0');
   $('mlabel').textContent=TH_M[view.getMonth()]+' '+(view.getFullYear()+543);
-  const rows=data.filter(r=>r.date.startsWith(ym)).sort((a,b)=>b.date.localeCompare(a.date)||String(b.id).localeCompare(String(a.id)));
+  const rows=data.filter(r=>r.date.startsWith(ym)).sort((a,b)=>b.date.localeCompare(a.date)||(b.time||'').localeCompare(a.time||'')||String(b.id).localeCompare(String(a.id)));
   const tin=rows.filter(r=>r.type==='in').reduce((s,r)=>s+r.amount,0);
   const tout=rows.filter(r=>r.type==='out').reduce((s,r)=>s+r.amount,0);
   animNum($('tin'),tin,fmt); animNum($('tout'),tout,fmt);
@@ -2933,8 +3009,8 @@ function renderCore(){
   const dayHTML=([dt,rs])=>{
     const d=new Date(dt+'T00:00'); const net=rs.reduce((s,r)=>s+NET(r),0), sp=dayOut[dt]||0;
     return `<div class="day" data-d="${dt}"><div class="dayhead"><span>${d.toLocaleDateString(LOC(),searching?{day:'numeric',month:'short',year:'numeric'}:{weekday:'short',day:'numeric',month:'short'})}</span><span class="dright">${sp?`<i class="dbar" title="${fmt(sp)}"><b style="width:${Math.max(6,sp/maxDay*100).toFixed(0)}%"></b></i>`:'<span class="nospend">ไม่ใช้เงิน</span>'}<span class="num">${net>=0?'+':'-'}${fmt(Math.abs(net))}</span></span></div>`+
-    rs.map(r=>{const big=r.type==='out'&&r.amount>=bigCut; return `<div class="rowwrap"><span class="swd" aria-hidden="true">${SWI('del')}<b>${L('ลบ','Delete')}</b></span>${r.type==='in'||r.type==='out'?`<span class="swc" aria-hidden="true">${SWI('dup')}<b>${L('จดซ้ำวันนี้','Log again today')}</b></span>`:''}<div class="row${String(r.id)===lastAddedId?' new':''}${big?' big':''}" data-id="${r.id}">${ic(r.cat)}<div class="t" tabindex="0" role="button" aria-label="${L('แก้ไข','Edit')} ${esc(rTitle(r))}"><b>${esc(rTitle(r))}</b><small>${big?'<span class="tag big">ก้อนใหญ่</span>':''}${r.type==='lend'?'<span class="tag split">หารบิล</span>':''}${r.recurId?'<span class="tag rec">ประจำ</span>':''}${r.tax?'<span class="tag taxt">ลดหย่อน</span>':''}${r.demo?'<span class="tag">ตัวอย่าง</span>':''}${esc(rSub(r))}${r.note?' · '+esc(r.note):''}</small></div>
-      <div class="amt num ${r.type}">${r.type==='in'||r.type==='back'?'+':r.type==='tr'?'':'-'}${fmt(r.amount)}</div></div></div>`}).join('')+'</div>';
+    rs.map(r=>{const big=r.type==='out'&&r.amount>=bigCut; return `<div class="rowwrap"><span class="swd" aria-hidden="true">${SWI('del')}<b>${L('ลบ','Delete')}</b></span>${r.type==='in'||r.type==='out'?`<span class="swc" aria-hidden="true">${SWI('dup')}<b>${L('จดซ้ำวันนี้','Log again today')}</b></span>`:''}<div class="row${String(r.id)===lastAddedId?' new':''}${big?' big':''}" data-id="${r.id}">${ic(r.cat)}<div class="t" tabindex="0" role="button" aria-label="${L('แก้ไข','Edit')} ${esc(rTitle(r))}"><b>${esc(rTitle(r))}</b><small>${big?'<span class="tag big">ก้อนใหญ่</span>':''}${r.type==='lend'?'<span class="tag split">หารบิล</span>':''}${r.recurId?'<span class="tag rec">ประจำ</span>':''}${r.tax?'<span class="tag taxt">ลดหย่อน</span>':''}${r.demo?'<span class="tag">ตัวอย่าง</span>':''}${r.time?`<span class="rtime num">${r.time}</span>`:''}${esc(rSub(r))}${r.note?' · '+esc(r.note):''}</small></div>
+      <div class="amt num ${r.type}">${r.type==='in'||r.type==='back'?'+':r.type==='tr'?'':'-'}${fmt(r.amount)}</div>${r.slip&&SLIPS_HAVE.has(String(r.id))?`<button type="button" class="slipth" data-slip="${r.id}" aria-label="${L('ดูสลิป','View slip')}"></button>`:''}</div></div>`}).join('')+'</div>';
   };
   const gapHTML=(n,a,b)=>{const f=x=>x.toLocaleDateString(LOC(),{day:'numeric',month:'short'}); return `<div class="nsgap">${leaf}<span>${L(`ไม่ใช้เงิน ${n} วัน`,`${n} no-spend ${n===1?'day':'days'}`)}</span><small>${n>1?`${f(a)} – ${f(b)}`:f(a)}</small></div>`};
   if(searching||filterCat){ $('list').innerHTML=Object.entries(groups).map(dayHTML).join('') }
@@ -3039,7 +3115,7 @@ function openEntry(rec){
   wSel=rec?wOf(rec):(wallets.some(w=>w.id===prefs.lastW)?prefs.lastW:'w0'); if(rec&&rec.type==='tr'){wFrom=rec.from;wTo=rec.to} else {wFrom=wSel;wTo=null}
   $('splitchk').checked=false; $('splitbox').hidden=true; $('splitnames').value=''; fillTaxSel(); $('taxsel').value=rec&&rec.tax||'';
   setType(rec?rec.type:'out'); cat=rec?rec.cat:CATS.out[0];
-  $('amount').value=rec?rec.amount:''; $('memo').value=rec?rec.memo:''; $('date').value=rec?rec.date:iso(new Date());
+  $('amount').value=rec?rec.amount:''; $('memo').value=rec?rec.memo:''; $('date').value=rec?rec.date:iso(new Date()); $('etime').value=rec?(rec.time||''):nowHM();
   $('err').textContent=''; chips(); showSheet('sheet'); $('delentry').hidden=!rec;
   $('recur').checked=false; $('recurrow').hidden=!!rec||type==='tr'; updateRecurHint(); $('quickcat').hidden=true;
   if(!rec) setTimeout(()=>$('amount').focus(),50);
@@ -3056,7 +3132,7 @@ $('form').onsubmit=e=>{
   const amt=parseFloat($('amount').value.replace(/,/g,''));
   if(!(amt>0)){$('err').textContent='ใส่จำนวนเงินที่มากกว่า 0';shake($('amount'));$('amount').focus();return}
   if(!$('date').value){$('err').textContent='เลือกวันที่';return}
-  const rec={type,amount:Math.round(amt*100)/100,cat,memo:$('memo').value.trim(),date:$('date').value};
+  const rec={type,amount:Math.round(amt*100)/100,cat,memo:$('memo').value.trim(),date:$('date').value,time:/^\d\d:\d\d$/.test($('etime').value)?$('etime').value:''};
   if(type==='tr'){ if(!wTo||wFrom===wTo){$('err').textContent=L('เลือกกระเป๋าต้นทางและปลายทางให้ต่างกัน','Pick two different wallets');return} rec.cat='โอน'; rec.from=wFrom; rec.to=wTo }
   else { rec.w=wSel; prefs.lastW=wSel }
   const doSplit=!editing&&type==='out'&&$('splitchk').checked, sp=doSplit?splitInfo(rec.amount):null;
@@ -3556,7 +3632,7 @@ function parseBackup(text){
   const arr=Array.isArray(o)?o:o&&Array.isArray(o.data)?o.data:null;
   if(!arr) throw new Error('shape');
   const clean=arr.filter(r=>r&&['in','out','tr','lend','back'].includes(r.type)&&+r.amount>0&&/^\d{4}-\d{2}-\d{2}$/.test(r.date))
-    .map((r,i)=>({id:String(r.id||('r'+i+Date.now().toString(36))),type:r.type,amount:+r.amount,cat:String(r.cat||'อื่นๆ'),memo:String(r.memo||''),note:String(r.note||''),ref:String(r.ref||''),date:r.date,...(r.recurId?{recurId:String(r.recurId)}:{}),...(r.w?{w:String(r.w)}:{}),...(r.from?{from:String(r.from),to:String(r.to)}:{}),...(r.who?{who:String(r.who)}:{}),...(r.split?{split:String(r.split)}:{}),...(r.tax?{tax:String(r.tax)}:{}),...(r.demo?{demo:true}:{})}));
+    .map((r,i)=>({id:String(r.id||('r'+i+Date.now().toString(36))),type:r.type,amount:+r.amount,cat:String(r.cat||'อื่นๆ'),memo:String(r.memo||''),note:String(r.note||''),ref:String(r.ref||''),date:r.date,...(r.recurId?{recurId:String(r.recurId)}:{}),...(r.w?{w:String(r.w)}:{}),...(r.from?{from:String(r.from),to:String(r.to)}:{}),...(r.who?{who:String(r.who)}:{}),...(r.split?{split:String(r.split)}:{}),...(r.tax?{tax:String(r.tax)}:{}),...(r.demo?{demo:true}:{}),...(/^\d\d:\d\d$/.test(r.time||'')?{time:r.time}:{}),...(r.slip?{slip:1}:{})}));
   return {data:clean,budget:o&&o.budget&&typeof o.budget==='object'?o.budget:null,merchants:o&&o.merchants&&typeof o.merchants==='object'?o.merchants:null,goals:o&&Array.isArray(o.goals)?o.goals:null,recur:o&&Array.isArray(o.recur)?o.recur:null,cats:o&&o.cats&&Array.isArray(o.cats.out)?o.cats:null,prefs:o&&o.prefs&&typeof o.prefs==='object'?o.prefs:null,wallets:o&&Array.isArray(o.wallets)&&o.wallets.length?o.wallets:null,friends:o&&Array.isArray(o.friends)?o.friends:null,skipped:arr.length-clean.length};
 }
 function applyBackup(p){
@@ -3584,7 +3660,7 @@ $('restorefile').onchange=e=>{
 };
 
 /* Slip reading */
-let sampleFn=null, imgLim=null, rvItems=[], rvCtl=null, thumbs=[];
+let sampleFn=null, imgLim=null, rvItems=[], rvCtl=null, thumbs=[], rvFiles=[];
 (async()=>{
   try{ if(window.claude&&claude.use) sampleFn=await claude.use("sample") }catch(e){}
   if(!sampleFn) return;
@@ -3626,7 +3702,7 @@ async function handleSlips(files){
   const max=imgLim?.maxCount||5, extra=files.length>max; files=files.slice(0,max);
   const left=quotaLeft(); if(left<=0){openPlans(`สแกนสลิปครบ ${planLimit()} ใบของเดือนนี้แล้ว`);return}
   const cut=files.length>left; if(cut) files=files.slice(0,left);
-  thumbs=files.map(f=>URL.createObjectURL(f)); rvItems=[];
+  thumbs=files.map(f=>URL.createObjectURL(f)); rvFiles=files; rvItems=[];
   $('rvlist').innerHTML=''; $('rvmsg').textContent=cut?`โควตาเดือนนี้เหลือ ${left} ใบ จะอ่าน ${left} ใบแรก`:extra?`อ่านได้ครั้งละ ${max} ใบ จะอ่าน ${max} ใบแรกก่อน`:'';
   $('rvmsg').classList.remove('ok-msg');
   $('rvstatus').hidden=false; $('rvstatustext').textContent=`กำลังอ่านสลิป ${files.length} ใบ อาจใช้เวลาราว 10–40 วินาที`;
@@ -3661,7 +3737,7 @@ function mapSlips(files,arr){
       const date=/^\d{4}-\d{2}-\d{2}$/.test(r.date||'')?r.date:iso(new Date());
       const ref=String(r.ref||'').trim(), dup=!!ref&&data.some(x=>x.ref===ref);
       const flags={date:!/^\d{4}-\d{2}-\d{2}$/.test(r.date||''),cat:!remembered&&cat==='อื่นๆ',memo:!memo};
-      return {i,flags,type,cat,amount:Math.round(+r.amount*100)/100,date,memo,note:String(r.note||'').slice(0,80),ref,dup,transfer,remembered,on:!dup&&!transfer};
+      return {i,flags,type,cat,amount:Math.round(+r.amount*100)/100,date,time:/^\d{1,2}:\d\d$/.test(r.time||'')?String(r.time).padStart(5,'0'):'',memo,note:String(r.note||'').slice(0,80),ref,dup,transfer,remembered,on:!dup&&!transfer};
     });
 }
 
@@ -3706,7 +3782,8 @@ $('rvsave').onclick=()=>{
   if(badAmt){$('rvmsg').textContent=`สลิปที่ ${badAmt.i+1}: ตรวจจำนวนเงินและวันที่`;$('rvmsg').classList.remove('ok-msg');return}
   const base=Date.now();
   chosen.forEach(x=>{ if(x.memo&&!x.transfer) learn(x.memo,x.type,x.cat) });
-  chosen.forEach((x,k)=>data.push({id:(base+k).toString(36),type:x.type,amount:Math.round(x.amount*100)/100,cat:x.cat,memo:x.memo,note:x.note,date:x.date,ref:x.ref,slip:1}));
+  const pics=[]; chosen.forEach((x,k)=>{ const id=(base+k).toString(36); data.push({id,type:x.type,amount:Math.round(x.amount*100)/100,cat:x.cat,memo:x.memo,note:x.note,date:x.date,...(x.time?{time:x.time}:{}),ref:x.ref,slip:1}); if(rvFiles[x.i]) pics.push([id,rvFiles[x.i]]) });
+  if(pics.length) storeSlips(pics);
   save(); const last=chosen[chosen.length-1]; const d=new Date(last.date+'T00:00'); view=new Date(d.getFullYear(),d.getMonth(),1);
   closeReview(); render();
 };
@@ -4358,7 +4435,7 @@ async function prepSlip(file){
   const g=c.getContext('2d'); g.filter='grayscale(1) contrast(1.15)'; g.imageSmoothingQuality='high'; g.drawImage(bmp,0,0,c.width,c.height); try{bmp.close()}catch(e){} return c;
 }
 async function readSlipsLocal(files){
-  files=files.slice(0,10); thumbs=files.map(f=>URL.createObjectURL(f)); rvItems=[];
+  files=files.slice(0,10); thumbs=files.map(f=>URL.createObjectURL(f)); rvFiles=files; rvItems=[];
   $('rvlist').innerHTML=''; $('rvmsg').textContent=''; $('rvmsg').classList.remove('ok-msg','info');
   $('rvstatus').hidden=false; $('rvsave').hidden=true; $('rvcancel').textContent=L('ยกเลิก','Cancel'); showSheet('rvsheet');
   const st=t=>{$('rvstatustext').textContent=t}; let cancelled=false; rvCtl={abort(){cancelled=true}};
@@ -4368,7 +4445,7 @@ async function readSlipsLocal(files){
     const w=await ocrInit(); const arr=[];
     for(let i=0;i<files.length;i++){ if(cancelled) return;
       st(L(`กำลังอ่านสลิป ${i+1}/${files.length} ในเครื่อง`,`Reading slip ${i+1} of ${files.length} on this phone`));
-      try{ const {data}=await w.recognize(await prepSlip(files[i])); const r=parseSlipText(data.text||''); arr.push(r.ok?{slip:i+1,...r,cat:r.cat||'อื่นๆ',note:[r.time,r.note].filter(Boolean).join(' · ')}:{slip:i+1,ok:false,reason:L('อ่านยอดเงินไม่ได้ ลองแคปหน้าจอสลิปให้ชัดขึ้น','Could not find the amount. Try a clearer screenshot.')}) }
+      try{ const {data}=await w.recognize(await prepSlip(files[i])); const r=parseSlipText(data.text||''); arr.push(r.ok?{slip:i+1,...r,cat:r.cat||'อื่นๆ',note:String(r.note||'')}:{slip:i+1,ok:false,reason:L('อ่านยอดเงินไม่ได้ ลองแคปหน้าจอสลิปให้ชัดขึ้น','Could not find the amount. Try a clearer screenshot.')}) }
       catch(e){ arr.push({slip:i+1,ok:false,reason:L('อ่านรูปนี้ไม่ได้','Could not read this image')}) }
     }
     if(cancelled) return;
@@ -5167,7 +5244,7 @@ async function eraseAll(full){
   const ov=document.createElement('div'); ov.id='wipeov'; ov.innerHTML=`<div><div class="wj">${jarSVG('good',null,.8,1)}</div><b>${L('กำลังล้างโอ่ง…','Emptying the jar…')}</b><small>${L('เริ่มใหม่กันนะ','A fresh start')}</small></div>`; document.body.appendChild(ov);
   if(FX()){ ov.animate([{opacity:0},{opacity:1}],{duration:300}); const w=ov.querySelector('.wlvl'); if(w) w.animate([{transform:'translateY(0)'},{transform:'translateY(64px)'}],{duration:1300,delay:300,easing:'cubic-bezier(.5,0,.75,0)',fill:'forwards'}); setTimeout(()=>{ const c=ov.querySelector('.wj').getBoundingClientRect(); splash(c.left+c.width/2,c.top+c.height*.8,12) },1500) }
   try{ speechSynthesis&&speechSynthesis.cancel() }catch(e){}
-  WIPING=true; clearTimeout(MIR_T); try{ indexedDB.deleteDatabase('kp-mirror') }catch(e){}
+  WIPING=true; clearTimeout(MIR_T); try{ indexedDB.deleteDatabase('kp-mirror') }catch(e){} try{ indexedDB.deleteDatabase('kp-slips') }catch(e){}
   const keep=full?[]:[SKEY,LKEY,AKEY];
   const ks=[]; for(let i=0;i<localStorage.length;i++){ const k=localStorage.key(i); if(k&&k.startsWith('kp-')&&!keep.includes(k)) ks.push(k) }
   ks.forEach(k=>{ try{localStorage.removeItem(k)}catch(e){} });
@@ -5209,7 +5286,7 @@ let vRec=null;
 function startVoice(){ if(!SR){ toast(L('มือถือเครื่องนี้ยังพูดจดไม่ได้','Speech input is not available here')); return }
   try{ speechSynthesis&&speechSynthesis.cancel() }catch(e){} hideSheet('sheet'); closeFab&&closeFab();
   const ov=document.createElement('div'); ov.id='vlisten'; ov.className='live';
-  ov.innerHTML=`<div class="vj"><i></i><i></i><i></i>${jarSVG('good',undefined,null,undefined,0)}</div><div class="vt interim" id="vtxt">${L('ฟังอยู่… พูดได้เลย','Listening… go ahead')}</div><small>${L('เช่น “ค่ากาแฟ 60” · “ข้าวมันไก่ห้าสิบบาท” · “เงินเดือนเข้า 45,000”','e.g. “coffee 60” · “lunch 120 baht” · “salary 45,000 received”')}</small><div class="vbtns"><button type="button" class="btn" id="vcancel">${L('ยกเลิก','Cancel')}</button><button type="button" class="mic" id="vagain" aria-label="${L('ฟังใหม่','Listen again')}"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3M8.5 21h7"/></svg></button></div>`;
+  ov.innerHTML=`<div class="vj"><i></i><i></i><i></i>${jarSVG('good',undefined,null,undefined,0)}</div><div class="vt interim" id="vtxt">${L('ฟังอยู่… พูดได้เลย','Listening… go ahead')}</div><small>${L('เช่น “กาแฟ 60 ข้าว 50” · “เมื่อวาน สองทุ่ม แท็กซี่ 250” · “เงินเดือนเข้า 45,000”','e.g. “coffee 60, lunch 120” · “yesterday 8pm taxi 250” · “salary 45,000 received”')}</small><div class="vbtns"><button type="button" class="btn" id="vcancel">${L('ยกเลิก','Cancel')}</button><button type="button" class="mic" id="vagain" aria-label="${L('ฟังใหม่','Listen again')}"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3M8.5 21h7"/></svg></button></div>`;
   document.body.appendChild(ov); if(FX()) ov.animate([{opacity:0},{opacity:1}],{duration:220});
   let final='', done=false; const close=()=>{ done=true; try{vRec&&vRec.abort()}catch(e){} vRec=null; if(FX()) ov.animate([{opacity:1},{opacity:0}],{duration:200}).onfinish=()=>ov.remove(); else ov.remove() };
   $('vcancel').onclick=close; $('vagain').onclick=()=>{ try{vRec&&vRec.abort()}catch(e){} setTimeout(listen,150) };
@@ -5218,7 +5295,7 @@ function startVoice(){ if(!SR){ toast(L('มือถือเครื่อง
     r.onresult=e=>{ let txt=''; for(let i=e.resultIndex;i<e.results.length;i++){ const res=e.results[i]; if(res.isFinal) final+=res[0].transcript; else txt+=res[0].transcript }
       $('vtxt').textContent=final||txt; $('vtxt').className='vt'+(final?'':' interim') };
     r.onerror=e=>{ ov.classList.remove('live'); $('vtxt').className='vt interim'; $('vtxt').textContent=e.error==='not-allowed'||e.error==='service-not-allowed'?L('ยังไม่ได้อนุญาตให้ใช้ไมค์','Microphone is not allowed'):e.error==='no-speech'?L('ไม่ได้ยินเลย แตะไมค์แล้วพูดอีกครั้ง','Didn’t hear anything. Tap the mic and try again'):L('ฟังไม่ชัด ลองอีกครั้งนะ','Couldn’t catch that. Try again') };
-    r.onend=()=>{ ov.classList.remove('live'); if(done) return; if(final.trim()){ const p=parseSpoken(final); close(); setTimeout(()=>voiceFill(p),220) } };
+    r.onend=()=>{ ov.classList.remove('live'); if(done) return; if(final.trim()){ const u=parseUtter(final), many=u.items.filter(i=>i.amount>0).length; close(); if(many>1||u.date||u.time||(u.items[0]&&u.items[0].catSaid)) setTimeout(()=>quickFrom(final,true),220); else { const p=parseSpoken(final); setTimeout(()=>voiceFill(p),220) } } };
     try{ r.start() }catch(e){ r.onerror({error:'x'}) } };
   listen() }
 function voiceFill(p){ openEntry(null); setType(p.type); cat=p.cat; chips(); if(p.amount) $('amount').value=String(p.amount); $('memo').value=p.memo||'';
@@ -5441,8 +5518,8 @@ $('carry').addEventListener('click',openExplain); $('ballabel').addEventListener
   afterRender(fix); fix() }
 
 /* ===== V310 help guide, what's new, feedback ===== */
-const APP_VER='1.57', NEWS_VER='1.54'; // APP_VER = '1.'+sw cache number, bumped every release; NEWS_VER = last release that shows the What's new popup
-const CHANGELOG=[["1.57","2026-10-11","ข้อมูลปลอดภัยขึ้น: บันทึกไม่สำเร็จจะเตือนทันที ข้อมูลในเครื่องเสียหายจะกู้คืนจากสำเนาอัตโนมัติ เปิดสองหน้าต่างพร้อมกันไม่ทับกัน และถ้าแอปมีปัญหาจะมีหน้าช่วยเหลือแทนหน้าจอว่าง","Safer data: failed saves warn you right away, damaged data is restored from a copy automatically, two open windows no longer overwrite each other, and a problem shows a help screen instead of a blank page"],["1.56","2026-10-11","ลื่นขึ้นทั้งแอป: เลื่อนรายการยาวๆ ได้ลื่นขึ้น กดบันทึกแล้วหน้าต่างปิดทันที เปลี่ยนเดือนเร็วขึ้น พิมพ์จำนวนเงินไม่สะดุด และของตกแต่งพื้นหลังหยุดพักระหว่างเลื่อน","Smoother everywhere: long lists scroll better, the sheet closes instantly on save, month changes are quicker, typing amounts no longer stutters, and background decorations rest while you scroll"],["1.55","2026-10-11","เลื่อนลื่นขึ้นเมื่อเปิดเอฟเฟกต์เต็ม: แก้ภาพหน่วงตอนถือมือถือ (การเอียงน้ำในโอ่ง) พื้นหลังและแถบด้านบนเบาเครื่องขึ้น และแก้บางส่วนไม่แสดงจนต้องเลื่อนขึ้นลงหลายรอบ","Smoother scrolling with full effects: fixed the phone-tilt water effect slowing everything down, lighter background and top bar, and sections that stayed invisible until you scrolled back and forth now always appear"],["1.54","2026-10-11","การ์ดบนหน้าหลักแต่งตามเทศกาลเหมือนน้องโอ่ง: ธงประดับบนการ์ดยอดเงิน สีปุ่ม และของตกแต่งตามเทศกาล ปิดได้ในตู้เสื้อผ้า","Home cards dress up for festivals with Nong Ong: a garland on the balance card, accent colours and small decorations. Turn it off in the wardrobe"],["1.53","2026-10-11","สรุปวันนี้ตอนค่ำ แจ้งเตือนแบบรู้ใจ นับถอยหลังวันเงินเดือนออก ปฏิทินสีของเดือน และสรุปสัปดาห์ทุกวันจันทร์","Evening wrap-up, smarter reminders, payday countdown, month colour calendar and a Monday weekly recap"],["1.52","2026-10-11","ใส่เลขเวอร์ชันทุกครั้งที่อัปเดต และดูประวัติทุกเวอร์ชันย้อนหลังได้","Every update now has a version number, with the full version history"],["1.51","2026-10-11","เอฟเฟกต์ลื่นขึ้น: ฝนแบบใหม่ เมฆนุ่มขึ้น ลดภาพเคลื่อนไหวที่วิ่งพร้อมกัน และหยุดส่วนที่มองไม่เห็น","Smoother effects: new rain, softer clouds, fewer animations at once, off-screen motion paused"],["1.50","2026-10-11","น้ำในโอ่งขึ้นตามตอนพิมพ์ยอดเงินเริ่มต้น ที่มายอดเงินนับเลขขึ้น รายการนำเข้าหล่นลงในรายการ ตู้โชว์มีประกาย","Water rises as you type the opening balance, balance explainer counts up, imported rows drop in, cabinet glints"],["1.49","2026-10-11","จัดระเบียบเบื้องหลังและเพิ่มชุดทดสอบอัตโนมัติ ให้แอปเสถียรขึ้น","Behind-the-scenes tidy-up and automated tests for a steadier app"],["1.48","2026-10-11","คู่มือวิธีใช้ หน้ามีอะไรใหม่ และส่งความเห็นถึงผู้พัฒนาทาง LINE","How-to guide, What’s new, and feedback to the developer on LINE"],["1.47","2026-10-11","น้ำในโอ่งลดตามเงินที่เหลือจริง และเปิดครั้งแรกเป็นภาษาไทย","Water level follows the money you have left; Thai on first launch"],["1.46","2026-10-11","ครั้งแรกเริ่มจากโอ่งว่าง แล้วน้องโอ่งถามยอดเงินที่มี","First run starts with an empty jar and asks your starting balance"],["1.45","2026-10-11","พูดเพื่อจดรายการ สำรองข้อมูลไป Google Drive นำเข้า CSV จากธนาคาร สรุปเป็น PDF และโหมดประหยัดแบต","Speak to log, Google Drive backup, bank CSV import, PDF summary, battery saver"],["1.44","2026-10-11","ปุ่มล้างข้อมูลทั้งหมด ใน ตั้งค่า › ข้อมูล","Erase all data in Settings › Data"],["1.43","2026-10-11","น้องโอ่งพูดได้ ปากขยับตามเสียง","Nong Ong talks, with a moving mouth"],["1.42","2026-10-11","เพิ่มเครดิต Developed by Napat Mekthap","Added credit: Developed by Napat Mekthap"],["1.41","2026-10-11","ท่าทางสัมผัส (ปัด กดค้าง เขย่า) และภาพเคลื่อนไหวของสภาพอากาศ","Touch gestures (swipe, hold, shake) and weather motion"],["1.40","2026-10-11","พื้นหลังตามสภาพอากาศจริง น้องโอ่งถือร่มหรือใส่แว่นกันแดดตามอากาศ","Live weather background; Nong Ong dresses for the weather"],["1.39","2026-10-11","เลเวลน้องโอ่ง เหรียญรางวัล และชุดที่ปลดล็อกได้","Nong Ong levels, badges and unlockable outfits"],["1.38","2026-10-11","เก็บรายละเอียดทั้งแอปและเพิ่มเอฟเฟกต์","Polish pass and more effects"],["1.37","2026-10-11","น้ำเอียงตามมือถือ เทน้ำออกตอนใช้เงิน ตราประทับเมื่อครบเป้า ลบแบบแตกกระจาย และนับวันไม่ใช้เงินติดกัน","Tilting water, pour-out, goal stamp, shatter delete, no-spend streak"],["1.36","2026-10-11","ภาพเคลื่อนไหวชุดใหญ่: ค่อยๆ โผล่ตอนเลื่อน ระลอกตอนแตะ น้ำกระฉอก ปัดเปลี่ยนเดือน","Motion pack: scroll reveal, ripples, jar slosh, month swipe"],["1.35","2026-10-11","เก็บงานธีมศิลาดล และติดตั้งบนหน้าจอหลัก iPhone ได้","Celadon finishing touches and iPhone home-screen support"],["1.34","2026-10-10","ตัวช่วยลดหย่อนภาษีปี 2569: ติดป้ายรายการ เพดานลดหย่อน และประมาณภาษี","Tax deduction helper for 2026: tags, caps and estimated tax"],["1.33","2026-10-10","ลายรานเคลือบบนการ์ดยอดเงินและหน้าล็อก แสงวาบบนน้องโอ่ง","Crackle glaze on the balance card and lock screen; glint on Nong Ong"],["1.32","2026-10-10","ธีมศิลาดลทุกหน้า: สตอรี่ การ์ดแชร์ และไอคอนแอปใหม่","Celadon everywhere: story, share card and a new app icon"],["1.31","2026-10-10","ธีมศิลาดลแบบเครื่องลายคราม ตั้งเป็นค่าเริ่มต้น","Celadon porcelain theme, now the default"],["1.30","2026-10-10","ช่องกรอกเงินตัวใหญ่ หัวข้อนุ่มขึ้น ช่อง PIN สวยขึ้น","Big amount fields, calmer titles, nicer PIN field"],["1.29","2026-10-10","รายการประจำเป็นไทม์ไลน์วันครบกำหนด แตะเพื่อบอกว่าจ่ายแล้ว","Recurring items as a due-date timeline, tap to mark paid"],["1.28","2026-10-10","แถบงบบอกความเร็วการใช้จ่าย กราฟโดนัทละเอียดขึ้น ไอคอนแอปพาสเทล","Budget pace marker, richer donut chart, pastel app icon"],["1.27","2026-10-10","ปรับข้อความอ่านสลิปในเครื่องให้อ่านง่ายขึ้น","Clearer on-device slip reading note"],["1.26","2026-10-10","อ่านสลิปภาษาไทยในเครื่อง แชร์สลิปเข้าแอป ล็อกแอปด้วยลายนิ้วมือ/PIN ซ่อนยอดเงิน ปุ่ม + เมนูเดียว","On-device Thai slip reading, share slips in, fingerprint/PIN lock, hide balances, one + menu"],["1.25","2026-10-10","กระเป๋าเงินและการโอน หารบิล ภาพรวม 6 เดือน การเตือน และจุดกู้คืน","Wallets and transfers, split bills, 6-month insights, reminders, restore points"],["1.24","2026-10-10","น้ำไหลตามระดับเงิน ส่วนบนยุบตอนเลื่อน ตัวเลขหมุน แถบงบแบบของเหลว","Flowing water, collapsing header, rolling numbers, liquid budget bars"],["1.23","2026-10-10","โอ่งในหน้าจดรายการ รายการรายวันละเอียดขึ้น โอ่งเป้าหมาย เมนูตั้งค่าใหม่","Live jar when adding, richer daily list, goal jars, new settings menu"],["1.22","2026-10-10","แก้คำภาษาอังกฤษบางจุด","English wording fixes"],["1.21","2026-10-10","ชุดเทศกาลของน้องโอ่ง ฟอนต์ Mitr เสียงเหรียญ และชุดสี","Festival outfits, Mitr font, coin sounds, colour palettes"],["1.20","2026-10-10","รองรับเบราว์เซอร์ที่เล่นเอฟเฟกต์ไม่ได้","Works on browsers without effects support"],["1.19","2026-10-10","ฉากเปิดแอป น้องโอ่งขยับได้ เหรียญบิน กราฟค่อยๆ วาด","Intro scene, living mascot, flying coins, chart draw-in"],["1.18","2026-10-10","แก้การเลือกธีมในบางเบราว์เซอร์","Theme detection fix"],["1.17","2026-10-10","วงแหวนความคืบหน้าเป้าหมาย ฉลองเมื่อสำเร็จ สลับธีมสว่าง/มืด","Goal ring, celebrations, light/dark switch"],["1.16","2026-10-10","สตอรี่และการ์ดแชร์สีพาสเทล หน้าว่างมีน้องโอ่ง","Pastel story and share card, mascot empty states"],["1.15","2026-10-10","แก้ปุ่มเบียดในหน้าตั้งค่า","Fixed squashed settings buttons"],["1.14","2026-10-10","ทางลัดจากไอคอนแอป: จดรายจ่าย จดรายรับ ค้นหา","App icon shortcuts: add expense, add income, search"],["1.13","2026-10-10","ปุ่มตอบสนองตอนกด ตัวเลขนับขึ้น และแจ้งเตือนเมื่อบันทึก","Press feedback, count-up numbers, save toast"],["1.12","2026-10-10","หน้าตาใหม่ธีม Bento Pastel (สว่างและมืด)","New Bento Pastel look (light and dark)"],["1.11","2026-10-10","ค้นหาด้วยจำนวนเงินแบบตรงตัว","Search matches amounts exactly"],["1.10","2026-10-10","ค้นหารายการได้ทุกเดือน","Search across all months"],["1.9","2026-10-10","เตือนให้สำรองข้อมูล และเพิ่มหมวดหมู่เองได้","Backup reminder and custom categories"],["1.0–1.8","","รุ่นแรก: จดรายรับรายจ่าย อ่านสลิป งบรายหมวด เป้าหมายออม รายการประจำ ยอดยกมา สตอรี่สรุปเดือน ธีมมืด ติดตั้งเป็นแอปและใช้ออฟไลน์ได้","First releases: income and expenses, slip reading, budgets, savings goals, recurring items, carry-over, monthly story, dark theme, installable and offline"]];
+const APP_VER='1.58', NEWS_VER='1.58'; // APP_VER = '1.'+sw cache number, bumped every release; NEWS_VER = last release that shows the What's new popup
+const CHANGELOG=[["1.58","2026-10-11","จดด้วยประโยคเดียว พิมพ์หรือพูดก็ได้ บอกวัน เวลา หมวด และหลายรายการพร้อมกัน · บันทึกเวลาของรายการ · เก็บรูปสลิปไว้กับรายการ · งบรวมทั้งเดือนพร้อมเส้นงบบนโอ่ง · การ์ดใช้ไปวันนี้ · แถบเมนูด้านล่าง","One-sentence entry by typing or speaking, with date, time, category and several items at once · times on entries · slip pictures kept with entries · whole-month budget with a line on the jar · spent-today card · bottom menu bar"],["1.57","2026-10-11","ข้อมูลปลอดภัยขึ้น: บันทึกไม่สำเร็จจะเตือนทันที ข้อมูลในเครื่องเสียหายจะกู้คืนจากสำเนาอัตโนมัติ เปิดสองหน้าต่างพร้อมกันไม่ทับกัน และถ้าแอปมีปัญหาจะมีหน้าช่วยเหลือแทนหน้าจอว่าง","Safer data: failed saves warn you right away, damaged data is restored from a copy automatically, two open windows no longer overwrite each other, and a problem shows a help screen instead of a blank page"],["1.56","2026-10-11","ลื่นขึ้นทั้งแอป: เลื่อนรายการยาวๆ ได้ลื่นขึ้น กดบันทึกแล้วหน้าต่างปิดทันที เปลี่ยนเดือนเร็วขึ้น พิมพ์จำนวนเงินไม่สะดุด และของตกแต่งพื้นหลังหยุดพักระหว่างเลื่อน","Smoother everywhere: long lists scroll better, the sheet closes instantly on save, month changes are quicker, typing amounts no longer stutters, and background decorations rest while you scroll"],["1.55","2026-10-11","เลื่อนลื่นขึ้นเมื่อเปิดเอฟเฟกต์เต็ม: แก้ภาพหน่วงตอนถือมือถือ (การเอียงน้ำในโอ่ง) พื้นหลังและแถบด้านบนเบาเครื่องขึ้น และแก้บางส่วนไม่แสดงจนต้องเลื่อนขึ้นลงหลายรอบ","Smoother scrolling with full effects: fixed the phone-tilt water effect slowing everything down, lighter background and top bar, and sections that stayed invisible until you scrolled back and forth now always appear"],["1.54","2026-10-11","การ์ดบนหน้าหลักแต่งตามเทศกาลเหมือนน้องโอ่ง: ธงประดับบนการ์ดยอดเงิน สีปุ่ม และของตกแต่งตามเทศกาล ปิดได้ในตู้เสื้อผ้า","Home cards dress up for festivals with Nong Ong: a garland on the balance card, accent colours and small decorations. Turn it off in the wardrobe"],["1.53","2026-10-11","สรุปวันนี้ตอนค่ำ แจ้งเตือนแบบรู้ใจ นับถอยหลังวันเงินเดือนออก ปฏิทินสีของเดือน และสรุปสัปดาห์ทุกวันจันทร์","Evening wrap-up, smarter reminders, payday countdown, month colour calendar and a Monday weekly recap"],["1.52","2026-10-11","ใส่เลขเวอร์ชันทุกครั้งที่อัปเดต และดูประวัติทุกเวอร์ชันย้อนหลังได้","Every update now has a version number, with the full version history"],["1.51","2026-10-11","เอฟเฟกต์ลื่นขึ้น: ฝนแบบใหม่ เมฆนุ่มขึ้น ลดภาพเคลื่อนไหวที่วิ่งพร้อมกัน และหยุดส่วนที่มองไม่เห็น","Smoother effects: new rain, softer clouds, fewer animations at once, off-screen motion paused"],["1.50","2026-10-11","น้ำในโอ่งขึ้นตามตอนพิมพ์ยอดเงินเริ่มต้น ที่มายอดเงินนับเลขขึ้น รายการนำเข้าหล่นลงในรายการ ตู้โชว์มีประกาย","Water rises as you type the opening balance, balance explainer counts up, imported rows drop in, cabinet glints"],["1.49","2026-10-11","จัดระเบียบเบื้องหลังและเพิ่มชุดทดสอบอัตโนมัติ ให้แอปเสถียรขึ้น","Behind-the-scenes tidy-up and automated tests for a steadier app"],["1.48","2026-10-11","คู่มือวิธีใช้ หน้ามีอะไรใหม่ และส่งความเห็นถึงผู้พัฒนาทาง LINE","How-to guide, What’s new, and feedback to the developer on LINE"],["1.47","2026-10-11","น้ำในโอ่งลดตามเงินที่เหลือจริง และเปิดครั้งแรกเป็นภาษาไทย","Water level follows the money you have left; Thai on first launch"],["1.46","2026-10-11","ครั้งแรกเริ่มจากโอ่งว่าง แล้วน้องโอ่งถามยอดเงินที่มี","First run starts with an empty jar and asks your starting balance"],["1.45","2026-10-11","พูดเพื่อจดรายการ สำรองข้อมูลไป Google Drive นำเข้า CSV จากธนาคาร สรุปเป็น PDF และโหมดประหยัดแบต","Speak to log, Google Drive backup, bank CSV import, PDF summary, battery saver"],["1.44","2026-10-11","ปุ่มล้างข้อมูลทั้งหมด ใน ตั้งค่า › ข้อมูล","Erase all data in Settings › Data"],["1.43","2026-10-11","น้องโอ่งพูดได้ ปากขยับตามเสียง","Nong Ong talks, with a moving mouth"],["1.42","2026-10-11","เพิ่มเครดิต Developed by Napat Mekthap","Added credit: Developed by Napat Mekthap"],["1.41","2026-10-11","ท่าทางสัมผัส (ปัด กดค้าง เขย่า) และภาพเคลื่อนไหวของสภาพอากาศ","Touch gestures (swipe, hold, shake) and weather motion"],["1.40","2026-10-11","พื้นหลังตามสภาพอากาศจริง น้องโอ่งถือร่มหรือใส่แว่นกันแดดตามอากาศ","Live weather background; Nong Ong dresses for the weather"],["1.39","2026-10-11","เลเวลน้องโอ่ง เหรียญรางวัล และชุดที่ปลดล็อกได้","Nong Ong levels, badges and unlockable outfits"],["1.38","2026-10-11","เก็บรายละเอียดทั้งแอปและเพิ่มเอฟเฟกต์","Polish pass and more effects"],["1.37","2026-10-11","น้ำเอียงตามมือถือ เทน้ำออกตอนใช้เงิน ตราประทับเมื่อครบเป้า ลบแบบแตกกระจาย และนับวันไม่ใช้เงินติดกัน","Tilting water, pour-out, goal stamp, shatter delete, no-spend streak"],["1.36","2026-10-11","ภาพเคลื่อนไหวชุดใหญ่: ค่อยๆ โผล่ตอนเลื่อน ระลอกตอนแตะ น้ำกระฉอก ปัดเปลี่ยนเดือน","Motion pack: scroll reveal, ripples, jar slosh, month swipe"],["1.35","2026-10-11","เก็บงานธีมศิลาดล และติดตั้งบนหน้าจอหลัก iPhone ได้","Celadon finishing touches and iPhone home-screen support"],["1.34","2026-10-10","ตัวช่วยลดหย่อนภาษีปี 2569: ติดป้ายรายการ เพดานลดหย่อน และประมาณภาษี","Tax deduction helper for 2026: tags, caps and estimated tax"],["1.33","2026-10-10","ลายรานเคลือบบนการ์ดยอดเงินและหน้าล็อก แสงวาบบนน้องโอ่ง","Crackle glaze on the balance card and lock screen; glint on Nong Ong"],["1.32","2026-10-10","ธีมศิลาดลทุกหน้า: สตอรี่ การ์ดแชร์ และไอคอนแอปใหม่","Celadon everywhere: story, share card and a new app icon"],["1.31","2026-10-10","ธีมศิลาดลแบบเครื่องลายคราม ตั้งเป็นค่าเริ่มต้น","Celadon porcelain theme, now the default"],["1.30","2026-10-10","ช่องกรอกเงินตัวใหญ่ หัวข้อนุ่มขึ้น ช่อง PIN สวยขึ้น","Big amount fields, calmer titles, nicer PIN field"],["1.29","2026-10-10","รายการประจำเป็นไทม์ไลน์วันครบกำหนด แตะเพื่อบอกว่าจ่ายแล้ว","Recurring items as a due-date timeline, tap to mark paid"],["1.28","2026-10-10","แถบงบบอกความเร็วการใช้จ่าย กราฟโดนัทละเอียดขึ้น ไอคอนแอปพาสเทล","Budget pace marker, richer donut chart, pastel app icon"],["1.27","2026-10-10","ปรับข้อความอ่านสลิปในเครื่องให้อ่านง่ายขึ้น","Clearer on-device slip reading note"],["1.26","2026-10-10","อ่านสลิปภาษาไทยในเครื่อง แชร์สลิปเข้าแอป ล็อกแอปด้วยลายนิ้วมือ/PIN ซ่อนยอดเงิน ปุ่ม + เมนูเดียว","On-device Thai slip reading, share slips in, fingerprint/PIN lock, hide balances, one + menu"],["1.25","2026-10-10","กระเป๋าเงินและการโอน หารบิล ภาพรวม 6 เดือน การเตือน และจุดกู้คืน","Wallets and transfers, split bills, 6-month insights, reminders, restore points"],["1.24","2026-10-10","น้ำไหลตามระดับเงิน ส่วนบนยุบตอนเลื่อน ตัวเลขหมุน แถบงบแบบของเหลว","Flowing water, collapsing header, rolling numbers, liquid budget bars"],["1.23","2026-10-10","โอ่งในหน้าจดรายการ รายการรายวันละเอียดขึ้น โอ่งเป้าหมาย เมนูตั้งค่าใหม่","Live jar when adding, richer daily list, goal jars, new settings menu"],["1.22","2026-10-10","แก้คำภาษาอังกฤษบางจุด","English wording fixes"],["1.21","2026-10-10","ชุดเทศกาลของน้องโอ่ง ฟอนต์ Mitr เสียงเหรียญ และชุดสี","Festival outfits, Mitr font, coin sounds, colour palettes"],["1.20","2026-10-10","รองรับเบราว์เซอร์ที่เล่นเอฟเฟกต์ไม่ได้","Works on browsers without effects support"],["1.19","2026-10-10","ฉากเปิดแอป น้องโอ่งขยับได้ เหรียญบิน กราฟค่อยๆ วาด","Intro scene, living mascot, flying coins, chart draw-in"],["1.18","2026-10-10","แก้การเลือกธีมในบางเบราว์เซอร์","Theme detection fix"],["1.17","2026-10-10","วงแหวนความคืบหน้าเป้าหมาย ฉลองเมื่อสำเร็จ สลับธีมสว่าง/มืด","Goal ring, celebrations, light/dark switch"],["1.16","2026-10-10","สตอรี่และการ์ดแชร์สีพาสเทล หน้าว่างมีน้องโอ่ง","Pastel story and share card, mascot empty states"],["1.15","2026-10-10","แก้ปุ่มเบียดในหน้าตั้งค่า","Fixed squashed settings buttons"],["1.14","2026-10-10","ทางลัดจากไอคอนแอป: จดรายจ่าย จดรายรับ ค้นหา","App icon shortcuts: add expense, add income, search"],["1.13","2026-10-10","ปุ่มตอบสนองตอนกด ตัวเลขนับขึ้น และแจ้งเตือนเมื่อบันทึก","Press feedback, count-up numbers, save toast"],["1.12","2026-10-10","หน้าตาใหม่ธีม Bento Pastel (สว่างและมืด)","New Bento Pastel look (light and dark)"],["1.11","2026-10-10","ค้นหาด้วยจำนวนเงินแบบตรงตัว","Search matches amounts exactly"],["1.10","2026-10-10","ค้นหารายการได้ทุกเดือน","Search across all months"],["1.9","2026-10-10","เตือนให้สำรองข้อมูล และเพิ่มหมวดหมู่เองได้","Backup reminder and custom categories"],["1.0–1.8","","รุ่นแรก: จดรายรับรายจ่าย อ่านสลิป งบรายหมวด เป้าหมายออม รายการประจำ ยอดยกมา สตอรี่สรุปเดือน ธีมมืด ติดตั้งเป็นแอปและใช้ออฟไลน์ได้","First releases: income and expenses, slip reading, budgets, savings goals, recurring items, carry-over, monthly story, dark theme, installable and offline"]];
 const DEV_CONTACT={line:'qnapat',mail:''}; // optional: the developer can put a LINE ID or e-mail here for a direct "send to developer" button
 const ERRLOG=[]; addEventListener('error',e=>{ try{ ERRLOG.push((e.message||'error')+' @'+String(e.filename||'').split('/').pop()+':'+(e.lineno||0)); if(ERRLOG.length>5) ERRLOG.shift() }catch(_){} });
 addEventListener('unhandledrejection',e=>{ try{ ERRLOG.push('promise: '+String(e.reason&&e.reason.message||e.reason).slice(0,120)); if(ERRLOG.length>5) ERRLOG.shift() }catch(_){} });
@@ -5466,10 +5543,10 @@ function openHelp(){ const P=sheetOf('helpsheet');
   P.onclick=e=>{ const b=e.target.closest('[data-try]'); if(!b) return; const k=b.dataset.try; hideSheet('helpsheet'); hideSheet('setsheet');
     setTimeout(()=>{ if(k==='voice') startVoice(); else if(k==='explain') openExplain(); else if(k==='trophy') openTrophy(); else if(k==='backup'){ openSet(); setOpenFor($('sharebk')); setTimeout(()=>$('sharebk').scrollIntoView({block:'center'}),350) } },300) } }
 /* (2) What's new — shown once after an update */
-const WHATSNEW=()=>[['spark',L('การ์ดแต่งตามเทศกาล','Festive cards'),L('ช่วงเทศกาลการ์ดยอดเงินมีธงประดับ ปุ่มและการ์ดเปลี่ยนสีตามชุดของน้องโอ่ง ปิดได้ใน ตั้งค่า › ตู้เสื้อผ้าน้องโอ่ง','During festivals the balance card gets a garland and the buttons and cards take on Nong Ong’s colours. Turn it off in Settings › Wardrobe')],
- ['jar',L('สรุปวันนี้ตอนค่ำ','Evening wrap-up'),L('หลัง 6 โมงเย็นมีการ์ดสรุปว่าวันนี้ใช้ไปเท่าไร เหลือเท่าไร','After 6 pm a card shows what you spent and what is left')],
- ['money',L('นับถอยหลังเงินเดือนออก','Payday countdown'),L('อีกกี่วันเงินเดือนออก และถึงวันนั้นใช้ได้วันละเท่าไร','Days to payday and what you can spend a day until then')],
- ['target',L('ปฏิทินสี และสรุปสัปดาห์','Spending calendar and weekly recap'),L('แต่ละวันเป็นสีตามงบ และทุกวันจันทร์มีสรุปสัปดาห์ที่แล้ว','Each day coloured against your budget, plus a recap every Monday')]];
+const WHATSNEW=()=>[['mic',L('จดด้วยประโยคเดียว','One sentence, done'),L('พิมพ์หรือพูดที่ช่องบนสุด เช่น “เมื่อวาน สองทุ่ม แท็กซี่ 250” หรือ “กาแฟ 60 ข้าว 50 BTS 42” ได้หลายรายการในทีเดียว','Type or say it in the bar at the top, like “yesterday 8pm taxi 250” or “coffee 60, lunch 50, BTS 42”, several at once')],
+ ['target',L('งบรวมทั้งเดือน','Whole-month budget'),L('ตั้งเพดานในตั้งค่า › การเงิน แล้วมีเส้นงบบนโอ่ง น้องโอ่งเตือนที่ 80% และ 100%','Set a cap in Settings › Money. A line appears on the jar and Nong Ong warns at 80% and 100%')],
+ ['money',L('เวลาและรูปสลิป','Times and slip pictures'),L('ทุกรายการมีเวลา และรายการจากสลิปเก็บรูปไว้ แตะดูได้','Every entry has a time, and slip entries keep the picture to tap and view')],
+ ['book',L('เมนูด้านล่าง','Bottom menu'),L('หน้าหลัก รายการ สถิติ และตั้งค่า เลื่อนหาง่ายและลื่นขึ้น','Home, Entries, Stats and Settings. Easier to find, smoother to scroll')]];
 function openWhatsNew(){ const P=sheetOf('wnsheet');
   P.innerHTML=`<div class="wn-jar">${jarSVG('great',undefined,null,undefined,0)}</div><div class="wn-k">${L('มีอะไรใหม่','WHAT’S NEW')} · v${APP_VER}</div><h3 style="text-align:center;margin:0">${L('น้องโอ่งอัปเดตแล้ว!','Nong Ong just got an update!')}</h3>
   <div class="wn-list">${WHATSNEW().map(([ic,t,d])=>`<div class="wn-item"><i>${ic==='jar'?'<svg viewBox="0 0 24 24"><path d="M8 4h8M9 4v2c-3 1-5 4-5 7.5C4 17.5 7 20 12 20s8-2.5 8-6.5C20 10 18 7 15 6V4M5 13c4 2 10 2 14 0"/></svg>':hsvg(ic)}</i><span><b>${t}</b><small>${d}</small></span></div>`).join('')}</div>
@@ -5563,7 +5640,7 @@ const habitReady=()=>data.length>0&&!!account;
 function renderEveCard(){ let c=$('evecard'); const now=new Date(), today=iso(now);
   const show=habitReady()&&now.getHours()>=18&&prefs.eveSeen!==today;
   if(!show){ if(c) c.hidden=true; return }
-  if(!c){ c=document.createElement('button'); c.type='button'; c.id='evecard'; c.className='evecard'; const b=document.querySelector('.balance'); b.parentNode.insertBefore(c,b.nextSibling); c.onclick=()=>openEve() }
+  if(!c){ c=document.createElement('button'); c.type='button'; c.id='evecard'; c.className='evecard'; const b=$('glance')||document.querySelector('.balance'); b.after(c); c.onclick=()=>openEve() }
   const B=curBudget(now), has=B.nToday>0;
   const sub=!has?L('ยังไม่ได้จดเลย แตะเพื่อดูและจดก่อนนอน','Nothing logged yet. Tap to review and log'):B.spentToday===0?L('วันนี้ไม่ได้ใช้เงินเลย','No spending today'):
     B.ok&&B.perDay>0?L(`ใช้ไป <b class="num">${fmt(B.spentToday)}</b> จากงบวันนี้ ${fmt(Math.floor(B.perDay))}`,`<b class="num">${fmt(B.spentToday)}</b> of today’s ${fmt(Math.floor(B.perDay))}`):L(`วันนี้ใช้ไป <b class="num">${fmt(B.spentToday)}</b>`,`<b class="num">${fmt(B.spentToday)}</b> spent today`);
@@ -5828,6 +5905,226 @@ function showErrBar(){ if(document.getElementById('errbar')) return; const b=doc
 MY_REV=readRev();
 if(Object.keys(CORRUPT).length) console.warn('damaged keys',Object.keys(CORRUPT));
 recoverAtBoot();
+/* ===== V390 one sentence → entries: date, time, category and several items at once ===== */
+const NW={'สิบสอง':12,'สิบเอ็ด':11,'สิบ':10,'เก้า':9,'แปด':8,'เจ็ด':7,'หก':6,'ห้า':5,'สี่':4,'สาม':3,'สอง':2,'หนึ่ง':1,'นึง':1,'เอ็ด':1};
+const NWR='(\\d{1,2}|สิบสอง|สิบเอ็ด|สิบ|เก้า|แปด|เจ็ด|หก|ห้า|สี่|สาม|สอง|หนึ่ง|นึง)';
+const nwv=s=>s==null?null:/^\d+$/.test(s)?+s:(NW[s]??null);
+const CAT_ALIAS={'เดินทาง':['การเดินทาง','เดินทาง','ค่ารถ','ค่าเดินทาง','travel','transport'],'อาหาร':['อาหารและเครื่องดื่ม','เครื่องดื่ม','อาหาร','ของกิน','กิน','food','drink'],
+  'ช้อปปิ้ง':['ช้อปปิ้ง','ช็อปปิ้ง','ช้อปปิ้ง','ช้อป','ช็อป','shopping'],'บิล/ค่าน้ำไฟ':['ค่าสาธารณูปโภค','สาธารณูปโภค','ค่าน้ำไฟ','ค่าน้ำค่าไฟ','บิล','bill','bills','utilities'],
+  'ที่พัก':['ที่พัก','ค่าเช่า','ค่าห้อง','บ้าน','rent','housing'],'สุขภาพ':['สุขภาพ','ค่ายา','ค่าหมอ','health'],'บันเทิง':['บันเทิง','เที่ยว','entertainment'],'อื่นๆ':['อื่นๆ','อื่น','other'],
+  'เงินเดือน':['เงินเดือน','salary'],'โบนัส':['โบนัส','bonus'],'ฟรีแลนซ์':['ฟรีแลนซ์','freelance'],'ขายของ':['ขายของ','sales'],'ดอกเบี้ย':['ดอกเบี้ย','interest']};
+const MON_RE=[['ม.ค.','มกรา','มกราคม','jan'],['ก.พ.','กุมภา','กุมภาพันธ์','feb'],['มี.ค.','มีนา','มีนาคม','mar'],['เม.ย.','เมษา','เมษายน','apr'],['พ.ค.','พฤษภา','พฤษภาคม','may'],['มิ.ย.','มิถุนา','มิถุนายน','jun'],
+  ['ก.ค.','กรกฎา','กรกฎาคม','jul'],['ส.ค.','สิงหา','สิงหาคม','aug'],['ก.ย.','กันยา','กันยายน','sep'],['ต.ค.','ตุลา','ตุลาคม','oct'],['พ.ย.','พฤศจิกา','พฤศจิกายน','nov'],['ธ.ค.','ธันวา','ธันวาคม','dec']];
+function parseUtter(raw,now){ now=now||new Date(); let t=String(raw||'').normalize('NFC').replace(/[๐-๙]/g,d=>String(d.charCodeAt(0)-0x0E50)).replace(/\s+/g,' ').trim();
+  const out={date:null,time:null,dateWord:'',timeWord:'',items:[]}; if(!t) return out;
+  const cut=(m,i)=>{ t=t.slice(0,i)+' '.repeat(m.length)+t.slice(i+m.length) }; // blank a phrase but keep positions
+  const take=(re,fn)=>{ const m=re.exec(t); if(!m) return false; const r=fn(m); if(r===false) return false; cut(m[0],m.index); return true };
+  const day0=new Date(now.getFullYear(),now.getMonth(),now.getDate()), addD=n=>{ const d=new Date(day0); d.setDate(d.getDate()+n); return d };
+  const setDate=(d,w)=>{ if(!out.date){ out.date=iso(d); out.dateWord=w } };
+  const setTime=(h,m,w)=>{ if(out.time||h==null||h<0||h>23||m<0||m>59) return false; out.time=String(h).padStart(2,'0')+':'+String(m).padStart(2,'0'); out.timeWord=w; };
+  /* dates */
+  take(/เมื่อวานซืน|day before yesterday/i,m=>setDate(addD(-2),m[0]));
+  take(/เมื่อวาน(?:นี้)?|yesterday/i,m=>setDate(addD(-1),m[0]));
+  take(/เมื่อคืน(?:นี้)?|last night/i,m=>{ setDate(now.getHours()<5?day0:addD(-1),m[0]); if(!out.time&&now.getHours()>=5) setTime(21,0,m[0]) });
+  take(/วันนี้|today/i,m=>setDate(day0,m[0]));
+  take(new RegExp('(?:เมื่อ)?\\s*'+NWR+'\\s*วัน(?:ก่อน|ที่แล้ว)'),m=>{ const n=nwv(m[1]); if(!n||n>60) return false; setDate(addD(-n),m[0]) });
+  take(/(?:เมื่อ)?วัน(อาทิตย์|จันทร์|อังคาร|พุธ|พฤหัส(?:บดี)?|ศุกร์|เสาร์)(ที่แล้ว|ก่อน)?|(?:last |on )?(sunday|monday|tuesday|wednesday|thursday|friday|saturday)/i,m=>{
+    const th=['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัส','ศุกร์','เสาร์'], en=['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
+    let dw=m[1]?th.indexOf(m[1].replace('บดี','')):en.indexOf(String(m[3]).toLowerCase()); if(dw<0) return false;
+    let diff=(day0.getDay()-dw+7)%7; if((m[2]||/last/i.test(m[0]))&&diff===0) diff=7; setDate(addD(-diff),m[0]) });
+  { const mons=MON_RE.flat().map(s=>s.replace(/\./g,'\\.')).sort((a,b)=>b.length-a.length).join('|');
+    take(new RegExp('(?:วันที่\\s*)?(\\d{1,2})\\s*('+mons+')(?:\\s*(\\d{2,4}))?','i'),m=>{ const mi=MON_RE.findIndex(a=>a.some(x=>x.toLowerCase()===m[2].toLowerCase())); const d=+m[1]; if(mi<0||d<1||d>31) return false;
+      let y=m[3]?+m[3]:now.getFullYear(); if(y>2400) y-=543; else if(y<100) y=y>40?y+2500-543:2000+y; let dt=new Date(y,mi,d); if(!m[3]&&dt>day0) dt=new Date(y-1,mi,d); setDate(dt,m[0]) }); }
+  take(/วันที่\s*(\d{1,2})(?!\s*(?:บาท|฿|\d))/,m=>{ const d=+m[1]; if(d<1||d>31) return false; let dt=new Date(now.getFullYear(),now.getMonth(),d); if(dt>day0) dt=new Date(now.getFullYear(),now.getMonth()-1,d); setDate(dt,m[0]) });
+  /* times */
+  const half=s=>/ครึ่ง/.test(s||'')?30:0;
+  take(/(?:เวลา|ตอน|at)?\s*(\d{1,2}):(\d{2})\s*(?:น\.?|นาฬิกา)?/,m=>setTime(+m[1],+m[2],m[0]));
+  take(/(?:เวลา|ตอน)?\s*(\d{1,2})\.(\d{2})\s*(?:น\.|นาฬิกา)/,m=>setTime(+m[1],+m[2],m[0]));
+  take(/เที่ยงคืน|midnight/i,m=>setTime(0,0,m[0]));
+  take(/เที่ยง(?:วัน)?(ครึ่ง)?|noon/i,m=>setTime(12,half(m[1]),m[0]));
+  take(new RegExp('ตี\\s*'+NWR+'(\\s*ครึ่ง)?'),m=>{ const n=nwv(m[1]); if(!n||n>5) return false; return setTime(n,half(m[2]),m[0]) });
+  take(new RegExp('(?:'+NWR+'\\s*)?ทุ่ม(?:นึง|หนึ่ง)?(\\s*ครึ่ง)?'),m=>{ const n=m[1]?nwv(m[1]):1; if(!n||n>5) return false; return setTime(18+n,half(m[2]),m[0]) });
+  take(new RegExp('บ่าย\\s*(?:'+NWR+')?\\s*(?:โมง)?(\\s*ครึ่ง)?'),m=>{ const n=m[1]?nwv(m[1]):1; if(!n||n>5) return false; return setTime(12+n,half(m[2]),m[0]) });
+  take(new RegExp(NWR+'\\s*โมง\\s*(เช้า|เย็น|ค่ำ)?(\\s*ครึ่ง)?'),m=>{ let n=nwv(m[1]); if(n==null||n>12) return false; const w=m[2]||'';
+    if(/เย็น|ค่ำ/.test(w)) n=n<12?n+12:n; else if(!/เช้า/.test(w)&&n>=1&&n<=5) n+=12; return setTime(n,half(m[3]),m[0]) });
+  take(/(\d{1,2})(?::(\d{2}))?\s*(am|pm|a\.m\.|p\.m\.)/i,m=>{ let h=+m[1]%12; if(/p/i.test(m[3])) h+=12; return setTime(h,+(m[2]||0),m[0]) });
+  /* explicit categories ("หมวดเดินทาง"), remembered by position so each item can have its own */
+  const cats=[]; { const all=[...CATS.out.map(c=>['out',c]),...CATS.in.map(c=>['in',c])], names=[];
+    for(const [ty,c] of all){ names.push([c,ty,c]); for(const a of (CAT_ALIAS[c]||[])) names.push([a,ty,c]); if(EN_CAT[c]) names.push([EN_CAT[c].toLowerCase(),ty,c]) }
+    names.sort((a,b)=>b[0].length-a[0].length);
+    const re=/(?:หมวด(?:หมู่)?|category|cat\.?)\s*/gi; let m;
+    while((m=re.exec(t))){ const rest=t.slice(m.index+m[0].length), hit=names.find(([n])=>rest.toLowerCase().startsWith(n.toLowerCase()));
+      if(hit){ cats.push({pos:m.index,type:hit[1],cat:hit[2]}); cut(t.substr(m.index,m[0].length+hit[0].length),m.index) } } }
+  /* items: one amount each */
+  const amtRe=/(\d[\d,]*(?:\.\d{1,2})?)\s*(พัน|หมื่น|แสน|ล้าน|k\b|K\b)?\s*(?:บาท|baht|฿|thb)?/gi; const hits=[]; let a;
+  while((a=amtRe.exec(t))){ if(!a[1].replace(/[,.]/g,'')) continue; hits.push({s:a.index,e:a.index+a[0].length}) }
+  const clean=s=>s.replace(/\s{2,}/g,' ').replace(/^[\s,]+|[\s,]+$/g,'').replace(/^(?:แล้วก็|และ|กับ|and)\s+/,'').trim();
+  let segs=[];
+  if(hits.length<=1) segs=[[0,t.length]];
+  else { const lead=t.slice(0,hits[0].s).replace(/\s|จ่าย|ซื้อ|ค่า/g,'');
+    if(lead) segs=hits.map((h,i)=>[i?hits[i-1].e:0, i===hits.length-1?t.length:h.e]); // "กาแฟ 60 ข้าว 50"
+    else segs=hits.map((h,i)=>[h.s, i===hits.length-1?t.length:hits[i+1].s]) } // "60 กาแฟ 50 ข้าว"
+  for(const [s,e] of segs){ const txt=clean(t.slice(s,e)); if(!txt) continue; const p=parseSpoken(txt); if(!p.amount&&segs.length>1) continue;
+    const ec=cats.find(c=>c.pos>=s&&c.pos<e)||(segs.length===1?cats[0]:null)||(cats.length===1&&segs.length>1&&!cats[0]._used?null:null);
+    if(ec){ p.type=ec.type; p.cat=ec.cat; p.catSaid=true }
+    out.items.push({amount:p.amount,type:p.type,cat:p.cat,memo:p.memo.replace(/\s{2,}/g,' ').trim(),catSaid:!!p.catSaid}) }
+  // one category said for a whole list ("…หมวดอาหาร" at the end) applies to the items without their own
+  if(cats.length===1&&out.items.length>1&&!out.items.some(i=>i.catSaid)) out.items.forEach(i=>{ if(i.type===cats[0].type){ i.cat=cats[0].cat; i.catSaid=true } });
+  return out }
+
+/* ===== V390 slip pictures stay with their entries (on this phone only) ===== */
+function slipDB(){ return new Promise((ok,no)=>{ try{ const r=indexedDB.open('kp-slips',1); r.onupgradeneeded=()=>r.result.createObjectStore('img'); r.onsuccess=()=>ok(r.result); r.onerror=()=>no(r.error) }catch(e){ no(e) } }) }
+async function slipTx(mode,fn){ const db=await slipDB(); return await new Promise((ok,no)=>{ const t=db.transaction('img',mode), st=t.objectStore('img'); let out; try{ out=fn(st) }catch(e){ no(e) } t.oncomplete=()=>{ db.close(); ok(out&&out.result!==undefined?out.result:out) }; t.onerror=()=>{ db.close(); no(t.error) } }) }
+async function shrinkSlip(file){ // 640px wide JPEG: readable, about 60 KB
+  let src; try{ src=await createImageBitmap(file) }catch(e){ src=await new Promise((ok,no)=>{ const im=new Image(); im.onload=()=>ok(im); im.onerror=no; im.src=URL.createObjectURL(file) }) }
+  const w=Math.min(640,src.width), h=Math.round(src.height*w/src.width), c=document.createElement('canvas'); c.width=w; c.height=h; c.getContext('2d').drawImage(src,0,0,w,h);
+  return await new Promise(ok=>c.toBlob(b=>ok(b),'image/jpeg',.72)) }
+async function storeSlips(pairs){ for(const [id,f] of pairs){ try{ const b=await shrinkSlip(f); if(!b) continue; await slipTx('readwrite',st=>st.put(b,String(id))); SLIPS_HAVE.add(String(id)) }catch(e){} } try{ render() }catch(e){} }
+const SLIP_URL=new Map();
+async function slipURL(id){ id=String(id); if(SLIP_URL.has(id)) return SLIP_URL.get(id); try{ const b=await slipTx('readonly',st=>st.get(id)); if(!b) return null; const u=URL.createObjectURL(b); SLIP_URL.set(id,u); return u }catch(e){ return null } }
+async function fillThumbs(){ for(const el of document.querySelectorAll('.slipth:not(.ld)')){ el.classList.add('ld'); const u=await slipURL(el.dataset.slip); if(u) el.style.backgroundImage=`url("${u}")`; else el.remove() } }
+afterRender(()=>{ fillThumbs() });
+function openSlipView(id){ slipURL(id).then(u=>{ if(!u) return; const r=data.find(x=>String(x.id)===String(id));
+  const v=document.createElement('div'); v.id='slipview'; v.setAttribute('role','dialog');
+  v.innerHTML=`<div class="sv-top"><b>${esc(r?rTitle(r):'')}</b><small class="num">${r?`${fmt(r.amount)} · ${dShort(r.date,{day:'numeric',month:'short',year:'numeric'})}${r.time?' '+r.time:''}`:''}</small></div><img alt="${L('สลิป','Slip')}" src="${u}"><button type="button" class="sv-x">${L('ปิด','Close')}</button>`;
+  document.body.appendChild(v); if(FX()) v.animate([{opacity:0},{opacity:1}],{duration:200});
+  v.onclick=e=>{ if(e.target.tagName==='IMG') return; v.remove() } }) }
+document.addEventListener('click',e=>{ const b=e.target.closest&&e.target.closest('.slipth'); if(!b) return; e.stopPropagation(); e.preventDefault(); openSlipView(b.dataset.slip) },true);
+// which entries have a picture; pictures of deleted entries are cleared a while later (undo still works meanwhile)
+(async()=>{ try{ const keys=await slipTx('readonly',st=>st.getAllKeys()); (keys||[]).forEach(k=>SLIPS_HAVE.add(String(k))); if(SLIPS_HAVE.size) render();
+  setTimeout(async()=>{ const ids=new Set(data.map(r=>String(r.id))), gone=[...SLIPS_HAVE].filter(k=>!ids.has(k)); if(gone.length){ try{ await slipTx('readwrite',st=>gone.forEach(k=>st.delete(k))); gone.forEach(k=>SLIPS_HAVE.delete(k)) }catch(e){} } },60000) }catch(e){} })();
+
+/* ===== V390 quick add: type or say a sentence, check, save ===== */
+const QA_EX=()=>LANG==='en'?['coffee 60, lunch 120','yesterday 8pm taxi 250','salary 45,000','friday movie 240 category entertainment']:['กาแฟ 60 ข้าวมันไก่ 50','เมื่อวาน สองทุ่ม แท็กซี่ 250','เงินเดือนเข้า 45,000','วันศุกร์ ดูหนัง 240 หมวดบันเทิง','เที่ยง ส้มตำ 70 น้ำ 15'];
+function buildQuickAdd(){ if($('qadd')) return; const hero=document.querySelector('.balance'); if(!hero) return;
+  const f=document.createElement('form'); f.id='qadd'; f.className='qadd'; f.autocomplete='off';
+  f.innerHTML=`<button type="button" class="qa-mic" id="qamic" aria-label="${L('พูดจด','Speak')}"${SR?'':' hidden'}><svg viewBox="0 0 24 24"><path d="M9 3h6v11H9zM5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button>
+    <input id="qatext" enterkeyhint="done" aria-label="${L('จดด่วน พิมพ์ประโยคเดียว','Quick add in one sentence')}" placeholder="${esc(L('พิมพ์ เช่น ','Type e.g. ')+QA_EX()[0])}">
+    <button type="submit" class="qa-go" aria-label="${L('จด','Add')}"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>`;
+  hero.before(f);
+  let k=0; setInterval(()=>{ const i=$('qatext'); if(!i||i.value||document.activeElement===i||document.hidden) return; k=(k+1)%QA_EX().length; i.placeholder=L('พิมพ์ เช่น ','Type e.g. ')+QA_EX()[k] },4000);
+  f.onsubmit=e=>{ e.preventDefault(); const v=$('qatext').value.trim(); if(!v){ $('qatext').focus(); return } quickFrom(v,false) };
+  $('qamic').onclick=()=>startVoice(); }
+function quickFrom(text,spoken){ const r=parseUtter(text); const items=r.items.filter(i=>i.amount>0);
+  if(!items.length){ toast(L('ยังไม่เจอจำนวนเงิน ลองพิมพ์ เช่น “กาแฟ 60”','No amount found. Try “coffee 60”')); try{ shake($('qadd')) }catch(e){} return false }
+  openQuickReview(r,items,text,spoken); return true }
+function openQuickReview(r,items,text,spoken){ const P=sheetOf('qasheet'), today=iso(new Date());
+  const st={date:r.date||today,time:r.time||(r.date&&r.date!==today?'':nowHM()),items:items.map(i=>({...i,on:true}))};
+  const catOpts=(ty,sel)=>CATS[ty].map(c=>`<option value="${esc(c)}"${c===sel?' selected':''}>${esc(tr(c))}</option>`).join('');
+  const draw=()=>{ const on=st.items.filter(i=>i.on), tot=on.reduce((s,i)=>s+(i.type==='in'?0:i.amount),0), tin=on.reduce((s,i)=>s+(i.type==='in'?i.amount:0),0);
+    P.innerHTML=`<div class="qa-said">“${esc(text)}”</div><h3 style="margin:0">${L('ตรวจก่อนบันทึก','Check before saving')}</h3>
+    <div class="qa-when"><label><span>${L('วันที่','Date')}</span><input type="date" id="qadate" value="${st.date}" max="${iso(new Date(Date.now()+864e5*366))}"></label><label><span>${L('เวลา','Time')}</span><input type="time" id="qatime" value="${st.time}"></label></div>
+    <div class="qa-list">${st.items.map((it,n)=>`<div class="qa-it${it.on?'':' off'}" data-n="${n}">
+      <label class="qa-chk"><input type="checkbox" data-k="on" ${it.on?'checked':''} aria-label="${L('บันทึกรายการนี้','Save this item')}"><i></i></label>
+      <span class="qa-ic">${ic(it.cat,'sm')}</span>
+      <span class="qa-mid"><input class="qa-memo" data-k="memo" value="${esc(it.memo||'')}" placeholder="${L('ชื่อรายการ','Name')}"><select data-k="cat" aria-label="${L('หมวด','Category')}">${catOpts(it.type,it.cat)}</select>${it.catSaid?`<em>${L('ตามที่บอก','as said')}</em>`:''}</span>
+      <span class="qa-amt ${it.type}"><b>${it.type==='in'?'+':'-'}</b><input class="num" data-k="amount" inputmode="decimal" value="${it.amount}"></span></div>`).join('')}</div>
+    <div class="qa-sum"><span>${L(`${on.length} รายการ`,`${on.length} ${on.length===1?'item':'items'}`)}</span><b class="num">${tot?'-'+fmt(tot):''}${tot&&tin?' · ':''}${tin?'+'+fmt(tin):''}</b></div>
+    <div class="actions"><button type="button" class="btn" id="qacancel">${L('ยกเลิก','Cancel')}</button><button type="button" class="btn save" id="qasave"${on.length?'':' disabled'}>${L(`บันทึก ${on.length} รายการ`,`Save ${on.length}`)}</button></div>`;
+    $('qacancel').onclick=()=>hideSheet('qasheet'); $('qasave').onclick=commit };
+  const commit=()=>{ st.date=$('qadate').value||today; st.time=$('qatime').value||''; const on=st.items.filter(i=>i.on&&i.amount>0); if(!on.length) return;
+    const base=Date.now(); on.forEach((it,k)=>{ const rec={id:(base+k).toString(36),type:it.type,amount:Math.round(it.amount*100)/100,cat:it.cat,memo:(it.memo||'').trim(),date:st.date,...(st.time?{time:st.time}:{}),w:wallets.some(w=>w.id===prefs.lastW)?prefs.lastW:'w0'};
+      data.push(rec); if(rec.memo) learn(rec.memo,rec.type,rec.cat) });
+    lastAddedId=(base+on.length-1).toString(36); prefs.lastLogDay=iso(new Date()); savePrefs(); saveData(); const d=new Date(st.date+'T00:00'); view=new Date(d.getFullYear(),d.getMonth(),1);
+    $('qatext')&&($('qatext').value=''); hideSheet('qasheet'); toast(L(`บันทึก ${on.length} รายการแล้ว`,`${on.length} saved`)); try{navigator.vibrate&&navigator.vibrate(10)}catch(e){}
+    const out=on.filter(i=>i.type==='out').reduce((s,i)=>s+i.amount,0);
+    requestAnimationFrame(()=>setTimeout(()=>{ render(); const pt=centerOf($('pig')); if(FX()&&out) pourOut(pt,out); else if(FX()) flyCoin(centerOf($('qadd')||$('pig')),pt,()=>{ splash(pt.x,pt.y-20,10); sfx('clink') }); bump($('bal')); bump($('pig')) },0)) };
+  P.oninput=P.onchange=e=>{ const row=e.target.closest('.qa-it'), k=e.target.dataset.k; if(e.target.id==='qadate'){ st.date=e.target.value; return } if(e.target.id==='qatime'){ st.time=e.target.value; return }
+    if(!row||!k) return; const it=st.items[+row.dataset.n];
+    if(k==='on'){ it.on=e.target.checked; draw() } else if(k==='memo') it.memo=e.target.value; else if(k==='cat'&&e.type==='change'){ it.cat=e.target.value; it.catSaid=false; draw() }
+    else if(k==='amount'){ it.amount=parseFloat(String(e.target.value).replace(/,/g,''))||0; if(e.type==='change') draw() } };
+  draw(); showSheet('qasheet');
+  if(spoken&&typeof nongSpeak==='function'&&vMode()!=='off'){ const sum=items.map(i=>`${i.memo||tr(i.cat)} ${fmt(i.amount)}`).join(L(' กับ ',', '));
+    setTimeout(()=>nongSpeak(L(`${r.dateWord?r.dateWord+' ':''}${r.timeWord?r.timeWord+' ':''}${sum} ถูกไหม`,`${sum}. Is that right?`),null),300) }
+  if(FX()) P.querySelectorAll('.qa-it').forEach((e,i)=>e.animate([{opacity:0,transform:'translateY(10px)'},{opacity:1,transform:'none'}],{duration:340,delay:120+i*70,easing:'cubic-bezier(.2,.85,.25,1)',fill:'backwards'})) }
+buildQuickAdd(); afterRender(()=>{ try{ buildQuickAdd() }catch(e){} });
+
+/* ===== V390 at a glance: spent today + this month's budget (with a line on the jar) ===== */
+function monthBudget(){ const set=+prefs.mbudget>0?+prefs.mbudget:0; return {b:set,auto:false} }
+function outBetween(a,b){ return data.filter(r=>r.type==='out'&&r.date>=a&&r.date<=b).reduce((s,r)=>s+r.amount,0) }
+function renderGlance(){ const now=new Date(), cur=view.getFullYear()===now.getFullYear()&&view.getMonth()===now.getMonth(); let g=$('glance');
+  if(!habitReady()||!cur){ if(g) g.hidden=true; jarBudgetLine(null); return }
+  if(!g){ g=document.createElement('div'); g.id='glance'; g.className='glance'; document.querySelector('.balance').after(g);
+    g.addEventListener('click',e=>{ const t=e.target.closest('[data-g]'); if(!t) return; if(t.dataset.g==='today') openEve(); else { openSet(); setOpenFor($('mbudget')); setTimeout(()=>{ try{ $('mbudget').scrollIntoView({block:'center'}); if(!(+prefs.mbudget>0)) $('mbudget').focus() }catch(_){} },350) } }) }
+  const today=iso(now), ym=today.slice(0,7), d=now.getDate(), dim=new Date(now.getFullYear(),now.getMonth()+1,0).getDate();
+  const tRows=data.filter(r=>r.date===today), tOut=tRows.filter(r=>r.type==='out').reduce((s,r)=>s+r.amount,0);
+  const mtd=outBetween(ym+'-01',today), pm=new Date(now.getFullYear(),now.getMonth()-1,1), pdim=new Date(pm.getFullYear(),pm.getMonth()+1,0).getDate(), pym=iso(pm).slice(0,7);
+  const prev=outBetween(pym+'-01',pym+'-'+String(Math.min(d,pdim)).padStart(2,'0')), hasPrev=data.some(r=>r.date.startsWith(pym));
+  let chip; if(!hasPrev||!prev) chip=`<span class="gchip">${L('ยังไม่มีข้อมูลเดือนก่อน','No last-month data yet')}</span>`;
+  else { const pc=Math.round((mtd-prev)/prev*100); chip=`<span class="gchip ${pc<=0?'good':'bad'}">${pc<=0?'▼':'▲'} ${Math.abs(pc)}% ${L('จากช่วงเดียวกันเดือนก่อน','vs last month so far')}</span>` }
+  const days=Array.from({length:7},(_,i)=>{ const x=new Date(now.getFullYear(),now.getMonth(),d-6+i); return outBetween(iso(x),iso(x)) }), mx=Math.max(1,...days);
+  const M=monthBudget(), used=data.filter(r=>r.type==='out'&&r.date.startsWith(ym)).reduce((s,r)=>s+r.amount,0), pct=M.b?used/M.b:0, pace=d/dim;
+  const cls=!M.b?'':pct>1?'over':pct>=.8?'near':'ok', perDay=M.b?Math.max(0,(M.b-used)/(dim-d+1)):0;
+  g.innerHTML=`<button type="button" class="gtile" data-g="today"><small>${L('วันนี้ใช้ไป','Spent today')}</small><b class="num">${fmt(tOut)}</b>
+      <span class="gsub">${L(`${tRows.length} รายการ`,`${tRows.length} ${tRows.length===1?'entry':'entries'}`)}</span><span class="gbars" aria-hidden="true">${days.map((v,i)=>`<i class="${i===6?'td':''}" style="height:${Math.max(8,v/mx*100).toFixed(0)}%"></i>`).join('')}</span>${chip}</button>
+    <button type="button" class="gtile ${cls}" data-g="budget"><small>${L('งบเดือนนี้','Budget this month')}${M.b&&M.auto?` <em>${L('รวมทุกหมวด','all categories')}</em>`:''}</small>${M.b?`<b class="num">${Math.round(pct*100)}<span>%</span></b>
+      <span class="gsub num">${pct>1?L(`เกินงบ ${fmt(Math.round(used-M.b))}`,`${fmt(Math.round(used-M.b))} over`):L(`เหลือ ${fmt(Math.round(M.b-used))}`,`${fmt(Math.round(M.b-used))} left`)}</span>
+      <span class="gbar"><u style="width:${Math.min(100,pct*100).toFixed(1)}%"></u><i style="left:${(pace*100).toFixed(1)}%" title="${L('วันนี้ของเดือน','today')}"></i></span>
+      <span class="gchip">${pct>1?L('ลองงดของไม่จำเป็นนะ','Time to hold back'):L(`ใช้ได้อีกวันละ ${fmt(Math.floor(perDay))}`,`${fmt(Math.floor(perDay))} a day from here`)}</span>`
+      :`<b class="gset">${L('ตั้งงบรวม','Set a budget')}</b><span class="gsub">${L('ตั้งเพดานทั้งเดือน แล้วน้องโอ่งจะช่วยเตือน','Set a monthly cap and Nong Ong will keep an eye on it')}</span>`}</button>`;
+  g.hidden=false; jarBudgetLine(M.b?M:null);
+  // alerts once a month at 80% and 100%
+  if(M.b&&data.some(r=>!r.demo)){ const al=prefs.mbAl&&prefs.mbAl.ym===ym?prefs.mbAl.l:0, lvl=pct>=1?2:pct>=.8?1:0;
+    if(lvl>al){ prefs.mbAl={ym,l:lvl}; savePrefs(); const txt=lvl===2?L(`ใช้ครบงบเดือนนี้แล้ว (${fmt(Math.round(used))} จาก ${fmt(M.b)}) ที่เหลือของเดือนค่อยๆ ใช้นะ`,`You have used this month's budget (${fmt(Math.round(used))} of ${fmt(M.b)}). Go easy for the rest of the month.`):L(`ใช้ไปแล้ว ${Math.round(pct*100)}% ของงบเดือนนี้ เหลือ ${fmt(Math.round(M.b-used))}`,`${Math.round(pct*100)}% of this month's budget used, ${fmt(Math.round(M.b-used))} left`);
+      setTimeout(()=>{ notice(txt,false); try{ if(typeof nongSpeak==='function'&&vMode()!=='off') nongSpeak(txt.replace(/฿/g,'')+'',null) }catch(e){} },1200) } } }
+// the dashed line on the jar: where the water will be once the month's budget is spent
+function jarBudgetLine(M){ const p=$('pig'); if(!p) return; let ln=p.querySelector('.bline'); const now=new Date(), ym=iso(now).slice(0,7);
+  const carry=prefs.carry?carryBefore(ym):0, tin=data.filter(r=>r.type==='in'&&r.date.startsWith(ym)).reduce((s,r)=>s+r.amount,0), avail=Math.max(0,carry)+tin;
+  if(!M||avail<=0||M.b>=avail){ if(ln) ln.remove(); return }
+  const Lb=Math.max(.05,Math.min(.9,(avail-M.b)/avail)), y=(106-72*Lb)/120*100;
+  if(!ln){ ln=document.createElement('i'); ln.className='bline'; ln.setAttribute('aria-hidden','true'); ln.innerHTML=`<span>${L('งบ','budget')}</span>`; p.appendChild(ln) }
+  ln.style.top=y.toFixed(1)+'%' }
+afterRender(renderGlance);
+(function(){ const box=$('budgets'); if(!box||$('mbudget')) return; const l=document.createElement('label'); l.className='mbrow';
+  l.innerHTML=`<span>${L('งบรวมทั้งเดือน (บาท)','Whole-month budget (THB)')}<small>${L('เพดานรวมทุกหมวด เว้นว่างได้ถ้าไม่ต้องการ','One cap for everything. Leave empty for none')}</small></span><input id="mbudget" class="num" inputmode="decimal" placeholder="${L('เช่น 15,000','e.g. 15,000')}">`;
+  box.before(l); const i=$('mbudget'); i.value=+prefs.mbudget>0?String(prefs.mbudget):'';
+  const put=()=>{ const v=parseFloat(String(i.value).replace(/,/g,'')); prefs.mbudget=v>0?Math.round(v):0; savePrefs(); render() };
+  i.addEventListener('change',put); const sb=$('savebudget'); if(sb) sb.addEventListener('click',put) })();
+
+/* ===== V390 bottom tab bar: Home · Entries · Stats · Settings over the same page ===== */
+var TAB='home';
+function tabOf(el){ const id=el.id||'', c=el.className||'';
+  if(/titlebar/.test(c)) return 'all';
+  if(id==='calsec'||el.querySelector&&el.querySelector('#list')) return 'list';
+  if(['openrecap','opentax','openins','mixsec'].includes(id)||el.querySelector&&el.querySelector('#cats')) return 'stats';
+  return 'home' }
+function markTabs(){ const w=document.querySelector('.wrap'); if(!w) return; for(const el of w.children){ if(el._tab) continue; el._tab=tabOf(el); el.classList.add('tab-'+el._tab) }
+  // the list section: its upcoming bills belong to Home, the list itself to Entries
+}
+const TAB_ICON={home:'M4 11l8-7 8 7v9h-5v-6h-6v6H4z',list:'M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01',stats:'M12 3v9h9A9 9 0 1 1 12 3zM15 3.5A9 9 0 0 1 20.5 9H15z',set:'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z'};
+function buildTabbar(){ if($('tabbar')) return; const n=document.createElement('nav'); n.id='tabbar'; n.setAttribute('aria-label',L('เมนูหลัก','Main menu'));
+  n.innerHTML=[['home',L('หน้าหลัก','Home')],['list',L('รายการ','Entries')],['stats',L('สถิติ','Stats')],['set',L('ตั้งค่า','Settings')]].map(([k,t])=>`<button type="button" data-tab="${k}" class="${k===TAB?'on':''}" aria-label="${t}"><svg viewBox="0 0 24 24"><path d="${TAB_ICON[k]}"/></svg><span>${t}</span></button>`).join('')+'<i class="tb-pill" aria-hidden="true"></i>';
+  document.body.appendChild(n); document.body.dataset.tab=TAB;
+  n.addEventListener('click',e=>{ const b=e.target.closest('[data-tab]'); if(!b) return; const k=b.dataset.tab; if(k==='set'){ openSet(); return } setTab(k) });
+  (window.requestAnimationFrame||setTimeout)(()=>placePill(false)) }
+function placePill(anim){ const n=$('tabbar'); if(!n) return; const b=n.querySelector(`[data-tab="${TAB}"]`), p=n.querySelector('.tb-pill'); if(!b||!p) return;
+  const x=b.offsetLeft, w=b.offsetWidth; p.style.transition=anim&&FX()?'':'none'; p.style.transform=`translateX(${x}px)`; p.style.width=w+'px' }
+const TAB_Y={};
+function setTab(k,opts){ opts=opts||{}; if(!['home','list','stats'].includes(k)) return; const same=k===TAB;
+  if(same&&!opts.keep){ scrollTo({top:0,behavior:RM()?'auto':'smooth'}); return }
+  TAB_Y[TAB]=scrollY; TAB=k; document.body.dataset.tab=k; markTabs();
+  $('tabbar')&&$('tabbar').querySelectorAll('[data-tab]').forEach(b=>b.classList.toggle('on',b.dataset.tab===k)); placePill(true);
+  const T={home:L('เหลือเก็บ','Luakep'),list:L('รายการ','Entries'),stats:L('สถิติ','Stats')}; const bt=$('bigtitle'); if(bt){ bt.textContent=T[k]; bt.dataset.i18n='' }
+  if(k==='list') try{ listFlush() }catch(e){}
+  if(!opts.keep) scrollTo(0,opts.top!=null?opts.top:(TAB_Y[k]||0));
+  const w=document.querySelector('.wrap'); if(w&&FX()&&!same) w.animate([{opacity:.25,transform:'translateY(8px)'},{opacity:1,transform:'none'}],{duration:240,easing:'cubic-bezier(.2,.85,.25,1)'});
+  try{ revealScan(); }catch(e){} try{ window.dispatchEvent(new Event('scroll')) }catch(e){} }
+/* Home shows the latest few entries; "See all" opens Entries */
+function renderRecent(){ const w=document.querySelector('.wrap'); if(!w) return; let s=$('recentsec');
+  const rows=data.slice().sort((a,b)=>b.date.localeCompare(a.date)||(b.time||'').localeCompare(a.time||'')||String(b.id).localeCompare(String(a.id))).filter(r=>r.type!=='tr').slice(0,5);
+  if(!s){ s=document.createElement('section'); s.id='recentsec'; const g=$('goalsec'); w.insertBefore(s,g||null);
+    s.addEventListener('click',e=>{ if(e.target.closest('#seeall')){ setTab('list'); return } const r=e.target.closest('[data-rid]'); if(!r) return; const rec=data.find(x=>String(x.id)===r.dataset.rid); if(rec){ if(rec.type==='lend'||rec.type==='back') openFriend(rec.who); else openEntry(rec) } }) }
+  s.hidden=!rows.length; if(!rows.length) return; const today=iso(new Date()), yd=iso(new Date(Date.now()-864e5));
+  const when=r=>(r.date===today?L('วันนี้','Today'):r.date===yd?L('เมื่อวาน','Yesterday'):dShort(r.date,{day:'numeric',month:'short'}))+(r.time?' '+r.time:'');
+  s.innerHTML=`<h2><span>${L('รายการล่าสุด','Latest')}</span><button type="button" id="seeall">${L('ดูทั้งหมด','See all')} ›</button></h2><div class="recent">${rows.map(r=>`<button type="button" class="rrow" data-rid="${r.id}">${ic(r.cat)}<span class="rt"><b>${esc(rTitle(r))}</b><small>${esc(when(r))} · ${esc(tr(r.cat||''))}</small></span><span class="amt num ${r.type}">${r.type==='in'||r.type==='back'?'+':'-'}${fmt(r.amount)}</span>${r.slip&&SLIPS_HAVE.has(String(r.id))?`<span class="slipth" data-slip="${r.id}" role="button" aria-label="${L('ดูสลิป','View slip')}"></span>`:''}</button>`).join('')}</div>`;
+  s._tab='home'; s.classList.add('tab-home') }
+afterRender(()=>{ renderRecent(); markTabs(); fillThumbs() });
+buildTabbar(); markTabs(); renderRecent(); fillThumbs();
+addEventListener('resize',()=>placePill(false),{passive:true});
+// shortcuts and deep links land on the right tab
+try{ const q=new URLSearchParams(location.search); if(q.get('find')) setTab('list') }catch(e){}
+{ const _cj=calJump; calJump=function(ds){ if(TAB!=='list') setTab('list',{keep:true}); return _cj(ds) } }
+
 window.__kpBooted=true;
 </script>
 
