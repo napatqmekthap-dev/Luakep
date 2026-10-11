@@ -1,0 +1,72 @@
+// Luakep automated test suite.
+// Run:  node tests/run.js            (needs Node 18+ and Playwright with Chromium: npm i -g playwright && npx playwright install chromium)
+// Tests the built app (index.html) in a headless browser. Exit code 1 when anything fails.
+const fs=require('fs'), path=require('path');
+let chromium; try{ ({chromium}=require('playwright')) }catch(e){ console.error('Playwright is missing: npm i -g playwright && npx playwright install chromium'); process.exit(2) }
+const ROOT=path.join(__dirname,'..'), SRC=fs.readFileSync(path.join(ROOT,'index.html'),'utf8');
+const HARNESS=path.join(require('os').tmpdir(),'luakep-test.html');
+// Same page, but no service worker, no tips, and sample data unless the URL hash says #nosample
+fs.writeFileSync(HARNESS,SRC.replace(/<script>\s*if\('serviceWorker'[\s\S]*?<\/script>/,'').replace('<body>','<body><script>window.STANDALONE=true;window.NO_TIPS=true;window.KP_SAMPLE=!/nosample/.test(location.hash);try{sessionStorage.setItem("kp-intro","1")}catch(e){}</script>'));
+const URL='file://'+HARNESS;
+let pass=0, fail=0, browser; const fails=[];
+const eq=(a,b,msg)=>{ if(JSON.stringify(a)!==JSON.stringify(b)) throw new Error(`${msg||''} expected ${JSON.stringify(b)} got ${JSON.stringify(a)}`) };
+const ok=(c,msg)=>{ if(!c) throw new Error(msg||'assertion failed') };
+const near=(a,b,t,msg)=>{ if(Math.abs(a-b)>t) throw new Error(`${msg||''} expected ≈${b} got ${a}`) };
+async function page(o={}){ const ctx=await browser.newContext({viewport:{width:412,height:860},locale:o.locale||'th-TH'}); const p=await ctx.newPage(); p.errs=[];
+  p.on('pageerror',e=>p.errs.push(e.message)); await p.route(/open-meteo|googleapis|gstatic|accounts\.google/,r=>r.abort());
+  await p.addInitScript(o=>{ try{ if(o.lang) localStorage.setItem('kp-lang-v1',o.lang); for(const [k,v] of Object.entries(o.ls||{})) if(localStorage.getItem(k)==null) localStorage.setItem(k,v) }catch(e){} },o);
+  await p.goto(URL+(o.nosample?'#nosample':'')); await p.waitForTimeout(o.wait||1300); return p }
+async function test(name,fn){ let p; try{ await fn(o=>page(o).then(x=>(p=x))); if(p&&p.errs.length) throw new Error('page errors: '+p.errs.join(' | ')); pass++; console.log('  ✓ '+name) }
+  catch(e){ fail++; fails.push(name); console.log('  ✗ '+name+'\n      '+String(e.message).split('\n')[0]) } finally{ if(p) await p.context().close() } }
+(async()=>{ browser=await chromium.launch(); const t0=Date.now();
+console.log('Money and balances');
+await test('transfer between wallets keeps the total',async P=>{ const p=await P({nosample:true}); const r=await p.evaluate(()=>{ prefs.onbDone=1; prefs.opening=1000; wallets.push({id:'w1',name:'B',kind:'bank'}); const d=iso(new Date());
+  data.push({id:'a',type:'in',amount:500,cat:'เงินเดือน',memo:'',date:d,w:'w0'},{id:'b',type:'tr',amount:300,cat:'',memo:'',date:d,from:'w0',to:'w1'}); render(); return [walletBal('w0'),walletBal('w1'),$('bal')._v] }); eq(r,[1200,300,1500]) });
+await test('split bill counts only my share as spending',async P=>{ const p=await P({nosample:true}); const r=await p.evaluate(()=>{ prefs.onbDone=1; const d=iso(new Date());
+  data.push({id:'s',type:'out',amount:100,cat:'อาหาร',memo:'',date:d,w:'w0'},{id:'s1',type:'lend',amount:200,cat:'อาหาร',memo:'',date:d,w:'w0',who:'A',split:'s'}); render(); return [$('tout')._v,walletBal('w0')] }); eq(r,[100,-300]) });
+await test('carry-over includes the opening balance',async P=>{ const p=await P({nosample:true}); const r=await p.evaluate(()=>{ prefs.onbDone=1; prefs.carry=true; prefs.opening=5000; const d=new Date(); const prev=iso(new Date(d.getFullYear(),d.getMonth()-1,10));
+  data.push({id:'x',type:'out',amount:1000,cat:'อาหาร',memo:'',date:prev}); render(); return [carryBefore(iso(d).slice(0,7)),$('bal')._v] }); eq(r,[4000,4000]) });
+await test('tax: case 1 net income and tax',async P=>{ const p=await P({}); const c=await p.evaluate(()=>{ prefs.tax={manual:{},fam:{spouse:false,kids:0,kids2:0,parents:0}}; const c=taxCalc({life:50000,rmf:60000,sso:10500},900000); return [c.net,c.tax] }); eq(c,[619500,45425]) });
+await test('backup → restore round trip keeps everything',async P=>{ const p=await P({}); const r=await p.evaluate(()=>{ const before=JSON.stringify(data.filter(r=>!r.demo)); const j=backupJSON(true); const b=parseBackup(j); applyBackup(b); return [JSON.stringify(data.filter(r=>!r.demo))===before, data.length>0] }); eq(r,[true,true]) });
+console.log('Water level and mood');
+await test('water drops step by step as money is spent',async P=>{ const p=await P({nosample:true}); const r=await p.evaluate(()=>{ prefs.onbDone=1; const out=[];
+  for(const [op,tx] of [[0,[]],[12500,[]],[12500,[['out',2500]]],[12500,[['out',6000]]],[0,[['in',30000],['out',20000]]],[12500,[['out',11000]]],[0,[['in',30000],['out',32000]]]]){
+    data=tx.map((t,i)=>({id:'t'+i,type:t[0],amount:t[1],cat:t[0]==='in'?'เงินเดือน':'อาหาร',memo:'',date:iso(new Date())})); prefs.opening=op; prefs.carry=true; lastMood=null; lastL=null; view=new Date(); view.setDate(1); render(); out.push([lastMood,+lastL.toFixed(2)]) } return out });
+  eq(r.map(x=>x[0]),['none','great','great','great','good','warn','bad'],'moods'); const lv=r.map(x=>x[1]); ok(lv[1]>=lv[2]&&lv[2]>lv[3]&&lv[3]>lv[4]&&lv[4]>lv[5]&&lv[5]>=lv[6],'levels must fall: '+lv) ; ok(lv[0]<.15,'empty jar nearly empty') });
+console.log('Parsers');
+await test('speech: Thai words, digits, income/expense, category',async P=>{ const p=await P({}); const r=await p.evaluate(()=>[['ค่ากาแฟ 60'],['ข้าวมันไก่ห้าสิบบาท'],['เงินเดือนเข้า 45,000'],['ค่าแท็กซี่ สองร้อยห้าสิบ'],['ค่าไฟ 1.2 พัน'],['ได้รับโบนัส หนึ่งหมื่นห้าพัน'],['ซื้อเสื้อ 2 พันครึ่ง'],['ยี่สิบเอ็ดบาท ค่าน้ำ']].map(([t])=>{const x=parseSpoken(t);return [x.type,x.amount,x.cat]}));
+  eq(r,[['out',60,'อาหาร'],['out',50,'อาหาร'],['in',45000,'เงินเดือน'],['out',250,'เดินทาง'],['out',1200,'บิล/ค่าน้ำไฟ'],['in',15000,'โบนัส'],['out',2500,'ช้อปปิ้ง'],['out',21,'บิล/ค่าน้ำไฟ']]) });
+await test('bank CSV: Thai bank, English bank, semicolon, no header',async P=>{ const p=await P({}); const r=await p.evaluate(()=>{
+  const a='"วันที่","เวลา","รายการ","ถอนเงิน","ฝากเงิน","ยอดคงเหลือ","ช่องทาง","รายละเอียด"\n"01-10-69","08:12","ชำระเงิน","120.00","","10,000.00","K PLUS","STARBUCKS SIAM"\n"02-10-69","12:00","รับโอนเงิน","","45,000.00","55,000.00","K PLUS","เงินเดือน บริษัท"';
+  const b='Date,Time,Transaction,Withdrawal,Deposit,Balance,Channel,Description\n10/10/2026,09:00,Payment,"599.00",,"1,000.00",APP,AIS FIBRE';
+  const c='Date;Description;Amount\n2026-10-05;Lotus Rama 4;-850,00';
+  const d='05 ต.ค. 69,ร้านยา บู๊ทส์,(320.00)';
+  return [a,b,c,d].map(t=>parseStatement(t).map(x=>[x.date,x.type,x.amount,x.cat])) });
+  eq(r,[[['2026-10-01','out',120,'อาหาร'],['2026-10-02','in',45000,'เงินเดือน']],[['2026-10-10','out',599,'บิล/ค่าน้ำไฟ']],[['2026-10-05','out',850,'ช้อปปิ้ง']],[['2026-10-05','out',320,'สุขภาพ']]]) });
+await test('weather codes map to the right scene',async P=>{ const p=await P({}); const r=await p.evaluate(()=>[[0,1,30],[0,1,36],[2,1,30],[3,1,28],[53,1,26],[63,1,25],[95,1,24],[45,1,22],[45,1,19],[0,0,24],[0,1,18]].map(([c,d,t])=>{const w=wxClassify({weather_code:c,is_day:d,temperature_2m:t,wind_speed_10m:5});return w.k+(w.cold?'+c':'')}));
+  eq(r,['sun','hot','partly','cloudy','drizzle','rain','storm','fog','fog+c','night','sun+c']) });
+console.log('Levels and badges');
+await test('history earns badges and levels; opening balance is not "kept"',async P=>{ const p=await P({nosample:true}); const r=await p.evaluate(()=>{ prefs.onbDone=1; prefs.opening=50000; const now=new Date();
+  for(let i=8;i>=1;i--){ const d=new Date(now); d.setDate(d.getDate()-i); data.push({id:'h'+i,type:i===4?'in':'out',amount:100,cat:'อาหาร',memo:'',date:iso(d)}) } render(); return [Object.keys(prefs.badges).sort(),GAME.level] });
+  ok(r[0].includes('first')&&r[0].includes('d7')&&r[0].includes('s7'),'badges '+r[0]); ok(!r[0].includes('rich10'),'opening must not count'); ok(r[1]>=1) });
+console.log('Screens and flows');
+await test('first run: empty jar, asks the starting balance, Thai even on an English phone',async P=>{ const p=await P({nosample:true,locale:'en-US',wait:2400}); ok(await p.evaluate(()=>LANG==='th'),'Thai by default'); ok(await p.evaluate(()=>!$('onbsheet').hidden),'onboarding shown'); eq(await p.evaluate(()=>data.length),0);
+  await p.click('#onbnext'); await p.waitForTimeout(500); await p.fill('#onbamt','12500'); await p.click('#onbgo'); await p.waitForTimeout(900); eq(await p.evaluate(()=>[prefs.opening,$('bal')._v]),[12500,12500]) });
+await test('add an expense, delete it, undo',async P=>{ const p=await P({}); const n0=await p.evaluate(()=>data.length);
+  await p.evaluate(()=>openEntry(null)); await p.fill('#amount','250'); await p.fill('#memo','test-row'); await p.evaluate(()=>$('savebtn').click()); await p.waitForTimeout(600);
+  const id=await p.evaluate(()=>data.find(r=>r.memo==='test-row').id); eq(await p.evaluate(()=>data.length),n0+1);
+  await p.evaluate(id=>removeEntry(id),id); eq(await p.evaluate(()=>data.length),n0); await p.evaluate(()=>$('undo').click()); eq(await p.evaluate(()=>data.length),n0+1) });
+await test('log again today (swipe right action)',async P=>{ const p=await P({}); const r=await p.evaluate(()=>{ const src=data.find(r=>r.type==='out'); const n=data.length; dupEntry(src.id); const x=data[data.length-1]; return [data.length-n,x.amount===src.amount,x.date===iso(new Date())] }); eq(r,[1,true,true]) });
+await test('every sheet opens without errors (TH)',async P=>{ const p=await P({}); for(const f of ['openSet()','openSet();setPage(0)','openSet();setPage(1)','openSet();setPage(2)','openSet();setPage(3)','openInsights()','openTax()','openGoal(goals[0].id)','openGoalEdit(goals[0])','openTrophy()','openHelp()','openWhatsNew()','openFeedback()','openExplain()','openEntry(null)','openStory()']){
+  await p.evaluate(f); await p.waitForTimeout(250); await p.evaluate(()=>{document.querySelectorAll('.sheet').forEach(s=>{s.hidden=true;s.classList.remove('closing')}); const st=$('story'); if(st&&!st.hidden) try{closeStory()}catch(e){st.hidden=true}}) } });
+await test('English UI has no leftover Thai on main screens',async P=>{ const p=await P({lang:'en'}); const scan=()=>p.evaluate(()=>{ const r=[]; const tw=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT); let n; while(n=tw.nextNode()){ const t=n.textContent.trim(); if(!/[ก-ฺเ-๛]/.test(t)) continue; const el=n.parentElement; if(!el||el.closest('svg,script,style,[hidden],.demo-only')) continue; const cs=getComputedStyle(el); if(cs.display==='none'||cs.visibility==='hidden') continue; const b=el.getBoundingClientRect(); if(!b.width||b.bottom<0||b.top>innerHeight) continue; r.push(t) } return [...new Set(r)].filter(t=>!/ภาษา|ไทย|เจ$|^เจ|เหลือเก็บ ·/.test(t)) });
+  const bad=[...await scan()]; for(const f of ['openSet()','openSet();setPage(0)','openSet();setPage(1)','openSet();setPage(3)','openHelp()','openTrophy()']){ await p.evaluate(f); await p.waitForTimeout(250); bad.push(...await scan()); await p.evaluate(()=>document.querySelectorAll('.sheet').forEach(s=>{s.hidden=true})) }
+  ok(!bad.length,'Thai found: '+[...new Set(bad)].slice(0,6).join(' | ')) });
+await test('PDF summary page shows the month totals',async P=>{ const p=await P({}); const r=await p.evaluate(()=>{ openReport('month',true); const t=$('report').innerText; document.body.classList.remove('printing'); return [/รายรับ/.test(t),/Developed by Napat Mekthap/.test(t),t.includes(fmt(data.filter(r=>r.type==='in'&&r.date.startsWith(iso(view).slice(0,7))).reduce((a,r)=>a+r.amount,0)))] }); eq(r,[true,true,true]) });
+await test('bank CSV import adds the ticked rows',async P=>{ const p=await P({}); const f=path.join(require('os').tmpdir(),'luakep-st.csv'); fs.writeFileSync(f,'"วันที่","รายการ","ถอนเงิน","ฝากเงิน","รายละเอียด"\n"01-10-69","ชำระเงิน","120.00","","STARBUCKS"\n"03-10-69","โอน","90.00","","GRAB"');
+  const n0=await p.evaluate(()=>data.length); await p.evaluate(()=>{openSet();setPage(3)}); await p.waitForTimeout(300); await p.setInputFiles('#impfile',f); await p.waitForTimeout(600); await p.evaluate(()=>$('impgo').click()); await p.waitForTimeout(400); eq(await p.evaluate(()=>data.length),n0+2) });
+await test('erase all (keep settings): empty jar, restore point saved, theme kept',async P=>{ const p=await P({}); await p.evaluate(()=>{ prefs.palette='sea'; savePrefs(); data.push({id:'z',type:'out',amount:5,cat:'อาหาร',memo:'',date:iso(new Date())}); save() });
+  await p.evaluate(()=>eraseAll(false)); await p.waitForTimeout(3200); const r=await p.evaluate(async()=>[data.length,prefs.palette,(await snapList()).some(s=>/^ก่อนล้าง/.test(s.key))]); eq(r,[0,'sea',true]) });
+await test('feedback message carries device info but no amounts',async P=>{ const p=await P({}); const t=await p.evaluate(()=>devInfo()); ok(/v\d/.test(t)&&/entries \d+/.test(t)&&!/฿/.test(t),t) });
+console.log(`\n${pass} passed, ${fail} failed · ${((Date.now()-t0)/1000).toFixed(1)}s`); if(fail) console.log('Failed: '+fails.join(', '));
+await browser.close(); process.exit(fail?1:0) })();

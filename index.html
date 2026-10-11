@@ -2099,7 +2099,7 @@ const DICT={
 /* goals */
 'ไอคอน':'Icon','ชื่อเป้าหมาย':'Goal name','เช่น ทริปญี่ปุ่น, เงินสำรองฉุกเฉิน':'e.g. Japan trip, emergency fund','ยอดเป้าหมาย (บาท)':'Target (THB)','ภายในเดือน (ไม่บังคับ)':'By month (optional)',
 'แก้ไขเป้าหมาย':'Edit goal','ตั้งชื่อเป้าหมาย':'Give the goal a name','ใส่ยอดเป้าหมายที่มากกว่า 0':'Enter a target above 0',
-'{0} · อีก {1}':'{0} · {1} to go','{0}% · อีก {1}':'{0}% · {1} to go','ไม่กำหนดเวลา':'No deadline','ภายใน {0}':'By {0}','ภายใน {0} · เดือนละ {1}':'By {0} · {1} a month',
+'{0} · อีก {1}':'{0} · {1} to go','ไม่กำหนดเวลา':'No deadline','ภายใน {0}':'By {0}','ภายใน {0} · เดือนละ {1}':'By {0} · {1} a month',
 'ใส่เงินที่เหลือเดือนนี้ {0}':'Use this month’s leftover {0}','ถอนออก':'Withdraw','เติมเงิน':'Add money','ถอนได้ไม่เกิน {0}':'You can withdraw up to {0}',
 'ลบเป้าหมาย':'Delete goal','แก้ไข':'Edit','แตะอีกครั้งเพื่อลบ':'Tap again to delete','ครบเป้าหมายแล้ว! น้องโอ่งน้ำเต็มปริ่มเลย':'Goal reached! Nong Ong is full to the brim.',
 'ทริปญี่ปุ่น':'Japan trip',
@@ -2160,7 +2160,6 @@ function applyLang(){
 function setLang(l){
   LANG=l; try{localStorage.setItem(LKEY,l)}catch(e){}
   applyLang(); if(typeof render==='function') render();
-  if(typeof setMoodForce==='function') setMoodForce();
   try{renderWardrobe();applyFestPill()}catch(e){}
 }
 Object.assign(DICT,{
@@ -2191,7 +2190,7 @@ Object.assign(DICT,{
 'คิดเป็น {0} ของรายจ่ายทั้งหมด':'That is {0} of all your spending','รวม {0} เจอกันบ่อยจนเจ้าของร้านน่าจะจำได้แล้ว':'{0} in total. The owner probably knows you by now.',
 'รวม {0} ร้านนี้ถูกใจคุณแน่ๆ':'{0} in total. You clearly like this place.','หมวด{0}':'Category: {0}',
 'และมี {0} วันที่ไม่ใช้เงินเลย เก่งมาก':'Plus {0} no-spend days. Nice work.','ทุกวันมีรายจ่าย ลองหาวันพักกระเป๋าสักวัน':'You spent something every day. Try a no-spend day.',
-'สรุปการเงินของฉัน':'My money recap','เก็บได้ {0} ของรายรับ':'Kept {0} of income','ใช้เกินรายรับ {0}':'Over income by {0}','ยังไม่มีรายรับ':'No income yet',
+'สรุปการเงินของฉัน':'My money recap','ใช้เกินรายรับ {0}':'Over income by {0}','ยังไม่มีรายรับ':'No income yet',
 'ขาประจำ':'Regular spot','ก้อนใหญ่ที่สุด':'Biggest spend','วันที่ใช้เยอะที่สุด':'Priciest day','ไม่ใช้เงิน {0} วัน':'{0} no-spend days','จดด้วยแอป เหลือเก็บ':'Made with Luakep',
 'สรุป-{0}.png':'recap-{0}.png','ภาษา / Language':'ภาษา / Language'
 });
@@ -2385,7 +2384,7 @@ function isMine(name){
 }
 
 let view=new Date(); view.setDate(1);
-let type='out', cat=CATS.out[0], armed=null, editing=null;
+let type='out', cat=CATS.out[0], editing=null;
 
 /* Mascot: น้องโอ่ง — a celadon water jar; the water inside is the money left this month */
 let JAR_N=0;
@@ -2523,7 +2522,6 @@ function jarSVG(m,o,lv,sk,wx){
     none:`<g class="z"><text x="96" y="20" font-size="14" font-weight="700" fill="${O}" font-family="sans-serif">z</text><text x="106" y="10" font-size="10" font-weight="700" fill="${O}" font-family="sans-serif">z</text></g>`
   }[m];
   // lotus leaf floating on the water for great/good; coins resting at the bottom
-  const lotus=(m==='great'||m==='good')?`<g transform="translate(0 ${wy-top})"><ellipse cx="60" cy="${top-1}" rx="0" ry="0"/></g>`:'';
   const coins=(m!=='bad')?`<g opacity=".95"><ellipse cx="48" cy="100" rx="6" ry="2.6" fill="#f2c14e" stroke="#b98b16" stroke-width="1"/><ellipse cx="60" cy="102" rx="6" ry="2.6" fill="#f2c14e" stroke="#b98b16" stroke-width="1"/><ellipse cx="72" cy="100" rx="6" ry="2.6" fill="#f2c14e" stroke="#b98b16" stroke-width="1"/></g>`:'';
   const lid=m==='none'?`<g class="lid"><path d="M28 22q32-16 64 0v4H28z" fill="#c9915a" stroke="${O}" stroke-width="2.4" stroke-linejoin="round"/><rect x="55" y="8" width="10" height="7" rx="3" fill="#a87443" stroke="${O}" stroke-width="2"/><path d="M36 22h48" stroke="#a87443" stroke-width="2" stroke-linecap="round"/></g>`:'';
   const leaf=(m==='great')?`<g><ellipse cx="90" cy="20" rx="11" ry="5" fill="#5fbf75" stroke="${O}" stroke-width="2" transform="rotate(-18 90 20)"/><path d="M82 23l15-6" stroke="#3f9a57" stroke-width="1.6"/><path d="M86 14c2-8 10-8 11-1c-4 3-8 3-11 1z" fill="#ff9fb8" stroke="${O}" stroke-width="1.8"/></g>`:'';
@@ -2646,7 +2644,7 @@ $('pig').addEventListener('click',e=>{
 let parT=0;
 addEventListener('scroll',()=>{ if(!FX()||parT) return; parT=requestAnimationFrame(()=>{parT=0; const y=Math.min(300,scrollY); $('pig').style.translate=`0 ${y*.18}px`; sloshKick((scrollY-(window._sly??scrollY))*.035); window._sly=scrollY; pigRot()})},{passive:true});
 const SL={a:0,v:0,run:0};
-function pigRot(){const p=$('pig'); if(p) p.style.rotate=`${(Math.min(300,scrollY)*.02+SL.a).toFixed(2)}deg`}
+function pigRot(){const p=$('pig'); if(!p) return; p.style.rotate=`${(Math.min(300,scrollY)*.02+SL.a).toFixed(2)}deg`; p.style.setProperty('--ws',(-SL.a*.9).toFixed(2)+'deg')}
 function sloshKick(dv){ if(!FX()) return; SL.v+=Math.max(-3.2,Math.min(3.2,dv)); if(!SL.run) SL.run=requestAnimationFrame(sloshStep) }
 function sloshStep(){ SL.v+=-SL.a*.11; SL.v*=.9; SL.a+=SL.v; SL.a=Math.max(-14,Math.min(14,SL.a)); pigRot(); if(Math.abs(SL.a)>.04||Math.abs(SL.v)>.04) SL.run=requestAnimationFrame(sloshStep); else {SL.a=0;SL.v=0;SL.run=0;pigRot()} }
 /* Motion helpers */
@@ -2674,7 +2672,12 @@ function shake(el){if(!el||RM())return; el.classList.remove('shake'); void el.of
 function toast(text){const t=document.createElement('div'); t.className='saved-toast'; t.textContent='✓ '+text; document.body.appendChild(t); setTimeout(()=>t.remove(),1700)}
 let lastAddedId=null, lastAnimYm=null;
 
-function render(){
+/* render() = renderCore() then every after-render hook, in the order they were added.
+   render({noGame:true}) skips hooks marked game (used when redrawing because the level or weather changed). */
+var AFTER_RENDER=[], AUTOLOW=false;
+function afterRender(fn,opt){ AFTER_RENDER.push({fn,game:!!(opt&&opt.game)}) }
+function render(o){ renderCore(); for(const h of AFTER_RENDER){ if(o&&o.noGame&&h.game) continue; try{h.fn()}catch(e){} } }
+function renderCore(){
   postRecurring();
   const ym=view.getFullYear()+'-'+String(view.getMonth()+1).padStart(2,'0');
   $('mlabel').textContent=TH_M[view.getMonth()]+' '+(view.getFullYear()+543);
@@ -2704,7 +2707,6 @@ function render(){
   // Budget vs spend
   const spent={}; rows.filter(r=>r.type==='out').forEach(r=>spent[r.cat]=(spent[r.cat]||0)+r.amount);
   const names=[...new Set([...Object.keys(budget).filter(c=>budget[c]>0),...Object.keys(spent)])];
-  const maxSpent=Math.max(1,...Object.values(spent));
   setMood(tin,tout,Object.keys(budget).filter(c=>budget[c]>0&&(spent[c]||0)>budget[c]).length);
   names.sort((a,b)=>{const ra=budget[a]?(spent[a]||0)/budget[a]:-1, rb=budget[b]?(spent[b]||0)/budget[b]:-1; return rb-ra||(spent[b]||0)-(spent[a]||0)});
   const nowD=new Date(), curM=view.getFullYear()===nowD.getFullYear()&&view.getMonth()===nowD.getMonth(), pace=curM?nowD.getDate()/new Date(nowD.getFullYear(),nowD.getMonth()+1,0).getDate():null;
@@ -2887,7 +2889,7 @@ $('list').onclick=e=>{
   if(e.target.closest('[data-act="add"]')){openEntry(null);return}
   if(suppressClick){suppressClick=false;return}
   const row=e.target.closest('.row'); if(!row) return;
-  const rec=data.find(r=>String(r.id)===row.dataset.id); if(rec){ if(rec.type==='lend'||rec.type==='back'){openFriend(rec.who);return} armed=null;rowMorph(row,()=>openEntry(rec))}
+  const rec=data.find(r=>String(r.id)===row.dataset.id); if(rec){ if(rec.type==='lend'||rec.type==='back'){openFriend(rec.who);return} rowMorph(row,()=>openEntry(rec))}
 };
 $('list').onkeydown=e=>{if((e.key==='Enter'||e.key===' ')&&e.target.classList.contains('t')){e.preventDefault();e.target.click()}};
 $('prev').onclick=()=>{view.setMonth(view.getMonth()-1);filterCat=null;render()};
@@ -2904,7 +2906,7 @@ function emptyState(mood,title,sub,btn,small){
 function searchData(q){
   const terms=q.toLowerCase().split(/\s+/).filter(Boolean);
   return data.filter(r=>{
-    const amt=String(r.amount), amtF=fmt(r.amount).replace('฿','');
+    const amt=String(r.amount);
     const hay=[r.memo,r.note,r.cat,EN_CAT[r.cat]||'',r.who||'',r.type==='tr'?wById(r.from).name+' '+wById(r.to).name:wById(wOf(r)).name,r.type==='in'?L('รายรับ','income'):r.type==='out'?L('รายจ่าย','expense'):r.type==='tr'?L('โอน','transfer'):L('หารบิล','split')].join(' ').toLowerCase();
     return terms.every(t=>{const tn=t.replace(/[฿,]/g,''); return hay.includes(t)||(tn&&/^\d+(\.\d+)?$/.test(tn)&&amt===tn)});
   }).sort((a,b)=>b.date.localeCompare(a.date)||String(b.id).localeCompare(String(a.id)));
@@ -3040,7 +3042,7 @@ function buildSlides(d){
   const S=[];
   S.push(`<div class="k">${d.cur?'เดือนนี้จนถึงวันนี้':'สรุปทั้งเดือน'}</div><h2 class="h">${L(d.month+'<br>ของคุณ','Your<br>'+tr(d.month))}</h2><div class="pigbig">${pigSVG(moodOf(d.tin,d.tout))}</div><p class="p">จดไป ${d.count} รายการ มาดูกันว่าเงินไปไหนบ้าง</p>`);
   S.push(`<div class="sart">${storyArt('coins',d)}</div><div class="k">เงินเข้า</div><div class="n num">${fmt(d.tin)}</div><div class="k" style="margin-top:12px">เงินออก</div><div class="n num">${fmt(d.tout)}</div><p class="p">${d.tin?(d.tout<=d.tin?`เหลือเก็บ ${fmt(d.tin-d.tout)} หรือ ${Math.round((1-d.tout/d.tin)*100)}% ของรายรับ`:`ใช้เกินรายรับไป ${fmt(d.tout-d.tin)}`):'ยังไม่มีรายรับในเดือนนี้'}</p>`);
-  if(d.top){const h=(ICONS[d.top[0]]||[200])[0];S.push(`<div class="sart">${storyArt('donut',d)}</div><div class="k">หมวดที่ใช้มากที่สุด</div><h2 class="h">${esc(d.top[0])}</h2><div class="n num" style="font-size:44px">${fmt(d.top[1])}</div><p class="p">คิดเป็น ${Math.round(d.top[1]/d.tout*100)}% ของรายจ่ายทั้งหมด</p>`)}
+  if(d.top){S.push(`<div class="sart">${storyArt('donut',d)}</div><div class="k">หมวดที่ใช้มากที่สุด</div><h2 class="h">${esc(d.top[0])}</h2><div class="n num" style="font-size:44px">${fmt(d.top[1])}</div><p class="p">คิดเป็น ${Math.round(d.top[1]/d.tout*100)}% ของรายจ่ายทั้งหมด</p>`)}
   if(d.fav&&d.fav.n>1) S.push(`<div class="sart">${storyArt('punch',d)}</div><div class="k">ขาประจำของคุณ</div><h2 class="h">${esc(d.fav.name)}</h2><div class="n num">${d.fav.n} ครั้ง</div><p class="p">รวม ${fmt(d.fav.sum)} ${d.fav.n>=4?'เจอกันบ่อยจนเจ้าของร้านน่าจะจำได้แล้ว':'ร้านนี้ถูกใจคุณแน่ๆ'}</p>`);
   else if(d.biggest) S.push(`<div class="sart">${storyArt('receipt',d)}</div><div class="k">รายจ่ายก้อนใหญ่ที่สุด</div><h2 class="h">${esc(d.biggest.memo||d.biggest.cat)}</h2><div class="n num">${fmt(d.biggest.amount)}</div><p class="p">หมวด${esc(d.biggest.cat)}</p>`);
   const mx=Math.max(1,...d.wd), hi=d.wd.indexOf(Math.max(...d.wd));
@@ -3363,10 +3365,6 @@ $('restorebtn').onclick=()=>{
     restoreArmed=false; pending=null; $('restorebtn').textContent='กู้คืน'; $('restorebtn').classList.remove('danger');
     view=new Date(); view.setDate(1); render(); msg('rmsg','กู้คืนข้อมูลเรียบร้อย',true); return;
   }
-  if(false){ if(pending.merchants){merchants=pending.merchants;store(MKEY,merchants);renderMerchants()} if(pending.goals){goals=pending.goals;saveGoals()} if(pending.recur){recur=pending.recur;saveRecur()} if(pending.prefs){prefs=pending.prefs;savePrefs()} if(pending.cats){customCats=pending.cats;saveCats()} save(); store(BKEY,budget);
-    restoreArmed=false; pending=null; $('restorebtn').textContent='กู้คืน'; $('restorebtn').classList.remove('danger');
-    view=new Date(); view.setDate(1); render(); msg('rmsg','กู้คืนข้อมูลเรียบร้อย',true); return;
-  }
   const t=$('restoretext').value.trim(); if(!t){msg('rmsg','วางข้อมูลสำรอง หรือเลือกไฟล์ก่อน');return}
   armRestore(t);
 };
@@ -3672,7 +3670,7 @@ function applyTheme(){
 $('themeseg').addEventListener('click',e=>{const b=e.target.closest('[data-th]'); if(!b||prefs.theme===b.dataset.th) return; vtReveal(b,()=>{prefs.theme=b.dataset.th; savePrefs(); applyTheme()})});
 try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',applyTheme)}catch(e){}
 applyTheme();
-function applyFx(){document.body.classList.toggle('lowfx',prefs.fx===false); const sw=$('fxon'); if(sw) sw.checked=prefs.fx!==false}
+function applyFx(){document.body.classList.toggle('lowfx',prefs.fx===false||AUTOLOW); const sw=$('fxon'); if(sw) sw.checked=prefs.fx!==false}
 $('fxon').addEventListener('change',()=>{prefs.fx=$('fxon').checked; savePrefs(); applyFx(); applyFestFx()});
 
 
@@ -4222,7 +4220,7 @@ $('lockon').addEventListener('change',async e=>{
 $('lockgo').onclick=async()=>{
   const pin=$('lockpin1').value.trim(); if(!/^\d{4,6}$/.test(pin)){ msg('lockmsg',L('ตั้ง PIN เป็นตัวเลข 4–6 หลัก','Use a 4–6 digit PIN')); return }
   const salt=b64(rnd(12)); let cred=null;
-  try{ if(window.PublicKeyCredential&&navigator.credentials&&(await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable())){
+  try{ if(window.PublicKeyCredential&&navigator.credentials&&(await window.PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable())){
     const c=await navigator.credentials.create({publicKey:{challenge:rnd(32),rp:{name:'Luakep'},user:{id:rnd(16),name:'luakep',displayName:'เหลือเก็บ'},pubKeyCredParams:[{type:'public-key',alg:-7},{type:'public-key',alg:-257}],authenticatorSelection:{authenticatorAttachment:'platform',userVerification:'required',residentKey:'discouraged'},timeout:60000,attestation:'none'}});
     if(c) cred=b64(c.rawId) } }catch(e){ cred=null }
   prefs.lock={on:true,cred,salt,pin:await pinHash(pin,salt),delay:+$('lockdelay').value||0}; savePrefs(); applyLockUI();
@@ -4317,7 +4315,7 @@ function revealScan(){ if(!RVIO||!FX()) return;
     if(RVSEEN.has(el)) return; RVSEEN.add(el); if(el.hidden) {RVSEEN.delete(el); return}
     const r=el.getBoundingClientRect(); if(r.top<innerHeight*.98) return;
     el.classList.add('scrv'); RVIO.observe(el) }) }
-{ const _r=render; render=function(){ const o=_r.apply(this,arguments); try{revealScan(); nudgeFab()}catch(e){} return o } }
+afterRender(()=>{revealScan(); nudgeFab()});
 setTimeout(revealScan,60);
 /* Ink ripple at the touch point */
 const INKSEL='button,.row,.goal,.setrow,.wcard,.ucard,.chips label,.seg label';
@@ -4346,7 +4344,7 @@ function monthSlide(dir){ if(!FX()) return; let i=0;
 (function(){ const b=document.querySelector('.balance'); if(!b||b.querySelector('.dust')) return; const d=document.createElement('div'); d.className='dust'; d.setAttribute('aria-hidden','true'); d.innerHTML='<b></b><b></b><b></b><b></b><b></b>'; b.insertBefore(d,b.firstChild) })();
 /* Nong Ong idle tricks: hop, look around, blow bubbles */
 function overlayOpen(){ return !!(document.querySelector('.sheet:not([hidden])')||($('fabs')&&$('fabs').classList.contains('open'))||document.body.classList.contains('locked')||!$('story').hidden||($('intro')&&!$('intro').hidden)) }
-function idleTrick(){ const p=$('pig'); if(!p||!FX()||document.visibilityState!=='visible'||overlayOpen()) return;
+function idleTrick(){ const p=$('pig'); if(!p||!FX()||document.visibilityState!=='visible'||overlayOpen()||document.body.classList.contains('lowfx')) return;
   if(p.classList.contains('nap')||p.classList.contains('sleepy')||lastMood==='none') return;
   const r=p.getBoundingClientRect(); if(r.bottom<60||r.top>innerHeight) return;
   const k=Math.floor(Math.random()*3);
@@ -4369,7 +4367,6 @@ function tiltApply(){ const r=document.documentElement; const k=TILT.cur; r.styl
 function tiltStep(){ TILT.cur+=(TILT.g-TILT.cur)*.12; tiltApply(); if(Math.abs(TILT.g-TILT.cur)>.05) TILT.run=requestAnimationFrame(tiltStep); else TILT.run=0 }
 addEventListener('deviceorientation',e=>{ if(!FX()||e.gamma==null) return; TILT.g=Math.max(-32,Math.min(32,e.gamma)); if(!TILT.run) TILT.run=requestAnimationFrame(tiltStep) });
 $('pig').addEventListener('click',()=>{ if(TILT.asked) return; TILT.asked=true; try{ if(window.DeviceOrientationEvent&&typeof DeviceOrientationEvent.requestPermission==='function') DeviceOrientationEvent.requestPermission().catch(()=>{}) }catch(e){} });
-{ const _pr=pigRot; pigRot=function(){ _pr(); const p=$('pig'); if(p) p.style.setProperty('--ws',(-SL.a*.9).toFixed(2)+'deg') } }
 /* 2. Spending pours water out of the jar */
 function pourOut(pt,amt){ if(!FX()||!pt.vis) return;
   const inc=Math.max(1,data.filter(r=>r.type==='in'&&r.date.slice(0,7)===iso(new Date()).slice(0,7)).reduce((a,r)=>a+r.amount,0)||20000);
@@ -4478,7 +4475,7 @@ const FLAME='<svg viewBox="0 0 24 24"><path class="fl1" d="M12 2c1 4 6 6 6 12a6 
 function renderStreak(){ const b=$('nspill'); if(!b) return; const n=nsStreak(); b.hidden=n<2; if(n>=2) b.innerHTML=FLAME+'<span>'+L(`ไม่ใช้เงินมา ${n} วันติด`,`${n}-day no-spend streak`)+'</span>';
   if(n>=1){ const k='kp-nsleaf', today=iso(new Date()); let seen=''; try{seen=localStorage.getItem(k)||''}catch(e){} if(seen!==today){ try{localStorage.setItem(k,today)}catch(e){} (function go(k){ setTimeout(()=>{ if(overlayOpen()&&k<30) go(k+1); else leavesIn(Math.min(8,2+n)) },k?1000:1400) })(0) } } }
 $('nspill').addEventListener('click',()=>leavesIn(Math.min(8,2+nsStreak())));
-{ const _r2=render; render=function(){ const o=_r2.apply(this,arguments); try{renderStreak()}catch(e){} return o } }
+afterRender(renderStreak);
 renderStreak();
 
 /* ===== V230 more effects ===== */
@@ -4511,7 +4508,7 @@ function walletDepth(){ const box=$('wallets'); if(!box||box.hidden||!FX()) retu
   if(box.scrollWidth<=box.clientWidth+2){ box.querySelectorAll('.wcard').forEach(c=>{c.style.scale='';c.style.rotate=''}); return }
   box.querySelectorAll('.wcard').forEach(c=>{ const b=c.getBoundingClientRect(), d=Math.max(-1,Math.min(1,(b.left+b.width/2-mid)/(r.width*.75))); c.style.scale=String((1-Math.abs(d)*.07).toFixed(3)); c.style.rotate=`y ${(-d*14).toFixed(1)}deg` }) }
 { let raf=0; document.addEventListener('scroll',e=>{ if(e.target&&e.target.id==='wallets'&&!raf) raf=requestAnimationFrame(()=>{raf=0;walletDepth()}) },{capture:true,passive:true}); }
-{ const _r3=render; render=function(){ const o=_r3.apply(this,arguments); try{walletDepth()}catch(e){} return o } }
+afterRender(walletDepth);
 /* Welcome back after a while away */
 { let away=0; document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='hidden'){away=Date.now();return}
   if(away&&Date.now()-away>60000&&FX()) afterUnlock(()=>setTimeout(()=>{ if(overlayOpen()) return; const p=$('pig'); if(!p) return; p.classList.remove('nap');
@@ -4529,7 +4526,6 @@ $('pig').addEventListener('click',()=>{ try{ if(window.DeviceMotionEvent&&typeof
 /* ===== V240 levels, badges, unlockable outfits ===== */
 var GAME={level:1,xp:0,ready:false};
 const LEVELS=[[0,'ศิลาดลอ่อน','Pale celadon'],[150,'ลายคราม','Blue & white'],[400,'รานทอง','Gold crackle'],[900,'เบญจรงค์','Benjarong'],[1800,'โอ่งทองคำ','Golden jar']];
-const LOCKI='<svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
 const BICON={pencil:'M4 20l4-1 11-11-3-3L5 16zM14 6l3 3',cal:'M4 6h16v14H4zM4 10h16M8 3v4M16 3v4',flame:'M12 3c1 4 6 6 6 11a6 6 0 0 1-12 0c0-3 2-5 3-7 0 2 1 3 2 3 0-3-1-5 1-7z',leaf:'M5 19C5 10 11 5 20 4c0 9-5 15-15 15zM5 19l9-9',shield:'M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6zM9 12l2 2 4-4',coin:'M12 4a8 8 0 1 0 0 16a8 8 0 1 0 0-16M12 7.5v9M14.5 9.5h-3.5a1.75 1.75 0 0 0 0 3.5h2a1.75 1.75 0 0 1 0 3.5H9.5',target:'M12 4a8 8 0 1 0 0 16a8 8 0 1 0 0-16M12 8a4 4 0 1 0 0 8a4 4 0 1 0 0-8M12 11.5v1',receipt:'M6 3h12v18l-3-2-3 2-3-2-3 2zM9 8h6M9 12h6',wallet:'M4 7h14a2 2 0 0 1 2 2v9H4zM4 7l11-3v3M16 13h2',people:'M9 11a3 3 0 1 0 0-6a3 3 0 1 0 0 6M3 20c0-3.5 2.7-6 6-6s6 2.5 6 6M16 5a3 3 0 0 1 0 6M18 14c2 .8 3 3 3 6',repeat:'M4 12a7 7 0 0 1 12-5l2 2M20 12a7 7 0 0 1-12 5l-2-2M18 4v5h-5M6 20v-5h5',doc:'M7 3h7l4 4v14H7zM10 12h5M10 16h5',save:'M12 4v10M8 10l4 4 4-4M5 20h14',moon:'M20 14A8 8 0 1 1 10 4a6.5 6.5 0 0 0 10 10z',sun:'M12 8a4 4 0 1 0 0 8a4 4 0 1 0 0-8M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M5 19l1.5-1.5M17.5 6.5L19 5',star:'M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z'};
 // [id, icon, tier, nameTH, nameEN, howTH, howEN, test]
 const BADGES=[
@@ -4658,12 +4654,11 @@ function openTrophy(hi){ const lv=GAME.level, a=LEVELS[lv-1][0], nx=LEVELS[lv], 
   $('trophypanel').querySelector('.badges').onclick=e=>{ const b=e.target.closest('[data-b]'); if(!b) return; if(FX()){ const m=b.querySelector('.md'); m.animate([{transform:'rotateY(0)'},{transform:'rotateY(360deg)'}],{duration:700,easing:'cubic-bezier(.2,.85,.25,1)'}) } } }
 $('trophysheet').onclick=e=>{if(e.target.id==='trophysheet')hideSheet('trophysheet')};
 $('lvchip').addEventListener('click',e=>{ e.stopPropagation(); openTrophy() });
-const _renderNoGame=render;
-{ const _r4=render; render=function(){ const o=_r4.apply(this,arguments); try{gameTick()}catch(e){} return o } }
+const _renderNoGame=()=>render({noGame:true});
+afterRender(gameTick,{game:true});
 gameTick();
 
 /* ===== V250 live weather: background + Nong Ong's gear ===== */
-const WXK=['sun','hot','partly','cloudy','drizzle','rain','storm','fog','wind','snow','night','nightcloud'];
 const WXNAME={sun:['แดดออก','Sunny'],hot:['แดดจัด ร้อนมาก','Scorching'],partly:['มีเมฆบางส่วน','Partly cloudy'],cloudy:['เมฆมาก','Cloudy'],drizzle:['ฝนปรอยๆ','Drizzle'],rain:['ฝนตก','Rain'],storm:['พายุฝนฟ้าคะนอง','Thunderstorm'],fog:['หมอกลง','Fog'],wind:['ลมแรง','Windy'],snow:['หิมะตก','Snow'],night:['ท้องฟ้าโปร่ง','Clear night'],nightcloud:['เมฆบางส่วน','Partly cloudy'],cold:['อากาศหนาว','Cold']};
 const WXSAY={sun:['แดดดี ขอใส่แว่นกันแดดหน่อย','Nice sun. Shades on!'],hot:['ร้อนจัง ดื่มน้ำเยอะๆ นะ','So hot. Drink lots of water!'],rain:['ฝนตก กางร่มก่อนนะ','Rain! Umbrella up.'],drizzle:['ฝนปรอยๆ พกร่มไว้นะ','Drizzle. Bring an umbrella.'],storm:['ฟ้าร้อง! อยู่ในที่ร่มนะ','Thunder! Stay indoors.'],fog:['หมอกลง ขับรถระวังนะ','Foggy. Drive carefully.'],wind:['ลมแรงมาก จับของไว้แน่นๆ','Very windy. Hold on tight!'],snow:['หิมะตก! หนาวมาก','Snow! So cold.'],cold:['หนาวจัง ขอผ้าพันคอหน่อย','Brr, scarf time.']};
 const WXCITY={bkk:['กรุงเทพฯ','Bangkok',13.75,100.5],cnx:['เชียงใหม่','Chiang Mai',18.79,98.98],cei:['เชียงราย','Chiang Rai',19.91,99.83],kkc:['ขอนแก่น','Khon Kaen',16.43,102.83],udn:['อุดรธานี','Udon Thani',17.41,102.79],nma:['นครราชสีมา','Nakhon Ratchasima',14.97,102.1],cbi:['ชลบุรี','Chonburi',13.36,100.98],pty:['พัทยา','Pattaya',12.93,100.88],hkt:['ภูเก็ต','Phuket',7.88,98.39],hdy:['หาดใหญ่','Hat Yai',7.01,100.47],urt:['สุราษฎร์ธานี','Surat Thani',9.14,99.33],hhq:['หัวหิน','Hua Hin',12.57,99.96]};
@@ -4899,7 +4894,7 @@ function renderVoiceSet(){ const sel=$('vmode'); if(!sel) return; sel.value=vMod
   g.appendChild(box);
   $('vmode').addEventListener('change',e=>{ prefs.voice=e.target.value; savePrefs(); if(e.target.value==='off'&&VOICE.ok) try{speechSynthesis.cancel()}catch(_){} });
   $('vtest').addEventListener('click',()=>{ if(prefs.voice==='off'){ prefs.voice='tap'; savePrefs(); $('vmode').value='tap' }
-    const p=$('pig'), t=L('สวัสดี! เราชื่อน้องโอ่ง จะช่วยเก็บเงินให้เต็มโอ่งเลย','Hi! I am Nong Ong. Let’s fill this jar together!');
+    const t=L('สวัสดี! เราชื่อน้องโอ่ง จะช่วยเก็บเงินให้เต็มโอ่งเลย','Hi! I am Nong Ong. Let’s fill this jar together!');
     if(!VOICE.ok){ toast(L('เครื่องนี้ไม่รองรับเสียงพูด','No text-to-speech on this phone')); return }
     nongSpeak(t,null); toast(L('น้องโอ่งกำลังพูด','Nong Ong is talking')) });
   renderVoiceSet() })();
@@ -5001,17 +4996,15 @@ if(SR){ $('voice').hidden=false; $('micin').hidden=false; try{syncFab()}catch(e)
 $('voice').addEventListener('click',startVoice); $('micin').addEventListener('click',startVoice);
 
 /* ===== V290 (5) Battery & smoothness saver ===== */
-let AUTOLOW=false;
+
 function setAutoLow(on,why){ if(AUTOLOW===on) return; AUTOLOW=on; document.body.classList.toggle('lowfx',on||prefs.fx===false);
   if(on&&why) toast(why==='bat'?L('แบตใกล้หมด ลดเอฟเฟกต์ลงให้ก่อน','Battery low: effects toned down'):L('เครื่องทำงานหนัก ลดเอฟเฟกต์ลงให้ลื่นขึ้น','Phone is busy: effects toned down to stay smooth')) }
-{ const _af=applyFx; applyFx=function(){ _af.apply(this,arguments); if(AUTOLOW) document.body.classList.add('lowfx') } }
 function autoSaveOn(){ return prefs.autolow!==false }
 try{ navigator.getBattery&&navigator.getBattery().then(b=>{ const chk=()=>{ if(!autoSaveOn()) return; if(!b.charging&&b.level<=.2) setAutoLow(true,'bat'); else if(b.charging||b.level>.3){ if(AUTOLOW==='bat') setAutoLow(false) } }; b.addEventListener('levelchange',chk); b.addEventListener('chargingchange',chk); chk() }) }catch(e){}
 (function fpsWatch(){ let slowWins=0; const win=()=>{ if(!autoSaveOn()||AUTOLOW||document.visibilityState!=='visible'){ setTimeout(win,8000); return }
   const ts=[]; let last=performance.now(), n=0; const f=t=>{ ts.push(t-last); last=t; if(++n<90) requestAnimationFrame(f); else { ts.sort((a,b)=>a-b); const med=ts[Math.floor(ts.length/2)], p90=ts[Math.floor(ts.length*.9)];
     if(med>30||p90>60) slowWins++; else slowWins=Math.max(0,slowWins-1); if(slowWins>=2) setAutoLow(true,'fps'); setTimeout(win,6000) } }; requestAnimationFrame(f) };
   setTimeout(win,5000) })();
-{ const _it=idleTrick; idleTrick=function(){ if(document.body.classList.contains('lowfx')) return; return _it.apply(this,arguments) } }
 (function(){ const sw=$('fxon'), lab=sw&&sw.closest('label'); if(!lab) return; const l=document.createElement('label'); l.className='switch'; l.style.background='var(--s-low)';
   l.innerHTML=`<span><b>${L('ประหยัดแบตอัตโนมัติ','Automatic battery saver')}</b><small>${L('ลดเอฟเฟกต์เองเมื่อแบตเหลือไม่ถึง 20% หรือเครื่องเริ่มกระตุก','Tones effects down when the battery is under 20% or the phone starts to stutter')}</small></span><input type="checkbox" id="autolow" role="switch">`;
   lab.after(l); $('autolow').checked=autoSaveOn(); $('autolow').addEventListener('change',e=>{ prefs.autolow=e.target.checked; savePrefs(); if(!e.target.checked) setAutoLow(false) }) })();
@@ -5028,7 +5021,7 @@ function parseAnyDate(v){ v=String(v||'').trim().replace(/[๐-๙]/g,d=>String(
   if(!y||!m||!d||m>12||d>31) return null; if(y<100) y=y>=50?2500+y-543:2000+y; if(y>2400) y-=543; if(y<2000||y>2100) return null;
   return y+'-'+String(m).padStart(2,'0')+'-'+String(d).padStart(2,'0') }
 const numOf=v=>{ v=String(v||'').replace(/[฿\s]|THB|บาท/gi,''); if(/,\d{1,2}\)?$/.test(v)&&!/\./.test(v)) v=v.replace(/\./g,'').replace(',','.'); v=v.replace(/,/g,''); if(!v) return null; let neg=/^\(.*\)$/.test(v)||/^-/.test(v)||/-$/.test(v); v=v.replace(/[()\-+]/g,''); const n=parseFloat(v); return isNaN(n)?null:(neg?-n:n) };
-function parseStatement(text){ const rows=csvRows(text); if(rows.length<2) return [];
+function parseStatement(text){ const rows=csvRows(text); if(!rows.length) return [];
   const H=/วันที่|date|วันทำรายการ|transaction date|posting/i; let hi=rows.slice(0,20).findIndex(r=>r.some(c=>H.test(c))&&r.some(c=>/จำนวน|amount|ถอน|ฝาก|withdraw|deposit|debit|credit|เงินออก|เงินเข้า/i.test(c)));
   let ci={date:-1,desc:-1,out:-1,in:-1,amt:-1};
   if(hi>=0){ const h=rows[hi].map(c=>c.toLowerCase()); const f=re=>h.findIndex(c=>re.test(c));
@@ -5073,7 +5066,7 @@ function openImport(rows,name){ IMP=rows; let sh=$('impsheet'); if(!sh){ sh=docu
 
 /* ===== V290 (4) Monthly / yearly report as PDF (print → Save as PDF) ===== */
 function reportHTML(kind,withList){ const vy=view.getFullYear(), vm=view.getMonth(); const pre=kind==='year'?String(vy):vy+'-'+String(vm+1).padStart(2,'0');
-  const rows=data.filter(r=>!r.demo&&r.date.startsWith(pre)).sort((a,b)=>a.date<b.date?-1:1);
+  const useDemo=!data.some(r=>!r.demo), rows=data.filter(r=>(useDemo||!r.demo)&&r.date.startsWith(pre)).sort((a,b)=>a.date<b.date?-1:1);
   const tin=rows.filter(r=>r.type==='in').reduce((a,r)=>a+r.amount,0), tout=rows.filter(r=>r.type==='out').reduce((a,r)=>a+r.amount,0), kept=tin-tout;
   const per=kind==='year'?L(`ปี ${vy+543}`,`Year ${vy}`):L(`${TH_M[vm]} ${vy+543}`,`${EN_M[vm]} ${vy}`);
   const byCat={}; rows.filter(r=>r.type==='out').forEach(r=>byCat[r.cat]=(byCat[r.cat]||0)+r.amount); const cats=Object.entries(byCat).sort((a,b)=>b[1]-a[1]); const mx=cats.length?cats[0][1]:1;
@@ -5086,7 +5079,7 @@ function reportHTML(kind,withList){ const vy=view.getFullYear(), vm=view.getMont
   const G=(goals||[]).filter(g=>!g.demo);
   let taxBlock=''; try{ if(kind==='year'&&typeof taxSums==='function'&&vy===taxYear()){ const ts=taxSums(); const items=Object.entries(ts||{}).filter(([k,v])=>v>0); if(items.length) taxBlock=`<h2>${L('รายการที่ติดป้ายลดหย่อนภาษี','Tax-tagged spending')}</h2><table><tr><th>${L('ประเภท','Type')}</th><th class="n">${L('ยอดรวม','Total')}</th></tr>${items.map(([k,v])=>{ const it=(TAX_ITEMS||[]).find(x=>x[0]===k); const nm=it?L(it[1],it[2]):k; return `<tr><td>${esc(String(nm))}</td><td class="n">${fmt(v)}</td></tr>` }).join('')}</table>` } }catch(e){}
   const dt=d=>new Date(d+'T00:00').toLocaleDateString(LOC(),{day:'numeric',month:'short'});
-  return `<div class="rp"><div class="rph"><div><h1>${L('สรุปรายรับรายจ่าย','Money summary')}</h1><small>${per} · ${L('สร้างเมื่อ','Made on')} ${new Date().toLocaleDateString(LOC(),{day:'numeric',month:'long',year:'numeric'})}</small></div><div class="rpj">${jarSVG(kept>=0?'great':'bad',null,null,jarSkin())}</div></div>
+  return `<div class="rp"><div class="rph"><div><h1>${L('สรุปรายรับรายจ่าย','Money summary')}</h1><small>${useDemo?L('ข้อมูลตัวอย่าง · ','Sample data · '):''}${per} · ${L('สร้างเมื่อ','Made on')} ${new Date().toLocaleDateString(LOC(),{day:'numeric',month:'long',year:'numeric'})}</small></div><div class="rpj">${jarSVG(kept>=0?'great':'bad',null,null,jarSkin())}</div></div>
     <div class="tiles"><div class="tile"><small>${L('รายรับ','Income')}</small><b>${fmt(tin)}</b></div><div class="tile"><small>${L('รายจ่าย','Spending')}</small><b>${fmt(tout)}</b></div><div class="tile"><small>${L('เหลือเก็บ','Kept')}</small><b>${(kept<0?'-':'')+fmt(Math.abs(kept))}</b></div><div class="tile"><small>${L('เก็บได้','Saved rate')}</small><b>${tin>0?Math.round(kept/tin*100)+'%':'–'}</b></div></div>
     <h2>${kind==='year'?L('รายรับ (เขียว) และรายจ่าย (ส้ม) รายเดือน','Income (green) and spending (orange) by month'):L('รายจ่ายรายวัน','Spending by day')}</h2>${chart}
     <h2>${L('รายจ่ายตามหมวด','Spending by category')}</h2>${cats.length?`<table><tr><th>${L('หมวด','Category')}</th><th style="width:40%"></th><th class="n">${L('ยอด','Amount')}</th><th class="n">%</th></tr>${cats.map(([c,v])=>`<tr><td>${esc(L(c,EN_CAT[c]||c))}</td><td><div class="bar"><i style="width:${(v/mx*100).toFixed(1)}%"></i></div></td><td class="n">${fmt(v)}</td><td class="n">${tout?Math.round(v/tout*100):0}%</td></tr>`).join('')}</table>`:`<p class="note">${L('ไม่มีรายจ่ายในช่วงนี้','No spending in this period')}</p>`}
@@ -5210,7 +5203,7 @@ function openExplain(){ const ym=view.getFullYear()+'-'+String(view.getMonth()+1
   if($('exopen')) $('exopen').onclick=()=>{ hideSheet('explsheet'); setTimeout(()=>{ openSet(); try{setOpenFor($('opening')); setTimeout(()=>{$('opening').scrollIntoView({block:'center'}); $('opening').focus()},350)}catch(e){} },260) } }
 $('carry').addEventListener('click',openExplain); $('ballabel').addEventListener('click',openExplain);
 { const fix=()=>{ const l=$('ballabel'); if(l&&!l.querySelector('.why')){ const w=document.createElement('span'); w.className='why'; w.textContent='?'; w.setAttribute('aria-hidden','true'); l.appendChild(w) } };
-  const _r5=render; render=function(){ const o=_r5.apply(this,arguments); try{fix()}catch(e){} return o }; fix() }
+  afterRender(fix); fix() }
 
 /* ===== V310 help guide, what's new, feedback ===== */
 const APP_VER='1.48';
