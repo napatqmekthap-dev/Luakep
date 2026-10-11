@@ -1,4 +1,4 @@
-const CACHE='luakep-v39';
+const CACHE='luakep-v40';
 const SHELL=['./','index.html','manifest.webmanifest','icon-192.png','apple-touch-icon.png','icon-512.png','icon-maskable-512.png','icon-monochrome-512.png','sc-expense.png','sc-income.png','sc-search.png'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(SHELL)));self.skipWaiting()});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE&&k!=='kp-state'&&k!=='kp-share').map(k=>caches.delete(k)))));self.clients.claim()});
@@ -12,6 +12,7 @@ self.addEventListener('fetch',e=>{
     return;
   }
   if(e.request.method!=='GET') return;
+  if(new URL(e.request.url).origin!==self.location.origin&&/open-meteo\.com$/.test(new URL(e.request.url).hostname)) return; // live weather: never cache
   const isPage=e.request.mode==='navigate'||e.request.url.endsWith('/index.html');
   if(isPage){
     e.respondWith(fetch(e.request).then(res=>{const cp=res.clone();caches.open(CACHE).then(c=>c.put(e.request,cp));return res}).catch(()=>caches.match(e.request,{ignoreSearch:true}).then(r=>r||caches.match('index.html'))));

@@ -1345,6 +1345,57 @@ html{overscroll-behavior-y:contain}
 #bpop .tx b{font:500 16px var(--display)}
 #bpop .tx em{font-style:normal;font-size:12px;opacity:.8}
 @media (prefers-reduced-motion: reduce){#lvup .lvrays,.lvchip.up,.badge.new{animation:none}#lvup *{animation:none!important}}
+
+/* ===== V250 live weather ===== */
+.titlebar{position:relative}
+.wxpill{position:absolute;right:0;top:4px;display:inline-flex;align-items:center;gap:6px;border:0;cursor:pointer;padding:5px 12px 5px 8px;border-radius:999px;background:color-mix(in srgb,var(--s-low) 82%,transparent);color:var(--ink);font:500 13px var(--display);box-shadow:inset 0 0 0 1px var(--ov);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);animation:festin .5s both}
+.wxpill svg{width:22px;height:22px;flex:none;overflow:visible}
+.wxpill .t{font-family:var(--display);font-size:15px}
+.wxpill small{color:var(--muted);font:400 12px var(--body)}
+#wxfx{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;--rc:rgba(60,95,130,.42);--cl:rgba(118,132,146,.17);--fl:#fff}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) #wxfx{--rc:rgba(190,215,255,.30);--cl:rgba(220,230,240,.07)}}
+:root[data-theme="dark"] #wxfx{--rc:rgba(190,215,255,.30);--cl:rgba(220,230,240,.07)}
+#wxfx .tint{position:absolute;inset:0}
+#wxfx .wsun{position:absolute;right:-70px;top:-70px;width:250px;height:250px;border-radius:50%;background:radial-gradient(circle,rgba(255,226,140,.95) 0 17%,rgba(255,210,110,.45) 18%,rgba(255,210,110,0) 62%)}
+#wxfx .wsun::before{content:"";position:absolute;inset:-30%;border-radius:50%;background:repeating-conic-gradient(rgba(255,214,120,.22) 0 6deg,transparent 6deg 18deg);-webkit-mask:radial-gradient(circle,#000 18%,transparent 62%);mask:radial-gradient(circle,#000 18%,transparent 62%);animation:rays 40s linear infinite}
+#wxfx .wmoon{position:absolute;right:42px;top:58px;width:56px;height:56px;border-radius:50%;box-shadow:-13px 9px 0 0 #f4e7b8;filter:drop-shadow(0 0 14px rgba(244,231,184,.6));transform:rotate(-20deg)}
+#wxfx .wcloud{position:absolute;left:0;top:var(--y);width:var(--w);height:calc(var(--w)*.36);border-radius:999px;background:var(--cl);animation:wcl var(--d) linear var(--dl) infinite;filter:blur(1.5px)}
+#wxfx .wcloud::before,#wxfx .wcloud::after{content:"";position:absolute;border-radius:50%;background:inherit}
+#wxfx .wcloud::before{width:46%;height:120%;left:16%;top:-58%}
+#wxfx .wcloud::after{width:34%;height:92%;left:50%;top:-38%}
+@keyframes wcl{from{transform:translateX(-120%)}to{transform:translateX(calc(100vw + 20%))}}
+#wxfx .wr{position:absolute;top:-14vh;left:var(--x);width:1.6px;height:var(--h);border-radius:2px;background:linear-gradient(transparent,var(--rc));transform:rotate(14deg);animation:wrain var(--d) linear var(--dl) infinite}
+@keyframes wrain{to{transform:translate(-30vh,128vh) rotate(14deg)}}
+#wxfx .wrip{position:absolute;left:var(--x);bottom:var(--y);width:26px;height:8px;margin-left:-13px;border-radius:50%;border:1.5px solid var(--rc);opacity:0;animation:wrip 1.6s ease-out var(--dl) infinite}
+@keyframes wrip{0%{transform:scale(.2);opacity:.9}100%{transform:scale(1.6);opacity:0}}
+#wxfx .wsn{position:absolute;top:-4vh;left:var(--x);width:var(--s);height:var(--s);border-radius:50%;background:var(--fl);box-shadow:0 0 4px rgba(120,140,170,.5);animation:wsnow var(--d) linear var(--dl) infinite}
+@keyframes wsnow{0%{transform:translate(0,0)}25%{transform:translate(14px,27vh)}50%{transform:translate(-10px,54vh)}75%{transform:translate(12px,80vh)}100%{transform:translate(0,108vh)}}
+#wxfx .wfog{position:absolute;left:-30%;width:160%;height:26vh;top:var(--y);border-radius:50%;background:radial-gradient(closest-side,rgba(215,220,226,.8),transparent);filter:blur(8px);animation:wfog var(--d) ease-in-out var(--dl) infinite alternate}
+@keyframes wfog{to{transform:translateX(18%)}}
+#wxfx .wlf{position:absolute;left:-40px;top:var(--y);width:20px;height:20px;animation:wleaf var(--d) linear var(--dl) infinite}
+#wxfx .wlf svg{width:100%;height:100%}
+@keyframes wleaf{0%{transform:translate(0,0) rotate(0)}50%{transform:translate(55vw,-6vh) rotate(400deg)}100%{transform:translate(115vw,4vh) rotate(800deg)}}
+#wxfx .wgust{position:absolute;left:-30%;top:var(--y);width:28vw;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,var(--rc),transparent);animation:wgust var(--d) linear var(--dl) infinite}
+@keyframes wgust{to{transform:translateX(160vw)}}
+#wxfx .wheat{position:absolute;left:0;right:0;bottom:-20vh;height:60vh;background:repeating-linear-gradient(0deg,rgba(255,170,90,.0) 0 18px,rgba(255,170,90,.10) 18px 26px);filter:blur(6px);animation:wheat 5s linear infinite}
+@keyframes wheat{to{transform:translateY(-52px)}}
+#wxfx .wflash{position:absolute;inset:0;background:#eef3ff;opacity:0}
+.wxdrip circle{animation:wxdrip 1.5s ease-in infinite}
+.wxdrip circle:nth-child(2){animation-delay:.7s}
+@keyframes wxdrip{0%{transform:translateY(0);opacity:0}15%{opacity:1}100%{transform:translateY(22px);opacity:0}}
+.wxsweat{animation:wxdrip 1.9s ease-in infinite}
+.wxfan{transform-box:fill-box;transform-origin:50% 100%;animation:wxfan .45s ease-in-out infinite alternate}
+@keyframes wxfan{from{transform:rotate(-14deg)}to{transform:rotate(10deg)}}
+.wxset .row3{display:flex;gap:10px;align-items:center;justify-content:space-between}
+.wxset select{max-width:190px}
+.wxprev{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.wxprev button{border:0;border-radius:999px;padding:7px 12px 7px 8px;display:inline-flex;align-items:center;gap:6px;background:var(--s-low);color:var(--ink);font:500 13px var(--body);cursor:pointer;box-shadow:inset 0 0 0 1px var(--ov)}
+.wxprev button.on{box-shadow:inset 0 0 0 2px var(--ink)}
+.wxprev svg{width:18px;height:18px}
+.wxst{font-size:13px;color:var(--muted);margin:6px 2px 12px}
+.wxset .wnote{display:block;margin:4px 2px}
+body.lowfx #wxfx .wr,body.lowfx #wxfx .wsn,body.lowfx #wxfx .wlf,body.lowfx #wxfx .wgust,body.lowfx #wxfx .wrip{display:none}
+@media (prefers-reduced-motion: reduce){#wxfx *{animation:none!important}#wxfx .wr,#wxfx .wsn,#wxfx .wlf,#wxfx .wgust,#wxfx .wrip{display:none}.wxdrip circle,.wxsweat,.wxfan{animation:none}}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i></div><div id="festfx" aria-hidden="true"></div>
@@ -1430,7 +1481,7 @@ html{overscroll-behavior-y:contain}
 </header>
 <div class="wrap">
   <div class="titlebar">
-    <h1 id="bigtitle">เหลือเก็บ</h1>
+    <h1 id="bigtitle">เหลือเก็บ</h1><button class="wxpill" id="wxpill" type="button" hidden></button>
     <div class="month">
       <button class="round" id="prev" aria-label="เดือนก่อน"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
       <span id="mlabel"></span>
@@ -2243,7 +2294,7 @@ function currentOutfit(){
   const f=currentFest(); return f?FEST[f][2]:null;
 }
 
-function jarSVG(m,o,lv,sk){
+function jarSVG(m,o,lv,sk,wx){
   if(o===undefined) o=currentOutfit(); if(sk==null) sk=jarSkin();
   const id='j'+(++JAR_N);
   const L=lv!=null?Math.max(.05,Math.min(.9,lv)):{great:.86,good:.62,warn:.32,bad:.07,none:.55}[m];
@@ -2304,7 +2355,7 @@ function jarSVG(m,o,lv,sk){
   <path d="M38 33Q36 27 32 25H88Q84 27 82 33Z" fill="${sk===5?'#f3d98a':'#bfe6cf'}" stroke="${O}" stroke-width="2.6" stroke-linejoin="round"/><rect x="30" y="20" width="60" height="7" rx="3.5" fill="${sk>=3?'#f2d98c':'#cfeedb'}" stroke="${O}" stroke-width="2.6"/>${sk===5?'<g class="spk"><path d="M8 58l1.6 4 4 1.6-4 1.6L8 69l-1.6-3.8-4-1.6 4-1.6z" fill="#ffd54f"/><path d="M112 70l1.2 3 3 1.2-3 1.2-1.2 3-1.2-3-3-1.2 3-1.2z" fill="#ffd54f"/></g>':''}
   ${W.shirt}
   <path d="M18 72q-8-1-9 7M102 72q8-1 9 7" ${S}/>
-  ${W.neck}${o?'':lid}${W.head}${o?'':leaf}${W.props}${cheeks}<g class="look"><g class="eyes">${eyes}</g></g>${mouth}${extra}${W.face||''}
+  ${W.neck}${o?'':lid}${W.head}${o?'':leaf}${W.props}${cheeks}<g class="look"><g class="eyes">${eyes}</g></g>${mouth}${extra}${W.face||''}${wx?wxLayers(o,m):''}
 </svg>`;
 }
 
@@ -2323,11 +2374,11 @@ function setMood(tin,tout,overCats){
   if(overCats&&m!=='none') text+=L(` · เกินงบ ${overCats} หมวด`,` · ${overCats} ${overCats>1?'categories':'category'} over budget`);
   const lv=tin>0?Math.max(0,(tin-tout)/tin):null, newL=lv!=null?Math.max(.05,Math.min(.9,lv)):{great:.86,good:.62,warn:.32,bad:.07,none:.55}[m];
   if(m===lastMood&&lastL!=null&&Math.abs(newL-lastL)>.003){
-    const p=$('pig'); p.innerHTML=jarSVG(m,undefined,lv); try{$('ntjar').innerHTML=jarSVG(m,undefined,lv)}catch(e){}
+    const p=$('pig'); p.innerHTML=jarSVG(m,undefined,lv,undefined,1); try{$('ntjar').innerHTML=jarSVG(m,undefined,lv,undefined,1)}catch(e){}
     if(FX()){const g=p.querySelector('.wlvl'); if(g) g.animate([{transform:`translateY(${(72*(newL-lastL)).toFixed(1)}px)`},{transform:'translateY(0)'}],{duration:1200,easing:'cubic-bezier(.3,1.3,.45,1)'})}
     lastL=newL;
   }
-  if(m!==lastMood){const p=$('pig');p.innerHTML=jarSVG(m,undefined,lv);p.classList.remove('pop');void p.offsetWidth;p.classList.add('pop'); try{$('ntjar').innerHTML=jarSVG(m,undefined,lv)}catch(e){}
+  if(m!==lastMood){const p=$('pig');p.innerHTML=jarSVG(m,undefined,lv,undefined,1);p.classList.remove('pop');void p.offsetWidth;p.classList.add('pop'); try{$('ntjar').innerHTML=jarSVG(m,undefined,lv,undefined,1)}catch(e){}
     if(FX()&&lastL!=null&&Math.abs(newL-lastL)>.003){const g=p.querySelector('.wlvl'); if(g) g.animate([{transform:`translateY(${(72*(newL-lastL)).toFixed(1)}px)`},{transform:'translateY(0)'}],{duration:1200,easing:'cubic-bezier(.3,1.3,.45,1)'})}
     lastL=newL; applyNight();
     p.setAttribute('aria-label',{great:'น้องโอ่งน้ำเต็ม ยิ้มกว้าง',good:'น้องโอ่งยิ้ม',warn:'น้องโอ่งน้ำเหลือน้อย กังวล',bad:'น้องโอ่งแห้ง ร้องไห้',none:'น้องโอ่งปิดฝาหลับ'}[m]);lastMood=m}
@@ -4401,6 +4452,114 @@ $('lvchip').addEventListener('click',e=>{ e.stopPropagation(); openTrophy() });
 const _renderNoGame=render;
 { const _r4=render; render=function(){ const o=_r4.apply(this,arguments); try{gameTick()}catch(e){} return o } }
 gameTick();
+
+/* ===== V250 live weather: background + Nong Ong's gear ===== */
+const WXK=['sun','hot','partly','cloudy','drizzle','rain','storm','fog','wind','snow','night','nightcloud'];
+const WXNAME={sun:['แดดออก','Sunny'],hot:['แดดจัด ร้อนมาก','Scorching'],partly:['มีเมฆบางส่วน','Partly cloudy'],cloudy:['เมฆมาก','Cloudy'],drizzle:['ฝนปรอยๆ','Drizzle'],rain:['ฝนตก','Rain'],storm:['พายุฝนฟ้าคะนอง','Thunderstorm'],fog:['หมอกลง','Fog'],wind:['ลมแรง','Windy'],snow:['หิมะตก','Snow'],night:['ท้องฟ้าโปร่ง','Clear night'],nightcloud:['เมฆบางส่วน','Partly cloudy'],cold:['อากาศหนาว','Cold']};
+const WXSAY={sun:['แดดดี ขอใส่แว่นกันแดดหน่อย','Nice sun. Shades on!'],hot:['ร้อนจัง ดื่มน้ำเยอะๆ นะ','So hot. Drink lots of water!'],rain:['ฝนตก กางร่มก่อนนะ','Rain! Umbrella up.'],drizzle:['ฝนปรอยๆ พกร่มไว้นะ','Drizzle. Bring an umbrella.'],storm:['ฟ้าร้อง! อยู่ในที่ร่มนะ','Thunder! Stay indoors.'],fog:['หมอกลง ขับรถระวังนะ','Foggy. Drive carefully.'],wind:['ลมแรงมาก จับของไว้แน่นๆ','Very windy. Hold on tight!'],snow:['หิมะตก! หนาวมาก','Snow! So cold.'],cold:['หนาวจัง ขอผ้าพันคอหน่อย','Brr, scarf time.']};
+const WXCITY={bkk:['กรุงเทพฯ','Bangkok',13.75,100.5],cnx:['เชียงใหม่','Chiang Mai',18.79,98.98],cei:['เชียงราย','Chiang Rai',19.91,99.83],kkc:['ขอนแก่น','Khon Kaen',16.43,102.83],udn:['อุดรธานี','Udon Thani',17.41,102.79],nma:['นครราชสีมา','Nakhon Ratchasima',14.97,102.1],cbi:['ชลบุรี','Chonburi',13.36,100.98],pty:['พัทยา','Pattaya',12.93,100.88],hkt:['ภูเก็ต','Phuket',7.88,98.39],hdy:['หาดใหญ่','Hat Yai',7.01,100.47],urt:['สุราษฎร์ธานี','Surat Thani',9.14,99.33],hhq:['หัวหิน','Hua Hin',12.57,99.96]};
+const WXICON={sun:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.6" fill="#ffc94a" stroke="#c99a2e" stroke-width="1.4"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8" stroke="#e0a82e" stroke-width="1.8" stroke-linecap="round"/></svg>',
+ cloud:'<svg viewBox="0 0 24 24"><path d="M7 18h10.5a3.8 3.8 0 0 0 .4-7.6A5.5 5.5 0 0 0 7.4 9.2 4.4 4.4 0 0 0 7 18z" fill="#dfe6ec" stroke="#7d8b97" stroke-width="1.4" stroke-linejoin="round"/></svg>',
+ partly:'<svg viewBox="0 0 24 24"><circle cx="9" cy="8.5" r="4" fill="#ffc94a" stroke="#c99a2e" stroke-width="1.3"/><path d="M9 1.8v1.6M2.3 8.5h1.6M4.2 3.7l1.1 1.1M13.8 3.7l-1.1 1.1" stroke="#e0a82e" stroke-width="1.6" stroke-linecap="round"/><path d="M8 20h9.5a3.4 3.4 0 0 0 .3-6.8 4.9 4.9 0 0 0-9.4-1A4 4 0 0 0 8 20z" fill="#e9eef2" stroke="#7d8b97" stroke-width="1.4" stroke-linejoin="round"/></svg>',
+ rain:'<svg viewBox="0 0 24 24"><path d="M7 14h10.5a3.6 3.6 0 0 0 .4-7.2A5.3 5.3 0 0 0 7.6 5.6 4.2 4.2 0 0 0 7 14z" fill="#cfd8e0" stroke="#6d7c89" stroke-width="1.4" stroke-linejoin="round"/><path d="M8.5 16.5l-1.2 3M12.5 16.5l-1.2 3M16.5 16.5l-1.2 3" stroke="#3d8bd4" stroke-width="1.8" stroke-linecap="round"/></svg>',
+ storm:'<svg viewBox="0 0 24 24"><path d="M7 13h10.5a3.6 3.6 0 0 0 .4-7.2A5.3 5.3 0 0 0 7.6 4.6 4.2 4.2 0 0 0 7 13z" fill="#aeb9c4" stroke="#56636f" stroke-width="1.4" stroke-linejoin="round"/><path d="M12.5 13.5L10 18h3l-2 4.5" stroke="#f2b632" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+ fog:'<svg viewBox="0 0 24 24"><path d="M4 9h16M3 13h18M5 17h14" stroke="#8f9aa4" stroke-width="2" stroke-linecap="round"/></svg>',
+ wind:'<svg viewBox="0 0 24 24"><path d="M3 9h11a3 3 0 1 0-3-3M3 14h15a3 3 0 1 1-3 3M3 19h7" stroke="#6d8fa8" stroke-width="1.9" fill="none" stroke-linecap="round"/></svg>',
+ snow:'<svg viewBox="0 0 24 24"><path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9M9.5 4.5L12 7l2.5-2.5M9.5 19.5L12 17l2.5 2.5" stroke="#5c9bd6" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>',
+ night:'<svg viewBox="0 0 24 24"><path d="M19 14.5A8 8 0 1 1 9.5 5a6.4 6.4 0 0 0 9.5 9.5z" fill="#f4e7b8" stroke="#b9a46a" stroke-width="1.4" stroke-linejoin="round"/></svg>',
+ hot:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5" fill="#ff9a3c" stroke="#c9622a" stroke-width="1.4"/><path d="M12 2v2.6M12 19.4V22M2 12h2.6M19.4 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" stroke="#ff7a2e" stroke-width="1.9" stroke-linecap="round"/></svg>'};
+const wxIco=k=>WXICON[{cloudy:'cloud',drizzle:'rain',nightcloud:'cloud'}[k]||k]||WXICON.cloud;
+var WX=null, WXPREV=null, wxLastSaid='';
+function wxNow(){ return (typeof WXPREV!=='undefined'&&WXPREV)||(typeof WX!=='undefined'&&WX)||null }
+function wxClassify(c){ const code=+c.weather_code, day=!!c.is_day, t=+c.temperature_2m, w=+c.wind_speed_10m||0; let k;
+  if([95,96,99].includes(code)) k='storm'; else if((code>=61&&code<=67)||(code>=80&&code<=82)) k='rain'; else if(code>=51&&code<=57) k='drizzle';
+  else if((code>=71&&code<=77)||code===85||code===86) k='snow'; else if(code===45||code===48) k='fog'; else if(code===3) k='cloudy';
+  else if(code===1||code===2) k=day?'partly':'nightcloud'; else k=day?'sun':'night';
+  if(w>=35&&['sun','partly','cloudy','night','nightcloud'].includes(k)) k='wind';
+  if(day&&t>=34&&(k==='sun'||k==='partly')) k='hot';
+  return {k,t:Math.round(t),day,cold:t<=20||k==='snow'} }
+function wxLayers(o,m){ const w=wxNow(); if(!w) return ''; const O='#2b3b36', S=(c,x)=>`stroke="${c||O}" stroke-width="${x||2.2}" stroke-linejoin="round" stroke-linecap="round"`;
+  let W={}; try{ W=o?outfitLayers(o,'wx',60):{} }catch(e){} let f='';
+  if(w.cold){ f+=`<path d="M28 35q32 11 64 0l1.5 8.5q-33.5 12-67 0z" fill="#c8463c" ${S()}/><path d="M34 41l-5 22 9 1 3-20z" fill="#c8463c" ${S()}/><path d="M36 39.5v6M46 41.5v6M56 42.5v6M66 42.5v6M76 41.5v6M86 39.5v6M31 53h8M30 58h8" stroke="#f3d9b0" stroke-width="1.6" opacity=".85"/>`;
+    if(!W.head&&m!=='none') f+=`<path d="M32 24q28-32 56 0z" fill="#4b74c4" ${S()}/><path d="M44 10q16-8 32 0" stroke="#7fa3e0" stroke-width="2" fill="none"/><rect x="29" y="18" width="62" height="8" rx="4" fill="#f3efe6" ${S()}/><circle cx="60" cy="-6" r="6" fill="#f3efe6" ${S()}/>`; }
+  if(w.k==='rain'||w.k==='drizzle'||w.k==='storm'){ const tl=w.k==='storm'?-34:-21;
+    f+=`<g transform="rotate(${tl} 110 80)"><path d="M110 80V-6" ${S('#6b5640',2.6)}/><path d="M110 80q0 7-5 7t-5-4" fill="none" ${S('#6b5640',2.6)}/><path d="M72 2Q110-42 148 2q-6.3-5-12.7 0-6.3-5-12.7 0-6.3-5-12.6 0-6.3-5-12.7 0-6.3-5-12.6 0-6.4-5-12.7 0z" fill="${w.k==='storm'?'#3d5a80':'#e8574c'}" ${S()}/><path d="M110-20Q101-8 97.3 2M110-20Q119-8 122.7 2" stroke="#fff" stroke-width="1.6" opacity=".45" fill="none"/><path d="M110-20v-7" ${S()}/><g class="wxdrip" fill="#7cc8f2"><circle cx="74" cy="6" r="1.8"/><circle cx="146" cy="6" r="1.8"/></g></g>`; }
+  if((w.k==='sun'||w.k==='hot')&&!W.face&&m!=='none') f+=`<rect x="36" y="54" width="21" height="13" rx="5" fill="#1d2622"/><rect x="63" y="54" width="21" height="13" rx="5" fill="#1d2622"/><path d="M57 58q3-2 6 0M36 57l-13-4M84 57l13-4" stroke="#1d2622" stroke-width="2.2" fill="none" stroke-linecap="round"/><path d="M40 57.5h6M67 57.5h6" stroke="#fff" stroke-width="1.6" opacity=".7" stroke-linecap="round"/>`;
+  if(w.k==='hot') f+=`<path class="wxsweat" d="M28 46q-3.5 6 0 8q3.5-2 0-8z" fill="#7cc8f2" ${S(O,1.2)}/><path class="wxsweat" style="animation-delay:.9s" d="M94 42q-3 5 0 7q3-2 0-7z" fill="#7cc8f2" ${S(O,1.2)}/><g transform="rotate(-18 9 79)"><path class="wxfan" d="M9 79L-7 55q16-11 32 0z" fill="#ffd36b" ${S()}/></g>`;
+  return f }
+function wxBuildFx(k){ let fx=$('wxfx'); if(!fx){ fx=document.createElement('div'); fx.id='wxfx'; fx.setAttribute('aria-hidden','true'); const t=$('todfx')||$('aurora'); t.after(fx) }
+  if(!k){ fx.innerHTML=''; return }
+  const R=(a,b)=>a+Math.random()*(b-a), rep=(n,f)=>Array.from({length:n},(_,i)=>f(i)).join('');
+  const cloud=(n,y0,y1)=>rep(n,i=>`<i class="wcloud" style="--y:${R(y0,y1).toFixed(0)}vh;--w:${R(150,280).toFixed(0)}px;--d:${R(55,95).toFixed(0)}s;--dl:-${R(0,90).toFixed(0)}s"></i>`);
+  const rain=(n,h0,h1,d0,d1)=>rep(n,()=>`<i class="wr" style="--x:${R(-5,125).toFixed(1)}%;--h:${R(h0,h1).toFixed(0)}px;--d:${R(d0,d1).toFixed(2)}s;--dl:-${R(0,2).toFixed(2)}s"></i>`);
+  const rip=n=>rep(n,()=>`<i class="wrip" style="--x:${R(4,96).toFixed(1)}%;--y:${R(1,14).toFixed(1)}vh;--dl:-${R(0,1.6).toFixed(2)}s"></i>`);
+  const T={rain:'linear-gradient(180deg,rgba(60,80,100,.20),transparent 65%)',drizzle:'linear-gradient(180deg,rgba(80,100,120,.13),transparent 60%)',storm:'linear-gradient(180deg,rgba(30,36,52,.38),rgba(30,36,52,.10) 70%)',cloudy:'linear-gradient(180deg,rgba(110,122,134,.16),transparent 60%)',fog:'linear-gradient(180deg,rgba(205,210,216,.30),rgba(205,210,216,.18))',hot:'radial-gradient(120% 70% at 90% 0%,rgba(255,140,60,.28),transparent 60%)',sun:'radial-gradient(110% 60% at 90% 0%,rgba(255,206,120,.22),transparent 60%)',partly:'radial-gradient(110% 60% at 90% 0%,rgba(255,206,120,.14),transparent 60%)',snow:'linear-gradient(180deg,rgba(200,218,238,.24),transparent 70%)',wind:'',night:'',nightcloud:''}[k]||'';
+  let h=`<div class="tint" style="background:${T}"></div>`;
+  if(k==='sun'||k==='hot'||k==='partly') h+=`<div class="wsun"></div>`;
+  if(k==='hot') h+=`<div class="wheat"></div>`;
+  if(k==='night'||k==='nightcloud') h+=`<div class="wmoon"></div>`;
+  if(k==='partly'||k==='nightcloud') h+=cloud(3,4,26);
+  if(k==='cloudy') h+=cloud(6,2,40);
+  if(k==='drizzle') h+=cloud(4,2,22)+rain(26,18,34,1.1,1.6);
+  if(k==='rain') h+=cloud(5,0,22)+rain(70,26,52,.55,.9)+rip(10);
+  if(k==='storm') h+=cloud(7,0,26)+rain(110,34,66,.42,.7)+rip(14)+'<div class="wflash"></div>';
+  if(k==='snow') h+=cloud(3,0,18)+rep(46,()=>`<i class="wsn" style="--x:${R(0,100).toFixed(1)}%;--s:${R(3,7).toFixed(1)}px;--d:${R(7,14).toFixed(1)}s;--dl:-${R(0,14).toFixed(1)}s"></i>`);
+  if(k==='fog') h+=rep(4,i=>`<i class="wfog" style="--y:${(i*24-6)}vh;--d:${R(14,24).toFixed(0)}s;--dl:-${R(0,10).toFixed(0)}s"></i>`);
+  if(k==='wind') h+=cloud(3,2,24)+rep(9,()=>`<i class="wlf" style="--y:${R(8,85).toFixed(0)}vh;--d:${R(4,7).toFixed(1)}s;--dl:-${R(0,7).toFixed(1)}s">${LEAF}</i>`)+rep(10,()=>`<i class="wgust" style="--y:${R(5,90).toFixed(0)}vh;--d:${R(1.6,2.8).toFixed(1)}s;--dl:-${R(0,3).toFixed(1)}s"></i>`);
+  fx.innerHTML=h }
+var wxBolt=0;
+function wxStorm(on){ clearTimeout(wxBolt); if(!on||!FX()) return; const go=()=>{ wxBolt=setTimeout(()=>{ const f=document.querySelector('#wxfx .wflash'); if(!f||document.visibilityState!=='visible'){go();return}
+  f.animate([{opacity:0},{opacity:.75,offset:.08},{opacity:.1,offset:.18},{opacity:.55,offset:.26},{opacity:0}],{duration:900,easing:'ease-out'});
+  const p=$('pig'); if(p&&!overlayOpen()) setTimeout(()=>{ p.animate([{transform:'none'},{transform:'translateY(-6px) scale(.96)'},{transform:'none'}],{duration:350}); sloshKick(5) },120); try{navigator.vibrate&&navigator.vibrate(20)}catch(_){} go() },4000+Math.random()*7000) }; go() }
+var wxShown=null;
+function applyWx(say){ const w=wxNow(), k=w?w.k:null, key=w?k+(w.cold?'c':''):'';
+  document.documentElement.setAttribute('data-wx',k||'none');
+  if(key!==wxShown){ wxShown=key; wxBuildFx(k); wxStorm(k==='storm'); lastMood=null; try{_renderNoGame()}catch(e){}
+    const sk=w&&(WXSAY[k]?k:(w.cold?'cold':null)); if(say&&sk&&wxLastSaid!==key&&FX()){ wxLastSaid=key; setTimeout(()=>{ if(overlayOpen()) return; const p=$('pig'); if(!p) return; document.querySelectorAll('.say').forEach(x=>x.remove()); const sb=document.createElement('div'); sb.className='say'; sb.textContent=L(WXSAY[sk][0],WXSAY[sk][1]); p.parentElement.appendChild(sb); setTimeout(()=>sb.remove(),2800) },900) } }
+  const pill=$('wxpill'); if(pill){ if(!w){pill.hidden=true} else { pill.hidden=false; pill.innerHTML=`${wxIco(k)}<span class="t num">${w.t!=null?w.t+'°':''}</span><small>${esc(L((WXNAME[k]||WXNAME.cloudy)[0],(WXNAME[k]||WXNAME.cloudy)[1]))}${WXPREV?L(' · ตัวอย่าง',' · preview'):''}</small>`; } }
+  renderWxSet() }
+function wxPrefs(){ prefs.wxs=prefs.wxs||{on:true,loc:'auto'}; return prefs.wxs }
+function wxCoords(){ const p=wxPrefs(); return new Promise(res=>{
+  if(p.loc&&p.loc!=='auto'&&p.loc!=='gps'&&WXCITY[p.loc]){ const c=WXCITY[p.loc]; res({lat:c[2],lon:c[3],name:L(c[0],c[1])}); return }
+  const fallback=()=>{ const c=WXCITY.bkk; res({lat:c[2],lon:c[3],name:L(c[0],c[1]),fb:true}) };
+  if(!navigator.geolocation){ fallback(); return }
+  const ask=()=>navigator.geolocation.getCurrentPosition(pos=>res({lat:+pos.coords.latitude.toFixed(2),lon:+pos.coords.longitude.toFixed(2),name:L('ตำแหน่งปัจจุบัน','Your location')}),fallback,{maximumAge:3*3600e3,timeout:9000,enableHighAccuracy:false});
+  if(p.loc==='gps') return ask();
+  try{ navigator.permissions.query({name:'geolocation'}).then(st=>{ if(st.state==='granted') ask(); else fallback() },fallback) }catch(e){ fallback() } }) }
+var wxBusy=false, wxErr='';
+async function wxFetch(force){ const p=wxPrefs(); if(!p.on){ WX=null; applyWx(); return } if(wxBusy) return;
+  let cache=null; try{cache=JSON.parse(localStorage.getItem('kp-wx-v1')||'null')}catch(e){}
+  if(!force&&cache&&Date.now()-cache.t<20*60e3&&cache.loc===p.loc){ WX=wxClassify(cache.cur); WX.place=cache.name; WX.at=cache.t; applyWx(true); return }
+  wxBusy=true;
+  try{ const c=await wxCoords(); const u=`https://api.open-meteo.com/v1/forecast?latitude=${c.lat}&longitude=${c.lon}&current=temperature_2m,weather_code,is_day,wind_speed_10m&timezone=auto`;
+    const r=await fetch(u,{cache:'no-store'}); if(!r.ok) throw new Error('http '+r.status); const j=await r.json(); if(!j.current) throw new Error('no data');
+    WX=wxClassify(j.current); WX.place=c.name+(c.fb&&p.loc==='auto'?L(' (ค่าเริ่มต้น)',' (default)'):''); WX.at=Date.now(); wxErr='';
+    try{localStorage.setItem('kp-wx-v1',JSON.stringify({t:WX.at,cur:j.current,name:WX.place,loc:p.loc}))}catch(e){} }
+  catch(e){ wxErr=L('ดึงข้อมูลอากาศไม่ได้ตอนนี้','Weather is unavailable right now'); if(cache){ WX=wxClassify(cache.cur); WX.place=cache.name; WX.at=cache.t } }
+  wxBusy=false; applyWx(true) }
+function renderWxSet(){ const g=$('wxgroup'); if(!g) return; const p=wxPrefs(), w=WX;
+  $('wxon').checked=!!p.on; $('wxloc').value=p.loc||'auto'; $('wxbody').hidden=!p.on;
+  $('wxst').textContent=wxErr||(w?L(`${w.place}: ${WXNAME[w.k][0]} ${w.t}°${w.cold&&w.k!=='snow'?' · หนาว':''} · อัปเดต ${new Date(w.at).toLocaleTimeString(LOC(),{hour:'2-digit',minute:'2-digit'})}`,`${w.place}: ${WXNAME[w.k][1]} ${w.t}°${w.cold&&w.k!=='snow'?' · cold':''} · updated ${new Date(w.at).toLocaleTimeString(LOC(),{hour:'2-digit',minute:'2-digit'})}`):L('กำลังดูอากาศ…','Checking the weather…'));
+  $('wxprev').querySelectorAll('button').forEach(b=>b.classList.toggle('on',WXPREV?(b.dataset.k===WXPREV.k+(WXPREV.cold&&WXPREV.k!=='snow'?'+c':'')):b.dataset.k==='real')) }
+(function(){ const wg=$('wardrobe')&&$('wardrobe').closest('.group'); if(!wg) return; const g=document.createElement('div'); g.className='group wxset'; g.id='wxgroup';
+  g.innerHTML=`<h4><span class="gh" style="--ghbg:var(--t-mood);--ghfg:var(--t-mood-fg)"><svg viewBox="0 0 24 24"><path d="M7 18h10.5a3.8 3.8 0 0 0 .4-7.6A5.5 5.5 0 0 0 7.4 9.2 4.4 4.4 0 0 0 7 18z"/></svg></span>${L('สภาพอากาศ','Weather')}</h4>
+  <label class="switch" style="background:var(--s-low)"><span><b>${L('พื้นหลังตามอากาศจริง','Live weather background')}</b><small>${L('ฝนตก แดดออก หมอก ลม หนาว พื้นหลังและน้องโอ่งจะแต่งตัวตามนั้น','Rain, sun, fog, wind or cold: the background and Nong Ong dress for it')}</small></span><input type="checkbox" id="wxon" role="switch"></label>
+  <div id="wxbody"><label class="remtime">${L('ใช้อากาศที่','Weather for')}<select id="wxloc"><option value="auto">${L('อัตโนมัติ','Automatic')}</option><option value="gps">${L('ตำแหน่งปัจจุบัน (GPS)','My location (GPS)')}</option>${Object.entries(WXCITY).map(([k,c])=>`<option value="${k}">${L(c[0],c[1])}</option>`).join('')}</select></label>
+  <p class="wxst" id="wxst"></p>
+  <small class="wnote">${L('ลองดูแต่ละแบบ','Try each look')}</small>
+  <div class="wxprev" id="wxprev"><button type="button" data-k="real">${L('อากาศจริง','Live')}</button>${['sun','hot','partly','cloudy','drizzle','rain','storm','fog','wind','snow','night'].map(k=>`<button type="button" data-k="${k}">${wxIco(k)}${L(WXNAME[k][0],WXNAME[k][1])}</button>`).join('')}<button type="button" data-k="cloudy+c">${WXICON.snow}${L('หนาว','Cold')}</button></div>
+  <small class="wnote">${L('แอปส่งพิกัดแบบหยาบ (ราว 1 กม.) หรือเมืองที่เลือกไปที่ Open-Meteo เพื่อดูอากาศเท่านั้น ข้อมูลการเงินไม่ออกจากเครื่อง','Only a rough location (about 1 km) or the city you pick is sent to Open-Meteo to look up the weather. Your money data never leaves the phone.')}</small></div>`;
+  wg.after(g);
+  $('wxon').addEventListener('change',e=>{ wxPrefs().on=e.target.checked; savePrefs(); WXPREV=null; if(e.target.checked) wxFetch(true); else { WX=null; applyWx() } });
+  $('wxloc').addEventListener('change',e=>{ wxPrefs().loc=e.target.value; savePrefs(); wxFetch(true) });
+  $('wxprev').addEventListener('click',e=>{ const b=e.target.closest('[data-k]'); if(!b) return; const k=b.dataset.k;
+    if(k==='real') WXPREV=null; else { const [kk,c]=k.split('+'); WXPREV={k:kk,t:{sun:31,hot:37,partly:30,cloudy:c?17:28,drizzle:26,rain:25,storm:24,fog:19,wind:27,snow:-2,night:24}[kk],day:kk!=='night',cold:!!c||kk==='snow',place:'',at:Date.now()} }
+    applyWx(true); try{bump(b)}catch(_){} });
+})();
+$('wxpill').addEventListener('click',()=>{ const p=wxPrefs(); const w=wxNow(); if(p.loc==='auto'&&WX&&/\(/.test(WX.place||'')&&navigator.geolocation){ p.loc='gps'; savePrefs(); wxFetch(true); return }
+  const pg=$('pig'); if(!pg||!w) return; const sk=WXSAY[w.k]?w.k:(w.cold?'cold':null); document.querySelectorAll('.say').forEach(x=>x.remove()); const sb=document.createElement('div'); sb.className='say'; sb.textContent=sk?L(WXSAY[sk][0],WXSAY[sk][1]):L(`${WXNAME[w.k][0]} ${w.t}°`,`${WXNAME[w.k][1]} ${w.t}°`); pg.parentElement.appendChild(sb); setTimeout(()=>sb.remove(),2600); bump(pg) });
+setTimeout(()=>wxFetch(false),700); setInterval(()=>{ if(document.visibilityState==='visible') wxFetch(false) },5*60e3);
+document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='visible') wxFetch(false) });
 </script>
 
 <script>
