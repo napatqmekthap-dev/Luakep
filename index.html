@@ -1285,6 +1285,66 @@ html{overscroll-behavior-y:contain}
 .heart{position:fixed;z-index:65;pointer-events:none;width:22px;height:22px;margin:-11px}
 .heart svg{width:100%;height:100%;display:block}
 .wallets .wcard{transition:scale .15s linear,rotate .15s linear}
+
+/* ===== V240 levels, badges, outfits ===== */
+.lvchip{position:absolute;right:30px;top:112px;z-index:2;display:flex;align-items:center;gap:6px;border:0;cursor:pointer;padding:3px 9px 3px 8px;border-radius:999px;background:var(--btn);color:var(--btn-fg);font:600 11.5px var(--display);box-shadow:0 4px 10px -4px rgba(0,0,0,.35)}
+[data-palette="celadon"] .lvchip{top:120px;right:38px;background:var(--s-low);color:var(--ink);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--gold) 60%,transparent),0 4px 10px -6px rgba(0,0,0,.3)}
+.lvchip b{font-weight:600;letter-spacing:.02em}
+.lvchip i{display:block;width:30px;height:4px;border-radius:2px;background:color-mix(in srgb,currentColor 18%,transparent);overflow:hidden}
+.lvchip u{display:block;height:100%;width:calc(var(--p,0)*100%);background:var(--gold,#d1ab52);border-radius:2px;transition:width 1s cubic-bezier(.2,.8,.2,1)}
+.lvchip.up{animation:lvchip 1s cubic-bezier(.3,1.6,.5,1)}
+@keyframes lvchip{0%{transform:scale(.4)}60%{transform:scale(1.25)}100%{transform:none}}
+.wardrobe button{position:relative}
+.wardrobe button.locked .wj{filter:grayscale(1) opacity(.45)}
+.wardrobe button.locked>span:last-child{opacity:.55}
+.wardrobe .lk{position:absolute;top:8px;right:8px;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--s-high);color:var(--muted)}
+.wardrobe .lk svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.wardrobe em.gold{background:var(--gold,#d1ab52);color:#2b2208}
+#trophypanel .trhead{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;padding:6px 0 4px}
+#trophypanel .trjar{width:150px;height:150px;position:relative}
+#trophypanel .trjar::before{content:"";position:absolute;inset:6% 4% 0;border-radius:50%;background:radial-gradient(circle at 50% 55%,color-mix(in srgb,var(--gold,#d1ab52) 35%,transparent),transparent 68%)}
+#trophypanel .trjar svg{position:relative;width:100%;height:100%;overflow:visible}
+#trophypanel .trlv{font:500 13px var(--display);letter-spacing:.08em;color:var(--muted)}
+#trophypanel .trname{font:500 26px var(--display)}
+.xpbar{width:100%;max-width:320px;height:10px;border-radius:6px;background:var(--s-high);overflow:hidden;margin-top:8px}
+.xpbar i{display:block;height:100%;width:0;border-radius:6px;background:linear-gradient(90deg,var(--in-bar,#7fbf9a),var(--gold,#d1ab52));transition:width 1.2s cubic-bezier(.2,.8,.2,1) .2s}
+.xptxt{font-size:13px;color:var(--muted)}
+.trsec{font:500 15px var(--display);margin:18px 2px 8px;display:flex;justify-content:space-between;align-items:baseline}
+.trsec small{font:400 13px var(--body);color:var(--muted)}
+.skins{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.skins button{border:0;background:var(--s-low);border-radius:16px;padding:8px 2px 6px;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;color:var(--ink);font:500 10.5px var(--body);position:relative;box-shadow:inset 0 0 0 1px var(--ov)}
+.skins button.on{box-shadow:inset 0 0 0 2px var(--ink)}
+.skins button .sj{width:44px;height:44px}.skins button .sj svg{width:100%;height:100%;overflow:visible}
+.skins button.locked .sj{filter:grayscale(1) opacity(.4)}
+.skins button.locked{color:var(--muted)}
+.xphow{font-size:12.5px;color:var(--muted);line-height:1.6;background:var(--s-low);border-radius:14px;padding:10px 12px;margin-top:10px}
+.badges{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.badge{border:0;background:var(--s-low);border-radius:18px;padding:10px 6px 9px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:3px;color:var(--ink);font:inherit;cursor:pointer;box-shadow:inset 0 0 0 1px var(--ov)}
+.badge .md{width:46px;height:54px}.badge .md svg{width:100%;height:100%;overflow:visible}
+.badge b{font:500 12.5px var(--body);line-height:1.25}
+.badge small{font-size:10.5px;color:var(--muted);line-height:1.3}
+.badge.off b{color:var(--muted)}
+.badge.new{animation:bnew 1.6s ease-in-out 3}
+@keyframes bnew{50%{box-shadow:inset 0 0 0 2px var(--gold,#d1ab52),0 0 18px -4px var(--gold,#d1ab52)}}
+.badge .ofit{font-size:10px;color:#9c7a24}
+#lvup{position:fixed;inset:0;z-index:96;display:grid;place-items:center;background:radial-gradient(circle at 50% 40%,#3b3214,#0c0e0d 70%);animation:lvin .35s both}
+@keyframes lvin{from{opacity:0}}
+#lvup .lvrays{position:absolute;left:50%;top:42%;width:900px;height:900px;margin:-450px 0 0 -450px;background:repeating-conic-gradient(rgba(255,226,140,.20) 0 7deg,transparent 7deg 18deg);border-radius:50%;-webkit-mask:radial-gradient(circle,#000 10%,transparent 60%);mask:radial-gradient(circle,#000 10%,transparent 60%);animation:rays 18s linear infinite}
+@keyframes rays{to{transform:rotate(360deg)}}
+#lvup .lvbox{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;color:#fffaf0;padding:24px;max-width:340px}
+#lvup .lvk{font:500 14px var(--display);letter-spacing:.2em;color:#f2d27a;animation:wordin .6s .2s both}
+#lvup .lvjar{width:200px;height:200px}
+#lvup .lvjar svg{width:100%;height:100%;overflow:visible}
+#lvup b{font:500 30px/1.2 var(--display);animation:wordin .6s 1.3s both}
+#lvup small{font-size:15px;opacity:.85;animation:wordin .6s 1.5s both}
+#lvup .lvbtn{cursor:pointer;padding:0 28px;margin-top:14px;min-width:200px;height:50px;border:0;border-radius:999px;background:linear-gradient(180deg,#f6d77a,#d2a43c);color:#2b2208;font:600 16px var(--display);box-shadow:0 10px 24px -10px rgba(242,193,78,.7);animation:wordin .6s 1.8s both}
+#bpop{position:fixed;left:50%;width:max-content;top:calc(14px + env(safe-area-inset-top,0px));z-index:95;transform:translateX(-50%);display:flex;align-items:center;gap:12px;padding:10px 18px 10px 12px;border-radius:22px;background:var(--btn);color:var(--btn-fg);box-shadow:0 18px 40px -16px rgba(0,0,0,.55);cursor:pointer;max-width:calc(100vw - 32px);border:0;font:inherit;text-align:left;background:#1d2622!important;color:#fffaf0!important}
+#bpop .md{width:42px;height:50px;flex:none}#bpop .md svg{width:100%;height:100%;overflow:visible}
+#bpop .tx{display:flex;flex-direction:column;gap:1px}
+#bpop .tx small{font-size:11.5px;letter-spacing:.06em;color:#f2d27a}
+#bpop .tx b{font:500 16px var(--display)}
+#bpop .tx em{font-style:normal;font-size:12px;opacity:.8}
+@media (prefers-reduced-motion: reduce){#lvup .lvrays,.lvchip.up,.badge.new{animation:none}#lvup *{animation:none!important}}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i></div><div id="festfx" aria-hidden="true"></div>
@@ -1379,7 +1439,7 @@ html{overscroll-behavior-y:contain}
   </div>
 
   <div class="balance">
-    <div class="pig" id="pig" role="img" aria-label="น้องโอ่ง"></div>
+    <div class="pig" id="pig" role="img" aria-label="น้องโอ่ง"></div><button class="lvchip" id="lvchip" type="button" aria-label="ระดับน้องโอ่ง"><b>Lv.1</b><i><u></u></i></button>
     <div class="festpill" id="festpill" hidden></div>
     <div class="labrow"><div class="label" id="ballabel">คงเหลือเดือนนี้</div><button class="eyebtn" id="eyebtn" type="button" aria-label="ซ่อนหรือแสดงยอดเงิน"><svg viewBox="0 0 24 24"><path class="eo" d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12zM12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/><path class="ec" d="M3 3l18 18M10.6 5.1A10 10 0 0 1 12 5c6.5 0 10 7 10 7a17 17 0 0 1-3.2 4.1M6.6 6.6A17 17 0 0 0 2 12s3.5 7 10 7a9.6 9.6 0 0 0 5.4-1.6"/></svg></button></div>
     <div class="big num" id="bal">฿0</div>
@@ -1519,6 +1579,9 @@ html{overscroll-behavior-y:contain}
 
 <div class="sheet" id="friendsheet" hidden><div class="panel" id="friendpanel"></div></div>
 <div class="sheet" id="inssheet" hidden><div class="panel" id="inspanel"></div></div>
+<div class="sheet" id="trophysheet" hidden><div class="panel" id="trophypanel"></div></div>
+<div id="lvup" hidden><div class="lvrays"></div><div class="lvbox"><div class="lvk" id="lvk"></div><div class="lvjar" id="lvjar"></div><b id="lvt"></b><small id="lvs"></small><button class="lvbtn" id="lvok" type="button">เยี่ยมเลย</button></div></div>
+<div id="bpop" hidden role="status"></div>
 <div class="sheet" id="taxsheet" hidden><div class="panel" id="taxpanel"></div></div>
 
 <div id="imgview" hidden role="dialog" aria-label="ดูสลิป"><img id="imgviewimg" alt="สลิป"><small>แตะเพื่อปิด</small></div>
@@ -2083,7 +2146,7 @@ let JAR_N=0;
 function outfitLayers(o,id,wy){
   const O='#2b3b36', S=(c,w)=>`stroke="${c||O}" stroke-width="${w||2.2}" stroke-linejoin="round" stroke-linecap="round"`;
   const clip=inner=>`<g clip-path="url(#${id}c)">${inner}</g>`;
-  const R={shirt:'',neck:'',head:'',props:'',water:''};
+  const R={shirt:'',neck:'',head:'',props:'',water:'',back:'',face:''};
   switch(o){
   case 'party':
     R.head=`<path d="M47 21L60-8L73 21Z" fill="#7c5cff" ${S()}/><path d="M52 12l15 3M49 18l21 2" stroke="#ffd54f" stroke-width="3"/><circle cx="60" cy="-9" r="4.5" fill="#ff6b9a" ${S(0,1.8)}/>`;
@@ -2124,6 +2187,20 @@ function outfitLayers(o,id,wy){
     R.shirt=clip(`<path d="M106 56L20 98l6 14L112 68z" fill="#e0a92e" ${S('#9c6b10',1.4)}/><path d="M104 62L24 102" stroke="#fff3c4" stroke-width="1.4" stroke-dasharray="1 4"/><path d="M0 92Q60 100 120 92V120H0z" fill="#b5326b" opacity=".9"/><path d="M0 96Q60 104 120 96" stroke="#f3c44f" stroke-width="1.6" fill="none"/>`);
     R.head=`<path d="M48 21l2-9 4-3 2-8 4-7 4 7 2 8 4 3 2 9z" fill="#f3c44f" ${S(0,1.8)}/><path d="M50 15h20M53 8h14" stroke="#c98a1f" stroke-width="1.4"/><circle cx="60" cy="16" r="2" fill="#d7263d"/>`;
     R.water=`<g transform="translate(60 ${wy-1})"><path d="M-14 0q14 8 28 0z" fill="#5fbf75" ${S(0,1.4)}/><path d="M-8-1c0-6 3-9 8-10c5 1 8 4 8 10z" fill="#ff9fc0" ${S(0,1.2)}/><path d="M0-11v-5" stroke="#fff" stroke-width="1.6"/><path d="M0-16c-2-2-1-4 0-5c1 1 2 3 0 5z" fill="#ffb84d"/></g>`;break;
+  case 'saver':
+    R.neck=`<path d="M24 37q36 10 72 0v8q-36 10-72 0z" fill="#2f7d5b" ${S()}/><path d="M93 40l13-5-2 7 7 3-15 2z" fill="#2f7d5b" ${S()}/><circle cx="60" cy="45.5" r="6.5" fill="#f2c14e" ${S('#b98b16',1.4)}/><path d="M60 41.5v8M62.4 43.4q-1.2-1.2-2.8-.8-1.8.6-.6 1.8l2 .8q1.6 1-.2 2-1.6.6-3-.6" stroke="#8a6410" stroke-width="1.1" fill="none"/>`;break;
+  case 'crown':
+    R.head=`<path d="M38 22l3-17 10 9 9-14 9 14 10-9 3 17z" fill="#f2c14e" ${S()}/><path d="M40 18h40" stroke="#b98b16" stroke-width="1.6"/><circle cx="60" cy="12" r="2.8" fill="#e2445c" ${S(0,1.2)}/><circle cx="47" cy="15.5" r="2" fill="#4fa3e0"/><circle cx="73" cy="15.5" r="2" fill="#4fa3e0"/>`;
+    R.props=`<g class="spk"><path d="M30 2l1.4 3.4 3.4 1.4-3.4 1.4L30 11.6l-1.4-3.4-3.4-1.4 3.4-1.4z" fill="#ffd54f"/><path d="M92 0l1 2.6 2.6 1-2.6 1L92 7.2l-1-2.6-2.6-1 2.6-1z" fill="#ffd54f"/></g>`;break;
+  case 'grad':
+    R.head=`<path d="M42 22v-9q18 6 36 0v9" fill="#2b3b36" ${S()}/><path d="M22 9L60-4 98 9 60 22z" fill="#3c4d47" ${S()}/><path d="M60 9L90 15v13" stroke="#f2c14e" stroke-width="2" fill="none"/><path d="M87 28h6l-1 7h-4z" fill="#f2c14e" ${S('#b98b16',1.2)}/>`;break;
+  case 'leaf':
+    R.head=[[34,18,-35,'#5fbf75'],[44,13,-20,'#7fd08a'],[54,10,-8,'#5fbf75'],[66,10,8,'#7fd08a'],[76,13,20,'#5fbf75'],[86,18,35,'#7fd08a']].map(([x,y,r,c])=>`<ellipse cx="${x}" cy="${y}" rx="7" ry="3.6" fill="${c}" ${S('#3d7a45',1.4)} transform="rotate(${r} ${x} ${y})"/>`).join('')+`<circle cx="60" cy="5" r="4" fill="#ff9fb8" ${S(0,1.4)}/><circle cx="60" cy="5" r="1.4" fill="#ffd54f"/>`;break;
+  case 'shades':
+    R.face=`<rect x="36" y="54" width="21" height="13" rx="5" fill="#1d2622" ${S('#1d2622',1.6)}/><rect x="63" y="54" width="21" height="13" rx="5" fill="#1d2622" ${S('#1d2622',1.6)}/><path d="M57 58q3-2 6 0M36 57l-13-4M84 57l13-4" stroke="#1d2622" stroke-width="2.2" fill="none" stroke-linecap="round"/><path d="M40 57.5h6M67 57.5h6" stroke="#fff" stroke-width="1.6" opacity=".7" stroke-linecap="round"/>`;break;
+  case 'cape':
+    R.back=`<path d="M32 36Q2 70 5 112L60 104 115 112Q118 70 88 36z" fill="#d33b3b" ${S()}/>`;
+    R.neck=`<path d="M34 34q26 9 52 0v6q-26 9-52 0z" fill="#d33b3b" ${S()}/><circle cx="60" cy="41" r="4.2" fill="#f2c14e" ${S('#b98b16',1.4)}/>`;break;
   case 'santa':
     R.head=`<path d="M40 22C42 4 64-6 86 8c4 3 4 7 0 9C80 8 66 6 80 22z" fill="#e23b3b" ${S()}/><rect x="36" y="16" width="48" height="8" rx="4" fill="#fff" ${S()}/><circle cx="88" cy="14" r="5" fill="#fff" ${S()}/>`;
     R.neck=`<path d="M34 34q26 9 52 0v7q-26 9-52 0z" fill="#2f9e6a" ${S()}/><path d="M78 40l4 16 8-2-5-15z" fill="#2f9e6a" ${S()}/><path d="M40 37h4M50 40h4M60 41h4M70 40h4" stroke="#fff" stroke-width="2"/>`;break;
@@ -2131,7 +2208,8 @@ function outfitLayers(o,id,wy){
   return R;
 }
 const OUTFITS=['party','kids','love','cny','buddhist','candle','songkran','mother','moon','kinje','thai','father','santa'];
-const OUTFIT_NAME={auto:['ตามเทศกาล','By festival'],none:['ไม่ใส่ชุด','No outfit'],party:['ปาร์ตี้ปีใหม่','New Year party'],kids:['หมวกใบพัดวันเด็ก','Kids\' day cap'],love:['โบว์วาเลนไทน์','Valentine bow'],
+const OUTFITS_LOCKED={saver:'s7',crown:'goal1',grad:'d100',leaf:'ns5',shades:'nsw',cape:'budget'};
+const OUTFIT_NAME={saver:['ผ้าคาดหัวนักออม','Saver headband'],crown:['มงกุฎทอง','Gold crown'],grad:['หมวกบัณฑิต','Graduation cap'],leaf:['มงกุฎใบไม้','Leaf crown'],shades:['แว่นเท่','Cool shades'],cape:['ผ้าคลุมฮีโร่','Hero cape'],auto:['ตามเทศกาล','By festival'],none:['ไม่ใส่ชุด','No outfit'],party:['ปาร์ตี้ปีใหม่','New Year party'],kids:['หมวกใบพัดวันเด็ก','Kids\' day cap'],love:['โบว์วาเลนไทน์','Valentine bow'],
   cny:['ชุดตรุษจีน','Chinese New Year'],buddhist:['ชุดขาวไปวัด','Temple whites'],candle:['แห่เทียนพรรษา','Lent candle'],songkran:['เสื้อลายดอกสงกรานต์','Songkran shirt'],mother:['มาลัยมะลิวันแม่','Jasmine garland'],
   moon:['หูกระต่ายไหว้พระจันทร์','Moon festival ears'],kinje:['ผ้าคาดหัวกินเจ','Vegetarian festival'],thai:['ชุดไทยลอยกระทง','Loy Krathong Thai dress'],father:['โบว์วันพ่อ','Father\'s Day bow'],santa:['ซานต้า','Santa']};
 /* ===== Thai festival calendar ===== */
@@ -2161,12 +2239,12 @@ function festivalOn(d){
 function currentFest(){try{return festivalOn(new Date())}catch(e){return null}}
 function currentOutfit(){
   const p=(typeof prefs!=='undefined'&&prefs&&prefs.outfit)||'auto';
-  if(p==='none') return null; if(p!=='auto') return p;
+  if(p==='none') return null; if(p!=='auto') return outfitLocked(p)?null:p;
   const f=currentFest(); return f?FEST[f][2]:null;
 }
 
-function jarSVG(m,o,lv){
-  if(o===undefined) o=currentOutfit();
+function jarSVG(m,o,lv,sk){
+  if(o===undefined) o=currentOutfit(); if(sk==null) sk=jarSkin();
   const id='j'+(++JAR_N);
   const L=lv!=null?Math.max(.05,Math.min(.9,lv)):{great:.86,good:.62,warn:.32,bad:.07,none:.55}[m];
   const top=34, bot=106, wy=bot-(bot-top)*L;           // water surface y
@@ -2205,13 +2283,13 @@ function jarSVG(m,o,lv){
   const W=o?outfitLayers(o,id,wy):{shirt:'',neck:'',head:'',props:'',water:''};
   return `<svg viewBox="0 0 120 120" aria-hidden="true" style="overflow:visible">
   <defs>
-    <linearGradient id="${id}g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d9f2e3"/><stop offset=".55" stop-color="#a9dcc0"/><stop offset="1" stop-color="#7cc2a0"/></linearGradient>
+    <linearGradient id="${id}g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${sk===5?'#fff4c9':'#d9f2e3'}"/><stop offset=".55" stop-color="${sk===5?'#f3d27a':'#a9dcc0'}"/><stop offset="1" stop-color="${sk===5?'#c99a2e':'#7cc2a0'}"/></linearGradient>
     <linearGradient id="${id}w" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5ec4e8" stop-opacity=".85"/><stop offset="1" stop-color="#2a8fbf" stop-opacity=".95"/></linearGradient>
     <clipPath id="${id}c"><path d="${body}"/></clipPath>
     <linearGradient id="${id}gl" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".85"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
   </defs>
   <ellipse cx="60" cy="111" rx="34" ry="4.5" fill="#000" opacity=".12"/>
-  <path d="${body}" fill="url(#${id}g)"/>
+  ${W.back||''}<path d="${body}" fill="url(#${id}g)"/>
   <g clip-path="url(#${id}c)">
     <g class="tiltw" style="transform-origin:60px ${wy}px"><g class="wlvl"><g class="wave"><path d="${wave}" fill="url(#${id}w)"/><path d="M-100 ${wy} q10 -4 20 0${' t20 0'.repeat(19)}" stroke="#e8fbff" stroke-width="2" fill="none" opacity=".8" pathLength="1"/></g></g></g>
     <g class="coinsl">${coins}</g>${(m==='great'||m==='good'||m==='warn')?`<g class="bubs"><circle class="bub" cx="40" cy="100" r="2.2" fill="#ffffff" opacity=".7"/><circle class="bub b2" cx="66" cy="102" r="1.6" fill="#ffffff" opacity=".7"/><circle class="bub b3" cx="80" cy="98" r="2.6" fill="#ffffff" opacity=".6"/></g>`:''}
@@ -2220,13 +2298,13 @@ function jarSVG(m,o,lv){
     ${W.water}
     <ellipse cx="38" cy="50" rx="7" ry="13" fill="#fff" opacity=".35" transform="rotate(25 38 50)"/>
   </g>
-  <g clip-path="url(#${id}c)" opacity=".55"><path d="M10 42Q60 50 110 42" stroke="#4f9e7c" stroke-width="2.4" fill="none"/><path d="M10 47Q60 55 110 47" stroke="#4f9e7c" stroke-width="1.2" fill="none" stroke-dasharray="2 4"/><path d="M10 97Q60 104 110 97" stroke="#4f9e7c" stroke-width="2.4" fill="none"/></g>
+  ${skinDecor(sk,id)}
   <g clip-path="url(#${id}c)"><g class="glint"><rect x="-52" y="-10" width="36" height="140" fill="url(#${id}gl)" transform="skewX(-18)"/><rect x="-10" y="-10" width="7" height="140" fill="url(#${id}gl)" transform="skewX(-18)"/></g></g>
   <path d="${body}" fill="none" stroke="${O}" stroke-width="2.8"/>
-  <path d="M38 33Q36 27 32 25H88Q84 27 82 33Z" fill="#bfe6cf" stroke="${O}" stroke-width="2.6" stroke-linejoin="round"/><rect x="30" y="20" width="60" height="7" rx="3.5" fill="#cfeedb" stroke="${O}" stroke-width="2.6"/>
+  <path d="M38 33Q36 27 32 25H88Q84 27 82 33Z" fill="${sk===5?'#f3d98a':'#bfe6cf'}" stroke="${O}" stroke-width="2.6" stroke-linejoin="round"/><rect x="30" y="20" width="60" height="7" rx="3.5" fill="${sk>=3?'#f2d98c':'#cfeedb'}" stroke="${O}" stroke-width="2.6"/>${sk===5?'<g class="spk"><path d="M8 58l1.6 4 4 1.6-4 1.6L8 69l-1.6-3.8-4-1.6 4-1.6z" fill="#ffd54f"/><path d="M112 70l1.2 3 3 1.2-3 1.2-1.2 3-1.2-3-3-1.2 3-1.2z" fill="#ffd54f"/></g>':''}
   ${W.shirt}
   <path d="M18 72q-8-1-9 7M102 72q8-1 9 7" ${S}/>
-  ${W.neck}${o?'':lid}${W.head}${o?'':leaf}${W.props}${cheeks}<g class="look"><g class="eyes">${eyes}</g></g>${mouth}${extra}
+  ${W.neck}${o?'':lid}${W.head}${o?'':leaf}${W.props}${cheeks}<g class="look"><g class="eyes">${eyes}</g></g>${mouth}${extra}${W.face||''}
 </svg>`;
 }
 
@@ -3161,7 +3239,7 @@ $('rvsave').onclick=()=>{
   if(badAmt){$('rvmsg').textContent=`สลิปที่ ${badAmt.i+1}: ตรวจจำนวนเงินและวันที่`;$('rvmsg').classList.remove('ok-msg');return}
   const base=Date.now();
   chosen.forEach(x=>{ if(x.memo&&!x.transfer) learn(x.memo,x.type,x.cat) });
-  chosen.forEach((x,k)=>data.push({id:(base+k).toString(36),type:x.type,amount:Math.round(x.amount*100)/100,cat:x.cat,memo:x.memo,note:x.note,date:x.date,ref:x.ref}));
+  chosen.forEach((x,k)=>data.push({id:(base+k).toString(36),type:x.type,amount:Math.round(x.amount*100)/100,cat:x.cat,memo:x.memo,note:x.note,date:x.date,ref:x.ref,slip:1}));
   save(); const last=chosen[chosen.length-1]; const d=new Date(last.date+'T00:00'); view=new Date(d.getFullYear(),d.getMonth(),1);
   closeReview(); render();
 };
@@ -3688,8 +3766,8 @@ function applyFestPill(){
 }
 function renderWardrobe(){
   const w=$('wardrobe'); if(!w) return; const cur=prefs.outfit||'auto', f=currentFest(), today=f?FEST[f][2]:null;
-  w.innerHTML=['auto','none',...OUTFITS].map(k=>{const o=k==='auto'?today:k==='none'?null:k;
-    return `<button type="button" data-o="${k}" class="${k===cur?'on':''}" aria-pressed="${k===cur}">${k!=='auto'&&k===today?`<em>${L('วันนี้','Today')}</em>`:''}<span class="wj">${jarSVG('good',o)}</span><span>${esc(L(OUTFIT_NAME[k][0],OUTFIT_NAME[k][1]))}</span></button>`}).join('');
+  w.innerHTML=['auto','none',...OUTFITS,...Object.keys(OUTFITS_LOCKED)].map(k=>{const o=k==='auto'?today:k==='none'?null:k; const lk=outfitLocked(k);
+    return `<button type="button" data-o="${k}" class="${k===cur?'on':''}${lk?' locked':''}" aria-pressed="${k===cur}">${lk?`<i class="lk"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></i>`:(OUTFITS_LOCKED[k]?`<em class="gold">${L('รางวัล','Reward')}</em>`:'')}${k!=='auto'&&k===today?`<em>${L('วันนี้','Today')}</em>`:''}<span class="wj">${jarSVG('good',o)}</span><span>${esc(L(OUTFIT_NAME[k][0],OUTFIT_NAME[k][1]))}</span></button>`}).join('');
   $('wnote').textContent=f?L(`วันนี้ตรงกับ${FEST[f][0].replace(/^สุขสันต์/,'')} น้องโอ่งแต่งชุดให้อัตโนมัติ`,`Today is ${FEST[f][1].replace(/^Happy /,'')}. Nong Ong dresses up automatically.`)
     :L('ช่วงนี้ไม่มีเทศกาล น้องโอ่งจะแต่งตัวเองเมื่อถึงวันสำคัญ หรือเลือกชุดเองได้เลย','No festival right now. Nong Ong dresses up on special days, or pick an outfit yourself.');
 }
@@ -3698,7 +3776,7 @@ function refreshOutfit(){
   try{$('brandcrab').innerHTML=pigSVG('great')}catch(e){} try{if($('planjar')) $('planjar').innerHTML=jarSVG('great')}catch(e){}
   renderWardrobe(); applyFestFx(); applyFestPill();
 }
-$('wardrobe').addEventListener('click',e=>{const b=e.target.closest('[data-o]'); if(!b) return; prefs.outfit=b.dataset.o; savePrefs(); refreshOutfit();
+$('wardrobe').addEventListener('click',e=>{const b=e.target.closest('[data-o]'); if(!b) return; if(outfitLocked(b.dataset.o)){ shake(b); const bd=BADGES.find(x=>x[0]===OUTFITS_LOCKED[b.dataset.o]); toast(L(`ปลดล็อกได้เมื่อได้เหรียญ “${bd[3]}”`,`Unlock with the “${bd[4]}” badge`)); return } prefs.outfit=b.dataset.o; savePrefs(); refreshOutfit();
   const nb=$('wardrobe').querySelector(`[data-o="${b.dataset.o}"]`); try{bump(nb)}catch(_){} sfx('bloop')});
 $('festpill').addEventListener('click',()=>{const p=$('pig'); if(p) p.click()});
 renderWardrobe(); applyFestPill(); applyFestFx();
@@ -4187,6 +4265,142 @@ function walletDepth(){ const box=$('wallets'); if(!box||box.hidden||!FX()) retu
     const al=$('allow'); const txt=al&&!al.hidden?(al.querySelector('b')||al).textContent.trim():''; document.querySelectorAll('.say').forEach(x=>x.remove()); const sb=document.createElement('div'); sb.className='say'; sb.textContent=txt&&!document.body.classList.contains('privacy')?txt:L('กรุ๊งกริ๊ง!','Jingle jingle!'); p.parentElement.appendChild(sb); setTimeout(()=>sb.remove(),2600) }
   last=m },{passive:true}); }
 $('pig').addEventListener('click',()=>{ try{ if(window.DeviceMotionEvent&&typeof DeviceMotionEvent.requestPermission==='function') DeviceMotionEvent.requestPermission().catch(()=>{}) }catch(e){} },{once:true});
+
+/* ===== V240 levels, badges, unlockable outfits ===== */
+var GAME={level:1,xp:0,ready:false};
+const LEVELS=[[0,'ศิลาดลอ่อน','Pale celadon'],[150,'ลายคราม','Blue & white'],[400,'รานทอง','Gold crackle'],[900,'เบญจรงค์','Benjarong'],[1800,'โอ่งทองคำ','Golden jar']];
+const LOCKI='<svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
+const BICON={pencil:'M4 20l4-1 11-11-3-3L5 16zM14 6l3 3',cal:'M4 6h16v14H4zM4 10h16M8 3v4M16 3v4',flame:'M12 3c1 4 6 6 6 11a6 6 0 0 1-12 0c0-3 2-5 3-7 0 2 1 3 2 3 0-3-1-5 1-7z',leaf:'M5 19C5 10 11 5 20 4c0 9-5 15-15 15zM5 19l9-9',shield:'M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6zM9 12l2 2 4-4',coin:'M12 4a8 8 0 1 0 0 16a8 8 0 1 0 0-16M12 7.5v9M14.5 9.5h-3.5a1.75 1.75 0 0 0 0 3.5h2a1.75 1.75 0 0 1 0 3.5H9.5',target:'M12 4a8 8 0 1 0 0 16a8 8 0 1 0 0-16M12 8a4 4 0 1 0 0 8a4 4 0 1 0 0-8M12 11.5v1',receipt:'M6 3h12v18l-3-2-3 2-3-2-3 2zM9 8h6M9 12h6',wallet:'M4 7h14a2 2 0 0 1 2 2v9H4zM4 7l11-3v3M16 13h2',people:'M9 11a3 3 0 1 0 0-6a3 3 0 1 0 0 6M3 20c0-3.5 2.7-6 6-6s6 2.5 6 6M16 5a3 3 0 0 1 0 6M18 14c2 .8 3 3 3 6',repeat:'M4 12a7 7 0 0 1 12-5l2 2M20 12a7 7 0 0 1-12 5l-2-2M18 4v5h-5M6 20v-5h5',doc:'M7 3h7l4 4v14H7zM10 12h5M10 16h5',save:'M12 4v10M8 10l4 4 4-4M5 20h14',moon:'M20 14A8 8 0 1 1 10 4a6.5 6.5 0 0 0 10 10z',sun:'M12 8a4 4 0 1 0 0 8a4 4 0 1 0 0-8M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M5 19l1.5-1.5M17.5 6.5L19 5',star:'M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z'};
+// [id, icon, tier, nameTH, nameEN, howTH, howEN, test]
+const BADGES=[
+ ['first','pencil','b','จดรายการแรก','First entry','จดรายการแรกของคุณ','Log your first entry',c=>c.n>=1],
+ ['d7','cal','b','จดครบ 7 วัน','7 days logged','จดรายการรวม 7 วัน','Log on 7 different days',c=>c.days>=7],
+ ['d30','cal','s','จดครบ 30 วัน','30 days logged','จดรายการรวม 30 วัน','Log on 30 different days',c=>c.days>=30],
+ ['d100','cal','g','จดครบ 100 วัน','100 days logged','จดรายการรวม 100 วัน','Log on 100 different days',c=>c.days>=100],
+ ['s3','flame','b','จดติดกัน 3 วัน','3-day streak','จดทุกวัน 3 วันติด','Log 3 days in a row',c=>c.logStreak>=3],
+ ['s7','flame','s','จดติดกัน 7 วัน','7-day streak','จดทุกวัน 7 วันติด','Log 7 days in a row',c=>c.logStreak>=7],
+ ['s30','flame','g','จดติดกัน 30 วัน','30-day streak','จดทุกวัน 30 วันติด','Log 30 days in a row',c=>c.logStreak>=30],
+ ['ns1','leaf','b','วันไม่ใช้เงิน','No-spend day','ผ่านไป 1 วันโดยไม่มีรายจ่าย','Get through a day with no spending',c=>c.nsDays>=1],
+ ['nsw','leaf','s','เสาร์อาทิตย์ไม่ใช้เงิน','No-spend weekend','ไม่มีรายจ่ายทั้งเสาร์และอาทิตย์','No spending all weekend',c=>c.nsWeekend],
+ ['ns5','leaf','g','ไม่ใช้เงิน 5 วันติด','5 no-spend days','ไม่มีรายจ่าย 5 วันติดกัน','5 days in a row with no spending',c=>c.nsStreak>=5],
+ ['budget','shield','g','อยู่ในงบทั้งเดือน','Within budget','จบเดือนโดยไม่เกินงบสักหมวด','Finish a month with every budget kept',c=>c.budgetMonth],
+ ['keep20','coin','b','เก็บได้ 20%','Kept 20%','จบเดือนโดยเหลือเก็บ 20% ของรายรับ','End a month keeping 20% of income',c=>c.bestKeep>=.2],
+ ['keep50','coin','g','เก็บได้ครึ่งหนึ่ง','Kept half','จบเดือนโดยเหลือเก็บครึ่งหนึ่งของรายรับ','End a month keeping half your income',c=>c.bestKeep>=.5],
+ ['goal1','target','s','ครบเป้าแรก','First goal','ออมจนครบเป้าหมายแรก','Reach your first savings goal',c=>c.goals>=1],
+ ['goal3','target','g','ครบ 3 เป้าหมาย','3 goals','ออมครบ 3 เป้าหมาย','Reach 3 savings goals',c=>c.goals>=3],
+ ['dep10','coin','s','หยอดกระปุก 10 ครั้ง','10 deposits','เติมเงินเข้าเป้าหมาย 10 ครั้ง','Add money to goals 10 times',c=>c.deps>=10],
+ ['slip10','receipt','b','อ่านสลิป 10 ใบ','10 slips','บันทึกจากสลิป 10 รายการ','Save 10 entries from slips',c=>c.slips>=10],
+ ['slip50','receipt','s','อ่านสลิป 50 ใบ','50 slips','บันทึกจากสลิป 50 รายการ','Save 50 entries from slips',c=>c.slips>=50],
+ ['wallet','wallet','b','หลายกระเป๋า','Multi-wallet','มีกระเป๋าเงิน 2 ใบขึ้นไป','Have 2 or more wallets',c=>c.wallets>=2],
+ ['split','people','b','หารบิลครั้งแรก','First split','จ่ายแทนเพื่อนแล้วให้แอปจำไว้','Pay for a friend and track it',c=>c.lend],
+ ['back','people','s','ได้เงินคืน','Paid back','บันทึกว่าเพื่อนคืนเงินแล้ว','Record a friend paying you back',c=>c.back],
+ ['recur','repeat','b','ตั้งรายการประจำ','Set a repeat','ตั้งรายการที่จดเองทุกเดือน','Set up a monthly repeat',c=>c.recur],
+ ['tax','doc','b','ติดป้ายลดหย่อน','Tax tagged','ติดป้ายลดหย่อนภาษีให้รายการ','Tag an entry as tax-deductible',c=>c.tax],
+ ['backup','save','b','สำรองข้อมูล','Backed up','สำรองข้อมูลครั้งแรก','Make your first backup',c=>c.backup],
+ ['night','moon','b','นกฮูกราตรี','Night owl','จดรายการหลังห้าทุ่ม','Log something after 11 pm',c=>c.night],
+ ['early','sun','b','นกตื่นเช้า','Early bird','จดรายการก่อน 7 โมงเช้า','Log something before 7 am',c=>c.early],
+ ['rich10','star','s','เก็บครบหมื่น','฿10,000 kept','ยอดเก็บสะสมถึง ฿10,000','Keep ฿10,000 in total',c=>c.kept>=10000],
+ ['rich100','star','g','เศรษฐีโอ่งทอง','฿100,000 kept','ยอดเก็บสะสมถึง ฿100,000','Keep ฿100,000 in total',c=>c.kept>=100000]];
+function outfitLocked(k){ const b=OUTFITS_LOCKED[k]; return !!b&&!((typeof prefs!=='undefined'&&prefs&&prefs.badges)||{})[b] }
+function jarSkin(){ const lv=(typeof GAME!=='undefined'&&GAME&&GAME.level)||1; const p=(typeof prefs!=='undefined'&&prefs&&prefs.skin)||lv; return Math.max(1,Math.min(lv,p)) }
+function skinDecor(sk,id){ const C=`clip-path="url(#${id}c)"`;
+  if(sk===2){ const fl=[24,42,60,78,96].map(x=>{const y=(42+8*(1-((x-60)/50)**2)+4).toFixed(1); return `<g transform="translate(${x} ${y})"><circle r="3.2" fill="#fff" stroke="#2f5fa8" stroke-width="1.3"/><circle r="1.1" fill="#2f5fa8"/><path d="M4 0q4-3 6 0M-4 0q-4 3-6 0" stroke="#2f5fa8" stroke-width="1.1" fill="none"/></g>`}).join('');
+    return `<g ${C}><path d="M10 41Q60 49 110 41" stroke="#2f5fa8" stroke-width="2.2" fill="none"/><path d="M10 53Q60 61 110 53" stroke="#2f5fa8" stroke-width="1.5" fill="none"/>${fl}<path d="M10 96Q60 103 110 96" stroke="#2f5fa8" stroke-width="2.2" fill="none"/><path d="M10 100Q60 107 110 100" stroke="#2f5fa8" stroke-width="1" fill="none" stroke-dasharray="3 3"/></g>`; }
+  if(sk===3) return `<g ${C}><g stroke="#c9a24a" stroke-width=".9" fill="none" opacity=".75" stroke-linecap="round"><path d="M24 60l10 6 4 10 12 3M38 76l-6 10M50 79l8-9 12 1 6-8M70 71l4 12 10 4M84 87l8-6M76 63l12-4 8 6M58 70l-2-8 6-6M30 92l12-2 10 6 14-2 10 4"/></g><path d="M10 42Q60 50 110 42" stroke="#c9a24a" stroke-width="2.4" fill="none"/><path d="M10 47Q60 55 110 47" stroke="#c9a24a" stroke-width="1.1" fill="none" stroke-dasharray="2 4"/><path d="M10 97Q60 104 110 97" stroke="#c9a24a" stroke-width="2.4" fill="none"/></g>`;
+  if(sk===4){ const cols=['#c8463c','#e8b83a','#3f8f5b','#4b74c4']; const mo=[18,30,42,54,66,78,90,102].map((x,i)=>{const y=(41+8*(1-((x-60)/50)**2)+5).toFixed(1); return `<path transform="translate(${x} ${y})" d="M0-5q4 4 0 9q-4-5 0-9z" fill="${cols[i%4]}" stroke="#e9c766" stroke-width=".9"/>`}).join('');
+    return `<g ${C}><path d="M10 40Q60 48 110 40V54Q60 62 10 54Z" fill="#26324f"/><path d="M10 40Q60 48 110 40M10 54Q60 62 110 54" stroke="#e9c766" stroke-width="1.6" fill="none"/>${mo}<path d="M10 95Q60 102 110 95V101Q60 108 10 101Z" fill="#26324f"/><path d="M10 95Q60 102 110 95M10 101Q60 108 110 101" stroke="#e9c766" stroke-width="1.2" fill="none"/></g>`; }
+  if(sk===5) return `<g ${C}><path d="M10 42Q60 50 110 42" stroke="#a87a18" stroke-width="2.6" fill="none"/><path d="M10 47Q60 55 110 47" stroke="#fff3c4" stroke-width="1.4" fill="none" stroke-dasharray="1 4"/><path d="M10 97Q60 104 110 97" stroke="#a87a18" stroke-width="2.6" fill="none"/><path d="M24 70l4 4-4 4-4-4zM96 70l4 4-4 4-4-4z" fill="#fff3c4" opacity=".8"/></g>`;
+  return `<g ${C} opacity=".55"><path d="M10 42Q60 50 110 42" stroke="#4f9e7c" stroke-width="2.4" fill="none"/><path d="M10 47Q60 55 110 47" stroke="#4f9e7c" stroke-width="1.2" fill="none" stroke-dasharray="2 4"/><path d="M10 97Q60 104 110 97" stroke="#4f9e7c" stroke-width="2.4" fill="none"/></g>`;
+}
+function medalSVG(icon,tier,off){ const T={b:['#efc19b','#a8693a','#c8463c'],s:['#e9edf0','#8b969d','#4b74c4'],g:['#f7d873','#b98b16','#2f7d5b']}[tier]; const f=off?'#e8e6df':T[0], e=off?'#c9c4b8':T[1], rb=off?'#d6d2c7':T[2], ink=off?'#b7b1a4':'#3a2c10';
+  return `<svg viewBox="0 0 48 56"><path d="M13 1h9l4 15h-9zM35 1h-9l-4 15h9z" fill="${rb}" stroke="${off?'#c9c4b8':'#2b3b36'}" stroke-width="1.4" stroke-linejoin="round"/><circle cx="24" cy="34" r="18" fill="${f}" stroke="${e}" stroke-width="2.6"/><circle cx="24" cy="34" r="13.6" fill="none" stroke="${e}" stroke-width="1" opacity=".55"/>${off?'':`<path d="M13 26a13 13 0 0 1 9-6" stroke="#fff" stroke-width="2" fill="none" opacity=".6" stroke-linecap="round"/>`}<g transform="translate(14 24) scale(.83)" fill="none" stroke="${ink}" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="${BICON[icon]}"/></g></svg>` }
+function gameCtx(){
+  const R=data.filter(r=>!r.demo), c={n:R.length}; const byDay={}; R.forEach(r=>{byDay[r.date]=(byDay[r.date]||0)+1});
+  const ds=Object.keys(byDay).sort(); c.days=ds.length; c.perDay=ds.reduce((a,d)=>a+Math.min(5,byDay[d]),0);
+  const dn=d=>Math.round(new Date(d+'T00:00').getTime()/86400000); let st=0,best=0,prev=null; ds.forEach(d=>{const n=dn(d); st=prev!=null&&n===prev+1?st+1:1; best=Math.max(best,st); prev=n}); c.logStreak=best;
+  const outs=new Set(R.filter(r=>r.type==='out'||r.type==='lend').map(r=>r.date)); c.nsDays=0; c.nsStreak=0; c.nsWeekend=false;
+  if(ds.length){ const d=new Date(ds[0]+'T00:00'), end=new Date(); end.setHours(0,0,0,0); let run=0;
+    while(d<end){ const k=iso(d); if(!outs.has(k)){ c.nsDays++; run++; c.nsStreak=Math.max(c.nsStreak,run); if(d.getDay()===0){ const sat=new Date(d); sat.setDate(sat.getDate()-1); if(iso(sat)>=ds[0]&&!outs.has(iso(sat))) c.nsWeekend=true } } else run=0; d.setDate(d.getDate()+1) } }
+  const ymNow=iso(new Date()).slice(0,7), mon={}; R.forEach(r=>{const m=r.date.slice(0,7); if(m>=ymNow) return; const o=mon[m]||(mon[m]={in:0,out:0,cat:{}}); if(r.type==='in') o.in+=r.amount; if(r.type==='out'){o.out+=r.amount; o.cat[r.cat]=(o.cat[r.cat]||0)+r.amount} });
+  const bc=Object.keys(budget).filter(k=>budget[k]>0); c.budgetMonth=bc.length>0&&Object.values(mon).some(o=>o.out>0&&bc.every(k=>(o.cat[k]||0)<=budget[k]));
+  c.bestKeep=Math.max(0,...Object.values(mon).filter(o=>o.in>0).map(o=>(o.in-o.out)/o.in));
+  const G=(goals||[]).filter(g=>!g.demo); c.goals=G.filter(g=>g.target>0&&gSaved(g)>=g.target).length; c.deps=G.reduce((a,g)=>a+(g.hist||[]).filter(h=>h.amount>0).length,0);
+  c.slips=R.filter(r=>r.slip||r.ref).length; c.wallets=(typeof wallets!=='undefined'&&wallets?wallets.length:1); c.lend=R.some(r=>r.type==='lend'); c.back=R.some(r=>r.type==='back');
+  c.recur=(recur||[]).some(r=>!r.demo); c.tax=R.some(r=>r.tax); c.backup=!!+prefs.lastBackup;
+  const hrs=R.map(r=>{const t=parseInt(String(r.id).replace(/s\d+$/,''),36); return t>1.5e12&&t<2.5e12?new Date(t).getHours():null}).filter(h=>h!=null);
+  c.night=hrs.some(h=>h>=23||h<4); c.early=hrs.some(h=>h>=4&&h<7);
+  c.kept=R.reduce((a,r)=>a+NET(r),0)+(+prefs.opening||0); return c }
+const lvOf=xp=>{let l=1; LEVELS.forEach((x,i)=>{if(xp>=x[0]) l=i+1}); return l};
+const GQ=[]; let gqBusy=false;
+function gameTick(){
+  let c; try{c=gameCtx()}catch(e){return}
+  const init=!prefs.badges; prefs.badges=prefs.badges||{}; const today=iso(new Date()), fresh=[];
+  BADGES.forEach(b=>{ if(!prefs.badges[b[0]]&&b[7](c)){ prefs.badges[b[0]]=today; fresh.push(b[0]) } });
+  const xp=c.days*10+c.perDay*3+Object.keys(prefs.badges).length*30+c.goals*60; const before=prefs.xpMax||0; prefs.xpMax=Math.max(before,xp);
+  const lv=lvOf(prefs.xpMax), oldSkin=jarSkin(), oldLv=GAME.level; GAME.level=lv; GAME.xp=prefs.xpMax;
+  let dirty=fresh.length||prefs.xpMax!==before;
+  if(init){ prefs.lvSeen=lv; dirty=true; if(fresh.length&&GAME.ready) GQ.push({t:'hello',n:fresh.length,lv}); else if(fresh.length) GQ.push({t:'hello',n:fresh.length,lv}) }
+  else { if(fresh.length>2) GQ.push({t:'many',ids:fresh}); else fresh.forEach(id=>GQ.push({t:'badge',id})); if(lv>(prefs.lvSeen||1)){ GQ.push({t:'level',from:prefs.lvSeen||1,to:lv}); prefs.lvSeen=lv; dirty=true } }
+  if(dirty) savePrefs();
+  lvChip(oldLv!==lv&&GAME.ready);
+  GAME.ready=true;
+  if(jarSkin()!==oldSkin){ lastMood=null; setTimeout(()=>{ try{_renderNoGame()}catch(e){} try{renderWardrobe()}catch(e){} },0) }
+  else if(fresh.length) try{renderWardrobe()}catch(e){}
+  if(GQ.length) setTimeout(runGQ,900);
+}
+function lvChip(pop){ const ch=$('lvchip'); if(!ch) return; const lv=GAME.level, a=LEVELS[lv-1][0], b=LEVELS[lv]?LEVELS[lv][0]:null;
+  ch.querySelector('b').textContent='Lv.'+lv; ch.style.setProperty('--p',b?Math.min(1,(GAME.xp-a)/(b-a)).toFixed(3):1); ch.setAttribute('aria-label',L(`ระดับ ${lv} ${LEVELS[lv-1][1]}`,`Level ${lv} ${LEVELS[lv-1][2]}`));
+  if(pop&&FX()){ ch.classList.remove('up'); void ch.offsetWidth; ch.classList.add('up') } }
+function runGQ(){ if(gqBusy||!GQ.length) return; if(document.body.classList.contains('locked')||($('intro')&&!$('intro').hidden)||!$('lvup').hidden){ setTimeout(runGQ,1200); return }
+  gqBusy=true; const q=GQ.shift(); const done=()=>{gqBusy=false; setTimeout(runGQ,350)};
+  if(q.t==='level') showLevelUp(q.from,q.to,done); else showBadgePop(q,done) }
+function showBadgePop(q,done){ const p=$('bpop'); let html;
+  if(q.t==='hello') html=`<span class="md">${medalSVG('star','g')}</span><span class="tx"><small>${L('ใหม่! ระบบเลื่อนขั้นน้องโอ่ง','New: Nong Ong levels up')}</small><b>${L(`ได้ ${q.n} เหรียญจากที่จดมา`,`${q.n} badges from your history`)}</b><em>${L(`ตอนนี้ระดับ ${q.lv} · แตะเพื่อดูตู้โชว์`,`Now level ${q.lv} · tap to see your cabinet`)}</em></span>`;
+  else if(q.t==='many'){ const ms=q.ids.slice(0,4).map((id,i)=>{const b=BADGES.find(x=>x[0]===id); return `<span class="md" style="margin-left:${i?-22:0}px;z-index:${9-i};position:relative">${medalSVG(b[1],b[2])}</span>`}).join(''); const nOf=q.ids.filter(id=>Object.values(OUTFITS_LOCKED).includes(id)).length;
+    html=`<span style="display:flex;flex:none">${ms}</span><span class="tx"><small>${L('ได้เหรียญใหม่!','New badges!')}</small><b>${L(`${q.ids.length} เหรียญพร้อมกัน`,`${q.ids.length} at once`)}</b><em>${nOf?L(`ปลดล็อกชุดใหม่ ${nOf} ชุด · แตะเพื่อดู`,`${nOf} new outfit${nOf>1?'s':''} · tap to see`):L(`+${q.ids.length*30} XP · แตะเพื่อดู`,`+${q.ids.length*30} XP · tap to see`)}</em></span>`; }
+  else { const b=BADGES.find(x=>x[0]===q.id); const of=Object.keys(OUTFITS_LOCKED).find(k=>OUTFITS_LOCKED[k]===q.id);
+    html=`<span class="md">${medalSVG(b[1],b[2])}</span><span class="tx"><small>${L('ได้เหรียญใหม่!','New badge!')}</small><b>${esc(L(b[3],b[4]))}</b><em>${of?L(`ปลดล็อกชุด “${OUTFIT_NAME[of][0]}” แล้ว`,`Unlocked the “${OUTFIT_NAME[of][1]}” outfit`):'+30 XP'}</em></span>`; }
+  p.innerHTML=html; p.hidden=false; let gone=false; const hide=()=>{ if(gone) return; gone=true; clearTimeout(t); if(FX()) p.animate([{transform:'translateX(-50%)',opacity:1},{transform:'translate(-50%,-30px) scale(.9)',opacity:0}],{duration:280,easing:'ease-in'}).onfinish=()=>{p.hidden=true;done()}; else {p.hidden=true;done()} };
+  p.onclick=()=>{ hide(); setTimeout(()=>openTrophy(q.id),300) };
+  if(FX()){ p.animate([{transform:'translate(-50%,-90px) scale(.7)',opacity:0},{transform:'translate(-50%,6px) scale(1.04)',opacity:1,offset:.65},{transform:'translateX(-50%)',opacity:1}],{duration:620,easing:'cubic-bezier(.3,1.3,.5,1)'});
+    p.querySelectorAll('.md').forEach((m,i)=>m.animate([{transform:'rotateY(0)'},{transform:'rotateY(720deg)'}],{duration:1100,delay:i*120,easing:'cubic-bezier(.2,.8,.2,1)'})); const md=p.querySelector('.md'); md.animate([{transform:'rotateY(0)'},{transform:'rotateY(720deg)'}],{duration:1100,easing:'cubic-bezier(.2,.8,.2,1)'});
+    setTimeout(()=>{ const r=md.getBoundingClientRect(); fireworks(r.left+r.width/2,r.top+r.height/2,['#f2d27a','#fff3c4','#c9a24a']) },500) }
+  try{sfx('chime');navigator.vibrate&&navigator.vibrate([12,50,12])}catch(_){}
+  const t=setTimeout(hide,3600) }
+function showLevelUp(from,to,done){ const o=$('lvup'); $('lvk').textContent=L('น้องโอ่งเลื่อนขั้น!','LEVEL UP!'); $('lvt').textContent=L(`ระดับ ${to} · ${LEVELS[to-1][1]}`,`Level ${to} · ${LEVELS[to-1][2]}`);
+  $('lvs').textContent=L('ได้ลายโอ่งใหม่แล้ว เลือกลายได้ในตู้โชว์','A new jar finish is yours. Switch finishes in the cabinet.'); $('lvok').textContent=L('เยี่ยมเลย','Awesome');
+  const j=$('lvjar'); j.innerHTML=jarSVG('great',undefined,null,from); o.hidden=false;
+  if(FX()){ j.animate([{transform:'scale(.6)',opacity:0},{transform:'scale(1)',opacity:1}],{duration:500,easing:'cubic-bezier(.3,1.4,.5,1)'});
+    setTimeout(()=>{ j.animate([{transform:'none',filter:'brightness(1)'},{transform:'scale(1.08) rotate(-4deg)',filter:'brightness(1.6)'},{transform:'scale(.9) rotate(4deg)',filter:'brightness(3)'}],{duration:450,fill:'forwards'}) },550);
+    setTimeout(()=>{ j.innerHTML=jarSVG('great',undefined,null,to); j.getAnimations().forEach(a=>a.cancel()); j.animate([{transform:'scale(.5)',filter:'brightness(3)'},{transform:'scale(1.15)',filter:'brightness(1.2)',offset:.6},{transform:'none',filter:'none'}],{duration:700,easing:'cubic-bezier(.3,1.4,.5,1)'});
+      const r=j.getBoundingClientRect(); for(let k=0;k<3;k++) setTimeout(()=>fireworks(r.left+r.width*(.2+.3*k),r.top+r.height*.3,['#f2d27a','#fff3c4','#c9a24a','#8fbfa6']),k*200); celebrate() },1000) }
+  else j.innerHTML=jarSVG('great',undefined,null,to);
+  try{sfx('chime');navigator.vibrate&&navigator.vibrate([20,60,20,60,40])}catch(_){}
+  $('lvok').onclick=()=>{ o.hidden=true; prefs.skin=to; savePrefs(); lastMood=null; _renderNoGame(); try{renderWardrobe()}catch(e){} done() } }
+function openTrophy(hi){ const lv=GAME.level, a=LEVELS[lv-1][0], nx=LEVELS[lv], got=prefs.badges||{}, n=Object.keys(got).length, sk=jarSkin();
+  const pct=nx?Math.min(1,(GAME.xp-a)/(nx[0]-a)):1;
+  $('trophypanel').innerHTML=`<div class="trhead"><div class="trjar">${jarSVG('great',undefined,null,sk)}</div><div class="trlv">LEVEL ${lv}</div><div class="trname">${esc(L(LEVELS[lv-1][1],LEVELS[lv-1][2]))}</div>
+    <div class="xpbar"><i style="width:0" data-w="${(pct*100).toFixed(1)}%"></i></div><div class="xptxt">${nx?L(`${GAME.xp} / ${nx[0]} XP · อีก ${nx[0]-GAME.xp} XP ถึง${nx[1]}`,`${GAME.xp} / ${nx[0]} XP · ${nx[0]-GAME.xp} XP to ${nx[2]}`):L(`${GAME.xp} XP · ระดับสูงสุดแล้ว`,`${GAME.xp} XP · top level reached`)}</div></div>
+    <div class="trsec">${L('ลายโอ่ง','Jar finishes')}<small>${L('แตะเพื่อเปลี่ยนลาย','Tap to switch')}</small></div>
+    <div class="skins">${LEVELS.map((x,i)=>{const k=i+1, lk=k>lv; return `<button type="button" data-sk="${k}" class="${k===sk?'on':''}${lk?' locked':''}"><span class="sj">${jarSVG('good',null,null,k)}</span><span>${lk?`${x[0]} XP`:esc(L(x[1],x[2]))}</span></button>`}).join('')}</div>
+    <div class="xphow">${L('เก็บ XP: จดรายการวันไหนก็ได้ +10 · ทุกรายการ +3 (สูงสุดวันละ 5) · ได้เหรียญ +30 · ครบเป้าหมาย +60','Earn XP: any day you log +10 · each entry +3 (up to 5 a day) · each badge +30 · each goal reached +60')}</div>
+    <div class="trsec">${L('เหรียญรางวัล','Badges')}<small>${L(`ได้แล้ว ${n}/${BADGES.length}`,`${n} of ${BADGES.length}`)}</small></div>
+    <div class="badges">${BADGES.map(b=>{const on=!!got[b[0]], of=Object.keys(OUTFITS_LOCKED).find(k=>OUTFITS_LOCKED[k]===b[0]);
+      return `<button type="button" class="badge${on?'':' off'}${hi===b[0]?' new':''}" data-b="${b[0]}"><span class="md">${medalSVG(b[1],b[2],!on)}</span><b>${esc(L(b[3],b[4]))}</b><small>${on?L('ได้เมื่อ ','Earned ')+new Date(got[b[0]]+'T00:00').toLocaleDateString(LOC(),{day:'numeric',month:'short',year:'2-digit'}):esc(L(b[5],b[6]))}</small>${of?`<span class="ofit">${on?'✓ ':''}${L('ชุด','Outfit')}: ${esc(L(OUTFIT_NAME[of][0],OUTFIT_NAME[of][1]))}</span>`:''}</button>`}).join('')}</div>
+    <div class="actions"><button class="btn" id="trclose" type="button">${L('ปิด','Close')}</button></div>`;
+  showSheet('trophysheet'); $('trclose').onclick=()=>hideSheet('trophysheet');
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{ const i=$('trophypanel').querySelector('.xpbar i'); if(i) i.style.width=i.dataset.w }));
+  if(hi&&hi!=='hello'){ const el=$('trophypanel').querySelector(`[data-b="${hi}"]`); if(el) setTimeout(()=>el.scrollIntoView({block:'center',behavior:RM()?'auto':'smooth'}),450) }
+  $('trophypanel').querySelector('.skins').onclick=e=>{ const b=e.target.closest('[data-sk]'); if(!b) return; const k=+b.dataset.sk;
+    if(k>GAME.level){ shake(b); toast(L(`ปลดล็อกที่ ${LEVELS[k-1][0]} XP`,`Unlocks at ${LEVELS[k-1][0]} XP`)); return }
+    prefs.skin=k; savePrefs(); lastMood=null; _renderNoGame(); try{renderWardrobe()}catch(_){} const top=$('trophypanel').scrollTop; openTrophy(); $('trophypanel').scrollTop=top;
+    const j=$('trophypanel').querySelector('.trjar'); if(FX()&&j) j.animate([{transform:'scale(.8) rotate(-6deg)'},{transform:'scale(1.06)'},{transform:'none'}],{duration:500,easing:'cubic-bezier(.3,1.4,.5,1)'}); sfx('bloop') };
+  $('trophypanel').querySelector('.badges').onclick=e=>{ const b=e.target.closest('[data-b]'); if(!b) return; if(FX()){ const m=b.querySelector('.md'); m.animate([{transform:'rotateY(0)'},{transform:'rotateY(360deg)'}],{duration:700,easing:'cubic-bezier(.2,.8,.2,1)'}) } } }
+$('trophysheet').onclick=e=>{if(e.target.id==='trophysheet')hideSheet('trophysheet')};
+$('lvchip').addEventListener('click',e=>{ e.stopPropagation(); openTrophy() });
+const _renderNoGame=render;
+{ const _r4=render; render=function(){ const o=_r4.apply(this,arguments); try{gameTick()}catch(e){} return o } }
+gameTick();
 </script>
 
 <script>
