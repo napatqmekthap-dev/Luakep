@@ -1459,6 +1459,23 @@ body.lowfx #wxfx .wr,body.lowfx #wxfx .wsn,body.lowfx #wxfx .wlf,body.lowfx #wxf
 .vrow{display:flex;gap:10px;align-items:center;justify-content:space-between}
 .vrow .btn{flex:none;padding:0 16px;height:40px}
 @media (prefers-reduced-motion: reduce){.pig.talking .mouth,.pig.talking svg,.say.speaking::after{animation:none!important}}
+
+/* ===== V280 erase all data ===== */
+.wipeg h4{color:var(--out,#b3492f)}
+.wipeg p{font-size:13.5px;color:var(--muted);margin:0 0 10px;line-height:1.55}
+.wipebox{display:flex;flex-direction:column;gap:12px;margin-top:4px}
+.wipebox ul{margin:0;padding-left:18px;font-size:13.5px;line-height:1.7}
+.wipebox .chk{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;line-height:1.5}
+.wipebox .chk input{width:20px;height:20px;flex:none;margin-top:1px;accent-color:var(--out,#b3492f);appearance:auto;-webkit-appearance:checkbox}
+.holdbtn{position:relative;overflow:hidden;height:52px;border-radius:999px;border:1.5px solid var(--out,#b3492f);background:transparent;color:var(--out,#b3492f);font:600 15px var(--display);cursor:pointer;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;touch-action:none}
+.holdbtn::before{content:"";position:absolute;inset:0;background:var(--out,#b3492f);transform:scaleX(var(--hp,0));transform-origin:0 50%;opacity:.95}
+.holdbtn span{position:relative;z-index:1}
+.holdbtn .hov{position:absolute;inset:0;display:grid;place-items:center;color:#fff;clip-path:inset(0 calc((1 - var(--hp,0))*100%) 0 0)}
+.wipebox label.chk{flex-direction:row!important;align-items:flex-start!important}
+.wipebox .btn{min-height:44px}
+#wipeov{position:fixed;inset:0;z-index:99;display:grid;place-items:center;background:var(--surface);text-align:center}
+#wipeov .wj{width:150px;height:150px;margin:0 auto 10px}#wipeov .wj svg{width:100%;height:100%;overflow:visible}
+#wipeov b{display:block;font:500 22px var(--display)}#wipeov small{color:var(--muted)}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i></div><div id="festfx" aria-hidden="true"></div>
@@ -4764,6 +4781,50 @@ function renderVoiceSet(){ const sel=$('vmode'); if(!sel) return; sel.value=vMod
     if(!VOICE.ok){ toast(L('เครื่องนี้ไม่รองรับเสียงพูด','No text-to-speech on this phone')); return }
     nongSpeak(t,null); toast(L('น้องโอ่งกำลังพูด','Nong Ong is talking')) });
   renderVoiceSet() })();
+
+/* ===== V280 erase all data (Settings > Data) ===== */
+(function(){ const rs=$('restorebtn'), g0=rs&&rs.closest('.group'); if(!g0) return; const g=document.createElement('div'); g.className='group wipeg'; g.id='wipegroup';
+  g.innerHTML=`<h4><span class="gh" style="--ghbg:var(--t-out);--ghfg:var(--t-out-fg)"><svg viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg></span>${L('ล้างข้อมูลทั้งหมด','Erase all data')}</h4>
+  <p>${L('ลบทุกอย่างที่จดไว้ในเครื่องนี้ แล้วเริ่มใหม่จากโอ่งว่าง ใช้เมื่ออยากเริ่มต้นใหม่ หรือก่อนส่งต่อมือถือให้คนอื่น','Remove everything recorded on this phone and start again with an empty jar. Use it to start over, or before passing the phone on.')}</p>
+  <button type="button" class="btn danger" id="wipeopen">${L('ล้างข้อมูลทั้งหมด…','Erase all data…')}</button>
+  <div class="wipebox" id="wipebox" hidden>
+    <ul id="wipelist"></ul>
+    <button type="button" class="btn" id="wipebk">${L('สำรองข้อมูลก่อน','Back up first')}</button>
+    <label class="chk"><input type="checkbox" id="wipefull"><span>${L('ลบการตั้งค่า ล็อกแอป และจุดย้อนกลับในเครื่องด้วย เหมือนลงแอปใหม่','Also remove settings, app lock and restore points, like a fresh install')}</span></label>
+    <small class="wnote" id="wipenote"></small>
+    <button type="button" class="holdbtn" id="wipehold"><span>${L('กดค้างไว้เพื่อลบทั้งหมด','Press and hold to erase everything')}</span><span class="hov" aria-hidden="true">${L('กดค้างไว้เพื่อลบทั้งหมด','Press and hold to erase everything')}</span></button>
+    <button type="button" class="btn" id="wipecancel">${L('ยกเลิก','Cancel')}</button>
+  </div>`;
+  g0.after(g);
+  const note=()=>{ $('wipenote').textContent=$('wipefull').checked?L('ลบหมดจริง กู้คืนได้จากไฟล์สำรองที่ส่งออกไว้เท่านั้น','Gone for good. Only a backup file you exported can bring it back.'):L('แอปจะเก็บจุดย้อนกลับไว้ 1 จุดก่อนลบ ถ้าเปลี่ยนใจ กู้คืนได้จาก “จุดย้อนกลับในเครื่อง”','A restore point is kept first. Changed your mind? Restore it from “Restore points on this phone”.') };
+  $('wipeopen').onclick=()=>{ const R=data.filter(r=>!r.demo), G=goals.filter(x=>!x.demo);
+    $('wipelist').innerHTML=[L(`รายการ ${R.length} รายการ`,`${R.length} entries`),L(`เป้าหมายออม ${G.length} เป้า`,`${G.length} savings goals`),L('งบ รายการประจำ กระเป๋าเงิน รายชื่อเพื่อน หมวดที่สร้างเอง ร้านที่แอปจำได้','Budgets, repeats, wallets, friends, your categories, remembered shops'),L('เหรียญรางวัล ระดับ และลายโอ่งที่ปลดล็อก','Badges, level and unlocked jar finishes')].map(t=>`<li>${esc(t)}</li>`).join('');
+    $('wipebox').hidden=false; $('wipeopen').hidden=true; note(); if(FX()) $('wipebox').animate([{opacity:0,transform:'translateY(-6px)'},{opacity:1,transform:'none'}],{duration:260}) };
+  $('wipecancel').onclick=()=>{ $('wipebox').hidden=true; $('wipeopen').hidden=false };
+  $('wipefull').onchange=note; $('wipebk').onclick=()=>{ const b=$('sharebk'); if(b) b.click() };
+  const hb=$('wipehold'); let raf=0,t0=0,busy=false; const HOLD=2000;
+  const stop=()=>{ cancelAnimationFrame(raf); if(busy) return; hb.classList.remove('full'); hb.style.setProperty('--hp',0) };
+  hb.addEventListener('pointerdown',e=>{ if(busy) return; e.preventDefault(); try{hb.setPointerCapture(e.pointerId)}catch(_){} t0=performance.now(); let tick=0;
+    const step=t=>{ const k=Math.min(1,(t-t0)/HOLD); hb.style.setProperty('--hp',k.toFixed(3)); hb.classList.toggle('full',k>.5); const q=Math.floor(k*4); if(q>tick){tick=q; try{navigator.vibrate&&navigator.vibrate(8)}catch(_){}}
+      if(k<1) raf=requestAnimationFrame(step); else { busy=true; hb.classList.add('going'); eraseAll($('wipefull').checked).catch(()=>{}).finally(()=>{busy=false; stop()}) } }; raf=requestAnimationFrame(step) });
+  ['pointerup','pointercancel','pointerleave'].forEach(ev=>hb.addEventListener(ev,stop));
+  hb.addEventListener('contextmenu',e=>e.preventDefault()); })();
+async function eraseAll(full){
+  if(prefs.lock&&prefs.lock.on&&prefs.lock.cred){ const ok=await bioCheck(); if(!ok){ toast(L('ยืนยันตัวตนไม่สำเร็จ ยังไม่ได้ลบ','Not verified, nothing erased')); return } }
+  else if(prefs.lock&&prefs.lock.on&&prefs.lock.pin){ const v=window.prompt(L('ใส่ PIN เพื่อยืนยันการลบ','Enter your PIN to confirm')); if(!v||await pinHash(v.trim(),prefs.lock.salt)!==prefs.lock.pin){ toast(L('PIN ไม่ถูกต้อง ยังไม่ได้ลบ','Wrong PIN, nothing erased')); return } }
+  try{navigator.vibrate&&navigator.vibrate([30,60,30])}catch(_){}
+  if(!full){ try{ await snapNow('ก่อนล้าง') }catch(e){} }
+  const ov=document.createElement('div'); ov.id='wipeov'; ov.innerHTML=`<div><div class="wj">${jarSVG('good',null,.8,1)}</div><b>${L('กำลังล้างโอ่ง…','Emptying the jar…')}</b><small>${L('เริ่มใหม่กันนะ','A fresh start')}</small></div>`; document.body.appendChild(ov);
+  if(FX()){ ov.animate([{opacity:0},{opacity:1}],{duration:300}); const w=ov.querySelector('.wlvl'); if(w) w.animate([{transform:'translateY(0)'},{transform:'translateY(64px)'}],{duration:1300,delay:300,easing:'cubic-bezier(.5,0,.75,0)',fill:'forwards'}); setTimeout(()=>{ const c=ov.querySelector('.wj').getBoundingClientRect(); splash(c.left+c.width/2,c.top+c.height*.8,12) },1500) }
+  try{ speechSynthesis&&speechSynthesis.cancel() }catch(e){}
+  const keep=full?[]:[SKEY,LKEY,AKEY];
+  const ks=[]; for(let i=0;i<localStorage.length;i++){ const k=localStorage.key(i); if(k&&k.startsWith('kp-')&&!keep.includes(k)) ks.push(k) }
+  ks.forEach(k=>{ try{localStorage.removeItem(k)}catch(e){} });
+  if(full){ try{ indexedDB.deleteDatabase('kp-snap') }catch(e){} try{ await caches.delete('kp-state'); await caches.delete('kp-share') }catch(e){} try{ localStorage.removeItem(SKEY); localStorage.removeItem(LKEY); localStorage.removeItem(AKEY) }catch(e){} }
+  else { const P={...prefs}; ['badges','xpMax','lvSeen','skin','tax','taxMemo','lastBackup','wxs'].forEach(k=>delete P[k]); P.opening=0; if(OUTFITS_LOCKED[P.outfit]) P.outfit='auto';
+    try{ localStorage.setItem(SKEY,JSON.stringify(P)); localStorage.setItem(KEY,'[]'); localStorage.setItem(GKEY,'[]'); localStorage.setItem(RKEY,'[]'); localStorage.setItem(BKEY,'{}') }catch(e){} }
+  await new Promise(r=>setTimeout(r,FX()?1900:200));
+  location.reload() }
 </script>
 
 <script>
