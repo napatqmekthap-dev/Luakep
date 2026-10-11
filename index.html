@@ -2,6 +2,7 @@
 <html lang="th">
 <head>
 <meta charset="utf-8">
+<meta name="author" content="Napat Mekthap">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#f5f3ee">
 <link rel="manifest" href="manifest.webmanifest">
@@ -1437,13 +1438,21 @@ body.lowfx #wxfx .wr,body.lowfx #wxfx .wsn,body.lowfx #wxfx .wlf,body.lowfx #wxf
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .bsplash{--rcard:rgba(190,215,255,.5)}}
 :root[data-theme="dark"] .bsplash{--rcard:rgba(190,215,255,.5)}
 @media (prefers-reduced-motion: reduce){.bsplash,.wxspl{display:none}.swd svg,.swc svg{transition:none}.setmenu-back{animation:none}}
+
+/* credit */
+#intro .iby{font:500 12px var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);opacity:.8;margin-top:6px;animation:fadein .6s 1.6s both}
+.credit{display:flex;flex-direction:column;align-items:center;gap:6px;margin:18px 0 4px;text-align:center;color:var(--muted)}
+.credit .cj{width:34px;height:34px;opacity:.9}.credit .cj svg{width:100%;height:100%;overflow:visible}
+.credit b{font:500 13px var(--display);letter-spacing:.12em;color:var(--ink)}
+.credit small{font-size:12px;letter-spacing:.06em}
+.credit i{display:block;width:28px;height:1px;background:var(--gold,var(--ov));opacity:.7}
 </style>
 
 <div id="aurora" aria-hidden="true"><i></i><i></i><i></i></div><div id="festfx" aria-hidden="true"></div>
 <div id="lockscr" hidden role="dialog" aria-modal="true" aria-label="ล็อกอยู่"><div class="lkjar" id="lkjar"></div><b class="lkt">เหลือเก็บล็อกอยู่</b><small id="lkmsg"></small>
   <button class="btn save" id="lkbtn" type="button">ปลดล็อก</button><button class="lkpin" id="lkpinbtn" type="button">ใช้ PIN แทน</button>
   <div class="lkpad" id="lkpad" hidden><input id="lkpin" type="password" inputmode="numeric" maxlength="6" autocomplete="off" aria-label="PIN"><button class="btn" id="lkpinok" type="button">ตกลง</button></div></div>
-<div id="intro" hidden aria-hidden="true"><div class="ishine"></div><div class="icoin"></div><div class="ijar" id="ijar"></div><div class="iword">เหลือเก็บ</div><div class="itag">กินเหลือเก็บ เติมโอ่งทุกเดือน</div></div>
+<div id="intro" hidden aria-hidden="true"><div class="ishine"></div><div class="icoin"></div><div class="ijar" id="ijar"></div><div class="iword">เหลือเก็บ</div><div class="itag">กินเหลือเก็บ เติมโอ่งทุกเดือน</div><div class="iby">Developed by Napat Mekthap</div></div>
 <!-- Sign-up / sign-in -->
 <div class="auth" id="auth" hidden>
   <div class="box">
@@ -4692,6 +4701,10 @@ $('pig').addEventListener('pointerdown',e=>{ if(!FX()) return; const svg=$('pig'
   const bb=document.createElementNS(NS,'circle'); bb.setAttribute('cx',x.toFixed(1)); bb.setAttribute('cy',y.toFixed(1)); bb.setAttribute('r','1.8'); bb.setAttribute('fill','#fff'); bb.setAttribute('opacity','.8'); g.appendChild(bb);
   bb.animate([{transform:'translate(0,0)',opacity:.9},{transform:`translate(${(Math.random()-.5)*6}px,${-(y-wy)}px)`,opacity:0}],{duration:900,easing:'ease-in'}).onfinish=()=>bb.remove();
   sloshKick(1.5) },{passive:true});
+
+/* Developer credit at the foot of the settings menu */
+(function(){ const m=$('setmenu'); if(!m||m.querySelector('.credit')) return; const c=document.createElement('div'); c.className='credit';
+  c.innerHTML=`<span class="cj">${jarSVG('great',null,null,1)}</span><i></i><b>Developed by Napat Mekthap</b><small>${L('เหลือเก็บ · กินเหลือเก็บ เติมโอ่งทุกเดือน','Luakep · fill the jar every month')}</small>`; m.appendChild(c) })();
 </script>
 
 <script>
