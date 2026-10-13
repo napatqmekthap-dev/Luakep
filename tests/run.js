@@ -141,6 +141,10 @@ await test('ask Nong Ong: questions are answered, entries still go to quick add'
   data.push({id:'a1',type:'out',amount:60,cat:'อาหาร',memo:'กาแฟ',date:d},{id:'a2',type:'out',amount:45,cat:'อาหาร',memo:'กาแฟเย็น',date:d},{id:'a3',type:'out',amount:300,cat:'เดินทาง',memo:'แท็กซี่',date:d});
   return [isAsk('กาแฟ 60'),isAsk('เดือนนี้กาแฟไปเท่าไหร่'),askNongAnswer('เดือนนี้กาแฟไปเท่าไหร่').text,askNongAnswer('ใช้อะไรเยอะสุด').top[0][0],askNongAnswer('เดือนนี้กินไปเท่าไหร่').rows.length] });
   eq(r.slice(0,2),[false,true]); ok(r[2].includes('฿105'),r[2]); eq(r[3],'เดินทาง'); eq(r[4],2) });
+await test('big amounts fit their boxes (balance, income/spending, wallet cards)',async P=>{ const p=await P({nosample:true}); await p.evaluate(()=>{ prefs.onbDone=1; prefs.opening=123456789.5; const d=iso(new Date());
+  data.push({id:'g1',type:'in',amount:12345678.9,cat:'เงินเดือน',memo:'',date:d},{id:'g2',type:'out',amount:11961111.1,cat:'ที่พัก',memo:'',date:d}); wallets.push({id:'wc',name:'บัตรเครดิตแพลทินัม',kind:'card',opening:-1250000.75}); save(); render() });
+  await p.waitForTimeout(1600); const r=await p.evaluate(()=>['bal','tin','tout'].map(i=>$(i)).concat([...document.querySelectorAll('.wcard b')]).map(e=>fitOver(e)?e.id+':'+e.textContent:'ok'));
+  ok(r.every(x=>x==='ok'),JSON.stringify(r)); eq(await p.evaluate(()=>[fmt(45.5),fmt(1200),fitVariants('฿1,250,000.75').length]),['฿45.50','฿1,200',3]) });
 console.log('Release');
 await test('version: APP_VER = 1.<sw cache>, newest changelog entry, CHANGELOG.md in step',async P=>{ const p=await P({}); const r=await p.evaluate(()=>[APP_VER,NEWS_VER,CHANGELOG[0][0],CHANGELOG.length,CHANGELOG.every(c=>c[2]&&c[3])]);
   const cache=(fs.readFileSync(path.join(ROOT,'sw.js'),'utf8').match(/luakep-v(\d+)/)||[])[1]; eq(r[0],'1.'+cache,'APP_VER vs sw.js cache'); eq(r[2],r[0],'top changelog entry'); ok(r[4],'every entry needs Thai and English');
