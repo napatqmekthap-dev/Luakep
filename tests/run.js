@@ -5,8 +5,8 @@ const fs=require('fs'), path=require('path');
 let chromium; try{ ({chromium}=require('playwright')) }catch(e){ console.error('Playwright is missing: npm i -g playwright && npx playwright install chromium'); process.exit(2) }
 const ROOT=path.join(__dirname,'..'), SRC=fs.readFileSync(path.join(ROOT,'index.html'),'utf8');
 const HARNESS=path.join(require('os').tmpdir(),'luakep-test.html');
-// Same page, but no service worker, no tips, and sample data unless the URL hash says #nosample
-fs.writeFileSync(HARNESS,SRC.replace(/<script>\s*if\('serviceWorker'[\s\S]*?<\/script>/,'').replace('<body>','<body><script>window.STANDALONE=true;window.NO_TIPS=true;window.KP_SAMPLE=!/nosample/.test(location.hash);try{sessionStorage.setItem("kp-intro","1")}catch(e){}</script>'));
+// Same page (files such as fonts/ resolve from the repo), but no service worker, no tips, and sample data unless the URL hash says #nosample
+fs.writeFileSync(HARNESS,SRC.replace('<head>','<head><base href="file://'+ROOT+'/">').replace(/<script>\s*if\('serviceWorker'[\s\S]*?<\/script>/,'').replace('<body>','<body><script>window.STANDALONE=true;window.NO_TIPS=true;window.KP_SAMPLE=!/nosample/.test(location.hash);try{sessionStorage.setItem("kp-intro","1")}catch(e){}</script>'));
 const URL='file://'+HARNESS;
 let pass=0, fail=0, browser; const fails=[];
 const eq=(a,b,msg)=>{ if(JSON.stringify(a)!==JSON.stringify(b)) throw new Error(`${msg||''} expected ${JSON.stringify(b)} got ${JSON.stringify(a)}`) };
@@ -145,6 +145,14 @@ await test('big amounts fit their boxes (balance, income/spending, wallet cards)
   data.push({id:'g1',type:'in',amount:12345678.9,cat:'เงินเดือน',memo:'',date:d},{id:'g2',type:'out',amount:11961111.1,cat:'ที่พัก',memo:'',date:d}); wallets.push({id:'wc',name:'บัตรเครดิตแพลทินัม',kind:'card',opening:-1250000.75}); save(); render() });
   await p.waitForTimeout(1600); const r=await p.evaluate(()=>['bal','tin','tout'].map(i=>$(i)).concat([...document.querySelectorAll('.wcard b')]).map(e=>fitOver(e)?e.id+':'+e.textContent:'ok'));
   ok(r.every(x=>x==='ok'),JSON.stringify(r)); eq(await p.evaluate(()=>[fmt(45.5),fmt(1200),fitVariants('฿1,250,000.75').length]),['฿45.50','฿1,200',3]) });
+console.log('Privacy and install (1.62)');
+await test('the app contacts no host except weather (fonts and slip reader ship with it)',async P=>{ const p=await P({}); const hosts=new Set(); p.on('request',r=>{ try{ const u=new URL(r.url()); if(/^https?:/.test(u.protocol)&&u.host!==new URL(URL).host) hosts.add(u.host) }catch(e){} });
+  await p.evaluate(()=>{ prefs.onbDone=1; render() }); await p.reload(); await p.waitForTimeout(1500); const f=await p.evaluate(async()=>{ await document.fonts.ready; return ['Mitr','Noto Sans Thai','Kanit'].every(x=>document.fonts.check(`500 16px "${x}"`,'ก1')) });
+  ok([...hosts].every(h=>/open-meteo/.test(h)),'unexpected hosts: '+[...hosts].join(',')); ok(f,'self-hosted fonts did not load') });
+await test('privacy page lists what goes online and its controls work',async P=>{ const p=await P({}); const r=await p.evaluate(()=>{ prefs.onbDone=1; openPrivacy(); const t=$('privsheetp').innerText; document.querySelector('[data-pv="hide"]').click(); return [/Open-Meteo/.test(t),/Google Drive/.test(t),!!document.querySelector('#privsheetp a[href="privacy.html"]'),!!prefs.privacy,document.body.classList.contains('privacy'),!!prefs.privSeen] });
+  eq(r,[true,true,true,true,true,true]); ok(fs.existsSync(path.join(ROOT,'privacy.html')),'privacy.html is missing') });
+await test('install steps for iPhone and Android; card and settings row',async P=>{ const p=await P({}); const r=await p.evaluate(()=>{ prefs.onbDone=1; prefs.privSeen=1; openInstall('ios'); const a=$('instsheetp').innerText; openInstall('android'); const b=$('instsheetp').innerText; return [/หน้าจอโฮม|Home Screen/.test(a),/⋮/.test(b),!!document.querySelector('#setmenu .instrow'),!!document.querySelector('#setmenu .privrow')] });
+  eq(r,[true,true,true,true]) });
 console.log('Release');
 await test('version: APP_VER = 1.<sw cache>, newest changelog entry, CHANGELOG.md in step',async P=>{ const p=await P({}); const r=await p.evaluate(()=>[APP_VER,NEWS_VER,CHANGELOG[0][0],CHANGELOG.length,CHANGELOG.every(c=>c[2]&&c[3])]);
   const cache=(fs.readFileSync(path.join(ROOT,'sw.js'),'utf8').match(/luakep-v(\d+)/)||[])[1]; eq(r[0],'1.'+cache,'APP_VER vs sw.js cache'); eq(r[2],r[0],'top changelog entry'); ok(r[4],'every entry needs Thai and English');
